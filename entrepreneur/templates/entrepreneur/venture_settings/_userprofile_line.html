@@ -1,0 +1,26 @@
+{% load static widget_tweaks %}
+<li class="media qjane-userprofile-line">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object" src="http://placehold.it/50x50" alt="...">
+        </a>
+    </div>
+
+    <div class="media-body">
+        <h4 class="media-heading">{{ userprofile.get_print }}</h4>
+        <ul>
+            <li class="qjane-role-main-admin-description">Administrador general: Todos los permisos.</li>
+            <li class="qjane-role-secondary-admin-description">Administrador: Permiso a todo, menos a la gestión de roles y a la configuración de privacidad.</li>
+        </ul>
+    </div>
+
+    <div class="media-right">
+        <form class="qjane-send-membership-form">
+            {% render_field role_form.venture_slug %}
+            {% render_field role_form.profile_slug %}
+            {% render_field role_form.role %}
+
+            <button type="submit" class="btn btn-success btn-sm">Agregar</button>
+        </form>
+    </div>
+</li>

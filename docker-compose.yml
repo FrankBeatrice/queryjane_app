@@ -1,0 +1,36 @@
+version: '2'
+services:
+  web:
+    build: .
+    image: queryjane
+    command: ./manage.py runserver 0.0.0.0:8000
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    volumes:
+      - .:/code
+    depends_on:
+      - migration
+      - db
+      - redis
+  db:
+    image: mdillon/postgis:9.6
+    volumes:
+      - .:/tmp/data/
+  redis:
+    image: redis:3.2.8
+  yarn:
+    image: queryjane
+    command: yarn install
+    volumes:
+      - .:/code
+  gulp:
+    image: queryjane
+    command: gulp
+    volumes:
+      - .:/code
+  migration:
+    image: queryjane
+    command: ./manage.py migrate --noinput
+    volumes:
+      - .:/code

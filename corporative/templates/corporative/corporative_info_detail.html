@@ -1,0 +1,44 @@
+{% extends "layout/index.html" %}
+
+{% load static %}
+
+{% block title %}{{ object }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default main-nav-container is-authenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand logotype-wrapper--authenticated" href="/">
+                <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if user.is_authenticated %}
+                {% include 'layout/menu/_navbar_user_menu.html' %}
+            {% else %}
+                {% include 'layout/menu/_navbar_login_form.html' %}
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="QJCorporativeItem">
+    <div class="container">
+        <h1>{{ object.title_sp }}</h1>
+
+        <div class="QJRedactorContent">
+            {{ object.description_sp|safe }}
+        </div>
+    </div>
+</section>
+{% endblock %}

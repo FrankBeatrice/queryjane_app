@@ -1,0 +1,15 @@
+@import 'variables';
+@import 'theme';
+@import 'buttons';
+@import '../utilities/spacing';
+@import 'header';
+@import 'footer';
+
+.qj-body.authenticated {
+  background-color: #f5f5f5;
+}
+
+.form-group .error {
+  font-weight: 400;
+  font-style: italic;
+}

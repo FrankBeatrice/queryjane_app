@@ -1,0 +1,78 @@
+{% extends "layout/index.html" %}
+{% load widget_tweaks static %}
+
+{% block title %}Inicar sesión{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dist/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="qj-home-background"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+
+            <div class="panel panel-default LoginForm qj-home-register">
+                <div class="panel-heading">
+                    <h3>Iniciar sesión</h3>
+                </div>
+
+                <div class="panel-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="form-group">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {% render_field field class+="form-control" %}
+                            {{ field.errors }}
+                            <div class="helpText">{{ field.help_text|safe }}</div>
+                        </div>
+                    {% endfor %}
+                        <p>
+                            <a href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
+                        </p>
+                        <button type="submit" class="btn btn-ghost-white btn-lg">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$(function() {
+    'use strict';
+
+    $('.LoginForm form').validate({
+        rules: {
+            username: {
+                email: true,
+                required: true
+            },
+            password: {
+                required: true
+            }
+        },
+        messages: {
+            username: {
+                email: 'Por favor, ingrese un email válido',
+                required: 'Este campo es requerido'
+            },
+            password: {
+                required: 'Este campo es requerido'
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

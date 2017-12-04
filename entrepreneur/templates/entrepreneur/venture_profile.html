@@ -1,0 +1,143 @@
+{% extends "layout/index.html" %}
+
+{% load static entrepreneur_tags %}
+
+{% block title %}{{ venture }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default main-nav-container is-authenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand logotype-wrapper--authenticated" href="/">
+                <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if user.is_authenticated %}
+                {% include 'layout/menu/_navbar_user_menu.html' %}
+            {% else %}
+                {% include 'layout/menu/_navbar_login_form.html' %}
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="qjane-venture-profile">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <img style="max-width: 100%;" class="media-object thumbnail" src="{{ venture.get_logo }}" alt="{{ venture }}">
+
+            {% if can_manage %}
+                <a href="{% url 'entrepreneur:settings_venture_form' venture.slug %}" class="btn btn-ghost-purple">Configuración</a>
+            {% endif %}
+
+            {% get_user_venture_admin_notification user venture as user_venture_admin_notification %}
+
+            {% if user_venture_admin_notification %}
+                <div class="QJAdminnotification">
+                    <p>Tienes una solicitud de administración para esta empresa.</p>
+
+                    <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">Rechazar</a>
+                    <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">Aceptar</a>
+                </div>
+            {% endif %}
+
+                <div class="QJVentureDetCategories">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            <span>{% if venture.industry_categories.count > 1 %}Sectores{% else %}Sector{% endif %}</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="QJVentureDetCats">
+                            {% for industry_category in venture.industry_categories.all %}
+                                <li>{{ industry_category }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="QJVentureDetLocation">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <span>Ubicación</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <div>
+                                <img src="{{ venture.country.country.flag }}">
+                                <span>{{ venture.country }}</span>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                <span>{{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+                            </div>
+
+                            <div>
+                            {% if venture.address %}
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span>{{ venture.address }}</span>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if venture.phone_number or venture.email %}
+                <div class="QJVentureDetContact">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                            <span>Contacto</span>
+                        </div>
+
+                        <div class="panel-body">
+                            {% if venture.phone_number %}
+                            <div>
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <span>{{ venture.phone_number }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if venture.email %}
+                            <div>
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <span>{{ venture.email }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <h1>{{ venture }}</h1>
+
+                <div class="QJVentureDetDescription">
+                {% if venture.description_es %}
+                    <div class="QJRedactorContent">
+                        {{ venture.description_es|safe }}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

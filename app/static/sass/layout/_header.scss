@@ -1,0 +1,110 @@
+.main-nav-container {
+  background-color: $qj-purple;
+  border-color: transparent;
+
+  @media (min-width: 992px) {
+    background-color: transparent;
+  }
+
+  &.navbar-default .main-nav-items.navbar-nav {
+    margin-bottom: 0;
+
+    @media (min-width: 768px) {
+      margin-bottom: 7.5px;
+    }
+
+    & > li > .main-nav-items__item {
+      color: #fff;
+      padding-bottom: 16px;
+
+      @media (min-width: 768px) {
+        padding-bottom: 10px;
+      }
+    }
+
+    & > li.open > .main-nav-items__item {
+      background-color: transparent;
+    }
+  }
+
+  &.navbar-default .navbar-toggle {
+    background-color: $qj-purple;
+
+    .icon-bar {
+      background-color: #fff;
+    }
+  }
+
+  .navbar-nav .open .dropdown-menu {
+    border-radius: 0;
+    background-color: #fff;
+
+    @media (min-width: 768px) {
+      border-radius: 4px;
+    }
+  }
+
+  &.is-authenticated {
+    border-radius: 0;
+
+    @media (min-width: 992px) {
+      background-color: $qj-purple;
+    }
+
+    .navbar-nav {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .nav-item {
+      border-bottom: thin solid white;
+
+      @media (min-width: 768px) {
+        border-bottom: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.open .nav-link {
+        background-color: $qj-purple;
+        color: #fff;
+      }
+      .nav-link {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.logotype-wrapper {
+  padding: 8px 0 8px 15px;
+
+  @media (min-width: 768px) {
+    padding: 8px 0;
+  }
+
+  &--authenticated {
+    padding: 3px 0 3px 15px;
+  }
+
+  &__image {
+    width: 150px;
+
+    &--authenticated {
+      width: 43px;
+    }
+  }
+}
+
+.qjane-navbar-login-container {
+  min-width: 300px;
+  padding: 10px 15px;
+
+  .qjane-login-form {
+    label {
+      color: #000;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="col-md-3">
+    <div>
+        <h4 class="h3 mt-xxs mb-s">
+            <a class="text-primary" href="{{ venture.get_absolute_url }}">
+                <i class="fa fa-building" aria-hidden="true"></i>
+                {{ venture }}
+            </a>
+        </h4>
+    </div>
+
+    <ul class="list-group QjaneVentureSettingsMenu">
+        <li class="list-group-item {% if general_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:settings_venture_form' venture.slug %}" class="clearfix">
+                <span class="pull-left">General</span>
+                <i class="fa fa-cog pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <li class="list-group-item {% if contact_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:contact_venture_form' venture.slug %}" class="clearfix">
+                <span class="pull-left">Contacto</span>
+                <i class="fa fa-phone pull-right" aria-hidden="true"></i>
+        </a>
+        </li>
+
+        <li class="list-group-item {% if roles_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:roles_venture_form' venture.slug %}" class="clearfix">
+                <span class="pull-left">Roles</span>
+                <i class="fa fa-users pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        {% comment %}
+        <li class="list-group-item {% if privacy_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:privacy_venture_form' venture.slug %}" class="clearfix">
+                <span class="pull-left">Privacidad</span>
+                <i class="fa fa-user-secret pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+        {% endcomment %}
+    </ul>
+</div>

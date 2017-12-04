@@ -1,0 +1,124 @@
+$(function () {
+    'use strict';
+
+    // Logo Validation
+    $('#id_venture_change_logo_form').validate({
+        ignore: [],
+        rules: {
+            logo: {
+                extension: 'jpg|png|jpeg',
+                filesize: 4000000
+            }
+        },
+        messages: {
+            logo: {
+                extension: 'Solo archivos jpg, png o jpeg.'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'logo') {
+                error.insertAfter('#id_venture_logo_update_link');
+            }
+        }
+    });
+
+
+    $('#id_venture_logo_update_link').on('click', function() {
+        $('#id_logo').click();
+    });
+
+    $('#id_logo').on('change', function () {
+        $('#submit_venture_logo_link').click();
+    });
+
+    var venture_update_logo_url = $('#id_venture_change_logo_form').data('venture-update-logo-url');
+
+    $('#id_venture_change_logo_form').on('submit', function() {
+        var formData = new FormData(this);
+
+        $.ajax({
+            url : venture_update_logo_url,
+            type: "POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                $('.QjaneVentureGeneralInfo .alert-warning').remove();
+                $('.QjaneVentureSettingsLogoContainer img').attr('src', response.content);
+            },
+        });
+        return false;
+    });
+
+    // Update venture categories
+    var venture_category_url = $('.qjane-industry-categories-list').data('update-venture-category-url');
+
+    $(".qjane-industry-categories-list").on('click', '.btn', function () {
+        var category_id = $(this).data('category-id');
+        var new_status;
+        var cat_pressed_button = $(this);
+
+        if (cat_pressed_button.hasClass( "btn-ghost-purple" ) ) {
+            // Add category
+            cat_pressed_button.removeClass( "btn-ghost-purple" );
+            cat_pressed_button.addClass( "btn-primary" );
+            new_status = true
+        } else {
+            // Remove category
+            cat_pressed_button.addClass( "btn-ghost-purple" );
+            cat_pressed_button.removeClass( "btn-primary" );
+            new_status = false
+        }
+
+        $.post(venture_category_url, {'category_id': category_id, 'new_status': new_status}, function (response) {
+            if (response == 'minimum_error') {
+                cat_pressed_button.addClass('btn-primary').removeClass('btn-ghost-purple');
+                $('.QjaneEmptyCategoriesBug').text('debes elegir al menos un sector.');
+
+                setTimeout(function(){
+                     $('.QjaneEmptyCategoriesBug').text('');
+                },3000);
+            }
+        });
+    });
+
+    // Update venture description
+    $('.js_edit_desc_link').on('click', function () {
+        $(this).closest('.js_lan_form_container').find('.description_field_container').show();
+        $(this).closest('.js_lan_form_container').find('.desc_cont').hide();
+    });
+
+
+    var venture_update_description_url = $('.QjaneVentureSettingsDescriptionContainer').data('update-venture-description-form');
+
+    $('#id_venture_change_description_form').on('submit', function() {
+        var formData = new FormData(this);
+
+        $.ajax({
+            url : venture_update_description_url,
+            type: "POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                $('.venture_description_es_content').html(response.content.description_es);
+                $('.venture_description_en_content').html(response.content.description_en);
+
+                // Use updated_es and updated_en for hide description_field_container
+                $('.description_field_container').hide();
+                $('.js_lan_form_container').find('.desc_cont').show();
+
+                // Sucess message
+                if (response.content.updated_es) {
+                    $('.QjaneUpdatedSPdescVenture').html('<div class="alert alert-success" role="alert">Información actualizada correctamente</div>');
+                }
+
+                if (response.content.updated_en) {
+                    $('.QjaneUpdatedENdescVenture').html('<div class="alert alert-success" role="alert">Información actualizada correctamente</div>');
+                }
+            },
+        });
+
+        return false;
+    });
+})

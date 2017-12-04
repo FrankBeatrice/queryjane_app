@@ -1,0 +1,71 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ venture }} - Configuración de roles{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings" data-venture-slug="{{ venture.slug }}">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+            <div class="col-md-9 QjaneVentuerSettingsContent">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Roles</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="media-list qjane-venture-roles-list">
+                        {% for membership in memberships %}
+                            {% include 'entrepreneur/venture_settings/_membership_line.html' %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel panel-default qjane-role-search">
+                    <div class="panel-body">
+                        <h4>Busca por nombre, correo electrónico o nombre de usuario.</h4>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus nulla sed nunc placerat fermentum. Morbi leo quam, luctus et mauris nec, interdum rhoncus nisi.</p>
+                    </div>
+                    <div class="panel-footer">
+                        <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' venture.slug %}">
+                            <div class="form-group">
+                            {% render_field userprofile_form.userprofile %}
+                            {{ userprofile_form.userprofile.errors }}
+                            </div>
+                        </form>
+                        <p class="qjane-add-membership-error"></p>
+                        <button type="submit" class="hide btn btn-warning btn-sm qjane-cancel-role-search">Nueva búsqueda</button>
+
+                        <ul class="media-list qjane-venture-new-role-list-to-confirm"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/role_userprofile_autocomplete.js' %}"></script>
+
+<script>
+$(function() {
+    'use strict';
+
+    $('.js_qjane_action').on('click', '.js_qjane_resend_admin_invitation', function () {
+        var resend_link = $(this);
+        var resend_admin_invitation = $(this).data('resend-admin-invitation-url');
+
+        $.post(resend_admin_invitation, function (response) {
+            resend_link.closest('li').html(response.content);
+
+            return false;
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ venture }} - Configuración{% endblock %}
+
+{% block css %}
+<link href="{% static 'redactor/redactor.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/settings_venture_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+            <div class="col-md-9 QjaneVentuerSettingsContent">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Información general de la empresa</h3>
+                    </div>
+
+                    <div class="panel-body QjaneVentureGeneralInfo">
+                    {% if not venture.logo %}
+                        <div class="alert alert-warning" role="alert">Actualiza el logo de <strong>{{ venture }}</strong> para generar mayor impacto y recordación de la marca.</div>
+                    {% endif %}
+
+                        <div class="row">
+                            <div class="col-md-3 col-xs-12 QjaneVentureSettingsLogoContainer">
+                                <img class="media-object thumbnail" src="{{ venture.get_logo }}" alt="{{ venture }}">
+
+                                <form id="id_venture_change_logo_form" method="post" enctype="multipart/form-data" data-venture-update-logo-url="{% url 'entrepreneur:update_venture_logo_form' venture.slug %}" style="display:none;">
+                                    {% csrf_token %}
+                                    <div class="logo">
+                                        {{ venture_logo_form.logo.label_tag }}
+                                        {% render_field venture_logo_form.logo %}
+                                    </div>
+
+                                    <button type="submit" id="submit_venture_logo_link"></button>
+                                </form>
+
+                                <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_venture_logo_update_link">
+                                    <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
+                                    Actualizar
+                                </a>
+                            </div>
+
+                            <div class="col-md-9 col-xs-12">
+                                <p>Sectores de la industria</p>
+
+                                <ul class="qjane-industry-categories-list" data-update-venture-category-url="{% url 'entrepreneur:ax_update_venture_category' venture.slug %}">
+                                    {% for industry_category in industry_categories %}
+                                    <li>
+                                        <a class="btn {% if industry_category in venture.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_es }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <p class="QjaneEmptyCategoriesBug"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="QjaneVentureSettingsDescriptionContainer" data-update-venture-description-form="{% url 'entrepreneur:update_venture_description_form' venture.slug %}">
+
+                    <form id="id_venture_change_description_form" method="post">
+                        {% csrf_token %}
+                        <div class="js_lan_form_container">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title clearfix">
+                                        <span class="pull-left">Descripción en Español</span>
+
+                                        <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
+                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                        </a>
+                                    </h3>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="QjaneUpdatedSPdescVenture"></div>
+
+                                    <div class="description_field_container" style="{% if venture.description_es %}display:none;{% endif %}">
+                                        {% render_field description_form.description_es %}
+
+                                        <button type="submit" class="btn btn-primary mt-xs">
+                                            Guardar
+                                        </button>
+                                    </div>
+
+                                    <div class="desc_cont venture_description_es_content">
+                                    {% if venture.description_es %}
+                                        <div class="QJRedactorContent">
+                                            {{ venture.description_es|safe }}
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="js_lan_form_container">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title clearfix">
+                                        <span class="pull-left">Descripción en Inglés</span>
+
+                                        <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
+                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                        </a>
+                                    </h3>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="QjaneUpdatedENdescVenture"></div>
+
+                                    <div class="description_field_container" style="{% if venture.description_en %}display:none;{% endif %}">
+                                        {% render_field description_form.description_en %}
+
+                                        <button type="submit" class="btn btn-primary mt-xs">
+                                            Guardar
+                                        </button>
+                                    </div>
+
+                                    <div class="desc_cont venture_description_en_content">
+                                    {% if venture.description_en %}
+                                        <div class="QJRedactorContent">
+                                            {{ venture.description_en|safe }}
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/settings_venture_form.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout/index.html" %}
+{% load static %}
+
+{% block title %}{{ venture }} - Configuración de privacidad{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+            <div class="col-md-9">
+                <H2>Privacidad</H2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static general_forms widget_tweaks %}
+<ul class="nav navbar-nav navbar-right main-nav-items">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">INICIAR SESIÓN</a>
+
+        <ul class="dropdown-menu">
+            <li class="dropdown-item">
+                <p>Ingresa con tu cuenta de:</p>
+                <a class="QJFBLogin" href="#">Facebook</a>
+                <a class="QJGMLogin" href="#">Gmail</a>
+            </li>
+            <li>
+                <div class="dropdown-item qjane-navbar-login-container">
+                {% get_login_form as login_form %}
+                    <div class="qjane-login-forms-error-message"></div>
+
+                    <form action="" method="POST" class="qjane-login-form" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
+                        <div class="form-group">
+                            {% render_field login_form.email class+="form-control" %}
+                            {{ login_form.email.errors }}
+                        </div>
+                        <div class="form-group">
+                            {% render_field login_form.password class+="form-control" %}
+                            {{ login_form.password.errors }}
+                        </div>
+
+                        <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
+                        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

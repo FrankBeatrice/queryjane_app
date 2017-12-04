@@ -1,0 +1,144 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}Registrar de empresa{% endblock %}
+
+{% block css %}
+<link href="{% static 'redactor/redactor.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/venture_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-create">
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title text-center">REGISTRAR EMPRESA</h2>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 QjaneVFHeaderText">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus ante nulla, ac blandit nunc ultricies non. Sed cursus lorem quis faucibus mattis. Aliquam nec nunc sapien.
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="QjaneVFContainer">
+                            <form method="POST">
+                                {% csrf_token %}
+
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12 form-group">
+                                        <div class="form-group">
+                                            <label>
+                                                Nombre
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+
+                                            <div>
+                                                {% render_field form.name class+="form-control" %}
+                                                <p>{{ form.name.errors }}</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                            <label>
+                                                País
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+                                            <div>
+                                                {% render_field form.country_search  class+="form-control" %}
+                                                <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                                                <p>{{ form.country_search.errors }}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            {% render_field form.country_code %}
+                                            <p>{{ form.country_code.errors }}</p>
+                                        </div>
+
+                                        <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                            <label>
+                                                Ciudad
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+                                            <div>
+                                                {% render_field form.city_search  class+="form-control" %}
+                                                <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
+                                                <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                                <p>{{ form.city_search.errors }}</p>
+
+                                                <p class="QJgUbicationMessage">Si al escribir el nombre de la ciudad, esta no aparece disponible en la lista, <a href="javascript:void(0)" class="QjaneShareGPStext">por favor, permítenos intentar obtener tu ubicación</a> y registrarla en la aplicación.</p>
+                                            </div>
+
+                                            <div class="form-group" style="display:none;">
+                                                {% render_field form.city_id %}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>
+                                                Dirección
+                                            </label>
+                                            <div>
+                                                {% render_field form.address  class+="form-control" %}
+                                                <p>{{ form.address.errors }}</p>
+                                            </div>
+
+                                            <div style="display: none;">
+                                                {% render_field form.coordinates %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <p>Selecciona el sector o sectores de la industria de tu empresa.</p>
+
+                                        <ul class="qjane-industry-categories-list">
+                                            {% for industry_category in industry_categories %}
+                                            <li>
+                                                <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_es }}</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                        <p>{{ form.industry_categories.errors }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>
+                                        Descripción
+                                        <span class="QJRequiredField">*</span>
+                                    </label>
+                                    <div>
+                                        {% render_field form.description_es %}
+                                        <p>{{ form.description_es.errors }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display:none;">
+                                    {% render_field form.industry_categories %}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Siguiente</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/place/show_position.js' %}"></script>
+<script src="{% static 'js/entrepreneur/venture_form.js' %}"></script>
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+{% endblock %}
+

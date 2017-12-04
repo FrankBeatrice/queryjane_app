@@ -1,0 +1,139 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ venture }} - Configuración de contácto{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+            <div class="col-md-9 QjaneVentuerSettingsContent">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Información de contacto</h3>
+                    </div>
+
+                    <div class="panel-body QjaneVentureContactForm">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <form method="POST" id="id_venture_contact_form" data-venture-contact-form-url="{% url 'entrepreneur:ax_contact_venture_form' venture.id %}">
+                                    {% csrf_token %}
+                                    <div>
+                                        <label>
+                                        {{ contact_form.email.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field contact_form.email class+="form-control" %}
+                                        {{ contact_form.email.errors }}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label>
+                                        {{ contact_form.phone_number.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field contact_form.phone_number class+="form-control" %}
+                                        {{ contact_form.phone_number.errors }}
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <p>El correo electrónico y el número telefónico serán visibles en la página de detalle de tu empresa.</p>
+                                <div class="alert alert-success" role="alert" style="display:none;">Datos actualizados correctamente.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Ubicación</h3>
+                    </div>
+
+                    <div class="panel-body QjaneVentureLocationForm">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="alert alert-success" role="alert" style="display:none;">Datos actualizados correctamente.</div>
+                                <div class="alert alert-danger" role="alert" style="display:none;">Hay errores en el formulario. Asegurate de que la ciudad corresponde al país que has elegido.</div>
+
+                                <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' venture.id %}">
+                                    {% csrf_token %}
+
+                                    <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <label>
+                                            País
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field location_form.country_search class+="form-control" %}
+                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                                            <p>{{ location_form.country_search.errors }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="display:none;">
+                                        {% render_field location_form.country_code %}
+                                        <p>{{ location_form.country_code.errors }}</p>
+                                    </div>
+
+                                    <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <label>
+                                            Ciudad
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field location_form.city_search class+="form-control" %}
+                                            <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
+                                            <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                            <p>{{ location_form.city_search.errors }}</p>
+
+                                            <p class="QJgUbicationMessage">Si al escribir el nombre de la ciudad, esta no aparece disponible en la lista, <a href="javascript:void(0)" class="QjaneShareGPStext">por favor, permítenos intentar obtener tu ubicación</a> y registrarla en la aplicación.</p>
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            {% render_field location_form.city_id %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Dirección
+                                        </label>
+                                        <div>
+                                            {% render_field location_form.address class+="form-control" %}
+                                            <p>{{ location_form.address.errors }}</p>
+                                        </div>
+
+                                        <div style="display:none;">
+                                            {% render_field location_form.coordinates %}
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+<script src="{% static 'js/place/show_position.js' %}"></script>
+<script src="{% static 'js/entrepreneur/contact_venture_form.js' %}"></script>
+{% endblock %}
+

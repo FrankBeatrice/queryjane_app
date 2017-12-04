@@ -1,0 +1,132 @@
+body {
+  font-size: 16px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6, {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-brand {
+  height: auto;
+}
+
+.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {
+  max-height: none;
+}
+
+// Text primary
+.text-primary {
+  color: $qj-purple;
+}
+
+a.text-primary:hover {
+  color: $qj-purple;
+}
+
+// Btn primary
+.btn-primary {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+  border-radius: 0;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.ghost-reverse:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus {
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+.btn-primary .badge {
+  color: #fff;
+  background-color: $qj-purple;
+}
+
+// Panel primary
+.panel-primary {
+  border-color: #ddd;
+}
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+}
+
+// List group
+.list-group-item {
+
+  a {
+    color: $qj-purple;
+  }
+}
+
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
+
+  a {
+    color: #fff;
+  }
+}
+
+.list-group-item:hover {
+  background-color: #efefef;
+}

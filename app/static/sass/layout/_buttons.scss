@@ -1,0 +1,133 @@
+// Btn Ghost Purple
+.btn-ghost-purple {
+  color: purple;
+  background-color: transparent;
+  border-color: purple;
+  border-radius: 0;
+}
+
+.btn-ghost-purple:focus,
+.btn-ghost-purple.focus {
+  color: purple;
+  background-color: transparent;
+  border-color: purple;
+}
+
+.btn-ghost-purple:hover {
+  color: purple;
+  background-color: transparent;
+  border-color: purple;
+}
+
+.btn-ghost-purple:active,
+.btn-ghost-purple.active,
+.open > .dropdown-toggle.btn-ghost-purple {
+  color: purple;
+  background-color: transparent;
+  border-color: purple;
+}
+
+.btn-ghost-purple:active:hover,
+.btn-ghost-purple.active:hover,
+.open > .dropdown-toggle.btn-ghost-purple:hover,
+.btn-ghost-purple:active:focus,
+.btn-ghost-purple.active:focus,
+.open > .dropdown-toggle.ghost-reverse:focus,
+.btn-ghost-purple:active.focus,
+.btn-ghost-purple.active.focus,
+.open > .dropdown-toggle.btn-ghost-purple.focus {
+  color: purple;
+  background-color: transparent;
+  border-color: purple;
+}
+
+.btn-ghost-purple:active,
+.btn-ghost-purple.active,
+.open > .dropdown-toggle.btn-ghost-purple {
+  background-image: none;
+}
+
+.btn-ghost-purple.disabled:hover,
+.btn-ghost-purple[disabled]:hover,
+fieldset[disabled] .btn-ghost-purple:hover,
+.btn-ghost-purple.disabled:focus,
+.btn-ghost-purple[disabled]:focus,
+fieldset[disabled] .btn-ghost-purple:focus,
+.btn-ghost-purple.disabled.focus,
+.btn-ghost-purple[disabled].focus,
+fieldset[disabled] .btn-ghost-purple.focus {
+  background-color: purple;
+  border-color: purple;
+}
+
+.btn-ghost-purple .badge {
+  color: purple;
+  background-color: purple;
+}
+
+// Btn Ghost White
+.btn-ghost-white {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+  border-radius: 0;
+}
+
+.btn-ghost-white:focus,
+.btn-ghost-white.focus {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-ghost-white:hover {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-ghost-white:active,
+.btn-ghost-white.active,
+.open > .dropdown-toggle.btn-ghost-white {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-ghost-white:active:hover,
+.btn-ghost-white.active:hover,
+.open > .dropdown-toggle.btn-ghost-white:hover,
+.btn-ghost-white:active:focus,
+.btn-ghost-white.active:focus,
+.open > .dropdown-toggle.ghost-reverse:focus,
+.btn-ghost-white:active.focus,
+.btn-ghost-white.active.focus,
+.open > .dropdown-toggle.btn-ghost-white.focus {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-ghost-white:active,
+.btn-ghost-white.active,
+.open > .dropdown-toggle.btn-ghost-white {
+  background-image: none;
+}
+
+.btn-ghost-white.disabled:hover,
+.btn-ghost-white[disabled]:hover,
+fieldset[disabled] .btn-ghost-white:hover,
+.btn-ghost-white.disabled:focus,
+.btn-ghost-white[disabled]:focus,
+fieldset[disabled] .btn-ghost-white:focus,
+.btn-ghost-white.disabled.focus,
+.btn-ghost-white[disabled].focus,
+fieldset[disabled] .btn-ghost-white.focus {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.btn-ghost-white .badge {
+  color: #fff;
+  background-color: #fff;
+}

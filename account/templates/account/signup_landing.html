@@ -1,0 +1,58 @@
+{% extends "layout/index.html" %}
+{% load static greetings %}
+
+{% block title %}Registra tu perfil profesional o tu empresa.{% endblock %}
+
+{% block css %}
+<link href="{% static 'dist/css/account/signup_landing.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="account QjaneSignupLanding">
+    <div class="container">
+        <div class="row QjaneLandingWelcomeWords">
+        {% get_general_greeting as general_greeting %}
+            <div class="col-md-8 col-md-offset-2">
+            {{ general_greeting }} {{ user.first_name }}, te damos la bienvenida a QueryJane, curabitur consequat sagittis risus, non laoreet velit ullamcorper sed. Aenean a diam dolor. Proin posuere tempor pulvinar. Donec feugiat, ex vel scelerisque sodales, libero magna vehicula est, quis dignissim ex nibh vitae sapien.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12 QjaneLandingApplicant">
+                <h3>Deseo buscar trabajo</h3>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed tellus nec arcu placerat pulvinar. Sed consequat libero non erat iaculis, sit amet ornare risus accumsan. Nam porta ligula velit, sed vulputate nisi condimentum non.</p>
+
+                <p>Selecciona el sector o sectores de la industria en los que deseas recibir ofertas de empleo.</p>
+
+                <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}">
+                    {% for industry_category in industry_categories %}
+                    <li>
+                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_es }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="QjanePPnextbutton">
+                {% if user.professionalprofile.industry_categories.all %}
+                    <a href="#" class="btn btn-primary">Completar perfil</a>
+                {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12 QjaneLandingCreateCompany">
+                <h3>Registrar empresa</h3>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed tellus nec arcu placerat pulvinar. Sed consequat libero non erat iaculis, sit amet ornare risus accumsan. Nam porta ligula velit, sed vulputate nisi condimentum non.</p>
+
+                <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-primary">Registrar empresa</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/account/signup_landing.js' %}"></script>
+{% endblock %}

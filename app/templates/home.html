@@ -1,0 +1,59 @@
+{% extends "layout/index.html" %}
+{% load widget_tweaks static %}
+
+{% block title %}Red de la industria del Cannabis{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dist/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="qj-home-background"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+
+            <div class="panel panel-default qj-home-register">
+                <div class="panel-heading">
+                    <div class="clearfix">
+                        <span class="QJHcountry pull-left">
+                            <img src="{{ country.flag }}">
+                            <span>{{ country.name }}</span>
+                        </span>
+
+                        <span class="QJHcountryCount pull-right">
+                            <span class="fa fa-user"></span>
+                            <span>{{ country_users_count }} usuarios</span>
+
+                            <span class="QJHDivider">|</span>
+
+                            <span class="fa fa-briefcase"></span>
+                            <span>{{ country_users_count }} empresas</span>
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <h2>Regístrate</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et vehicula lacus, id imperdiet leo.</p>
+
+                    <form action="{% url 'account:signup_form_submit' %}" method="POST" class="qjane-home-signup-form" id="id-qjane-home-signup-form">
+                        {% csrf_token %}
+                        {% for field in signup_form.visible_fields %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                {% render_field field class+='borderInput form-control' %}
+                                {{ field.errors }}
+                                <div class="helpText">{{ field.help_text|safe }}</div>
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-ghost-white btn-lg">Crear cuenta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

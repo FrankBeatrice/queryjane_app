@@ -1,0 +1,21 @@
+{% load static %}
+<li class="media">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object" src="http://placehold.it/50x50" alt="...">
+        </a>
+    </div>
+
+    <div class="media-body">
+        <h4 class="media-heading">{{ membership.admin.get_print }}</h4>
+        <p>{{ membership.get_role_display }}</p>
+    </div>
+
+    <div class="media-right js_qjane_action">
+        <p>{{ membership.get_status_display }}</p>
+
+    {% if membership.is_rejected %}
+        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">Reenviar</a>
+    {% endif %}
+    </div>
+</li>
