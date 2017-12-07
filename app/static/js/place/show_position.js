@@ -14,7 +14,7 @@ function showPosition(position) {
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=false",
+        url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=false",
         data: {},
         success: function(data) {
             var status = data['status'];
