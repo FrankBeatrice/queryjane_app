@@ -27,7 +27,7 @@ function showPosition(position) {
                         }
                     }
 
-                    if (city_name != null) {
+                    if (city_name == null) {
                         if (val['types'] == "locality,political") {
                             if (val['long_name']!="") {
                                 city_name = val['long_name'];
