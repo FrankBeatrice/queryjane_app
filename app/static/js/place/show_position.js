@@ -27,6 +27,14 @@ function showPosition(position) {
                         }
                     }
 
+                    if (city_name != null) {
+                        if (val['types'] == "locality,political") {
+                            if (val['long_name']!="") {
+                                city_name = val['long_name'];
+                            }
+                        }
+                    }
+
                     if (val['types'] == "administrative_area_level_1,political") {
                         if (val['long_name']!="") {
                             state_long_name = val['long_name'];
