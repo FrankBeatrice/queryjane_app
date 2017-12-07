@@ -1,5 +1,4 @@
 function showPosition(position) {
-
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
 
@@ -22,7 +21,7 @@ function showPosition(position) {
 
             if (status === "OK") {
                 $.each(results['address_components'], function(i, val) {
-                    if (val['types'] == "locality,political") {
+                    if (val['types'] == "administrative_area_level_2,political") {
                         if (val['long_name']!="") {
                             city_name = val['long_name'];
                         }
