@@ -1,4 +1,10 @@
 $(function () {
+    var quill = new Quill('#rich_editor_description_en', {
+        theme: 'snow'
+    }).on('text-change', function () {
+        $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
+    });
+
     $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
         getLocation();
     });
@@ -60,7 +66,7 @@ $(function () {
                 maxlength: 10,
                 required: true
             },
-            description_es: {
+            description_en: {
                 minlength: 40,
                 required: true
             },
@@ -86,7 +92,7 @@ $(function () {
             city_id: {
                 required: 'selecciona una ciudad de la lista por favor. Si tu ciudad no está registrada, por favor permitenos obtener tu ubicación.'
             },
-            description_es: {
+            description_en: {
                 required: 'Ingresa una breve descripción de tu empresa por favor.',
                 minlength: 'Por favor, ingresa una descripción breve sobre tu empresa de al menos 40 caracteres.'
             },
@@ -105,6 +111,8 @@ $(function () {
                 error.insertAfter('.QjaneShareGPSfigure');
             } else if (element.attr('name') === 'industry_categories') {
                 error.insertAfter('.qjane-industry-categories-list');
+            }else if (element.attr('name') === 'description_en') {
+                error.insertAfter('#rich_editor_description_en');
             } else {
                 error.insertAfter(element);
             }

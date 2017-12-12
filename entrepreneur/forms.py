@@ -12,7 +12,7 @@ from account.models import IndustryCategory
 class VentureFilter(forms.Form):
     country_search = forms.CharField(
         required=False,
-        label='País',
+        label='Country',
         widget=forms.TextInput(
             attrs={
                 'placeholder': """Ingresa el nombre del país y seleccionalo de la lista.""",
@@ -27,7 +27,7 @@ class VentureFilter(forms.Form):
 
     city_search = forms.CharField(
         required=False,
-        label='Ciudad',
+        label='City',
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Ingresa el nombre de la ciudad.',
@@ -48,7 +48,7 @@ class VentureFilter(forms.Form):
     )
 
     venture_search = forms.CharField(
-        label='Buscar empresa',
+        label='Search company',
         required=False,
     )
 
@@ -115,7 +115,7 @@ class VentureForm(ModelForm):
             'city_id',
             'address',
             'coordinates',
-            'description_es',
+            'description_en',
             'industry_categories',
         ]
 
@@ -164,13 +164,13 @@ class VentureLogoForm(Form):
 
 
 class VentureDescriptionForm(Form):
-    description_es = forms.CharField(
+    description_en = forms.CharField(
         required=False,
         label='description',
         widget=forms.Textarea,
     )
 
-    description_en = forms.CharField(
+    description_es = forms.CharField(
         required=False,
         label='description',
         widget=forms.Textarea,

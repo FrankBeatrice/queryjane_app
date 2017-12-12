@@ -1,14 +1,14 @@
 {% load static general_forms widget_tweaks %}
 <ul class="nav navbar-nav navbar-right main-nav-items">
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">INICIAR SESIÓN</a>
+        <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in</a>
 
         <ul class="dropdown-menu">
-            <li class="dropdown-item">
+            <!-- <li class="dropdown-item">
                 <p>Ingresa con tu cuenta de:</p>
                 <a class="QJFBLogin" href="#">Facebook</a>
                 <a class="QJGMLogin" href="#">Gmail</a>
-            </li>
+            </li> -->
             <li>
                 <div class="dropdown-item qjane-navbar-login-container">
                 {% get_login_form as login_form %}
@@ -24,8 +24,8 @@
                             {{ login_form.password.errors }}
                         </div>
 
-                        <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
-                        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+                        <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">Forgot password?</a>
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
                     </form>
                 </div>
             </li>

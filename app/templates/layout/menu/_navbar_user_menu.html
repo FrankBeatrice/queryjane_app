@@ -27,7 +27,7 @@
     {% endfor %}
 
         {% if recent_user_notifications.count > 10 %}
-            <li class="dropdown-item"><a href="#">Ver todas</a></li>
+            <li class="dropdown-item"><a href="#">View all</a></li>
         {% endif %}
         </ul>
     </li>
@@ -58,7 +58,7 @@
         <ul class="dropdown-menu"  aria-labelledby="navbarDropdownSettingsLink">
             <li class="dropdown-item">
                 <a href="{% url 'professional_detail' user.professionalprofile.slug %}" class="clearfix">
-                    <span class="pull-left">Perfíl</span>
+                    <span class="pull-left">Profile</span>
                     <i class="fa fa-user pull-right" aria-hidden="true"></i>
                 </a>
             </li>
@@ -71,7 +71,7 @@
 
             <li class="dropdown-item">
                 <a href="{% url 'entrepreneur:venture_form' %}" class="clearfix">
-                    <span class="pull-left">Crear empresa</span>
+                    <span class="pull-left">New company</span>
                     <i class="fa fa-briefcase pull-right" aria-hidden="true"></i>
                 </a>
             </li>
@@ -84,7 +84,7 @@
         {% endif %}
             <li class="dropdown-item">
                 <a href="{% url 'user_logout' %}" class="clearfix">
-                    <span class="pull-left">Cerrar sesión</span>
+                    <span class="pull-left">Log out</span>
                     <i class="fa fa-power-off pull-right" aria-hidden="true"></i>
                 </a>
             </li>

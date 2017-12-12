@@ -24,20 +24,20 @@
 
                         <span class="QJHcountryCount pull-right">
                             <span class="fa fa-user"></span>
-                            <span>{{ country_users_count }} usuarios</span>
+                            <span>{{ country_users_count }} users</span>
 
                             <span class="QJHDivider">|</span>
 
                             <span class="fa fa-briefcase"></span>
-                            <span>{{ country_ventures_count }} empresas</span>
+                            <span>{{ country_ventures_count }} companies</span>
                         </span>
 
                     </div>
                 </div>
 
                 <div class="panel-body">
-                    <h2>Regístrate</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et vehicula lacus, id imperdiet leo.</p>
+                    <h2>The Cannabis Industry Network.</h2>
+                    <p>Connect with companies and experts in different sectors of the cannabis industry.</p>
 
                     <form action="{% url 'account:signup_form_submit' %}" method="POST" class="qjane-home-signup-form" id="id-qjane-home-signup-form">
                         {% csrf_token %}
@@ -49,7 +49,7 @@
                                 <div class="helpText">{{ field.help_text|safe }}</div>
                             </div>
                         {% endfor %}
-                        <button type="submit" class="btn btn-ghost-white btn-lg">Crear cuenta</button>
+                        <button type="submit" class="btn btn-ghost-white btn-lg">Sign up</button>
                     </form>
                 </div>
             </div>

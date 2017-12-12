@@ -48,7 +48,6 @@ class CorporativeInfoAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': (
-                'libs/redactor/redactor.min.css',
                 'css/admin.css',
             )
         }

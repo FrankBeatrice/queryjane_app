@@ -18,14 +18,14 @@
 
         <li class="list-group-item {% if contact_active %}active{% endif %}">
             <a href="{% url 'entrepreneur:contact_venture_form' venture.slug %}" class="clearfix">
-                <span class="pull-left">Contacto</span>
+                <span class="pull-left">Contact</span>
                 <i class="fa fa-phone pull-right" aria-hidden="true"></i>
         </a>
         </li>
 
         <li class="list-group-item {% if roles_active %}active{% endif %}">
             <a href="{% url 'entrepreneur:roles_venture_form' venture.slug %}" class="clearfix">
-                <span class="pull-left">Roles</span>
+                <span class="pull-left">Member</span>
                 <i class="fa fa-users pull-right" aria-hidden="true"></i>
             </a>
         </li>
@@ -33,7 +33,7 @@
         {% comment %}
         <li class="list-group-item {% if privacy_active %}active{% endif %}">
             <a href="{% url 'entrepreneur:privacy_venture_form' venture.slug %}" class="clearfix">
-                <span class="pull-left">Privacidad</span>
+                <span class="pull-left">Privacy</span>
                 <i class="fa fa-user-secret pull-right" aria-hidden="true"></i>
             </a>
         </li>
