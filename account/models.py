@@ -57,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     last_name = models.CharField(
-        verbose_name='apellidos',
+        verbose_name='last name',
         max_length=128,
         blank=False,
         validators=[
@@ -71,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     email = models.EmailField(
-        verbose_name='correo electrónico',
+        verbose_name='email',
         unique=True,
         blank=False,
     )
