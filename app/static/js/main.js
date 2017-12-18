@@ -96,7 +96,7 @@ function getLocation() {
                 $('.qjane-login-forms-error-message')
                     .show()
                     .addClass('mb-xs')
-                    .text('No reconocemos esta dirección de correo electrónico.');
+                    .text('We do not recognize this email address.');
                 return;
             }  else if (response === 'data_error') {
                 $('.qjane-login-forms-error-message')
@@ -108,7 +108,7 @@ function getLocation() {
                 $('.qjane-login-forms-error-message')
                     .show()
                     .addClass('mb-xs')
-                    .text('La cuenta asociada a este correo electrónico se encuentra inactiva.');
+                    .text('The account associated with this email is inactive.');
                 return;
             } else if (response === 'successful_login') {
                 window.location.href = $('.qjane-login-form').data('redirect-url');
@@ -138,26 +138,6 @@ function getLocation() {
           valid_password: {
               required: true,
               minlength: 8
-          }
-      },
-      messages: {
-          first_name: {
-              minlength: 'Ingresa al menos 2 caracteres',
-              maxlength: 'Ingresa máximo 40 caracteres',
-              required: 'Este campo es requerido'
-          },
-          last_name: {
-              minlength: 'Ingresa al menos 2 caracteres',
-              maxlength: 'Ingresa máximo 40 caracteres',
-              required: 'Este campo es requerido'
-          },
-          email: {
-              email: 'Ingresa una dirección de email válida',
-              required: 'Este campo es requerido'
-          },
-          valid_password: {
-              required: 'Este campo es requerido',
-              minlength: 'Ingresa al menos 8 caracteres'
           }
       }
   });
