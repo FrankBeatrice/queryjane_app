@@ -225,10 +225,10 @@ class IndustryCategory(models.Model):
     )
 
     class Meta:
-        ordering = ('name_es',)
+        ordering = ('name_en',)
 
     def __str__(self):
-        return '{0}'.format(self.name_es)
+        return '{0}'.format(self.name_en)
 
 
 class UserNotification(models.Model):

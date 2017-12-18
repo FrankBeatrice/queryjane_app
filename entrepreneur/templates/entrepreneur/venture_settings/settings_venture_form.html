@@ -4,7 +4,6 @@
 {% block title %}{{ venture }} - Configuración{% endblock %}
 
 {% block css %}
-<link href="{% static 'redactor/redactor.min.css' %}" rel="stylesheet">
 <link href="{% static 'dist/css/entrepreneur/settings_venture_form.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -70,40 +69,6 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title clearfix">
-                                        <span class="pull-left">Descripción en Español</span>
-
-                                        <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
-                                        </a>
-                                    </h3>
-                                </div>
-
-                                <div class="panel-body">
-                                    <div class="QjaneUpdatedSPdescVenture"></div>
-
-                                    <div class="description_field_container" style="{% if venture.description_es %}display:none;{% endif %}">
-                                        {% render_field description_form.description_es %}
-
-                                        <button type="submit" class="btn btn-primary mt-xs">
-                                            Guardar
-                                        </button>
-                                    </div>
-
-                                    <div class="desc_cont venture_description_es_content">
-                                    {% if venture.description_es %}
-                                        <div class="QJRedactorContent">
-                                            {{ venture.description_es|safe }}
-                                        </div>
-                                    {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="js_lan_form_container">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title clearfix">
                                         <span class="pull-left">Descripción en Inglés</span>
 
                                         <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
@@ -127,6 +92,40 @@
                                     {% if venture.description_en %}
                                         <div class="QJRedactorContent">
                                             {{ venture.description_en|safe }}
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="js_lan_form_container">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title clearfix">
+                                        <span class="pull-left">Descripción en Español</span>
+
+                                        <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
+                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                        </a>
+                                    </h3>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="QjaneUpdatedSPdescVenture"></div>
+
+                                    <div class="description_field_container" style="{% if venture.description_es %}display:none;{% endif %}">
+                                        {% render_field description_form.description_es %}
+
+                                        <button type="submit" class="btn btn-primary mt-xs">
+                                            Guardar
+                                        </button>
+                                    </div>
+
+                                    <div class="desc_cont venture_description_es_content">
+                                    {% if venture.description_es %}
+                                        <div class="QJRedactorContent">
+                                            {{ venture.description_es|safe }}
                                         </div>
                                     {% endif %}
                                     </div>

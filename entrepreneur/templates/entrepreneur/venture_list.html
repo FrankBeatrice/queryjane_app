@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks %}
 
-{% block title %}Empresas{% endblock %}
+{% block title %}Companies{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-default main-nav-container is-authenticated">
@@ -76,8 +76,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">Limpiar filtro</a>
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">Clean</a>
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>
                 <ul class="QJVentList">
@@ -109,12 +109,12 @@
                             </div>
 
                             <div class="pull-right">
-                                <a href="{{ venture.get_absolute_url }}" class="btn btn-ghost-purple">Ver empresa</a>
+                                <a href="{{ venture.get_absolute_url }}" class="btn btn-ghost-purple">View</a>
                             </div>
                         </div>
                     </li>
                 {% empty %}
-                    <li class="QJVentListEmptyMessage">No se han encontrado resultados.</li>
+                    <li class="QJVentListEmptyMessage">No results.</li>
                 {% endfor %}
                 </ul>
             </div>
