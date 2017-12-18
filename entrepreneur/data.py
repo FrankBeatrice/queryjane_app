@@ -3,8 +3,8 @@ QJANE_ADMIN = 20
 QJANE_SELLER = 30
 
 ADMINISTRATOR_ROLES = (
-    (OWNER, 'Administrador general'),
-    (QJANE_ADMIN, 'Administrador'),
+    (OWNER, 'Owner'),
+    (QJANE_ADMIN, 'Administrator'),
 )
 
 
@@ -14,8 +14,8 @@ DEACTIVATED_MEMBERSHIP = 30
 REJECTED_MEMBERSHIP = 40
 
 MEMBERSHIP_STATUS_CHOICES = (
-    (SENT_INVITATION, 'Invitación pendiente'),
-    (ACTIVE_MEMBERSHIP, 'Membresía activa'),
-    (DEACTIVATED_MEMBERSHIP, 'Membresía inactiva'),
-    (REJECTED_MEMBERSHIP, 'Membresía rechazada'),
+    (SENT_INVITATION, 'Pending membership'),
+    (ACTIVE_MEMBERSHIP, 'Active membership'),
+    (DEACTIVATED_MEMBERSHIP, 'Inactive membership'),
+    (REJECTED_MEMBERSHIP, 'Rejected membership'),
 )

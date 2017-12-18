@@ -39,17 +39,17 @@
                 <img style="max-width: 100%;" class="media-object thumbnail" src="{{ venture.get_logo }}" alt="{{ venture }}">
 
             {% if can_manage %}
-                <a href="{% url 'entrepreneur:settings_venture_form' venture.slug %}" class="btn btn-ghost-purple">Configuración</a>
+                <a href="{% url 'entrepreneur:settings_venture_form' venture.slug %}" class="btn btn-ghost-purple">Settings</a>
             {% endif %}
 
             {% get_user_venture_admin_notification user venture as user_venture_admin_notification %}
 
             {% if user_venture_admin_notification %}
                 <div class="QJAdminnotification">
-                    <p>Tienes una solicitud de administración para esta empresa.</p>
+                    <p>You have a management request for this company.</p>
 
-                    <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">Rechazar</a>
-                    <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">Aceptar</a>
+                    <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">Reject</a>
+                    <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">Accept</a>
                 </div>
             {% endif %}
 
@@ -57,7 +57,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if venture.industry_categories.count > 1 %}Sectores{% else %}Sector{% endif %}</span>
+                            <span>{% if venture.industry_categories.count > 1 %}Sectors{% else %}Sector{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -74,7 +74,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>Ubicación</span>
+                            <span>Location</span>
                         </div>
 
                         <div class="panel-body">
@@ -103,7 +103,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                            <span>Contacto</span>
+                            <span>Contact</span>
                         </div>
 
                         <div class="panel-body">

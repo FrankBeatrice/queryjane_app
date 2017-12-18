@@ -8,6 +8,7 @@
 
     <div class="media-body">
         <h4 class="media-heading">{{ membership.admin.get_print }}</h4>
+        <p>{{ membership.admin.user.email }}</p>
         <p>{{ membership.get_role_display }}</p>
     </div>
 
@@ -15,7 +16,7 @@
         <p>{{ membership.get_status_display }}</p>
 
     {% if membership.is_rejected %}
-        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">Reenviar</a>
+        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">Resend</a>
     {% endif %}
     </div>
 </li>

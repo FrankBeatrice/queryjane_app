@@ -1,5 +1,5 @@
 NEW_ENTREPRENEUR_ADMIN = 10
 
 NOTIFICATION_TYPE_CHOICES = (
-    (NEW_ENTREPRENEUR_ADMIN, 'Invitación a administrar empresa'),
+    (NEW_ENTREPRENEUR_ADMIN, 'Invitation to administer company.'),
 )

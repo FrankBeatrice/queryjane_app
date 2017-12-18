@@ -26,20 +26,26 @@
 
                 <div class="panel panel-default qjane-role-search">
                     <div class="panel-body">
-                        <h4>Busca por nombre, correo electrónico o nombre de usuario.</h4>
+                        <h4>Search by name, email or username.</h4>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus nulla sed nunc placerat fermentum. Morbi leo quam, luctus et mauris nec, interdum rhoncus nisi.</p>
+                        <p>Search your partners and allow them to administrate <strong>{{ venture }}.</strong></p>
                     </div>
-                    <div class="panel-footer">
-                        <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' venture.slug %}">
-                            <div class="form-group">
-                            {% render_field userprofile_form.userprofile %}
-                            {{ userprofile_form.userprofile.errors }}
-                            </div>
-                        </form>
-                        <p class="qjane-add-membership-error"></p>
-                        <button type="submit" class="hide btn btn-warning btn-sm qjane-cancel-role-search">Nueva búsqueda</button>
 
+                    <div class="row" style="padding-bottom: 50px;">
+                        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                            <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' venture.slug %}">
+                                <div class="form-group">
+                                {% render_field userprofile_form.userprofile class+="form-control" %}
+                                {{ userprofile_form.userprofile.errors }}
+                                </div>
+                            </form>
+
+                            <p class="qjane-add-membership-error"></p>
+                            <button type="submit" class="hide btn btn-warning btn-sm qjane-cancel-role-search">New search</button>
+                        </div>
+                    </div>
+
+                    <div>
                         <ul class="media-list qjane-venture-new-role-list-to-confirm"></ul>
                     </div>
                 </div>

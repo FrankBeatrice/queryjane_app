@@ -12,7 +12,7 @@
   <div class="modal-body">
 {% if notification.is_new_entrepreneur_admin %}
     <p>
-        {{ notification.membership.created_by }} te ha enviado una invitación para administrar la empresa <strong>{{ notification.membership.venture }}</strong>.
+        {{ notification.membership.created_by }} has sent you an invitation to administer <strong>{{ notification.membership.venture }}</strong>.
     </p>
 {% endif %}
   </div>
@@ -22,7 +22,7 @@
     {% if notification.answered %}
     <span>{{ notification.membership.get_status_display }}</span>
     {% else %}
-    <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">Responder</a>
+    <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">Answer</a>
     {% endif %}
 {% endif %}
 </div>

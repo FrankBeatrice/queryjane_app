@@ -8,17 +8,16 @@
 
     <div class="media-body">
         <h4 class="media-heading">{{ userprofile.get_print }}</h4>
-        <ul>
-            <li class="qjane-role-main-admin-description">Administrador general: Todos los permisos.</li>
-            <li class="qjane-role-secondary-admin-description">Administrador: Permiso a todo, menos a la gestión de roles y a la configuración de privacidad.</li>
-        </ul>
+        <p>{{ userprofile.user.email }}</p>
     </div>
 
     <div class="media-right">
         <form class="qjane-send-membership-form">
             {% render_field role_form.venture_slug %}
             {% render_field role_form.profile_slug %}
+            <div style="display:none;">
             {% render_field role_form.role %}
+            </div>
 
             <button type="submit" class="btn btn-success btn-sm">Agregar</button>
         </form>

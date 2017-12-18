@@ -15,14 +15,14 @@ class VentureFilter(forms.Form):
         label='Country',
         widget=forms.TextInput(
             attrs={
-                'placeholder': """Ingresa el nombre del país y seleccionalo de la lista.""",
+                'placeholder': """Type the country name and select one from the list.""",
             },
         ),
     )
 
     country_code = forms.CharField(
         required=False,
-        label='código del país',
+        label='country code',
     )
 
     city_search = forms.CharField(
@@ -30,21 +30,21 @@ class VentureFilter(forms.Form):
         label='City',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa el nombre de la ciudad.',
+                'placeholder': 'Type de city name.',
             },
         ),
     )
 
     city_id = forms.CharField(
         required=False,
-        label='Ciudad - id',
+        label='city id',
     )
 
     category = forms.ModelChoiceField(
         required=False,
         queryset=IndustryCategory.objects.all(),
         label='Sector',
-        empty_label='Todos los sectores',
+        empty_label='all sector',
     )
 
     venture_search = forms.CharField(
@@ -54,7 +54,7 @@ class VentureFilter(forms.Form):
 
     venture_id = forms.CharField(
         required=False,
-        label='empresa - id',
+        label='company id',
     )
 
     def __init__(self, *args, **kwargs):
@@ -64,45 +64,45 @@ class VentureFilter(forms.Form):
 class VentureForm(ModelForm):
     name = forms.CharField(
         required=True,
-        label='Nombre',
+        label='name',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'nombre de la empresa.',
+                'placeholder': 'Company name.',
             },
         ),
     )
 
     country_search = forms.CharField(
         required=True,
-        label='País',
+        label='country',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa el nombre del país y seleccionalo de la lista.',
+                'placeholder': 'Type the contry name and select one from the list.',
             },
         ),
     )
 
     country_code = forms.CharField(
         required=True,
-        label='código del país',
+        label='country code',
     )
 
     city_search = forms.CharField(
-        label='Ciudad',
+        label='city',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa el nombre de la ciudad.',
+                'placeholder': 'Type the city name.',
             },
         ),
     )
 
     city_id = forms.CharField(
-        label='Ciudad - id',
+        label='city id',
     )
 
     coordinates = forms.CharField(
         required=False,
-        label='coordenadas',
+        label='coordinates',
     )
 
     class Meta:
@@ -127,13 +127,13 @@ class VentureForm(ModelForm):
         if not country_code:
             self.add_error(
                 'country_search',
-                'Escribe el nombre del país y seleccional de la lista.',
+                'Type the country name and select it from the list.',
             )
 
         if not city_id:
             self.add_error(
                 'city_search',
-                'Escribe el nombre de la ciudad y seleccionalo de la lista.',
+                'Type the city name and select it from the list.',
             )
 
         city = None
@@ -155,7 +155,7 @@ class VentureForm(ModelForm):
             if city.country != country:
                 self.add_error(
                     'city_search',
-                    'Selecciona una ciudad ubicada en {}'.format(country.name),
+                    'select a city in {}'.format(country.name),
                 )
 
 
@@ -166,12 +166,14 @@ class VentureLogoForm(Form):
 class VentureDescriptionForm(Form):
     description_en = forms.CharField(
         required=False,
+        min_length=40,
         label='description',
         widget=forms.Textarea,
     )
 
     description_es = forms.CharField(
         required=False,
+        min_length=40,
         label='description',
         widget=forms.Textarea,
     )
@@ -192,32 +194,32 @@ class LocationVentureForm(ModelForm):
         label='País',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa el nombre del país y seleccionalo de la lista.',
+                'placeholder': 'Type the country name and select it from the list.',
             },
         ),
     )
 
     country_code = forms.CharField(
         required=True,
-        label='código del país',
+        label='country code',
     )
 
     city_search = forms.CharField(
-        label='Ciudad',
+        label='City',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa el nombre de la ciudad.',
+                'placeholder': 'type de the city name.',
             },
         ),
     )
 
     city_id = forms.CharField(
-        label='Ciudad - id',
+        label='City id',
     )
 
     coordinates = forms.CharField(
         required=False,
-        label='coordenadas',
+        label='coordinates',
     )
 
     class Meta:
@@ -249,13 +251,13 @@ class LocationVentureForm(ModelForm):
         if not country_code:
             self.add_error(
                 'country_search',
-                'Escribe el nombre del país y seleccional de la lista.',
+                'Type the country name and select it from the list.',
             )
 
         if not city_id:
             self.add_error(
                 'city_search',
-                'Escribe el nombre de la ciudad y seleccionalo de la lista.',
+                'Type the city name and select it from the list.',
             )
 
         city = None
@@ -277,7 +279,7 @@ class LocationVentureForm(ModelForm):
             if city.country != country:
                 self.add_error(
                     'city_search',
-                    'Selecciona una ciudad ubicada en {}'.format(country.name),
+                    'Select a city in {}'.format(country.name),
                 )
 
 

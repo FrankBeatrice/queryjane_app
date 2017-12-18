@@ -17,16 +17,6 @@ $(function () {
                 minlength: 6,
                 maxlength: 15
             },
-        },
-        messages: {
-            email: {
-                email: 'Ingresa un correo electrónico válido.'
-            },
-            phone_number: {
-                number: 'Ingresa un número válido.',
-                minlength: 'Ingresa al menos 6 caracteres',
-                maxlength: 'Ingresa máximo 15 caracteres'
-            }
         }
     });
 
@@ -77,16 +67,16 @@ $(function () {
         },
         messages: {
             country_search: {
-                required: 'El país es requerido.'
+                required: 'Country is required.'
             },
             country_code: {
-                required: 'Selecciona un país de la lista por favor.'
+                required: 'Select a country from de list.'
             },
             city_search: {
-                required: 'La ciudad es requerida.'
+                required: 'City is required.'
             },
             city_id: {
-                required: 'selecciona una ciudad de la lista por favor. Si tu ciudad no está registrada, por favor permitenos obtener tu ubicación.'
+                required: 'Select a city from the list. If your city is not available, please allow us to get your location.'
             }
         },
         errorPlacement: function(error, element) {
