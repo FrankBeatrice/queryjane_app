@@ -16,11 +16,11 @@ def get_general_greeting():
 
     now = timezone.now()
     current_time = now.time()
-    general_greeting = u'Buenas noches'
+    general_greeting = 'Good evening'
 
     if current_time > morning_init and current_time < morning_end:
-        general_greeting = u'Buenos días'
+        general_greeting = 'Good morning'
     if current_time > afternoon_init and current_time < afternoon_end:
-        general_greeting = u'Buenas tardes'
+        general_greeting = 'Good afternoon'
 
     return general_greeting

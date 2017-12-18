@@ -72,16 +72,6 @@ function getLocation() {
                 required: true,
 
             }
-        },
-        messages: {
-            'login_form-email': {
-                email: 'Ingresa una dirección de email válida',
-                required: 'Este campo es requerido'
-            },
-            'login_form-password': {
-                required: 'Este campo es requerido',
-                minlength: 'Ingresa al menos 8 caracteres'
-            }
         }
     });
 

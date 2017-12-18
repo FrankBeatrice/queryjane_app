@@ -74,32 +74,6 @@ $(function () {
                 required: true
             },
         },
-        messages: {
-            name: {
-                minlength: 'Ingrese al menos 3 caracteres.',
-                maxlength: 'Ingrese máximo 50 caracteres.',
-                required: 'Este campo es requerido.'
-            },
-            country_search: {
-                required: 'El país es requerido.'
-            },
-            country_code: {
-                required: 'Selecciona un país de la lista por favor.'
-            },
-            city_search: {
-                required: 'La ciudad es requerida.'
-            },
-            city_id: {
-                required: 'selecciona una ciudad de la lista por favor. Si tu ciudad no está registrada, por favor permitenos obtener tu ubicación.'
-            },
-            description_en: {
-                required: 'Ingresa una breve descripción de tu empresa por favor.',
-                minlength: 'Por favor, ingresa una descripción breve sobre tu empresa de al menos 40 caracteres.'
-            },
-            industry_categories: {
-                required: 'por favor, selecciona los sectores de la industria de tu empresa.'
-            }
-        },
         errorPlacement: function(error, element) {
             if (element.attr('name') === 'country_search') {
                 error.insertAfter('#id_QjaneVFcountryAutImg');
