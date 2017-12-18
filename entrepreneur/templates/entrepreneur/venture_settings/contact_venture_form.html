@@ -12,7 +12,7 @@
             <div class="col-md-9 QjaneVentuerSettingsContent">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Información de contacto</h3>
+                        <h3 class="panel-title">Contact information</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureContactForm">
@@ -40,13 +40,13 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </form>
                             </div>
 
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <p>El correo electrónico y el número telefónico serán visibles en la página de detalle de tu empresa.</p>
-                                <div class="alert alert-success" role="alert" style="display:none;">Datos actualizados correctamente.</div>
+                                <p>Email and phone number will be public.</p>
+                                <div class="alert alert-success" role="alert" style="display:none;">Contact data updated correctly.</div>
                             </div>
                         </div>
                     </div>
@@ -54,13 +54,13 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Ubicación</h3>
+                        <h3 class="panel-title">Location</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureLocationForm">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="alert alert-success" role="alert" style="display:none;">Datos actualizados correctamente.</div>
+                                <div class="alert alert-success" role="alert" style="display:none;">Contact data updated correctly.</div>
                                 <div class="alert alert-danger" role="alert" style="display:none;">Hay errores en el formulario. Asegurate de que la ciudad corresponde al país que has elegido.</div>
 
                                 <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' venture.id %}">
@@ -68,7 +68,7 @@
 
                                     <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
-                                            País
+                                            Country
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
@@ -85,7 +85,7 @@
 
                                     <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
-                                            Ciudad
+                                            City
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
@@ -104,7 +104,7 @@
 
                                     <div class="form-group">
                                         <label>
-                                            Dirección
+                                            Address
                                         </label>
                                         <div>
                                             {% render_field location_form.address class+="form-control" %}
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </form>
                             </div>
 

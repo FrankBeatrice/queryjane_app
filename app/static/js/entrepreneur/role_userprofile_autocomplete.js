@@ -77,11 +77,11 @@ $(function () {
         $.post(send_role_inivtation_url, $(this).serialize(), function (response) {
             if (response === "fail") {
                 $('.qjane-cancel-role-search').removeClass('hide');
-                $('.qjane-add-membership-error').text('Realiza una nueva búsqueda.');
+                $('.qjane-add-membership-error').text('New search.');
                 $('.qjane-venture-new-role-list-to-confirm').html('');
             } else if (response === "registered-membership") {
                 $('.qjane-cancel-role-search').removeClass('hide');
-                $('.qjane-add-membership-error').text('Membresía existente');
+                $('.qjane-add-membership-error').text('Membership previously created.');
                 $('.qjane-venture-new-role-list-to-confirm').html('');
             } else {
                 $('.qjane-venture-roles-list').append(response.content);

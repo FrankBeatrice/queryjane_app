@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks %}
 
-{% block title %}Registrar de empresa{% endblock %}
+{% block title %}Register company{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/venture_form.css' %}" rel="stylesheet">
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title text-center">REGISTRAR EMPRESA</h2>
+                <h2 class="panel-title text-center">REGISTER COMPANY</h2>
             </div>
 
             <div class="panel-body">
@@ -32,7 +32,7 @@
                                     <div class="col-md-6 col-xs-12 form-group">
                                         <div class="form-group">
                                             <label>
-                                                Nombre
+                                                Company name
                                                 <span class="QJRequiredField">*</span>
                                             </label>
 
@@ -45,7 +45,7 @@
 
                                         <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                             <label>
-                                                País
+                                                Country
                                                 <span class="QJRequiredField">*</span>
                                             </label>
                                             <div>
@@ -62,7 +62,7 @@
 
                                         <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                             <label>
-                                                Ciudad
+                                                City
                                                 <span class="QJRequiredField">*</span>
                                             </label>
                                             <div>
@@ -81,7 +81,7 @@
 
                                         <div class="form-group">
                                             <label>
-                                                Dirección
+                                                Address
                                             </label>
                                             <div>
                                                 {% render_field form.address  class+="form-control" %}
@@ -95,7 +95,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-xs-12">
-                                        <p>Selecciona el sector o sectores de la industria de tu empresa.</p>
+                                        <p>Select the sector or sectors of your company's industry.</p>
 
                                         <ul class="qjane-industry-categories-list">
                                             {% for industry_category in industry_categories %}
@@ -118,15 +118,12 @@
                                     <p>{{ form.description_en.errors }}</p>
                                 </div>
 
-                                <div>
-                                    {% render_field form.description_en %}
-                                </div>
-
                                 <div class="form-group" style="display:none;">
+                                    {% render_field form.description_en %}
                                     {% render_field form.industry_categories %}
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Siguiente</button>
+                                <button type="submit" class="btn btn-primary">Next</button>
                             </form>
                         </div>
                     </div>

@@ -284,7 +284,7 @@ class UserNotification(models.Model):
 
     def __str__(self):
         if self.is_new_entrepreneur_admin:
-            label = 'Invitación de {}'.format(
+            label = 'invitation from {}'.format(
                 self.created_by,
             )
         return label

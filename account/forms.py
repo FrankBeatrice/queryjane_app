@@ -13,7 +13,7 @@ class SignUpForm(Form):
         required=True,
         max_length=50,
         error_messages={
-            'required': 'Este campo es requerido.',
+            'required': 'This field is required.',
         },
     )
 
@@ -22,7 +22,7 @@ class SignUpForm(Form):
         required=True,
         max_length=50,
         error_messages={
-            'required': 'Este campo es requerido.',
+            'required': 'This field is required.',
         },
     )
 
@@ -31,7 +31,7 @@ class SignUpForm(Form):
         required=True,
         max_length=50,
         error_messages={
-            'required': 'Este campo es requerido.',
+            'required': 'This field is required.',
         },
     )
 
@@ -46,29 +46,29 @@ class SignUpForm(Form):
 
 class LoginForm(Form):
     email = forms.EmailField(
-        label=u'correo electrónico',
+        label=u'email',
         required=True,
         max_length=50,
         error_messages={
-            'required': u'Este campo es requerido.',
+            'required': 'This field is required.',
         },
     )
 
     password = forms.CharField(
         widget=forms.PasswordInput,
-        label=u'Contraseña',
+        label=u'password',
         required=True,
         max_length=50,
         error_messages={
-            'required': 'Este campo es requerido.',
+            'required': 'This field is required.',
         },
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['email'].widget.attrs['placeholder'] = 'Correo electrónico'
-        self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'
+        self.fields['email'].widget.attrs['placeholder'] = 'email'
+        self.fields['password'].widget.attrs['placeholder'] = 'password'
 
 
 class UserPasswordResetForm(PasswordResetForm):
@@ -87,7 +87,7 @@ class ProfileAutocompleteForm(Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Busca por nombre o correo electrónico',
+                'placeholder': 'Search by name, email or username',
             },
         ),
         label='',

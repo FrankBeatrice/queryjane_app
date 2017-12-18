@@ -14,7 +14,7 @@ from .data import ACTIVE_MEMBERSHIP
 class Venture(models.Model):
     name = models.CharField(
         max_length=50,
-        verbose_name='nombre',
+        verbose_name='name',
     )
 
     logo = models.ImageField(
@@ -26,11 +26,11 @@ class Venture(models.Model):
     )
 
     description_es = models.TextField(
-        verbose_name='descripción',
+        verbose_name='spanish description',
     )
 
     description_en = models.TextField(
-        verbose_name='description',
+        verbose_name='english description',
     )
 
     industry_categories = models.ManyToManyField(
@@ -40,7 +40,7 @@ class Venture(models.Model):
     country = models.ForeignKey(
         'place.Country',
         null=True,
-        verbose_name='país',
+        verbose_name='country',
     )
 
     state = models.ForeignKey(
@@ -58,11 +58,11 @@ class Venture(models.Model):
     address = models.CharField(
         max_length=50,
         blank=True,
-        verbose_name='dirección',
+        verbose_name='address',
     )
 
     point = PointField(
-        verbose_name='posición',
+        verbose_name='location',
         null=True,
         blank=True,
     )
@@ -70,44 +70,44 @@ class Venture(models.Model):
     email = models.EmailField(
         null=True,
         blank=True,
-        verbose_name='correo electrónico de contacto',
+        verbose_name='contact email',
     )
 
     phone_number = models.CharField(
         null=True,
         blank=True,
         max_length=50,
-        verbose_name='teléfono de contacto',
+        verbose_name='contact phone',
     )
 
     url = models.URLField(
         blank=True,
-        verbose_name='Página web',
+        verbose_name='webpage',
     )
 
     facebook_url = models.URLField(
         blank=True,
-        verbose_name='Página de Facebook',
+        verbose_name='Facebook url',
     )
 
     twitter_url = models.URLField(
         blank=True,
-        verbose_name='Página de Twitter',
+        verbose_name='Twitter url',
     )
 
     instagram_url = models.URLField(
         blank=True,
-        verbose_name='Página de Instagram',
+        verbose_name='Instagram url',
     )
 
     linkedin_url = models.URLField(
         blank=True,
-        verbose_name='Página de Linkedin',
+        verbose_name='Linkedin url',
     )
 
     googleplus_url = models.URLField(
         blank=True,
-        verbose_name='Página de Google +',
+        verbose_name='Google plus url',
     )
 
     is_active = models.BooleanField(
@@ -116,7 +116,7 @@ class Venture(models.Model):
 
     owner = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='Creada por',
+        verbose_name='created by',
     )
 
     created_at = models.DateTimeField(
@@ -146,12 +146,12 @@ class Venture(models.Model):
 class AdministratorMembership(models.Model):
     admin = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='Administrador',
+        verbose_name='Administrator',
     )
 
     venture = models.ForeignKey(
         'entrepreneur.Venture',
-        verbose_name='Empresa',
+        verbose_name='company',
     )
 
     status = models.PositiveSmallIntegerField(
@@ -167,7 +167,7 @@ class AdministratorMembership(models.Model):
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
         related_name='membership_owner',
-        verbose_name='Administrador',
+        verbose_name='Administrator',
     )
 
     created_at = models.DateTimeField(

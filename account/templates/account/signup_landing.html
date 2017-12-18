@@ -19,16 +19,16 @@
 
         <div class="row">
             <div class="col-md-6 col-xs-12 QjaneLandingApplicant">
-                <h3>Deseo buscar trabajo</h3>
+                <h3>I am a professional.</h3>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed tellus nec arcu placerat pulvinar. Sed consequat libero non erat iaculis, sit amet ornare risus accumsan. Nam porta ligula velit, sed vulputate nisi condimentum non.</p>
 
-                <p>Selecciona el sector o sectores de la industria en los que deseas recibir ofertas de empleo.</p>
+                <p>Select sectors of the industry.</p>
 
                 <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}">
                     {% for industry_category in industry_categories %}
                     <li>
-                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_es }}</a>
+                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -41,11 +41,11 @@
             </div>
 
             <div class="col-md-6 col-xs-12 QjaneLandingCreateCompany">
-                <h3>Registrar empresa</h3>
+                <h3>Register company</h3>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed tellus nec arcu placerat pulvinar. Sed consequat libero non erat iaculis, sit amet ornare risus accumsan. Nam porta ligula velit, sed vulputate nisi condimentum non.</p>
 
-                <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-primary">Registrar empresa</a>
+                <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-primary">Register company</a>
             </div>
         </div>
 

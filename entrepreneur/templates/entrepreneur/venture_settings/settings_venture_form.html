@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks %}
 
-{% block title %}{{ venture }} - Configuración{% endblock %}
+{% block title %}{{ venture }} - Settings{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/settings_venture_form.css' %}" rel="stylesheet">
@@ -16,7 +16,7 @@
             <div class="col-md-9 QjaneVentuerSettingsContent">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Información general de la empresa</h3>
+                        <h3 class="panel-title">General information</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureGeneralInfo">
@@ -40,17 +40,17 @@
 
                                 <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_venture_logo_update_link">
                                     <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
-                                    Actualizar
+                                    Update
                                 </a>
                             </div>
 
                             <div class="col-md-9 col-xs-12">
-                                <p>Sectores de la industria</p>
+                                <p>Industry sectors</p>
 
                                 <ul class="qjane-industry-categories-list" data-update-venture-category-url="{% url 'entrepreneur:ax_update_venture_category' venture.slug %}">
                                     {% for industry_category in industry_categories %}
                                     <li>
-                                        <a class="btn {% if industry_category in venture.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_es }}</a>
+                                        <a class="btn {% if industry_category in venture.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -69,10 +69,10 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title clearfix">
-                                        <span class="pull-left">Descripción en Inglés</span>
+                                        <span class="pull-left">English description</span>
 
                                         <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                            Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                         </a>
                                     </h3>
                                 </div>
@@ -81,18 +81,23 @@
                                     <div class="QjaneUpdatedENdescVenture"></div>
 
                                     <div class="description_field_container" style="{% if venture.description_en %}display:none;{% endif %}">
-                                        {% render_field description_form.description_en %}
+
+                                        <div id="rich_editor_description_en">
+                                            {{ venture.description_en|safe }}
+                                        </div>
+
+                                        <div style="display:none;">
+                                            {% render_field description_form.description_en %}
+                                        </div>
 
                                         <button type="submit" class="btn btn-primary mt-xs">
-                                            Guardar
+                                            Save
                                         </button>
                                     </div>
 
                                     <div class="desc_cont venture_description_en_content">
                                     {% if venture.description_en %}
-                                        <div class="QJRedactorContent">
-                                            {{ venture.description_en|safe }}
-                                        </div>
+                                        {{ venture.description_en|safe }}
                                     {% endif %}
                                     </div>
                                 </div>
@@ -103,10 +108,10 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title clearfix">
-                                        <span class="pull-left">Descripción en Español</span>
+                                        <span class="pull-left">Spanish description</span>
 
                                         <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                            Editar <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                            Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                         </a>
                                     </h3>
                                 </div>
@@ -115,18 +120,23 @@
                                     <div class="QjaneUpdatedSPdescVenture"></div>
 
                                     <div class="description_field_container" style="{% if venture.description_es %}display:none;{% endif %}">
-                                        {% render_field description_form.description_es %}
+
+                                        <div id="rich_editor_description_es">
+                                            {{ venture.description_es|safe }}
+                                        </div>
+
+                                        <div style="display: none;">
+                                            {% render_field description_form.description_es %}
+                                        </div>
 
                                         <button type="submit" class="btn btn-primary mt-xs">
-                                            Guardar
+                                            Save
                                         </button>
                                     </div>
 
                                     <div class="desc_cont venture_description_es_content">
                                     {% if venture.description_es %}
-                                        <div class="QJRedactorContent">
-                                            {{ venture.description_es|safe }}
-                                        </div>
+                                        {{ venture.description_es|safe }}
                                     {% endif %}
                                     </div>
                                 </div>
