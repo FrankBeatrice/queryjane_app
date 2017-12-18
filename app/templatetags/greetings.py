@@ -23,4 +23,7 @@ def get_general_greeting():
     if current_time > afternoon_init and current_time < afternoon_end:
         general_greeting = 'Good afternoon'
 
+    # TODO: FIX TIME ZONE
+    general_greeting = 'Hi'
+
     return general_greeting
