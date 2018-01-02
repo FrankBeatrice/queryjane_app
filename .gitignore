@@ -120,4 +120,4 @@ node_modules/
 /app/local_settings.py
 /static
 /app/views.py
-
+uploads/
