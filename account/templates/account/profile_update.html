@@ -104,7 +104,7 @@
             </div>
 
             <div class="panel-body">
-                <ul class="qjane-industry-categories-list" data-update-professional-category-url="{% url 'account:ax_update_professional_profile_category' %}">
+                <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}">
                     {% for industry_category in industry_categories %}
                     <li>
                         <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
