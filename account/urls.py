@@ -3,6 +3,7 @@ from django.conf.urls import url
 from .views import SignUpFormView
 from .views import ProfileSearch
 from .views import NewUserLandingView
+from .views import UpdateProfileFormView
 from .views import AdminNotificationAcceptView
 from .views import AdminNotificationRejectView
 from .views import AdminNotificationResendView
@@ -28,6 +29,12 @@ urlpatterns = [
         r'^landing/$',
         NewUserLandingView.as_view(),
         name='signup_landing',
+    ),
+
+    url(
+        r'^update/$',
+        UpdateProfileFormView.as_view(),
+        name='profile_update',
     ),
 
     url(

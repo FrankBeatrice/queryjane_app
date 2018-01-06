@@ -1,0 +1,126 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}Profile update{% endblock %}
+
+{% block css %}
+<link href="{% static 'dist/css/account/profile_edit.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="account qjane-profile-update">
+    <div class="container">            
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Basic information</h3>
+            </div>
+
+            <div class="panel-body QjaneAccountGeneralInfo">
+                <form id="id_user_profile_form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>
+                                    {{ form.first_name.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                {% render_field form.first_name class+="form-control" %}
+                                {{ form.first_name.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    {{ form.last_name.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                {% render_field form.last_name class+="form-control" %}
+                                {{ form.last_name.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    {{ form.email.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                {% render_field form.email class+="form-control" %}
+                                {{ form.email.errors }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                <label>
+                                    Country
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+                                <div>
+                                    {% render_field form.country_search class+="form-control" %}
+                                    <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                                    <p>{{ form.country_search.errors }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display:none;">
+                                {% render_field form.country_code %}
+                                <p>{{ form.country_code.errors }}</p>
+                            </div>
+
+                            <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                <label>
+                                    City
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+                                <div>
+                                    {% render_field form.city_search class+="form-control" %}
+                                    <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
+                                    <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                    <p>{{ form.city_search.errors }}</p>
+
+                                    <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                </div>
+
+                                <div class="form-group" style="display:none;">
+                                    {% render_field form.city_id %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix">
+                    <span class="pull-left">Industry sectors</span>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <ul class="qjane-industry-categories-list" data-update-professional-category-url="{% url 'account:ax_update_professional_profile_category' %}">
+                    {% for industry_category in industry_categories %}
+                    <li>
+                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <p class="QjaneEmptyCategoriesBug"></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+<script src="{% static 'js/place/show_position.js' %}"></script>
+<script src="{% static 'js/account/profile_update.js' %}"></script>
+{% endblock %}

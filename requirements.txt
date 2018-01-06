@@ -7,6 +7,5 @@ pygeoip==0.3.2
 
 # Apps
 django-widget-tweaks==1.4.1
-django-widget-tweaks==1.4.1
 django-extensions==1.7.4
 django-countries==4.6.2

@@ -27,7 +27,7 @@
 
                 <p class="h4">Select sectors of the industry.</p>
 
-                <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}">
+                <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}" data-account-url="{% url 'account:profile_update' %}">
                     {% for industry_category in industry_categories %}
                     <li>
                         <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
@@ -37,7 +37,7 @@
 
                 <div class="QjanePPnextbutton">
                 {% if user.professionalprofile.industry_categories.all %}
-                    <a href="#" class="btn btn-primary">Completar perfil</a>
+                    <a href="{% url 'account:profile_update' %}" class="btn btn-primary">Account settings</a>
                 {% endif %}
                 </div>
             </div>

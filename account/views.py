@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
 from django.views.generic import FormView
+from django.views.generic import UpdateView
 from django.contrib import auth
 from account.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,6 +23,7 @@ from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 
 from account.forms import SignUpForm
+from account.forms import ProfileForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import UserNotification
@@ -32,6 +34,8 @@ from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
 from entrepreneur.models import Venture
 from place.utils import get_user_country
+from place.models import Country
+from place.models import City
 
 
 class SignUpFormView(FormView):
@@ -197,6 +201,60 @@ class LoadNotificationModal(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
         raise Http404('Method not available')
+
+
+class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = 'account/profile_update.html'
+
+    def get_object(self):
+        return self.request.user
+
+    # def get_initial(self):
+    #     user = self.get_object()
+    #     return {
+    #         'first_name': user.first_name,
+    #         'last_name': user.last_name,
+    #         'email': user.email,
+    #         'country_search': user.country.country.name,
+    #         'country_code': user.country.country.code,
+    #         # 'city_search': user.city.name,
+    #         # 'city_code': user.city.id,
+    #     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['industry_categories'] = IndustryCategory.objects.all()
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        user = self.get_object()
+
+        country_code = form.cleaned_data['country_code']
+        country_instance = get_object_or_404(
+            Country,
+            country=country_code,
+        )
+
+        city = get_object_or_404(
+            City,
+            id=int(form.cleaned_data['city_id']),
+        )
+
+        user.country = country_instance
+        user.city = city
+        user.state = city.state
+        user.save()
+
+        return HttpResponseRedirect(
+            reverse(
+                'professional_detail',
+                args=[user.professionalprofile.slug],
+            )
+        )
 
 
 class AdminNotificationAcceptView(CustomUserMixin, View):
