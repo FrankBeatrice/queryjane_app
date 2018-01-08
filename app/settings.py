@@ -30,6 +30,7 @@ INSTALLED_APPS = PROJECT_APPS + (
     'django_extensions',
     'django_countries',
     'widget_tweaks',
+    'storages',
 )
 
 MIDDLEWARE = [
@@ -104,11 +105,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-MEDIA_URL = '/uploads/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Local settings
 settings_file = __import__('app.local_settings').local_settings
