@@ -5,7 +5,12 @@
 
 ### The Cannabis Industry Network.
 
-Connect with companies and experts in different sectors of the cannabis industry.
+*Connect with companies and experts in different sectors of the cannabis industry.*
+
+
+This application allows to classify companies and experts of the cannabis industry in different categories in order to establish commercial and professional relationships and boost the economic growth of the industry.
+
+QueryJane is aimed at specifically boosting the growth of cannabis indsutria, but this source code can be easily adjusted to almost any industry.
 
 
 ***
