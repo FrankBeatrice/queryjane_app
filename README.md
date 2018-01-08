@@ -1,6 +1,15 @@
 # QueryJane
 
-Web application created by "Roadhouse Studio"
+![queryjane.png](https://steemitimages.com/DQmcXpCUp5m2m2VKGXq3quvjMsAyDJVE6CNmFZ4qdB94KH8/queryjane.png)
+
+
+### The Cannabis Industry Network.
+
+Connect with companies and experts in different sectors of the cannabis industry.
+
+
+***
+***
 
 We are using Docker to isolate the development environment to have a single
 and stable operating system and libraries.
