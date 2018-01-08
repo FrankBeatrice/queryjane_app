@@ -18,7 +18,6 @@ class Venture(models.Model):
     )
 
     logo = models.ImageField(
-        upload_to='uploads/ventures/',
         max_length=255,
         blank=True,
         help_text='150x150',
