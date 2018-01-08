@@ -115,6 +115,90 @@
                 <p class="QjaneEmptyCategoriesBug"></p>
             </div>
         </div>
+
+        <div class="QjaneProfileUpdateDescriptionContainer" data-update-profile-description-form="{% url 'account:update_profile_description_form' %}">
+
+            <form id="id_profile_change_description_form" method="post">
+                {% csrf_token %}
+                <div class="js_lan_form_container">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title clearfix">
+                                <span class="pull-left">English - Professional profile description</span>
+
+                                <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
+                                    Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                </a>
+                            </h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="QjaneUpdatedENdescProfile"></div>
+
+                            <div class="description_field_container" style="{% if professional_profile.description_en %}display:none;{% endif %}">
+
+                                <div id="rich_editor_description_en">
+                                    {{ professional_profile.description_en|safe }}
+                                </div>
+
+                                <div style="display:none;">
+                                    {% render_field profile_description_form.description_en %}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-xs">
+                                    Save
+                                </button>
+                            </div>
+
+                            <div class="desc_cont profile_description_en_content">
+                            {% if professional_profile.description_en %}
+                                {{ professional_profile.description_en|safe }}
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="js_lan_form_container" style="display:none;>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title clearfix">
+                                <span class="pull-left">Spanish - Profissional profile description</span>
+
+                                <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
+                                    Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                </a>
+                            </h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="QjaneUpdatedSPdescProfile"></div>
+
+                            <div class="description_field_container" style="{% if professional_profile.description_es %}display:none;{% endif %}">
+
+                                <div id="rich_editor_description_es">
+                                    {{ professional_profile.description_es|safe }}
+                                </div>
+
+                                <div style="display: none;">
+                                    {% render_field profile_description_form.description_es %}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-xs">
+                                    Save
+                                </button>
+                            </div>
+
+                            <div class="desc_cont profile_description_es_content">
+                            {% if professional_profile.description_es %}
+                                {{ professional_profile.description_es|safe }}
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </section>
 {% endblock %}

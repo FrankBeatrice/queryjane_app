@@ -24,6 +24,7 @@ from django.utils.crypto import get_random_string
 
 from account.forms import SignUpForm
 from account.forms import ProfileForm
+from account.forms import ProfileDescriptionForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import UserNotification
@@ -211,21 +212,18 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
-    # def get_initial(self):
-    #     user = self.get_object()
-    #     return {
-    #         'first_name': user.first_name,
-    #         'last_name': user.last_name,
-    #         'email': user.email,
-    #         'country_search': user.country.country.name,
-    #         'country_code': user.country.country.code,
-    #         # 'city_search': user.city.name,
-    #         # 'city_code': user.city.id,
-    #     }
-
     def get_context_data(self, **kwargs):
+        professional_profile = self.get_object().professionalprofile
+
         context = super().get_context_data(**kwargs)
+        context['professional_profile'] = professional_profile
         context['industry_categories'] = IndustryCategory.objects.all()
+        context['profile_description_form'] = ProfileDescriptionForm(
+            initial={
+                'description_es': professional_profile.description_es,
+                'description_en': professional_profile.description_en,
+            },
+        )
 
         return context
 
@@ -254,6 +252,41 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
                 'professional_detail',
                 args=[user.professionalprofile.slug],
             )
+        )
+
+
+class UpdateProfileDescriptionForm(LoginRequiredMixin, FormView):
+    form_class = ProfileDescriptionForm
+
+    def get_object(self):
+        return self.request.user.professionalprofile
+
+    def form_valid(self, form):
+        professional_profile = self.get_object()
+        description_es = form.cleaned_data['description_es']
+        description_en = form.cleaned_data['description_en']
+
+        updated_es = False
+        if professional_profile.description_es != description_es:
+            updated_es = True
+            professional_profile.description_es = description_es
+
+        updated_en = False
+        if professional_profile.description_en != description_en:
+            updated_en = True
+            professional_profile.description_en = description_en
+
+        professional_profile.save()
+
+        return JsonResponse(
+            {
+                'content': {
+                    'updated_es': updated_es,
+                    'description_es': professional_profile.description_es,
+                    'updated_en': updated_en,
+                    'description_en': professional_profile.description_en,
+                },
+            },
         )
 
 

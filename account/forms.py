@@ -129,6 +129,22 @@ class ProfileForm(ModelForm):
             self.fields['city_id'].initial = user.city.id
 
 
+class ProfileDescriptionForm(Form):
+    description_en = forms.CharField(
+        required=False,
+        min_length=40,
+        label='description',
+        widget=forms.Textarea,
+    )
+
+    description_es = forms.CharField(
+        required=False,
+        min_length=40,
+        label='description',
+        widget=forms.Textarea,
+    )
+
+
 class UserPasswordResetForm(PasswordResetForm):
     required_css_class = 'required'
 
