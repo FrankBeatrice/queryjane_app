@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import Form
+from django.forms import ModelForm
 from django.contrib.auth.forms import PasswordResetForm
 
 from account.models import User
@@ -69,6 +70,79 @@ class LoginForm(Form):
 
         self.fields['email'].widget.attrs['placeholder'] = 'email'
         self.fields['password'].widget.attrs['placeholder'] = 'password'
+
+
+class ProfileForm(ModelForm):
+    country_search = forms.CharField(
+        required=True,
+        label='country',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type the contry name and select one from the list.',
+            },
+        ),
+    )
+
+    country_code = forms.CharField(
+        required=True,
+        label='country code',
+    )
+
+    city_search = forms.CharField(
+        label='city',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type the city name.',
+            },
+        ),
+    )
+
+    city_id = forms.CharField(
+        label='city id',
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'country_search',
+            'country_code',
+            'city_search',
+            'city_id',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        user = kwargs.get('instance', None)
+
+        country = user.country
+        city = user.city
+
+        if country:
+            self.fields['country_search'].initial = user.country.name
+            self.fields['country_code'].initial = user.country.country.code
+
+        if city:
+            self.fields['city_search'].initial = user.city.name
+            self.fields['city_id'].initial = user.city.id
+
+
+class ProfileDescriptionForm(Form):
+    description_en = forms.CharField(
+        required=False,
+        min_length=40,
+        label='description',
+        widget=forms.Textarea,
+    )
+
+    description_es = forms.CharField(
+        required=False,
+        min_length=40,
+        label='description',
+        widget=forms.Textarea,
+    )
 
 
 class UserPasswordResetForm(PasswordResetForm):

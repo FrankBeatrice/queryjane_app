@@ -119,5 +119,5 @@ Thumbs.db
 node_modules/
 /app/local_settings.py
 /static
-/app/views.py
-
+views.py
+uploads/

@@ -48,6 +48,7 @@
                         <a class="navbar-brand logotype-wrapper--authenticated" href="/">
                             <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
                         </a>
+                        <span style="color: white; margin-left: 10px; font-size: 25px;">(Beta)</span>
                     {% else %}
                         <a class="navbar-brand logotype-wrapper" href="/">
                             <img class="logotype-wrapper__image" src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
@@ -75,18 +76,18 @@
                 <div class="row footer__content">
                     <div class="col-xs-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
-                            <a href="{% url 'corporative:corporative_detail' 'privacy_policy' %}">Privacy Policy</a>
+                            <!-- <a href="{% url 'corporative:corporative_detail' 'privacy_policy' %}">Privacy Policy</a>
                             ·
                             <a href="{% url 'corporative:corporative_detail' 'user_agreement' %}">Terms</a>
-                            ·
+                            · -->
                             <a href="{% url 'venture_list' %}">Companies</a>
                             ·
-                            <a href="#">Jobs</a>
-                            <!-- ·
+                            <!-- <a href="#">Jobs</a>
+                            ·
                             <a href="#">Contáctenos</a> -->
                         </div>
                         <p class="QJRHlink">
-                            QueryJane 2017 &copy; <a href="http://roadhousestudio.co/" target="_blank">Roadhouse Studio</a>
+                            QueryJane 2018 &copy; <!-- <a href="http://roadhousestudio.co/" target="_blank">Roadhouse Studio</a> -->
                         </p>
                     </div>
 

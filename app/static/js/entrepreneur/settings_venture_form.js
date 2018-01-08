@@ -123,11 +123,11 @@ $(function () {
 
                     // Sucess message
                     if (response.content.updated_es) {
-                        $('.QjaneUpdatedSPdescVenture').html('<div class="alert alert-success" role="alert">Información actualizada correctamente</div>');
+                        $('.QjaneUpdatedSPdescVenture').html('<div class="alert alert-success" role="alert">Successful update</div>');
                     }
 
                     if (response.content.updated_en) {
-                        $('.QjaneUpdatedENdescVenture').html('<div class="alert alert-success" role="alert">Información actualizada correctamente</div>');
+                        $('.QjaneUpdatedENdescVenture').html('<div class="alert alert-success" role="alert">Successful update</div>');
                     }
                 },
             });

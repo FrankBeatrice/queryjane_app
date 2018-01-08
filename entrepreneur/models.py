@@ -191,3 +191,50 @@ class AdministratorMembership(models.Model):
             self.admin,
             self.venture,
         )
+
+
+class JobOffer(models.Model):
+    venture = models.ForeignKey(
+        Venture,
+        on_delete=models.PROTECT,
+        verbose_name='company',
+    )
+
+    country = models.ForeignKey(
+        'place.Country',
+        null=True,
+        verbose_name='country',
+    )
+
+    state = models.ForeignKey(
+        'place.State',
+        null=True,
+        verbose_name='state',
+    )
+
+    city = models.ForeignKey(
+        'place.City',
+        null=True,
+        verbose_name='city',
+    )
+
+    title = models.CharField(
+        max_length=80,
+        verbose_name='title (position)',
+    )
+
+    slug = models.SlugField()
+
+    description = models.TextField(
+        verbose_name='description',
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='is active',
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='created at',
+    )

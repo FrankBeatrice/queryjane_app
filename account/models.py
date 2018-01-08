@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     first_name = models.CharField(
-        verbose_name='nombres',
+        verbose_name='name',
         max_length=128,
         blank=False,
         validators=[
@@ -160,7 +160,12 @@ class ProfessionalProfile(models.Model):
         verbose_name='Cuenta de usuario',
     )
 
-    description = models.TextField(
+    description_en = models.TextField(
+        blank=True,
+        verbose_name='description',
+    )
+
+    description_es = models.TextField(
         blank=True,
         verbose_name='description',
     )

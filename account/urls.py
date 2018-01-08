@@ -3,6 +3,8 @@ from django.conf.urls import url
 from .views import SignUpFormView
 from .views import ProfileSearch
 from .views import NewUserLandingView
+from .views import UpdateProfileFormView
+from .views import UpdateProfileDescriptionForm
 from .views import AdminNotificationAcceptView
 from .views import AdminNotificationRejectView
 from .views import AdminNotificationResendView
@@ -31,9 +33,21 @@ urlpatterns = [
     ),
 
     url(
+        r'^update/$',
+        UpdateProfileFormView.as_view(),
+        name='profile_update',
+    ),
+
+    url(
         r'^ax_update_professional_profile_category/$',
         ProfessionalProfileCategoryView.as_view(),
         name='ax_update_professional_profile_category',
+    ),
+
+    url(
+        r'^ax_account/update_description/$',
+        UpdateProfileDescriptionForm.as_view(),
+        name='update_profile_description_form',
     ),
 
     url(

@@ -6,6 +6,58 @@
 <div class="qjane-profesional-profile">
     <div class="container">
         <h1>{{ profile }}</h1>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <div class="QJProfileDetCategories">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            <span>{% if profile.industry_categories.count > 1 %}Sectors{% else %}Sector{% endif %}</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="QJVentureDetCats">
+                            {% for industry_category in profile.industry_categories.all %}
+                                <li>{{ industry_category }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="QJVentureDetLocation">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <span>Location</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <div>
+                                <img src="{{ profile.country.country.flag }}">
+                                <span>{{ profile.user.country }}</span>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                <span>{{ profile.user.city }} {% if profile.user.state %}, {{ profile.user.state }}.{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <div class="QJProfileDetDescription">
+                {% if profile.description_en %}
+                    <div class="QJRedactorContent">
+                        {{ profile.description_en|safe }}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

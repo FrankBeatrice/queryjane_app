@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
 from django.views.generic import FormView
+from django.views.generic import UpdateView
 from django.contrib import auth
 from account.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,6 +23,8 @@ from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 
 from account.forms import SignUpForm
+from account.forms import ProfileForm
+from account.forms import ProfileDescriptionForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import UserNotification
@@ -32,6 +35,8 @@ from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
 from entrepreneur.models import Venture
 from place.utils import get_user_country
+from place.models import Country
+from place.models import City
 
 
 class SignUpFormView(FormView):
@@ -197,6 +202,92 @@ class LoadNotificationModal(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
         raise Http404('Method not available')
+
+
+class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = 'account/profile_update.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        professional_profile = self.get_object().professionalprofile
+
+        context = super().get_context_data(**kwargs)
+        context['professional_profile'] = professional_profile
+        context['industry_categories'] = IndustryCategory.objects.all()
+        context['profile_description_form'] = ProfileDescriptionForm(
+            initial={
+                'description_es': professional_profile.description_es,
+                'description_en': professional_profile.description_en,
+            },
+        )
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        user = self.get_object()
+
+        country_code = form.cleaned_data['country_code']
+        country_instance = get_object_or_404(
+            Country,
+            country=country_code,
+        )
+
+        city = get_object_or_404(
+            City,
+            id=int(form.cleaned_data['city_id']),
+        )
+
+        user.country = country_instance
+        user.city = city
+        user.state = city.state
+        user.save()
+
+        return HttpResponseRedirect(
+            reverse(
+                'professional_detail',
+                args=[user.professionalprofile.slug],
+            )
+        )
+
+
+class UpdateProfileDescriptionForm(LoginRequiredMixin, FormView):
+    form_class = ProfileDescriptionForm
+
+    def get_object(self):
+        return self.request.user.professionalprofile
+
+    def form_valid(self, form):
+        professional_profile = self.get_object()
+        description_es = form.cleaned_data['description_es']
+        description_en = form.cleaned_data['description_en']
+
+        updated_es = False
+        if professional_profile.description_es != description_es:
+            updated_es = True
+            professional_profile.description_es = description_es
+
+        updated_en = False
+        if professional_profile.description_en != description_en:
+            updated_en = True
+            professional_profile.description_en = description_en
+
+        professional_profile.save()
+
+        return JsonResponse(
+            {
+                'content': {
+                    'updated_es': updated_es,
+                    'description_es': professional_profile.description_es,
+                    'updated_en': updated_en,
+                    'description_en': professional_profile.description_en,
+                },
+            },
+        )
 
 
 class AdminNotificationAcceptView(CustomUserMixin, View):
