@@ -9,6 +9,8 @@ class CorporativeInfoDetail(DetailView):
     template_name = 'corporative/corporative_info_detail.html'
 
     def get_object(self, queryset=None):
+        print("entra")
+        print(self.kwargs['slug'])
         _object = get_object_or_404(
             CorporativeInfo,
             slug=self.kwargs['slug'],
