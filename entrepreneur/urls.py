@@ -7,6 +7,8 @@ from .views import ContactVentureFormView
 from .views import AjaxContactVentureFormView
 from .views import AjaxLocationVentureFormView
 from .views import RolesVentureFormView
+from .views import JobOffersListView
+from .views import JobOfferFormView
 from .views import PrivacyVentureFormView
 from .views import MembershipLineView
 from .views import UpdateVentureDescriptionForm
@@ -73,6 +75,19 @@ urlpatterns = [
         RolesVentureFormView.as_view(),
         name='roles_venture_form',
     ),
+
+    url(
+        r'^settings/(?P<slug>[-\w]+)/job_offers/$',
+        JobOffersListView.as_view(),
+        name='job_offers_list',
+    ),
+
+    url(
+        r'^settings/(?P<slug>[-\w]+)/job_offer_form/$',
+        JobOfferFormView.as_view(),
+        name='job_offer_form',
+    ),
+
     url(
         r'^settings/(?P<slug>[-\w]+)/privacy/$',
         PrivacyVentureFormView.as_view(),

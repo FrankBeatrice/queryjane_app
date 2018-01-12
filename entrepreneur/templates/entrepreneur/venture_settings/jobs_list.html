@@ -1,0 +1,75 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ venture }} - Jobs offers{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+            <div class="col-md-9 QjaneVentuerSettingsContent">
+
+                <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Create job offer
+                </a>
+
+                <br>
+                <br>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Job offers</h3>
+                    </div>
+
+                    <div class="panel-body QjaneVentureJobOffersList">
+                        <table class="table table-striped">
+                          <tbody>
+                            {% for job_offer in job_offers_list %}
+                            <tr>
+                              <td>
+                                <h2>{{ job_offer }}</h2>
+
+                                <ul class="QJVentureDetCats">
+                                {% for industry_category in job_offer.industry_categories.all %}
+                                    <li>{{ industry_category }}</li>
+                                {% endfor %}
+                                </ul>
+
+                                <p>Created at: {{ job_offer.created_at }}</p>
+
+                                {% if job_offer.country %}
+                                <div>
+                                    <img src="{{ venture.country.country.flag }}">
+                                    <span>{{ job_offer.country }}</span>
+                                </div>
+                                {% endif %}              
+
+                                {% if job_offer.city %}
+                                <div>
+                                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                    <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
+                                </div>
+                                {% endif %}
+
+                                <br>
+
+                                <div>
+                                    {{ job_offer.description|safe|truncatechars_html:230 }}
+                                </div>
+
+                                <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -3,6 +3,7 @@ from django.forms import Form
 from django.forms import ModelForm
 
 from .models import Venture
+from .models import JobOffer
 from place.models import City
 from place.models import Country
 from .data import ADMINISTRATOR_ROLES
@@ -15,7 +16,7 @@ class VentureFilter(forms.Form):
         label='Country',
         widget=forms.TextInput(
             attrs={
-                'placeholder': """Type the country name and select one from the list.""",
+                'placeholder': 'Type the country name and select one from the list.',
             },
         ),
     )
@@ -297,3 +298,47 @@ class RoleVentureForm(Form):
         widget=forms.RadioSelect,
         choices=ADMINISTRATOR_ROLES,
     )
+
+
+class JobOfferForm(forms.ModelForm):
+    country_search = forms.CharField(
+        required=False,
+        label='Country',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type the country name and select one from the list.',
+            },
+        ),
+    )
+
+    country_code = forms.CharField(
+        required=False,
+        label='country code',
+    )
+
+    city_search = forms.CharField(
+        required=False,
+        label='City',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type de city name.',
+            },
+        ),
+    )
+
+    city_id = forms.CharField(
+        required=False,
+        label='city id',
+    )
+
+    class Meta:
+        model = JobOffer
+        fields = (
+            'title',
+            'description',
+            'industry_categories',
+            'country_search',
+            'country_code',
+            'city_search',
+            'city_id',
+        )

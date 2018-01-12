@@ -228,6 +228,10 @@ class JobOffer(models.Model):
         verbose_name='description',
     )
 
+    industry_categories = models.ManyToManyField(
+        'account.IndustryCategory',
+    )
+
     is_active = models.BooleanField(
         default=True,
         verbose_name='is active',
@@ -237,3 +241,17 @@ class JobOffer(models.Model):
         auto_now_add=True,
         verbose_name='created at',
     )
+
+    def get_absolute_url(self):
+        return reverse(
+            'job_offer_detail',
+            args=[self.slug],
+        )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'job offer'
+        verbose_name_plural = 'job offers'
+        ordering = ('-created_at',)

@@ -8,7 +8,9 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.views.generic import CreateView
+from django.views.generic import DetailView
 from django.views.generic import FormView
 from django.views.generic import View
 from django.utils.text import slugify
@@ -26,8 +28,10 @@ from .forms import VentureDescriptionForm
 from .forms import VentureLogoForm
 from .forms import RoleVentureForm
 from .forms import VentureForm
+from .forms import JobOfferForm
 from .models import AdministratorMembership
 from .models import Venture
+from .models import JobOffer
 from .permissions import EntrepreneurPermissions
 from account.data import NEW_ENTREPRENEUR_ADMIN
 from account.forms import ProfileAutocompleteForm
@@ -369,8 +373,14 @@ class AjaxLocationVentureFormView(CustomUserMixin, View):
         raise Http404
 
 
-class RolesVentureFormView(LoginRequiredMixin, TemplateView):
+class RolesVentureFormView(CustomUserMixin, TemplateView):
     template_name = 'entrepreneur/venture_settings/roles_venture_form.html'
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
 
     def get_object(self):
         return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
@@ -444,6 +454,119 @@ class RolesVentureFormView(LoginRequiredMixin, TemplateView):
             return HttpResponse('fail')
 
         raise Http404
+
+
+class JobOffersListView(CustomUserMixin, ListView):
+    model = JobOffer
+    template_name = 'entrepreneur/venture_settings/jobs_list.html'
+    context_object_name = 'job_offers_list'
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    def get_queryset(self):
+        queryset = JobOffer.objects.filter(
+            venture=self.get_object()
+        )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['venture'] = self.get_object()
+        context['jobs_active'] = True
+
+        return context
+
+
+class JobOfferFormView(CustomUserMixin, CreateView):
+    model = JobOffer
+    form_class = JobOfferForm
+    template_name = 'entrepreneur/venture_settings/job_form.html'
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['industry_categories'] = IndustryCategory.objects.all()
+        context['country_instance'] = get_user_country(self.request.META)
+        context['venture'] = self.get_object()
+        context['jobs_active'] = True
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        venture = self.get_object()
+        job_offer = form.save(commit=False)
+        slug = slugify(job_offer.title)
+
+        if JobOffer.objects.filter(slug=slug):
+            random_string = get_random_string(length=6)
+            slug = '{0}-{1}'.format(
+                slug,
+                random_string.lower(),
+            )
+
+        country_instance = None
+        state = None
+        city = None
+
+        country_code = form.cleaned_data['country_code']
+
+        if country_code:
+            country_instance = get_object_or_404(
+                Country,
+                country=country_code,
+            )
+
+        city_id = form.cleaned_data['city_id']
+
+        if city_id:
+            city = get_object_or_404(
+                City,
+                id=int(form.cleaned_data['city_id']),
+            )
+
+            state = city.state
+
+        job_offer.venture = venture
+        job_offer.slug = slug
+        job_offer.country = country_instance
+        job_offer.city = city
+        job_offer.state = state
+        job_offer.save()
+
+        job_offer.industry_categories = form.cleaned_data['industry_categories']
+        job_offer.save()
+
+        return HttpResponseRedirect(
+            reverse(
+                'entrepreneur:job_offers_list',
+                args=[self.get_object().slug],
+            )
+        )
+
+
+class JobOfferDetail(DetailView):
+    model = JobOffer
+    template_name = 'entrepreneur/job_detail.html'
+
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
 
 
 class MembershipLineView(LoginRequiredMixin, View):
