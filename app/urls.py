@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import reverse_lazy
@@ -9,10 +7,12 @@ from django.contrib.auth import views as auth_views
 from .views import HomeView
 from .views import VentureList
 from .views import VentureDetail
+from .views import JobsList
 from .views import ProfessionalDetail
 from .views import ajax_login_form
 from .views import user_logout
 from account.forms import UserPasswordResetForm
+from entrepreneur.views import JobOfferDetail
 
 admin.site.site_title = 'QueryJane'
 admin.site.site_header = 'QueryJane - Administrador'
@@ -30,6 +30,18 @@ urlpatterns = [
         r'^companies/$',
         VentureList.as_view(),
         name='venture_list',
+    ),
+
+    url(
+        r'^jobs/$',
+        JobsList.as_view(),
+        name='jobs_list',
+    ),
+
+    url(
+        r'^jobs/(?P<slug>[-\w]+)/$',
+        JobOfferDetail.as_view(),
+        name='job_offer_detail',
     ),
 
     url(
@@ -114,5 +126,4 @@ urlpatterns = [
         ProfessionalDetail.as_view(),
         name='professional_detail',
     ),
-
 ]

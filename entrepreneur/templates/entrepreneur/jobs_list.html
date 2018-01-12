@@ -1,0 +1,114 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}Job offers{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default main-nav-container is-authenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand logotype-wrapper--authenticated" href="/">
+                <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if user.is_authenticated %}
+                {% include 'layout/menu/_navbar_user_menu.html' %}
+            {% else %}
+                {% include 'layout/menu/_navbar_login_form.html' %}
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="account">
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Job offers</h3>
+            </div>
+
+            <div class="panel-body QjaneVentureJobOffersList">
+                <table class="table table-striped">
+                  <tbody>
+                    {% for job_offer in jobs_list %}
+                    <tr>
+                      <td class="clearfix">
+                        <div class="pull-left">
+                            <img style="max-width: 150px;" class="media-object thumbnail" src="{{ job_offer.venture.get_logo }}" alt="{{ venture }}">
+                        </div>
+
+                        <div class="pull-right">
+                            <h3>{{ job_offer.venture }}</h3>
+
+                            <div class="AjVentureListLocation">
+                                <img src="{{ job_offer.venture.country.country.flag }}">
+                                <span>{{ job_offer.venture.country }}</span>
+                                <span> - {{ job_offer.venture.city }} {% if job_offer.venture.state %}, {{ job_offer.venture.state }}.{% endif %}</span>
+
+                                <div>
+                                {% if job_offer.venture.address %}
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    <span>{{ job_offer.venture.address }}</span>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <h2>{{ job_offer }}</h2>
+
+                            <ul class="QJVentureDetCats">
+                            {% for industry_category in job_offer.industry_categories.all %}
+                                <li>{{ industry_category }}</li>
+                            {% endfor %}
+                            </ul>
+
+                            <p>Created at: {{ job_offer.created_at }}</p>
+
+                            {% if job_offer.country %}
+                            <div>
+                                <img src="{{ venture.country.country.flag }}">
+                                <span>{{ job_offer.country }}</span>
+                            </div>
+                            {% endif %}              
+
+                            {% if job_offer.city %}
+                            <div>
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
+                            </div>
+                            {% endif %}
+
+                            <br>
+
+                            <div>
+                                {{ job_offer.description|safe|truncatechars_html:130 }}
+                            </div>
+
+                            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+<script src="{% static 'js/entrepreneur/venture_list.js' %}"></script>
+{% endblock %}
+

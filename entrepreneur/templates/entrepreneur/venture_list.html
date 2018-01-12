@@ -33,95 +33,89 @@
 {% block content %}
 <section class="account">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-xs-12">
-                <div class="QJVFilterForm">
-                    <form id="id_QJVfilterForm" method="get" class="clearfix">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
-                                    {{ filter_form.country_search.label_tag }}
-                                    {% render_field filter_form.country_search class+="form-control" %}
-                                    <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+        <div class="QJVFilterForm">
+            <form id="id_QJVfilterForm" method="get" class="clearfix">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                            {{ filter_form.country_search.label_tag }}
+                            {% render_field filter_form.country_search class+="form-control" %}
+                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
 
-                                    <div style="display:none">
-                                    {% render_field filter_form.country_code %}
-                                    </div>
-                                </div>                                
-                                <div class="form-group">
-                                    {{ filter_form.category.label_tag }}
-                                    {% render_field filter_form.category class+="form-control" %}
-                                    {{ filter_form.category.errors }}
-                                </div>
+                            <div style="display:none">
+                            {% render_field filter_form.country_code %}
                             </div>
+                        </div>                                
+                        <div class="form-group">
+                            {{ filter_form.category.label_tag }}
+                            {% render_field filter_form.category class+="form-control" %}
+                            {{ filter_form.category.errors }}
+                        </div>
+                    </div>
 
-                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
-                                    {{ filter_form.city_search.label_tag }}
-                                    {% render_field filter_form.city_search class+="form-control" %}
-                                    {{ filter_form.city_search.errors }}
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                            {{ filter_form.city_search.label_tag }}
+                            {% render_field filter_form.city_search class+="form-control" %}
+                            {{ filter_form.city_search.errors }}
 
-                                    <div style="display:none">
-                                    {% render_field filter_form.city_id %}
-                                    </div>
-                                </div>
-                                <div id="id_QjaneVListAut" class="form-group" data-ax-ventury-autocomplete-url="{% url 'entrepreneur:ax_ventury_autocomplete' %}">
-                                    {{ filter_form.venture_search.label_tag }}
-                                    {% render_field filter_form.venture_search class+="form-control" %}
-                                    {{ filter_form.venture_search.errors }}
-
-                                    <div style="display:none">
-                                    {% render_field filter_form.venture_id %}
-                                    </div>
-                                </div>
+                            <div style="display:none">
+                            {% render_field filter_form.city_id %}
                             </div>
                         </div>
-                        <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">Clean</a>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
+                        <div id="id_QjaneVListAut" class="form-group" data-ax-ventury-autocomplete-url="{% url 'entrepreneur:ax_ventury_autocomplete' %}">
+                            {{ filter_form.venture_search.label_tag }}
+                            {% render_field filter_form.venture_search class+="form-control" %}
+                            {{ filter_form.venture_search.errors }}
+
+                            <div style="display:none">
+                            {% render_field filter_form.venture_id %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="QJVentList">
-                {% for venture in venture_list %}
-                    <li class="QJVentListItem clearfix">
-                        <img style="max-width: 150px;" class="media-object thumbnail pull-left" src="{{ venture.get_logo }}" alt="{{ venture }}">
+                <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">Clean</a>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
 
-                        <div class="QJVentureListData pull-right clearfix">
-                            <div class="pull-left">
-                                <h3>{{ venture }}</h3>
-                                <div class="AjVentureListLocation">
-                                    <img src="{{ venture.country.country.flag }}">
-                                    <span>{{ venture.country }}</span>
-                                    <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+        <ul class="QJVentList">
+        {% for venture in venture_list %}
+            <li class="QJVentListItem clearfix">
+                <img style="max-width: 150px;" class="media-object thumbnail pull-left" src="{{ venture.get_logo }}" alt="{{ venture }}">
 
-                                    <div>
-                                    {% if venture.address %}
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                        <span>{{ venture.address }}</span>
-                                    {% endif %}
-                                    </div>
-                                </div>
+                <div class="QJVentureListData pull-right clearfix">
+                    <div class="pull-left">
+                        <h3>{{ venture }}</h3>
+                        <div class="AjVentureListLocation">
+                            <img src="{{ venture.country.country.flag }}">
+                            <span>{{ venture.country }}</span>
+                            <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
 
-                                <ul class="QJventureListCategories">
-                                {% for category in venture.industry_categories.all %}
-                                    <li>{{ category }}</li>
-                                {% endfor %}
-                                </ul>
-                            </div>
-
-                            <div class="pull-right">
-                                <a href="{{ venture.get_absolute_url }}" class="btn btn-ghost-purple">View</a>
+                            <div>
+                            {% if venture.address %}
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span>{{ venture.address }}</span>
+                            {% endif %}
                             </div>
                         </div>
-                    </li>
-                {% empty %}
-                    <li class="QJVentListEmptyMessage">No results.</li>
-                {% endfor %}
-                </ul>
-            </div>
 
-            <div class="col-md-4 col-xs-12">
-            </div>
-        </div>
+                        <ul class="QJventureListCategories">
+                        {% for category in venture.industry_categories.all %}
+                            <li>{{ category }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="pull-right">
+                        <a href="{{ venture.get_absolute_url }}" class="btn btn-ghost-purple">View</a>
+                    </div>
+                </div>
+            </li>
+        {% empty %}
+            <li class="QJVentListEmptyMessage">No results.</li>
+        {% endfor %}
+        </ul>
     </div>
 </section>
 {% endblock %}

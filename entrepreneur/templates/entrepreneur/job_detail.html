@@ -1,0 +1,103 @@
+{% extends "layout/index.html" %}
+
+{% load static entrepreneur_tags %}
+
+{% block title %}{{ venture }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default main-nav-container is-authenticated">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand logotype-wrapper--authenticated" href="/">
+                <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if user.is_authenticated %}
+                {% include 'layout/menu/_navbar_user_menu.html' %}
+            {% else %}
+                {% include 'layout/menu/_navbar_login_form.html' %}
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="qjane-job-offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <img style="max-width: 100%;" class="media-object thumbnail" src="{{ object.venture.get_logo }}" alt="{{ object.venture }}">
+
+                <h3><a href="{{ object.venture.get_abdolute_url }}">{{ object.venture }}</a></h3>
+
+                <div class="QJVentureDetCategories">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            <span>Job offer {% if object.industry_categories.count > 1 %}categories{% else %}category{% endif %}</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="QJVentureDetCats">
+                            {% for industry_category in object.industry_categories.all %}
+                                <li>{{ industry_category }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {% if object.country or object.city %}
+                <div class="QJJobDetLocation">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <span>Location</span>
+                        </div>
+
+                        <div class="panel-body">
+                            {% if object.country %}
+                            <div>
+                                <img src="{{ venture.country.country.flag }}">
+                                <span>{{ object.country }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if object.city %}
+                            <div>
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                <span>{{ object.city }} {% if object.state %}, {{ object.state }}.{% endif %}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <h1>{{ object }}</h1>
+                <p>Created at: {{ object.created_at }}</p>
+
+                <div class="QJVentureDetDescription">
+                {% if object.description %}
+                    <div class="QJRedactorContent">
+                        {{ object.description|safe }}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -25,8 +25,15 @@
 
         <li class="list-group-item {% if roles_active %}active{% endif %}">
             <a href="{% url 'entrepreneur:roles_venture_form' venture.slug %}" class="clearfix">
-                <span class="pull-left">Member</span>
+                <span class="pull-left">Members</span>
                 <i class="fa fa-users pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <li class="list-group-item {% if jobs_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:job_offers_list' venture.slug %}" class="clearfix">
+                <span class="pull-left">Job Offers</span>
+                <i class="fa fa-industry pull-right" aria-hidden="true"></i>
             </a>
         </li>
 

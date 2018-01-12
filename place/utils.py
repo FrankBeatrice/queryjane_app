@@ -15,6 +15,8 @@ def get_user_country(META):
         return None
 
     gi = pygeoip.GeoIP('app/static/GeoIP.dat')
+    # country_code = gi.country_code_by_addr('190.252.158.138')
+    # country_name = gi.country_name_by_addr('190.252.158.138')
     country_code = gi.country_code_by_addr(ip)
     country_name = gi.country_name_by_addr(ip)
 
