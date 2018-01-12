@@ -63,7 +63,10 @@
                                 <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
                               </td>
                             </tr>
+                            {% empty %}
+                            <p class="h4">There are not published job offers yet.</p>
                             {% endfor %}
+
                           </tbody>
                         </table>
                     </div>

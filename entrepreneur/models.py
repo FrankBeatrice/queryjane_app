@@ -195,7 +195,6 @@ class AdministratorMembership(models.Model):
 class JobOffer(models.Model):
     venture = models.ForeignKey(
         Venture,
-        on_delete=models.PROTECT,
         verbose_name='company',
     )
 
