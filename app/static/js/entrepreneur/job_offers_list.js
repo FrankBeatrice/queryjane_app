@@ -2,10 +2,10 @@ $(function () {
     'use strict';
 
     // Clean filter
-    $('#id_QJCleanVfilter').on('click', function () {
-      $('#id_QJVfilterForm')[0].reset();
+    $('#id_QJCleanJOfilter').on('click', function () {
+      $('#id_QJJOfilterForm')[0].reset();
       $('#id_category').val('');
-      $('#id_QJVfilterForm').submit();
+      $('#id_QJJOfilterForm').submit();
     });
 
     // City autocomplete

@@ -29,6 +29,7 @@ INSTALLED_APPS = PROJECT_APPS + (
 
     'django_extensions',
     'django_countries',
+    'social_django',
     'widget_tweaks',
     'storages',
 )
@@ -41,6 +42,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -56,6 +59,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+                'app.context_processors.facebook_app_id',
             ],
         },
     },
@@ -95,9 +102,42 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = 'auth_login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'account:signup_landing'
 LOGOUT_URL = 'user_logout'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
+)
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'first_name, last_name, email',
+}
+SOCIAL_AUTH_USER_FIELDS = [
+    'first_name',
+    'last_name',
+    'email',
+]
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = 'edit-it'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'edit-it'
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'

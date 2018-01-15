@@ -12,6 +12,7 @@ from account.models import ProfessionalProfile
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 from entrepreneur.forms import VentureFilter
+from entrepreneur.forms import JobOffersFilter
 from entrepreneur.models import JobOffer
 from place.utils import get_user_country
 
@@ -133,6 +134,47 @@ class JobsList(ListView):
     model = JobOffer
     template_name = 'entrepreneur/jobs_list.html'
     context_object_name = 'jobs_list'
+
+    def get_list_filter(self):
+        list_filter = JobOffersFilter(
+            self.request.GET,
+        )
+
+        return list_filter
+
+    def get_queryset(self):
+        queryset = JobOffer.objects.filter(is_active=True)
+
+        form = self.get_list_filter()
+
+        if form.is_valid():
+            country_code = form.cleaned_data['country_code']
+            if country_code:
+                queryset = queryset.filter(country__country=country_code)
+
+            city_id = form.cleaned_data['city_id']
+
+            if city_id:
+                queryset = queryset.filter(city__id=city_id)
+
+            category = form.cleaned_data['category']
+
+            if category:
+                queryset = queryset.filter(
+                    industry_categories__in=[category],
+                ).distinct()
+
+            venture_id = form.cleaned_data['venture_id']
+
+            if venture_id:
+                queryset = queryset.filter(id=venture_id)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_form'] = self.get_list_filter()
+        return context
 
 
 class ProfessionalDetail(LoginRequiredMixin, DetailView):

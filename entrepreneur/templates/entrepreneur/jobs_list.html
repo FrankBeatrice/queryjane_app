@@ -4,35 +4,59 @@
 {% block title %}Job offers{% endblock %}
 
 {% block navbar %}
-<nav class="navbar navbar-default main-nav-container is-authenticated">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand logotype-wrapper--authenticated" href="/">
-                <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {% if user.is_authenticated %}
-                {% include 'layout/menu/_navbar_user_menu.html' %}
-            {% else %}
-                {% include 'layout/menu/_navbar_login_form.html' %}
-            {% endif %}
-        </div>
-    </div>
-</nav>
+{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
 {% endblock %}
 
 {% block content %}
 <section class="account">
     <div class="container">
+        <div class="QJJOFilterForm">
+            <form id="id_QJJOfilterForm" method="get" class="clearfix">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                            {{ filter_form.country_search.label_tag }}
+                            {% render_field filter_form.country_search class+="form-control" %}
+                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+
+                            <div style="display:none">
+                            {% render_field filter_form.country_code %}
+                            </div>
+                        </div>                                
+                        <div class="form-group">
+                            {{ filter_form.category.label_tag }}
+                            {% render_field filter_form.category class+="form-control" %}
+                            {{ filter_form.category.errors }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                            {{ filter_form.city_search.label_tag }}
+                            {% render_field filter_form.city_search class+="form-control" %}
+                            {{ filter_form.city_search.errors }}
+
+                            <div style="display:none">
+                            {% render_field filter_form.city_id %}
+                            </div>
+                        </div>
+                        <div id="id_QjaneVListAut" class="form-group" data-ax-ventury-autocomplete-url="{% url 'entrepreneur:ax_ventury_autocomplete' %}">
+                            {{ filter_form.venture_search.label_tag }}
+                            {% render_field filter_form.venture_search class+="form-control" %}
+                            {{ filter_form.venture_search.errors }}
+
+                            <div style="display:none">
+                            {% render_field filter_form.venture_id %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">Clean</a>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <br>
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Job offers</h3>
@@ -97,6 +121,12 @@
                         </div>
                       </td>
                     </tr>
+                    {% empty %}
+                    <tr>
+                        <td>
+                            No job offers found.
+                        </td>
+                    </tr>
                     {% endfor %}
                   </tbody>
                 </table>
@@ -109,6 +139,5 @@
 
 {% block js %}
 <script src="{% static 'js/place/place_autocomplete.js' %}"></script>
-<script src="{% static 'js/entrepreneur/venture_list.js' %}"></script>
+<script src="{% static 'js/entrepreneur/job_offers_list.js' %}"></script>
 {% endblock %}
-

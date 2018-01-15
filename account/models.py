@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 
+from django.utils.text import slugify
+from django.utils.crypto import get_random_string
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
@@ -9,10 +12,18 @@ from django.utils import timezone
 
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_ENTREPRENEUR_ADMIN
+from entrepreneur.models import Venture
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, is_active=True):
+    def create_user(
+        self,
+        first_name,
+        last_name,
+        email,
+        password=None,
+        is_active=True,
+    ):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -20,10 +31,38 @@ class UserManager(BaseUserManager):
             email=UserManager.normalize_email(email),
             is_active=is_active,
         )
-        user.first_name = 'Jane'
-        user.last_name = 'QueryUser'
+
+        if not first_name:
+            first_name = 'Query'
+        if not last_name:
+            last_name = 'Jane'
+
+        user.first_name = first_name
+        user.last_name = last_name
         user.set_password(password)
         user.save(using=self._db)
+
+        slug = slugify(
+            '{0}{1}'.format(
+                first_name,
+                last_name,
+            )
+        )
+
+        if (
+            Venture.objects.filter(slug=slug) or
+            ProfessionalProfile.objects.filter(slug=slug)
+        ):
+            random_string = get_random_string(length=6)
+            slug = '{0}-{1}'.format(
+                slug,
+                random_string.lower(),
+            )
+
+        ProfessionalProfile.objects.create(
+            user=user,
+            slug=slug,
+        )
 
         return user
 

@@ -20,12 +20,15 @@
                             <ul class="QJVentureDetCats">
                             {% for industry_category in profile.industry_categories.all %}
                                 <li>{{ industry_category }}</li>
+                            {% empty %}
+                                <li>{{ profile.user.first_name }} has not added industry sectors.</li>
                             {% endfor %}
                             </ul>
                         </div>
                     </div>
                 </div>
 
+                {% if profile.user.country or profile.user.city %}
                 <div class="QJVentureDetLocation">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -34,18 +37,23 @@
                         </div>
 
                         <div class="panel-body">
+                            {% if profile.user.country %}
                             <div>
                                 <img src="{{ profile.country.country.flag }}">
                                 <span>{{ profile.user.country }}</span>
                             </div>
+                            {% endif %}
 
+                            {% if profile.user.city %}
                             <div>
                                 <i class="fa fa-location-arrow" aria-hidden="true"></i>
                                 <span>{{ profile.user.city }} {% if profile.user.state %}, {{ profile.user.state }}.{% endif %}</span>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
 
             <div class="col-sm-12 col-md-9 col-lg-9">
@@ -54,6 +62,8 @@
                     <div class="QJRedactorContent">
                         {{ profile.description_en|safe }}
                     </div>
+                {% else %}
+                <p>There is not information about this profile.</p>
                 {% endif %}
                 </div>
             </div>

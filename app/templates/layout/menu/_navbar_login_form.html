@@ -4,11 +4,11 @@
         <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in</a>
 
         <ul class="dropdown-menu">
-            <!-- <li class="dropdown-item">
-                <p>Ingresa con tu cuenta de:</p>
-                <a class="QJFBLogin" href="#">Facebook</a>
-                <a class="QJGMLogin" href="#">Gmail</a>
-            </li> -->
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                <span class="fa fa-facebook"></span>
+                Facebook login
+            </a>
+
             <li>
                 <div class="dropdown-item qjane-navbar-login-container">
                 {% get_login_form as login_form %}
