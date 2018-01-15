@@ -19,8 +19,6 @@ from django.views.generic import UpdateView
 from django.contrib import auth
 from account.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.text import slugify
-from django.utils.crypto import get_random_string
 
 from account.forms import SignUpForm
 from account.forms import ProfileForm
@@ -33,7 +31,6 @@ from app.mixins import CustomUserMixin
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
-from entrepreneur.models import Venture
 from place.utils import get_user_country
 from place.models import Country
 from place.models import City
@@ -50,6 +47,8 @@ class SignUpFormView(FormView):
         password = form.cleaned_data['password']
 
         user = User.objects.create_user(
+            first_name,
+            last_name,
             email,
             password,
         )
@@ -63,28 +62,6 @@ class SignUpFormView(FormView):
             user.country = country_instance
 
         user.save()
-
-        slug = slugify(
-            u'{0}{1}'.format(
-                first_name,
-                last_name,
-            )
-        )
-
-        if (
-            Venture.objects.filter(slug=slug) or
-            ProfessionalProfile.objects.filter(slug=slug)
-        ):
-            random_string = get_random_string(length=6)
-            slug = '{0}-{1}'.format(
-                slug,
-                random_string.lower(),
-            )
-
-        ProfessionalProfile.objects.create(
-            user=user,
-            slug=slug,
-        )
 
         authenticated_user = auth.authenticate(
             username=user.email,

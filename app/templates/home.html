@@ -39,6 +39,15 @@
                     <h2>The Cannabis Industry Network</h2>
                     <p>Connect with companies and experts in different sectors of the cannabis industry.</p>
 
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+                            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                                <span class="fa fa-facebook"></span>
+                                Facebook login
+                            </a>
+                        </div>
+                    </div>
+
                     <form action="{% url 'account:signup_form_submit' %}" method="POST" class="qjane-home-signup-form" id="id-qjane-home-signup-form">
                         {% csrf_token %}
                         {% for field in signup_form.visible_fields %}
@@ -53,7 +62,7 @@
                     </form>
 
                     <br>
-                    <p><i>By clicking on "Sign up", you accept the <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">terms of use</a></i> and the <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">privacy policy</a>.</p>
+                    <p><i>Registering, you are accepting the <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">terms of use</a></i> and the <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">privacy policy</a>.</p>
                 </div>
             </div>
         </div>

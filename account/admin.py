@@ -11,6 +11,7 @@ class ProfessionalProfileAdmin(admin.ModelAdmin):
         'user',
     ]
 
+
 admin.site.register(ProfessionalProfile, ProfessionalProfileAdmin)
 
 
@@ -25,5 +26,6 @@ class IndustryCategoryAdmin(admin.ModelAdmin):
         'name_es',
         'name_en',
     ]
+
 
 admin.site.register(IndustryCategory, IndustryCategoryAdmin)
