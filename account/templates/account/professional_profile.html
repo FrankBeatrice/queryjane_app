@@ -20,12 +20,15 @@
                             <ul class="QJVentureDetCats">
                             {% for industry_category in profile.industry_categories.all %}
                                 <li>{{ industry_category }}</li>
+                            {% empty %}
+                                <li>{{ profile.user.first_name }} has not added industry sectors.</li>
                             {% endfor %}
                             </ul>
                         </div>
                     </div>
                 </div>
 
+                {% if profile.user.country or profile.user.city %}
                 <div class="QJVentureDetLocation">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -46,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
 
             <div class="col-sm-12 col-md-9 col-lg-9">
@@ -54,6 +58,8 @@
                     <div class="QJRedactorContent">
                         {{ profile.description_en|safe }}
                     </div>
+                {% else %}
+                <p>There is not information about this profile.</p>
                 {% endif %}
                 </div>
             </div>

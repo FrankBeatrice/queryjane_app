@@ -84,7 +84,7 @@ def profile_as_JSON(profile):
     """
     name = '{0} ({1})'.format(
         profile.user.get_full_name,
-        profile.user.email,
+        profile.slug,
     )
 
     return {
