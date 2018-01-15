@@ -37,15 +37,19 @@
                         </div>
 
                         <div class="panel-body">
+                            {% if profile.user.country %}
                             <div>
                                 <img src="{{ profile.country.country.flag }}">
                                 <span>{{ profile.user.country }}</span>
                             </div>
+                            {% endif %}
 
+                            {% if profile.user.city %}
                             <div>
                                 <i class="fa fa-location-arrow" aria-hidden="true"></i>
                                 <span>{{ profile.user.city }} {% if profile.user.state %}, {{ profile.user.state }}.{% endif %}</span>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

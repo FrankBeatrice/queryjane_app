@@ -62,6 +62,58 @@ class VentureFilter(forms.Form):
         super().__init__(*args, **kwargs)
 
 
+class JobOffersFilter(forms.Form):
+    country_search = forms.CharField(
+        required=False,
+        label='Country',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type the country name and select one from the list.',
+            },
+        ),
+    )
+
+    country_code = forms.CharField(
+        required=False,
+        label='country code',
+    )
+
+    city_search = forms.CharField(
+        required=False,
+        label='City',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Type de city name.',
+            },
+        ),
+    )
+
+    city_id = forms.CharField(
+        required=False,
+        label='city id',
+    )
+
+    category = forms.ModelChoiceField(
+        required=False,
+        queryset=IndustryCategory.objects.all(),
+        label='Sector',
+        empty_label='all sector',
+    )
+
+    venture_search = forms.CharField(
+        label='Company',
+        required=False,
+    )
+
+    venture_id = forms.CharField(
+        required=False,
+        label='company id',
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class VentureForm(ModelForm):
     name = forms.CharField(
         required=True,
