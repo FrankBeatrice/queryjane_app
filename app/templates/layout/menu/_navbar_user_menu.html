@@ -17,14 +17,14 @@
 
         {% get_recent_user_notifications user as recent_user_notifications %}
         <ul class="dropdown-menu notification-list"  aria-labelledby="navbarDropdownNotificationsLink">
-    {% for notification in recent_user_notifications %}
+        {% for notification in recent_user_notifications %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
                 <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
                     <i class="fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Notificación revisada{% else %}Nueva notificación{% endif %}"></i>
                     {{ notification }}
                 </a>
             </li>
-    {% endfor %}
+        {% endfor %}
 
         {% if recent_user_notifications.count > 10 %}
             <li class="dropdown-item"><a href="#">View all</a></li>

@@ -34,6 +34,7 @@ from .models import Venture
 from .models import JobOffer
 from .permissions import EntrepreneurPermissions
 from account.data import NEW_ENTREPRENEUR_ADMIN
+from account.data import NEW_JOB_OFFER
 from account.forms import ProfileAutocompleteForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
@@ -437,7 +438,9 @@ class RolesVentureFormView(CustomUserMixin, TemplateView):
                 notification_type=NEW_ENTREPRENEUR_ADMIN,
                 noty_to=profile.user,
                 venture_from=venture,
-                description='Invitación como administrador de empresa.',
+                description='Invitation to administer company from {}.'.format(
+                    self.request.user.professionalprofile,
+                ),
                 created_by=self.request.user.professionalprofile,
                 membership=membership,
             )
@@ -552,6 +555,34 @@ class JobOfferFormView(CustomUserMixin, CreateView):
 
         job_offer.industry_categories = form.cleaned_data['industry_categories']
         job_offer.save()
+
+        # Create potential applicants notifications.
+        potential_applicants = ProfessionalProfile.objects.filter(
+            industry_categories__in=job_offer.industry_categories.all(),
+        )
+
+        if job_offer.country:
+            potential_applicants = potential_applicants.filter(
+                user__country=job_offer.country,
+            )
+
+        if job_offer.city:
+            potential_applicants = potential_applicants.filter(
+                user__city=job_offer.city,
+            )
+
+        for profile in potential_applicants.all():
+            UserNotification.objects.create(
+                notification_type=NEW_JOB_OFFER,
+                noty_to=profile.user,
+                answered=True,
+                venture_from=venture,
+                job_offer=job_offer,
+                description='New job offer that may interest you published by {}.'.format(
+                    venture,
+                ),
+                created_by=self.request.user.professionalprofile,
+            )
 
         return HttpResponseRedirect(
             reverse(
