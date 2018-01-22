@@ -13,6 +13,7 @@ from .views import ajax_login_form
 from .views import user_logout
 from account.forms import UserPasswordResetForm
 from entrepreneur.views import JobOfferDetail
+from entrepreneur.views import JobOfferApplyView
 
 admin.site.site_title = 'QueryJane'
 admin.site.site_header = 'QueryJane - Administrador'
@@ -43,6 +44,12 @@ urlpatterns = [
         r'^jobs/(?P<slug>[-\w]+)/$',
         JobOfferDetail.as_view(),
         name='job_offer_detail',
+    ),
+
+    url(
+        r'^jobs/(?P<slug>[-\w]+)/apply/$',
+        JobOfferApplyView.as_view(),
+        name='job_offer_apply',
     ),
 
     url(

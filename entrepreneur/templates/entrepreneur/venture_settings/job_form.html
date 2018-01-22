@@ -35,6 +35,41 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label>
+                                    {{ form.description.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+                                <p><i>Add a very detailed description of the job offer.</i></p>
+                                <div id="rich_editor_description"></div>
+
+                                <p>{{ form.description.errors }}</p>
+
+                                <div style="display:none;">
+                                    {% render_field form.description %}
+                                    {% render_field form.industry_categories %}
+                                </div>
+                            </div>
+
+                            <div class="IndustryCategoriesList">
+                                <p>Select the sector or sectors of your job offer.</p>
+
+                                <ul class="qjane-industry-categories-list">
+                                    {% for industry_category in industry_categories %}
+                                    <li>
+                                        <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <p>{{ form.industry_categories.errors }}</p>
+                            </div>
+
+                            <br>
+
+                            <p class="h4">Are you searching for people from some specific country or city?</p>
+                            <p>If you fill these fields, we will only look for people from these places.</p>
+
                             <div class="row">
                                 <div class="col-md-6 col-xs-12">
                                     <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
@@ -77,35 +112,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>
-                                    {{ form.description.label }}
-                                    <span class="QJRequiredField">*</span>
-                                </label>
-                                <p><i>Add a very detailed description of the job offer.</i></p>
-                                <div id="rich_editor_description"></div>
-
-                                <p>{{ form.description.errors }}</p>
-
-                                <div style="display:none;">
-                                    {% render_field form.description %}
-                                    {% render_field form.industry_categories %}
-                                </div>
-                            </div>
-
-                            <div class="IndustryCategoriesList">
-                                <p>Select the sector or sectors of your job offer.</p>
-
-                                <ul class="qjane-industry-categories-list">
-                                    {% for industry_category in industry_categories %}
-                                    <li>
-                                        <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-
-                                <p>{{ form.industry_categories.errors }}</p>
-                            </div>
+                            <br>
 
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>

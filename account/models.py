@@ -12,6 +12,7 @@ from django.utils import timezone
 
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_ENTREPRENEUR_ADMIN
+from .data import NEW_JOB_OFFER
 from entrepreneur.models import Venture
 
 
@@ -220,12 +221,6 @@ class ProfessionalProfile(models.Model):
         blank=True,
     )
 
-    apply_jobs = models.BooleanField(
-        default=True,
-        choices=BOOL_CHOICES,
-        verbose_name='¿Deseas aplicar a ofertas de trabajo publicadas en tus sectores de interés?',
-    )
-
     email_jobs_notifications = models.BooleanField(
         default=True,
         verbose_name='Recibir notificaciones de ofertas e trabajo via e-mail.',
@@ -309,6 +304,12 @@ class UserNotification(models.Model):
         null=True,
     )
 
+    job_offer = models.ForeignKey(
+        'entrepreneur.JobOffer',
+        verbose_name='related job offer',
+        null=True,
+    )
+
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
         verbose_name='creada por',
@@ -323,12 +324,12 @@ class UserNotification(models.Model):
     def is_new_entrepreneur_admin(self):
         return self.notification_type == NEW_ENTREPRENEUR_ADMIN
 
+    @property
+    def is_interest_job_offer(self):
+        return self.notification_type == NEW_JOB_OFFER
+
     class Meta:
         ordering = ('-created_at',)
 
     def __str__(self):
-        if self.is_new_entrepreneur_admin:
-            label = 'invitation from {}'.format(
-                self.created_by,
-            )
-        return label
+        return self.description
