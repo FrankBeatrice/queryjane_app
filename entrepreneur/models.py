@@ -132,6 +132,19 @@ class Venture(models.Model):
 
         return logo
 
+    @property
+    def get_active_administrator_ids(self):
+        active_memberships = self.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        )
+
+        active_administrators = []
+
+        for membership in active_memberships:
+            active_administrators.append(membership.admin.id)
+
+        return active_administrators
+
     def get_absolute_url(self):
         return reverse(
             'venture_detail',
@@ -253,4 +266,26 @@ class JobOffer(models.Model):
     class Meta:
         verbose_name = 'job offer'
         verbose_name_plural = 'job offers'
+        ordering = ('-created_at',)
+
+
+class Applicant(models.Model):
+    job_offer = models.ForeignKey(
+        'entrepreneur.JobOffer',
+        verbose_name='job offer',
+    )
+
+    applicant = models.ForeignKey(
+        'account.ProfessionalProfile',
+        verbose_name='applicant',
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='created at',
+    )
+
+    class Meta:
+        verbose_name = 'applicant'
+        verbose_name_plural = 'applicants'
         ordering = ('-created_at',)

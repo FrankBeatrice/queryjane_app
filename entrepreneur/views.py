@@ -3,6 +3,7 @@ import json
 from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.http import HttpResponse
@@ -32,7 +33,9 @@ from .forms import JobOfferForm
 from .models import AdministratorMembership
 from .models import Venture
 from .models import JobOffer
+from .models import Applicant
 from .permissions import EntrepreneurPermissions
+from account.permissions import JobOfferPermissions
 from account.data import NEW_ENTREPRENEUR_ADMIN
 from account.data import NEW_JOB_OFFER
 from account.forms import ProfileAutocompleteForm
@@ -559,7 +562,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
         # Create potential applicants notifications.
         potential_applicants = ProfessionalProfile.objects.filter(
             industry_categories__in=job_offer.industry_categories.all(),
-        )
+        ).exclude(id__in=venture.get_active_administrator_ids)
 
         if job_offer.country:
             potential_applicants = potential_applicants.filter(
@@ -598,6 +601,54 @@ class JobOfferDetail(DetailView):
 
     def get_object(self):
         return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        job_offer = self.get_object()
+
+        has_applied = False
+
+        if Applicant.objects.filter(
+            job_offer=job_offer,
+            applicant=self.request.user.professionalprofile
+        ):
+            has_applied = True
+
+        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+            self.request.user,
+            job_offer.venture,
+        )
+        context['can_apply'] = JobOfferPermissions.can_apply(
+            self.request.user,
+            job_offer,
+        )
+        context['has_applied'] = has_applied
+
+        return context
+
+
+class JobOfferApplyView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    def test_func(self):
+        return JobOfferPermissions.can_apply(
+            user=self.request.user,
+            job_offer=self.get_object(),
+        )
+
+    def get(self, *args, **kwargs):
+        job_offer = self.get_object()
+
+        Applicant.objects.create(
+            job_offer=job_offer,
+            applicant=self.request.user.professionalprofile
+        )
+
+        return redirect(
+            'job_offer_detail',
+            job_offer.slug,
+        )
 
 
 class MembershipLineView(LoginRequiredMixin, View):

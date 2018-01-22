@@ -1,5 +1,6 @@
 from account.models import UserNotification
 from entrepreneur.models import AdministratorMembership
+from entrepreneur.models import Applicant
 from account.data import NEW_ENTREPRENEUR_ADMIN
 from entrepreneur.data import SENT_INVITATION
 from entrepreneur.data import ACTIVE_MEMBERSHIP
@@ -32,3 +33,24 @@ class NotificationPermissions(object):
             return True
 
         return False
+
+
+class JobOfferPermissions(object):
+    @classmethod
+    def can_apply(self, user, job_offer):
+        if not user.is_authenticated:
+            return False
+
+        professional_profile = user.professionalprofile
+        venture = job_offer.venture
+
+        if professional_profile.id in venture.get_active_administrator_ids:
+            return False
+
+        if Applicant.objects.filter(
+            job_offer=job_offer,
+            applicant=professional_profile,
+        ):
+            return False
+
+        return True
