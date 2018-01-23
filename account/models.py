@@ -289,7 +289,7 @@ class UserNotification(models.Model):
 
     noty_to = models.ForeignKey(
         'account.User',
-        verbose_name='Notificar a',
+        verbose_name='Notify to',
     )
 
     venture_from = models.ForeignKey(
@@ -312,7 +312,7 @@ class UserNotification(models.Model):
 
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='creada por',
+        verbose_name='created by',
         related_name='creator',
     )
 
