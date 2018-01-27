@@ -34,6 +34,22 @@ class NotificationPermissions(object):
 
         return False
 
+    @classmethod
+    def can_view(self, user, notification):
+        if notification.noty_to == user:
+            return True
+
+        return False
+
+
+class MessagesPermissions(object):
+    @classmethod
+    def can_view(self, user, message):
+        if message.user_to == user:
+            return True
+
+        return False
+
 
 class JobOfferPermissions(object):
     @classmethod

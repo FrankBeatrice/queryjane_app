@@ -9,8 +9,10 @@ from .views import AdminNotificationAcceptView
 from .views import AdminNotificationRejectView
 from .views import AdminNotificationResendView
 from .views import ProfessionalProfileCategoryView
+from .views import UserMessageFormView
 
 from .views import LoadNotificationModal
+from .views import LoadMessageModal
 
 urlpatterns = [
     url(
@@ -72,5 +74,17 @@ urlpatterns = [
         r'^ax_admin_notification_resend/(?P<pk>\d+)/$',
         AdminNotificationResendView.as_view(),
         name='admin_notification_resend',
+    ),
+
+    url(
+        r'^ax_send_user_mesasge/$',
+        UserMessageFormView.as_view(),
+        name='send_user_mesasge',
+    ),
+
+    url(
+        r'^ax-post-message-load/(?P<pk>\d+)/$',
+        LoadMessageModal.as_view(),
+        name='ajax_post_message_load',
     ),
 ]
