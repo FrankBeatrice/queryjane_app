@@ -48,7 +48,7 @@
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
                 <a class="qjane-messages-link {% if message.unread %}qjane-unread-message{% else %}qjane-viewed-message{% endif %}" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
                     <i class="fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
-                    {{ message.user_from }}
+                    From: {{ message.user_from }}
 
                     <p>{{ message.created_at }}</p>
                 </a>
