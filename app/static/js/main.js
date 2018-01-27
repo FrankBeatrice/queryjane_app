@@ -133,7 +133,7 @@ function getLocation() {
   });
 
     // Populate general message modal with notifications messages.
-    $('.notification-list').on('click', '.qjane-notification-link', function () {
+    $('.header-notification-list').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
         $.post(notification_url).done(function (response) {
             if (response != 'fail') {
@@ -141,6 +141,36 @@ function getLocation() {
             }
         });
     });
+
+    // Populate send message modal form.
+    $('.header-messages-list').on('click', '.qjane-messages-link', function () {
+        var message_url = $(this).data('message-url');
+        $.post(message_url).done(function (response) {
+            if (response != 'fail') {
+                $('#generalModalMessage .modal-content').html(response.content);
+            }
+        });
+    });
+
+
+    $('#composeMessageModal').on('hidden.bs.modal', function() {
+      $('#composeMessageModal .modal-body .alert-success').hide();
+      $('#composeMessageModal #id_send_message_form').show();
+      $('#id_user_message, #id_user_to_id').val("");
+    })
+
+    // Submit message form
+    $('#id_send_message_form').on('submit', function() {
+      $.post($(this).data('send-message-url'), $('#id_send_message_form').serialize(), function (response) {
+          if (response === 'success') {
+            $('#composeMessageModal .modal-body .alert-success').show();
+            $('#composeMessageModal #id_send_message_form').hide();
+          }
+      });
+
+      return false;
+    });
+
 
     // Set global methods
     qjGlobal.mqDetector = mqDetector;

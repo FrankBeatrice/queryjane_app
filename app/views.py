@@ -194,6 +194,13 @@ class ProfessionalDetail(LoginRequiredMixin, DetailView):
         profile = self.get_object()
         context['profile'] = profile
 
+        can_send_message = True
+
+        if profile == self.request.user.professionalprofile:
+            can_send_message = False
+
+        context['can_send_message'] = can_send_message
+
         return context
 
 

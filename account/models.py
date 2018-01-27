@@ -333,3 +333,37 @@ class UserNotification(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class UserMessage(models.Model):
+    user_from = models.ForeignKey(
+        'account.User',
+        verbose_name='from',
+        related_name='user_from',
+    )
+
+    user_to = models.ForeignKey(
+        'account.User',
+        verbose_name='to',
+        related_name='user_to',
+    )
+
+    message = models.TextField(
+        verbose_name='message',
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    unread = models.BooleanField(
+        default=True,
+    )
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return 'message from {0}'.format(
+            self.user_from.get_full_name(),
+        )

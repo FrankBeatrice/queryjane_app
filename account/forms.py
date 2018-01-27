@@ -166,3 +166,12 @@ class ProfileAutocompleteForm(Form):
         ),
         label='',
     )
+
+
+class UserMessageForm(Form):
+    user_message = forms.CharField(
+        label='message',
+        widget=forms.Textarea,
+    )
+
+    user_to_id = forms.IntegerField()
