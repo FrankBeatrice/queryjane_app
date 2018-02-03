@@ -34,7 +34,10 @@
                     </div>
 
                     <div class="col-md-9 col-xs-12">
-                        <form id="id_user_profile_form" method="post" enctype="multipart/form-data">
+                        <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">Profile updated successfully.</div>
+                        <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">There was an error. Reload the page and try again.</div>
+
+                        <form id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             <div class="row">

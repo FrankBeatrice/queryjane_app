@@ -275,12 +275,7 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
         user.state = city.state
         user.save()
 
-        return HttpResponseRedirect(
-            reverse(
-                'professional_detail',
-                args=[user.professionalprofile.slug],
-            )
-        )
+        return HttpResponse('success')
 
 
 class UpdateProfileDescriptionForm(LoginRequiredMixin, FormView):

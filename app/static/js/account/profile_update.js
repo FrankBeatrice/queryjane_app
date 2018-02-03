@@ -1,6 +1,23 @@
 $(function () {
     'use strict';
 
+    $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
+        getLocation();
+    });
+
+    var quill_en = new Quill('#rich_editor_description_en', {
+        theme: 'snow'
+    }).on('text-change', function () {
+        $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
+    });
+
+    var quill_es = new Quill('#rich_editor_description_es', {
+        theme: 'snow'
+    }).on('text-change', function () {
+        $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
+    });
+
+    // ---------Avatar form - init ------------- //
     // avatar Validation
     $('#id_profile_update_avatar_form').validate({
         ignore: [],
@@ -47,21 +64,29 @@ $(function () {
         });
         return false;
     });
+    // ---------Avatar form - end ------------- //
+    $('#id_user_profile_form').on('submit', function () {
+        var formData = new FormData(this);
 
-    $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
-        getLocation();
-    });
+        $.ajax({
+            url : $('#id_user_profile_form').data('profile-update-url'),
+            type: "POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                if (response === "success") {
+                    $('.successfullyProfileUpdate').show();
+                } else {
+                    $('.badProfileUpdate').show();
+                }
 
-    var quill_en = new Quill('#rich_editor_description_en', {
-        theme: 'snow'
-    }).on('text-change', function () {
-        $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
-    });
-
-    var quill_es = new Quill('#rich_editor_description_es', {
-        theme: 'snow'
-    }).on('text-change', function () {
-        $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
+                setTimeout(function(){
+                     $('.successfullyProfileUpdate, .badProfileUpdate').hide();
+                },3000);
+            },
+        });
+        return false;
     });
 
     // Update venture description
