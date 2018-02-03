@@ -365,5 +365,5 @@ class UserMessage(models.Model):
 
     def __str__(self):
         return 'message from {0}'.format(
-            self.user_from.get_full_name(),
+            self.user_from.get_full_name,
         )

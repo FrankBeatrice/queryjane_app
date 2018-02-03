@@ -13,6 +13,7 @@ from .views import UserMessageFormView
 
 from .views import LoadNotificationModal
 from .views import LoadMessageModal
+from .views import InboxView
 
 urlpatterns = [
     url(
@@ -86,5 +87,11 @@ urlpatterns = [
         r'^ax-post-message-load/(?P<pk>\d+)/$',
         LoadMessageModal.as_view(),
         name='ajax_post_message_load',
+    ),
+
+    url(
+        r'^inbox/$',
+        InboxView.as_view(),
+        name='inbox_view',
     ),
 ]

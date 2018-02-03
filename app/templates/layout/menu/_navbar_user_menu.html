@@ -39,15 +39,15 @@
 
             <i class="fa {% if new_user_messages_count %}fa-envelope{% else %}fa-inbox{% endif %}" aria-hidden="true"></i>
 
-            {% if new_user_messages_count %}({{ new_user_messages_count }}){% endif %}
+            {% if new_user_messages_count %}(<span class="NewMessagesCounter">{{ new_user_messages_count }}</span>){% endif %}
         </a>
 
         {% get_recent_user_messages user as recent_user_messages %}
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
         {% for message in recent_user_messages %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
-                <a class="qjane-messages-link {% if message.unread %}qjane-unread-message{% else %}qjane-viewed-message{% endif %}" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
-                    <i class="fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
+                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
                     From: {{ message.user_from }}
 
                     <p>{{ message.created_at }}</p>
@@ -56,8 +56,10 @@
         {% endfor %}
 
 
-        {% if recent_user_messages.count > 10 %}
-            <li class="dropdown-item"><a href="#">View all</a></li>
+        {% if new_user_messages_count > 10 %}
+            <li class="dropdown-item text-center">
+                <a href="{% url 'account:inbox_view' %}">View all</a>
+            </li>
         {% endif %}
         </ul>
     </li>

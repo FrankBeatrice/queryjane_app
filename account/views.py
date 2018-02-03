@@ -16,6 +16,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
 from django.views.generic import FormView
 from django.views.generic import UpdateView
+from django.views.generic import ListView
 from django.contrib import auth
 from account.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -205,18 +206,25 @@ class LoadMessageModal(CustomUserMixin, View):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        print("YES")
         message = self.get_object()
         message.unread = False
         message.save()
 
-        return JsonResponse({'content': render_to_string(
-            'modals/_message_modal.html',
-            context={
-                'message': message,
-            },
-            request=self.request,
-        )})
+        return JsonResponse(
+            {
+                'content': render_to_string(
+                    'modals/_message_modal.html',
+                    context={
+                        'message': message,
+                    },
+                    request=self.request,
+                ),
+                'new_messages_counter': UserMessage.objects.filter(
+                    user_to=request.user,
+                    unread=True,
+                ).count()
+            }
+        )
 
     def get(self, *args, **kwargs):
         raise Http404('Method not available')
@@ -422,3 +430,14 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         )
 
         return HttpResponse('success')
+
+
+class InboxView(LoginRequiredMixin, ListView):
+    model = UserMessage
+    template_name = 'account/inbox.html'
+    context_object_name = 'messages_list'
+
+    def get_queryset(self):
+        return UserMessage.objects.filter(
+            user_to=self.request.user,
+        )
