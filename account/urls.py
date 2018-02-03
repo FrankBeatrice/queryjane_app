@@ -14,6 +14,7 @@ from .views import UserMessageFormView
 from .views import LoadNotificationModal
 from .views import LoadMessageModal
 from .views import InboxView
+from .views import NotificationsView
 
 urlpatterns = [
     url(
@@ -93,5 +94,11 @@ urlpatterns = [
         r'^inbox/$',
         InboxView.as_view(),
         name='inbox_view',
+    ),
+
+    url(
+        r'^notifications/$',
+        NotificationsView.as_view(),
+        name='notifications_view',
     ),
 ]

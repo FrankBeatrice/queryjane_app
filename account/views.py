@@ -165,7 +165,7 @@ class LoadNotificationModal(CustomUserMixin, View):
     def test_func(self):
         return NotificationPermissions.can_view(
             user=self.request.user,
-            message=self.get_object(),
+            notification=self.get_object(),
         )
 
     def get_object(self):
@@ -440,4 +440,15 @@ class InboxView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return UserMessage.objects.filter(
             user_to=self.request.user,
+        )
+
+
+class NotificationsView(LoginRequiredMixin, ListView):
+    model = UserNotification
+    template_name = 'account/notifications.html'
+    context_object_name = 'notifications_list'
+
+    def get_queryset(self):
+        return UserNotification.objects.filter(
+            noty_to=self.request.user,
         )

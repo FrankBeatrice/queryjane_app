@@ -133,8 +133,18 @@ function getLocation() {
   });
 
     // Populate general message modal with notifications messages.
-    $('.header-notification-list').on('click', '.qjane-notification-link', function () {
+    $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
+
+        console.log("notification_url");
+        console.log(notification_url);
+
+        // Remove active class
+        $(this).closest('tr').removeClass("active");
+
+        // Change envelope ico to opened envelope
+        $(this).parent().find('.JSNotificationStatus').removeClass('fa-eye-slash').addClass('fa-eye');
+
         $.post(notification_url).done(function (response) {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
