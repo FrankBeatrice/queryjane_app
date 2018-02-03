@@ -175,3 +175,7 @@ class UserMessageForm(Form):
     )
 
     user_to_id = forms.IntegerField()
+
+
+class AvatarForm(Form):
+    avatar = forms.ImageField()

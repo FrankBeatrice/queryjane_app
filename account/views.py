@@ -25,6 +25,7 @@ from account.forms import SignUpForm
 from account.forms import ProfileForm
 from account.forms import ProfileDescriptionForm
 from account.forms import UserMessageForm
+from account.forms import AvatarForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import UserNotification
@@ -243,6 +244,7 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
 
         context = super().get_context_data(**kwargs)
         context['professional_profile'] = professional_profile
+        context['avatar_form'] = AvatarForm()
         context['industry_categories'] = IndustryCategory.objects.all()
         context['profile_description_form'] = ProfileDescriptionForm(
             initial={
@@ -452,3 +454,14 @@ class NotificationsView(LoginRequiredMixin, ListView):
         return UserNotification.objects.filter(
             noty_to=self.request.user,
         )
+
+
+class UpdateProfileAvatarForm(LoginRequiredMixin, FormView):
+    form_class = AvatarForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        user.avatar = form.cleaned_data['avatar']
+        user.save()
+
+        return JsonResponse({'content': user.get_avatar})

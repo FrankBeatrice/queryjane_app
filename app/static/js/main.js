@@ -136,9 +136,6 @@ function getLocation() {
     $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
 
-        console.log("notification_url");
-        console.log(notification_url);
-
         // Remove active class
         $(this).closest('tr').removeClass("active");
 

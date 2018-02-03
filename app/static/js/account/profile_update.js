@@ -1,6 +1,53 @@
 $(function () {
     'use strict';
 
+    // avatar Validation
+    $('#id_profile_update_avatar_form').validate({
+        ignore: [],
+        rules: {
+            avatar: {
+                extension: 'jpg|png|jpeg',
+                filesize: 4000000
+            }
+        },
+        messages: {
+            avatar: {
+                extension: 'Only jpg, png or jpeg files.'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'avatar') {
+                error.insertAfter('#id_profile_avatar_update_link');
+            }
+        }
+    });
+
+    $('#id_profile_avatar_update_link').on('click', function() {
+        $('#id_avatar').click();
+    });
+
+    $('#id_avatar').on('change', function () {
+        $('#submit_avatar_link').click();
+    });
+
+    var update_avatar_url = $('#id_profile_update_avatar_form').data('profile-update-avatar-url');
+
+    $('#id_profile_update_avatar_form').on('submit', function() {
+        var formData = new FormData(this);
+
+        $.ajax({
+            url : update_avatar_url,
+            type: "POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                $('.QjaneAccountGeneralInfo .ProfileAvatar').attr('src', response.content);
+            },
+        });
+        return false;
+    });
+
     $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
         getLocation();
     });
