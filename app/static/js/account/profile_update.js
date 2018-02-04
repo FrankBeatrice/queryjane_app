@@ -65,27 +65,81 @@ $(function () {
         return false;
     });
     // ---------Avatar form - end ------------- //
-    $('#id_user_profile_form').on('submit', function () {
-        var formData = new FormData(this);
 
-        $.ajax({
-            url : $('#id_user_profile_form').data('profile-update-url'),
-            type: "POST",
-            data : formData,
-            processData: false,
-            contentType: false,
-            success:function(response){
-                if (response === "success") {
-                    $('.successfullyProfileUpdate').show();
-                } else {
-                    $('.badProfileUpdate').show();
-                }
 
-                setTimeout(function(){
-                     $('.successfullyProfileUpdate, .badProfileUpdate').hide();
-                },3000);
+    // ---------Profile form - init ------------- //
+    $('#id_user_profile_form').validate({
+        ignore: [],
+        rules: {
+            first_name: {
+                minlength: 3,
+                maxlength: 50,
+                required: true
             },
-        });
+            last_name: {
+                minlength: 3,
+                maxlength: 50,
+                required: true
+            },
+            email: {
+                email: true,
+                required: true
+            },
+            country_search: {
+                required: true
+            },
+            country_code: {
+                required: true,
+                maxlength: 2
+            },
+            city_search: {
+                required: true
+            },
+            city_id: {
+                maxlength: 10,
+                required: true
+            },
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'country_search') {
+                error.insertAfter('#id_QjaneVFcountryAutImg');
+            } else if (element.attr('name') === 'country_code') {
+                error.insertAfter('#id_QjaneVFcountryAutImg');
+            } else if (element.attr('name') === 'city_search') {
+                error.insertAfter('.QjaneShareGPSfigure');
+            } else if (element.attr('name') === 'city_id') {
+                error.insertAfter('.QjaneShareGPSfigure');
+            }  else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+
+    $('#id_user_profile_form').on('submit', function () {
+        if ($(this).valid()) {
+            var formData = new FormData(this);
+
+            $.ajax({
+                url : $('#id_user_profile_form').data('profile-update-url'),
+                type: "POST",
+                data : formData,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    if (response === "success") {
+                        $('.successfullyProfileUpdate').show();
+                    } else {
+                        $('.badProfileUpdate').show();
+                    }
+
+                    setTimeout(function(){
+                         $('.successfullyProfileUpdate, .badProfileUpdate').hide();
+                    },3000);
+                },
+            });
+        }
+
         return false;
     });
 
