@@ -1,0 +1,42 @@
+{% extends "layout/index.html" %}
+{% load static messages %}
+
+{% block title %}Inbox{% endblock %}
+
+{% block content %}
+<section class="QjaneInbox">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+
+            {% get_user_messages_count user as user_messages_count %}
+            {% get_new_user_messages_count user as new_user_messages_count %}
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Inbox - <span class="NewMessagesCounter">{{ new_user_messages_count }}</span> new messages.</h3>
+                </div>
+
+                <div class="panel-body QjaneInboxList">
+                    <table class="table">
+                        {% for message in messages_list %}
+                        <tr class="{% if message.unread %}active{% endif %}">
+                            <td>
+                                <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                                <span> - From: {{ message.user_from }}</span>
+                                <p>{{ message.created_at }}</p>
+
+                                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
+                                    <p>{{ message.message|truncatechars:70 }}</p>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

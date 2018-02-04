@@ -17,6 +17,132 @@ $(function () {
         $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
     });
 
+    // ---------Avatar form - init ------------- //
+    // avatar Validation
+    $('#id_profile_update_avatar_form').validate({
+        ignore: [],
+        rules: {
+            avatar: {
+                extension: 'jpg|png|jpeg',
+                filesize: 4000000
+            }
+        },
+        messages: {
+            avatar: {
+                extension: 'Only jpg, png or jpeg files.'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'avatar') {
+                error.insertAfter('#id_profile_avatar_update_link');
+            }
+        }
+    });
+
+    $('#id_profile_avatar_update_link').on('click', function() {
+        $('#id_avatar').click();
+    });
+
+    $('#id_avatar').on('change', function () {
+        $('#submit_avatar_link').click();
+    });
+
+    var update_avatar_url = $('#id_profile_update_avatar_form').data('profile-update-avatar-url');
+
+    $('#id_profile_update_avatar_form').on('submit', function() {
+        var formData = new FormData(this);
+
+        $.ajax({
+            url : update_avatar_url,
+            type: "POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                $('.QjaneAccountGeneralInfo .ProfileAvatar').attr('src', response.content);
+            },
+        });
+        return false;
+    });
+    // ---------Avatar form - end ------------- //
+
+
+    // ---------Profile form - init ------------- //
+    $('#id_user_profile_form').validate({
+        ignore: [],
+        rules: {
+            first_name: {
+                minlength: 3,
+                maxlength: 50,
+                required: true
+            },
+            last_name: {
+                minlength: 3,
+                maxlength: 50,
+                required: true
+            },
+            email: {
+                email: true,
+                required: true
+            },
+            country_search: {
+                required: true
+            },
+            country_code: {
+                required: true,
+                maxlength: 2
+            },
+            city_search: {
+                required: true
+            },
+            city_id: {
+                maxlength: 10,
+                required: true
+            },
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'country_search') {
+                error.insertAfter('#id_QjaneVFcountryAutImg');
+            } else if (element.attr('name') === 'country_code') {
+                error.insertAfter('#id_QjaneVFcountryAutImg');
+            } else if (element.attr('name') === 'city_search') {
+                error.insertAfter('.QjaneShareGPSfigure');
+            } else if (element.attr('name') === 'city_id') {
+                error.insertAfter('.QjaneShareGPSfigure');
+            }  else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+
+    $('#id_user_profile_form').on('submit', function () {
+        if ($(this).valid()) {
+            var formData = new FormData(this);
+
+            $.ajax({
+                url : $('#id_user_profile_form').data('profile-update-url'),
+                type: "POST",
+                data : formData,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    if (response === "success") {
+                        $('.successfullyProfileUpdate').show();
+                    } else {
+                        $('.badProfileUpdate').show();
+                    }
+
+                    setTimeout(function(){
+                         $('.successfullyProfileUpdate, .badProfileUpdate').hide();
+                    },3000);
+                },
+            });
+        }
+
+        return false;
+    });
+
     // Update venture description
     $('.js_edit_desc_link').on('click', function () {
         $(this).closest('.js_lan_form_container').find('.description_field_container').show();

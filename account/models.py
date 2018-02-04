@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
+from app.validators import FileSizeValidator
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
@@ -82,6 +83,13 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
+    avatar = models.ImageField(
+        verbose_name='profile image',
+        max_length=255,
+        blank=True,
+        validators=[FileSizeValidator(4000)],
+    )
+
     first_name = models.CharField(
         verbose_name='name',
         max_length=128,
@@ -161,6 +169,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     objects = UserManager()
+
+    @property
+    def get_avatar(self):
+        avatar = '/static/img/profile_default_avatar.png'
+        if self.avatar:
+            avatar = self.avatar.url
+
+        return avatar
 
     @property
     def get_country(self):
@@ -365,5 +381,5 @@ class UserMessage(models.Model):
 
     def __str__(self):
         return 'message from {0}'.format(
-            self.user_from.get_full_name(),
+            self.user_from.get_full_name,
         )
