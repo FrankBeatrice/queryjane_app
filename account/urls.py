@@ -1,21 +1,20 @@
 from django.conf.urls import url
 
-from .views import SignUpFormView
-from .views import ProfileSearch
-from .views import NewUserLandingView
-from .views import UpdateProfileFormView
-from .views import UpdateProfileAvatarForm
-from .views import UpdateProfileDescriptionForm
-from .views import AdminNotificationAcceptView
-from .views import AdminNotificationRejectView
-from .views import AdminNotificationResendView
-from .views import ProfessionalProfileCategoryView
-from .views import UserMessageFormView
-
-from .views import LoadNotificationModal
-from .views import LoadMessageModal
-from .views import InboxView
-from .views import NotificationsView
+from account.views.messages_views import InboxView
+from account.views.messages_views import LoadMessageModal
+from account.views.messages_views import UserMessageFormView
+from account.views.notifications_views import AdminNotificationAcceptView
+from account.views.notifications_views import AdminNotificationRejectView
+from account.views.notifications_views import AdminNotificationResendView
+from account.views.notifications_views import LoadNotificationModal
+from account.views.notifications_views import NotificationsView
+from account.views.profile_views import NewUserLandingView
+from account.views.profile_views import ProfessionalProfileCategoryView
+from account.views.profile_views import ProfileSearch
+from account.views.profile_views import SignUpFormView
+from account.views.profile_views import UpdateProfileAvatarForm
+from account.views.profile_views import UpdateProfileDescriptionForm
+from account.views.profile_views import UpdateProfileFormView
 
 urlpatterns = [
     url(
