@@ -26,8 +26,8 @@
             </li>
         {% endfor %}
 
-        {% if user_notifications_count.count > 10 %}
-            <li class="dropdown-item"><a href="{% url 'account:notifications_view' %}">View all</a></li>
+        {% if user_notifications_count > 10 %}
+            <li class="dropdown-item text-center"><a href="{% url 'account:notifications_view' %}">View all</a></li>
         {% endif %}
         </ul>
     </li>
