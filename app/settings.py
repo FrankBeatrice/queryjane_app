@@ -160,6 +160,9 @@ LOGGING = {
     },
 }
 
+BASE_URL = 'https://queryjane.net/'
+
+EMAIL_SUBJECT = 'QueryJane - {0}'
 
 SOCIAL_AUTH_FACEBOOK_KEY = 'edit-it'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'edit-it'
