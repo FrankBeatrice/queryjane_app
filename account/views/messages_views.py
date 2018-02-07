@@ -48,23 +48,24 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
             message=user_message,
         )
 
-        subject = 'You have received a new message from {0}'.format(
-            self.request.user,
-        )
+        if user_to.professionalprofile.email_jobs_notifications:
+            subject = 'You have received a new message from {0}'.format(
+                self.request.user,
+            )
 
-        body = render_to_string(
-            'account/emails/new_private_message.html', {
-                'title': subject,
-                'message': message,
-                'base_url': settings.BASE_URL,
-            },
-        )
+            body = render_to_string(
+                'account/emails/new_private_message.html', {
+                    'title': subject,
+                    'message': message,
+                    'base_url': settings.BASE_URL,
+                },
+            )
 
-        send_email(
-            subject=subject,
-            body=body,
-            mail_to=[user_to.email],
-        )
+            send_email(
+                subject=subject,
+                body=body,
+                mail_to=[user_to.email],
+            )
 
         return HttpResponse('success')
 

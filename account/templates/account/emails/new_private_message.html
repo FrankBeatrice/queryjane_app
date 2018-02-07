@@ -1,6 +1,6 @@
 {% extends 'layout/base_email.html' %}
 
-{% block title %}New private message{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 <h1>New private message</h1>
@@ -10,6 +10,4 @@
 <p>{{ message.message|truncatechars:100 }}</p>
 
 <p>Go to your <a href="{{ base_url }}account/inbox/">inbox</a>.</p>
-
-<p>{{ comment }}</p>
 {% endblock %}

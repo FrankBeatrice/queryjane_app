@@ -1,4 +1,5 @@
 import json
+from django.conf import settings
 
 from django.db import transaction
 from django.core.urlresolvers import reverse
@@ -20,6 +21,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.loader import render_to_string
 from django.contrib.gis.geos import Point
 
+from app.tasks import send_email
 from .data import ACTIVE_MEMBERSHIP
 from .data import OWNER
 from .data import QJANE_ADMIN
@@ -574,6 +576,10 @@ class JobOfferFormView(CustomUserMixin, CreateView):
                 user__city=job_offer.city,
             )
 
+        description = 'New job offer that may interest you published by {}.'.format(
+            venture,
+        )
+
         for profile in potential_applicants.all():
             UserNotification.objects.create(
                 notification_type=NEW_JOB_OFFER,
@@ -581,11 +587,27 @@ class JobOfferFormView(CustomUserMixin, CreateView):
                 answered=True,
                 venture_from=venture,
                 job_offer=job_offer,
-                description='New job offer that may interest you published by {}.'.format(
-                    venture,
-                ),
+                description=description,
                 created_by=self.request.user.professionalprofile,
             )
+
+            if profile.email_jobs_notifications:
+                subject = description
+
+                body = render_to_string(
+                    'account/emails/potenitial_job_offer.html', {
+                        'title': subject,
+                        'profile': profile,
+                        'job_offer': job_offer,
+                        'base_url': settings.BASE_URL,
+                    },
+                )
+
+                send_email(
+                    subject=subject,
+                    body=body,
+                    mail_to=[profile.user.email],
+                )
 
         return HttpResponseRedirect(
             reverse(
