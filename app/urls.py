@@ -11,9 +11,9 @@ from .views import JobsList
 from .views import ProfessionalDetail
 from .views import ajax_login_form
 from .views import user_logout
+from .views import JobOfferApplyView
+from .views import JobOfferDetail
 from account.forms import UserPasswordResetForm
-from entrepreneur.views import JobOfferDetail
-from entrepreneur.views import JobOfferApplyView
 
 admin.site.site_title = 'QueryJane'
 admin.site.site_header = 'QueryJane - Administrador'

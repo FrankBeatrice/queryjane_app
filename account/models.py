@@ -239,7 +239,12 @@ class ProfessionalProfile(models.Model):
 
     email_jobs_notifications = models.BooleanField(
         default=True,
-        verbose_name='Recibir notificaciones de ofertas e trabajo via e-mail.',
+        verbose_name='receive notifications of job offers',
+    )
+
+    email_messages_notifications = models.BooleanField(
+        default=True,
+        verbose_name='receive notifications of new messages',
     )
 
     created_at = models.DateTimeField(

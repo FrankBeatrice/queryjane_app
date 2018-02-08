@@ -140,7 +140,6 @@
         </div>
 
         <div class="QjaneProfileUpdateDescriptionContainer" data-update-profile-description-form="{% url 'account:update_profile_description_form' %}">
-
             <form id="id_profile_change_description_form" method="post">
                 {% csrf_token %}
                 <div class="js_lan_form_container">
@@ -182,11 +181,12 @@
                     </div>
                 </div>
 
-                <div class="js_lan_form_container" style="display:none;>
+                {% comment %}
+                <div class="js_lan_form_container">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title clearfix">
-                                <span class="pull-left">Spanish - Profissional profile description</span>
+                                <span class="pull-left">Spanish - Professional profile description</span>
 
                                 <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
                                     Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
@@ -220,7 +220,43 @@
                         </div>
                     </div>
                 </div>
+                {% endcomment %}
             </form>
+        </div>
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix">
+                    <span class="pull-left">Email notifications</span>
+                </h3>
+            </div>
+
+            <div class="panel-body text-center ManageEmailNotifications" data-update-email-notifications-url="{% url 'account:ax_email_notification_update' %}">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <h3>Job offers</h3>
+                        <p>Notify me about new job offers that fit my profile.</p>
+
+                        <div data-notification="email_jobs_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <h3>Private messages</h3>
+                        <p>notify me when I receive a new inbox message.</p>
+
+                        <div data-notification="email_messages_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

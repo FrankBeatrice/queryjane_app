@@ -11,11 +11,11 @@ $(function () {
         $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
     });
 
-    var quill_es = new Quill('#rich_editor_description_es', {
-        theme: 'snow'
-    }).on('text-change', function () {
-        $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
-    });
+    // var quill_es = new Quill('#rich_editor_description_es', {
+    //     theme: 'snow'
+    // }).on('text-change', function () {
+    //     $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
+    // });
 
     // ---------Avatar form - init ------------- //
     // avatar Validation
@@ -226,7 +226,23 @@ $(function () {
         }
 
         $.post(pp_category_url, {'category_id': category_id, 'new_status': new_status}, function (response) {
-            console.log("response");
+            if (response != 'success') {
+                alert("Please, reload and try again");
+            }
+        });
+    });
+
+    // Notifications
+    $('.ManageEmailNotifications').on('click', '.btn', function() {
+        var button = $(this);
+        var notification = button.parent().data('notification');
+        var value = button.data('value');
+
+        $.post($('.ManageEmailNotifications').data('update-email-notifications-url'), {'notification': notification, 'value': value}, function (response) {
+            if (response === 'success') {
+                button.parent().find('.btn').removeClass('btn-primary').addClass('btn-default');
+                button.addClass('btn-primary').removeClass('btn-default');
+            }
         });
     });
 })

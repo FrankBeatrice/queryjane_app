@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import Http404
@@ -9,9 +11,11 @@ from django.views.generic import ListView
 from django.views.generic import FormView
 from django.views.generic import View
 
+from account.models import User
 from account.models import UserMessage
 from account.permissions import MessagesPermissions
 from app.mixins import CustomUserMixin
+from app.tasks import send_email
 from account.forms import UserMessageForm
 
 
@@ -36,11 +40,32 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         user_message = form.cleaned_data['user_message']
         user_to_id = form.cleaned_data['user_to_id']
 
-        UserMessage.objects.create(
+        user_to = User.objects.get(id=user_to_id)
+
+        message = UserMessage.objects.create(
             user_from=self.request.user,
-            user_to_id=user_to_id,
+            user_to=user_to,
             message=user_message,
         )
+
+        if user_to.professionalprofile.email_jobs_notifications:
+            subject = 'You have received a new message from {0}'.format(
+                self.request.user,
+            )
+
+            body = render_to_string(
+                'account/emails/new_private_message.html', {
+                    'title': subject,
+                    'message': message,
+                    'base_url': settings.BASE_URL,
+                },
+            )
+
+            send_email(
+                subject=subject,
+                body=body,
+                mail_to=[user_to.email],
+            )
 
         return HttpResponse('success')
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %} | QueryJane</title>
+
+<style type="text/css">
+</style>
+
+</head>
+<body>
+    <table style="max-width: 600px; width: 100%; margin: auto; padding: 0px 20px;">
+        <tr>
+            <th>
+                <table style="width: 100%; padding: 20px 0px;">
+                    <tr>
+                        <th style="text-align: center;">
+                            <img src="https://s3-us-west-2.amazonaws.com/queryjane/social/queryjane_default.png" width="300px" height="auto">
+                        </th>
+                    </tr>
+                </table>
+            </th>
+        </tr>
+        <tr>
+            <td style="background-color: #FFFFFF; padding: 40px; color:#333333;">
+                {% block content %}{% endblock %}
+            </td>
+        </tr>
+
+        <tr>
+            <a href="{{ base_url }}account/update/" style="color:gray;">Go to manage email notifications.</a>
+        </tr>
+
+        <tr style="text-align: center;">
+            <td style="padding: 20px 0px 5px">
+                <a href="https://www.facebook.com/QueryJane-1788853644723154/" target="_blank"><img src="https://s3-us-west-2.amazonaws.com/queryjane/social/facebook.png" width="16px" height="16px" style="padding: 0px 9px" /></a>
+                <a href="https://twitter.com/queryjane" target="_blank"><img src="https://s3-us-west-2.amazonaws.com/queryjane/social/twitter.png" width="16px" height="16px" style="padding: 0px 7px" /></a>
+            </td>
+        </tr>
+
+        <tr style="text-align: center; font-size: 12px;">
+            <td style="padding: 5px 0px 20px; color: #800080;">© {% now 'Y' %} QueryJane</td>
+        </tr>
+    </table>
+</body>
+</html>
