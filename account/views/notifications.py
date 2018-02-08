@@ -82,7 +82,7 @@ class AdminNotificationAcceptView(CustomUserMixin, View):
         membership.save()
 
         return redirect(
-            'entrepreneur:settings_venture_form',
+            'entrepreneur:general_venture_form',
             notification.venture_from.slug,
         )
 

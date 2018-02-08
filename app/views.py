@@ -6,10 +6,15 @@ from django.contrib import auth
 from account.models import User
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
+from app.mixins import CustomUserMixin
 from account.models import ProfessionalProfile
 from entrepreneur.models import Venture
+from entrepreneur.models import Applicant
+from account.permissions import JobOfferPermissions
 from entrepreneur.permissions import EntrepreneurPermissions
 from entrepreneur.forms import VentureFilter
 from entrepreneur.forms import JobOffersFilter
@@ -17,7 +22,6 @@ from entrepreneur.models import JobOffer
 from place.utils import get_user_country
 
 from account.forms import SignUpForm
-from django.views.generic import TemplateView
 
 
 class HomeView(TemplateView):
@@ -237,3 +241,59 @@ def user_logout(request):
     auth.logout(request)
 
     return redirect('home')
+
+
+class JobOfferDetail(DetailView):
+    model = JobOffer
+    template_name = 'entrepreneur/job_detail.html'
+
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        job_offer = self.get_object()
+
+        has_applied = False
+
+        if Applicant.objects.filter(
+            job_offer=job_offer,
+            applicant=self.request.user.professionalprofile
+        ):
+            has_applied = True
+
+        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+            self.request.user,
+            job_offer.venture,
+        )
+        context['can_apply'] = JobOfferPermissions.can_apply(
+            self.request.user,
+            job_offer,
+        )
+        context['has_applied'] = has_applied
+
+        return context
+
+
+class JobOfferApplyView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    def test_func(self):
+        return JobOfferPermissions.can_apply(
+            user=self.request.user,
+            job_offer=self.get_object(),
+        )
+
+    def get(self, *args, **kwargs):
+        job_offer = self.get_object()
+
+        Applicant.objects.create(
+            job_offer=job_offer,
+            applicant=self.request.user.professionalprofile
+        )
+
+        return redirect(
+            'job_offer_detail',
+            job_offer.slug,
+        )

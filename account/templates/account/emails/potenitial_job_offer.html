@@ -14,11 +14,11 @@
 {{ job_offer.description|safe|truncatechars_html:130 }}
 
 {% if job_offer.country %}
-<p>Country: job_offer.country</p>
+<p>Country: {{ job_offer.country }}</p>
 {% endif %}
 
 {% if job_offer.city %}
-<p>City: job_offer.city</p>
+<p>City: {{ job_offer.city }}</p>
 {% endif %}
 
 <p>Go to <a href="{{ base_url }}{{ job_offer.slug }}">apply</a></p>

@@ -1,0 +1,130 @@
+from django.http import JsonResponse
+from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.http import Http404
+from django.views.generic import View
+
+from app.mixins import CustomUserMixin
+from entrepreneur.permissions import EntrepreneurPermissions
+from entrepreneur.models import Venture
+from entrepreneur.forms import RoleVentureForm
+from account.models import UserNotification
+from account.forms import ProfileAutocompleteForm
+from account.data import NEW_ENTREPRENEUR_ADMIN
+from account.models import ProfessionalProfile
+from entrepreneur.models import AdministratorMembership
+from entrepreneur.data import QJANE_ADMIN
+
+
+class RolesVentureFormView(CustomUserMixin, TemplateView):
+    template_name = 'entrepreneur/venture_settings/roles_venture_form.html'
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    def get(self, *args, **kwargs):
+        venture = self.get_object()
+
+        memberships = venture.administratormembership_set.all()
+
+        return self.render_to_response(
+            self.get_context_data(
+                venture=venture,
+                memberships=memberships,
+                userprofile_form=ProfileAutocompleteForm(prefix='role'),
+                roles_active=True,
+            )
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        membership_form = RoleVentureForm(
+            request.POST,
+        )
+
+        if membership_form.is_valid():
+            profile_slug = membership_form.cleaned_data['profile_slug']
+            venture_slug = membership_form.cleaned_data['venture_slug']
+            role = int(membership_form.cleaned_data['role'])
+
+            profile = get_object_or_404(
+                ProfessionalProfile,
+                slug=profile_slug,
+            )
+
+            venture = get_object_or_404(
+                Venture,
+                slug=venture_slug,
+            )
+
+            if AdministratorMembership.objects.filter(
+                admin=profile,
+                venture=venture,
+            ):
+                return HttpResponse('registered-membership')
+
+            membership = AdministratorMembership.objects.create(
+                admin=profile,
+                venture=venture,
+                role=role,
+                created_by=request.user.professionalprofile,
+            )
+
+            UserNotification.objects.create(
+                notification_type=NEW_ENTREPRENEUR_ADMIN,
+                noty_to=profile.user,
+                venture_from=venture,
+                description='Invitation to administer company from {}.'.format(
+                    self.request.user.professionalprofile,
+                ),
+                created_by=self.request.user.professionalprofile,
+                membership=membership,
+            )
+
+            return JsonResponse({'content': render_to_string(
+                'entrepreneur/venture_settings/_membership_line.html',
+                context={
+                    'membership': membership,
+                },
+                request=self.request,
+            )})
+
+        else:
+            return HttpResponse('fail')
+
+        raise Http404
+
+
+class MembershipLineView(LoginRequiredMixin, View):
+    def post(self, request, **kwargs):
+        profile_id = request.POST.get('profile_id')
+        venture_slug = request.POST.get('venture_slug')
+        userprofile = get_object_or_404(
+            ProfessionalProfile,
+            id=profile_id,
+        )
+
+        return JsonResponse({'content': render_to_string(
+            'entrepreneur/venture_settings/_userprofile_line.html',
+            context={
+                'userprofile': userprofile,
+                'role_form': RoleVentureForm(
+                    initial={
+                        'venture_slug': venture_slug,
+                        'profile_slug': userprofile.slug,
+                        'role': QJANE_ADMIN,
+                    },
+                ),
+            },
+            request=self.request,
+        )})

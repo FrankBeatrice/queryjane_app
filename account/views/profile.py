@@ -142,7 +142,7 @@ class ProfessionalProfileCategoryView(LoginRequiredMixin, View):
             professionalprofile.industry_categories.remove(category)
         professionalprofile.save()
 
-        return HttpResponse('success')
+        return HttpResponse(professionalprofile.industry_categories.count())
 
 
 class UpdateProfileFormView(LoginRequiredMixin, UpdateView):

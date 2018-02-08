@@ -1,21 +1,21 @@
 from django.conf.urls import url
 
-from account.views.messages_views import InboxView
-from account.views.messages_views import LoadMessageModal
-from account.views.messages_views import UserMessageFormView
-from account.views.notifications_views import AdminNotificationAcceptView
-from account.views.notifications_views import AdminNotificationRejectView
-from account.views.notifications_views import AdminNotificationResendView
-from account.views.notifications_views import LoadNotificationModal
-from account.views.notifications_views import NotificationsView
-from account.views.profile_views import NewUserLandingView
-from account.views.profile_views import ProfessionalProfileCategoryView
-from account.views.profile_views import ProfileSearch
-from account.views.profile_views import SignUpFormView
-from account.views.profile_views import UpdateProfileAvatarForm
-from account.views.profile_views import UpdateProfileDescriptionForm
-from account.views.profile_views import UpdateProfileFormView
-from account.views.profile_views import EmailNotificationsUpdateView
+from account.views.messages import InboxView
+from account.views.messages import LoadMessageModal
+from account.views.messages import UserMessageFormView
+from account.views.notifications import AdminNotificationAcceptView
+from account.views.notifications import AdminNotificationRejectView
+from account.views.notifications import AdminNotificationResendView
+from account.views.notifications import LoadNotificationModal
+from account.views.notifications import NotificationsView
+from account.views.profile import NewUserLandingView
+from account.views.profile import ProfessionalProfileCategoryView
+from account.views.profile import ProfileSearch
+from account.views.profile import SignUpFormView
+from account.views.profile import UpdateProfileAvatarForm
+from account.views.profile import UpdateProfileDescriptionForm
+from account.views.profile import UpdateProfileFormView
+from account.views.profile import EmailNotificationsUpdateView
 
 urlpatterns = [
     url(

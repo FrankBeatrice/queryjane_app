@@ -16,7 +16,7 @@
                 <img style="max-width: 100%;" class="media-object thumbnail" src="{{ venture.get_logo }}" alt="{{ venture }}">
 
             {% if can_manage %}
-                <a href="{% url 'entrepreneur:settings_venture_form' venture.slug %}" class="btn btn-ghost-purple">Settings</a>
+                <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">Settings</a>
             {% endif %}
 
             {% get_user_venture_admin_notification user venture as user_venture_admin_notification %}
