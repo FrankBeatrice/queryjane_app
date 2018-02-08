@@ -142,7 +142,7 @@ class ProfessionalProfileCategoryView(LoginRequiredMixin, View):
             professionalprofile.industry_categories.remove(category)
         professionalprofile.save()
 
-        return HttpResponse(professionalprofile.industry_categories.count())
+        return HttpResponse('success')
 
 
 class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
@@ -236,3 +236,31 @@ class UpdateProfileAvatarForm(LoginRequiredMixin, FormView):
         user.save()
 
         return JsonResponse({'content': user.get_avatar})
+
+
+class EmailNotificationsUpdateView(LoginRequiredMixin, View):
+    def get_object(self):
+        return self.request.user.professionalprofile
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        professionalprofile = self.get_object()
+
+        notification = request.POST.get('notification')
+        value = request.POST.get('value')
+
+        # Value to set in notification settings.
+        new_value = False
+        if value == 'notify':
+            new_value = True
+
+        print("notification")
+        print(notification)
+
+        print("new_value")
+        print(new_value)
+
+        setattr(professionalprofile, notification, new_value)
+        professionalprofile.save()
+
+        return HttpResponse('success')

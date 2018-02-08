@@ -15,6 +15,7 @@ from account.views.profile_views import SignUpFormView
 from account.views.profile_views import UpdateProfileAvatarForm
 from account.views.profile_views import UpdateProfileDescriptionForm
 from account.views.profile_views import UpdateProfileFormView
+from account.views.profile_views import EmailNotificationsUpdateView
 
 urlpatterns = [
     url(
@@ -106,5 +107,11 @@ urlpatterns = [
         r'^ax_profile_avatar/$',
         UpdateProfileAvatarForm.as_view(),
         name='update_profile_avatar_form',
+    ),
+
+    url(
+        r'^ax_email_notification_update/$',
+        EmailNotificationsUpdateView.as_view(),
+        name='ax_email_notification_update',
     ),
 ]
