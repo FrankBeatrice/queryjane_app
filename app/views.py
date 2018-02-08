@@ -256,11 +256,12 @@ class JobOfferDetail(DetailView):
 
         has_applied = False
 
-        if Applicant.objects.filter(
-            job_offer=job_offer,
-            applicant=self.request.user.professionalprofile
-        ):
-            has_applied = True
+        if self.request.user.is_authenticated:
+            if Applicant.objects.filter(
+                job_offer=job_offer,
+                applicant=self.request.user.professionalprofile
+            ):
+                has_applied = True
 
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
