@@ -32,6 +32,7 @@ INSTALLED_APPS = PROJECT_APPS + (
     'social_django',
     'widget_tweaks',
     'storages',
+    'huey.contrib.djhuey',
 )
 
 MIDDLEWARE = [
@@ -135,6 +136,33 @@ SOCIAL_AUTH_USER_FIELDS = [
     'email',
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'level-and-date': {
+            'format':
+            '%(levelname)s\t%(asctime)s\t%(funcName)s\t%(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'level-and-date',
+        },
+    },
+    'loggers': {
+        'huey': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+BASE_URL = 'https://queryjane.net/'
+
+EMAIL_SUBJECT = 'QueryJane - {0}'
 
 SOCIAL_AUTH_FACEBOOK_KEY = 'edit-it'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'edit-it'

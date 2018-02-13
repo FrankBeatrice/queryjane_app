@@ -1,0 +1,42 @@
+{% extends "layout/index.html" %}
+{% load static notifications %}
+
+{% block title %}Notification{% endblock %}
+
+{% block content %}
+<section class="QjaneNotifications">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+
+            {% get_user_notifications_count user as user_notifications_count %}
+            {% get_new_user_notifications_count user as new_user_notifications_count %}
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Notifications - <span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span> new notifications.</h3>
+                </div>
+
+                <div class="panel-body QjaneNotificationsList">
+                    <table class="table">
+                        {% for notification in notifications_list %}
+                        <tr class="{% if not notification.was_seen %}active{% endif %}">
+                            <td>
+                                <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if message.unread %}New notification{% else %}Viewed notification{% endif %}"></i>
+
+                                <span> - {{ notification.created_at }}</span>
+
+                                <a class="qjane-notification-link" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk %}" data-toggle="modal" data-target="#generalModalMessage">
+                                    <p>{{ notification }}</p>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

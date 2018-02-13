@@ -1,10 +1,10 @@
-{% load entrepreneur_tags notifications %}
+{% load entrepreneur_tags notifications messages general_forms widget_tweaks %}
 <ul class="nav navbar-nav navbar-right">
 
     {% get_user_notifications_count user as user_notifications_count %}
     {% get_new_user_notifications_count user as new_user_notifications_count %}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" {% if user_notifications_count %}href="#" id="navbarDropdownNotificationsLink" data-toggle="dropdown"{% endif %} title="{% if user_notifications_count %}Notificaciones{% else %}No hay nuevas notificaciones{% endif %}">
+        <a class="nav-link dropdown-toggle" {% if user_notifications_count %}href="#" id="navbarDropdownNotificationsLink" data-toggle="dropdown"{% endif %} title="{% if user_notifications_count %}Notifications{% else %}There are not new notifications{% endif %}">
 
         {% if user_notifications_count %}
             <i class="fa fa-bell" aria-hidden="true"></i>
@@ -16,38 +16,53 @@
         </a>
 
         {% get_recent_user_notifications user as recent_user_notifications %}
-        <ul class="dropdown-menu notification-list"  aria-labelledby="navbarDropdownNotificationsLink">
-    {% for notification in recent_user_notifications %}
+        <ul class="dropdown-menu header-notification-list"  aria-labelledby="navbarDropdownNotificationsLink">
+        {% for notification in recent_user_notifications %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
                 <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
-                    <i class="fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Notificación revisada{% else %}Nueva notificación{% endif %}"></i>
+                    <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
                     {{ notification }}
                 </a>
             </li>
-    {% endfor %}
+        {% endfor %}
 
-        {% if recent_user_notifications.count > 10 %}
-            <li class="dropdown-item"><a href="#">View all</a></li>
+        {% if user_notifications_count > 10 %}
+            <li class="dropdown-item text-center"><a href="{% url 'account:notifications_view' %}">View all</a></li>
         {% endif %}
         </ul>
     </li>
 
-    {% comment %}
+    {% get_user_messages_count user as user_messages_count %}
+    {% get_new_user_messages_count user as new_user_messages_count %}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMessagesLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
+        <a class="nav-link dropdown-toggle" {% if user_messages_count %}href="#" id="navbarDropdownMessagesLink" data-toggle="dropdown"{% endif %} title="{% if user_messages_count %}Messages{% else %}There are not new messages{% endif %}">
+
+            <i class="fa {% if new_user_messages_count %}fa-envelope{% else %}fa-inbox{% endif %}" aria-hidden="true"></i>
+
+            {% if new_user_messages_count %}(<span class="NewMessagesCounter">{{ new_user_messages_count }}</span>){% endif %}
         </a>
 
-        <ul class="dropdown-menu"  aria-labelledby="navbarDropdownMessagesLink">
-            <li class="dropdown-item"><a href="#">Conversación 1</a></li>
-            <li class="dropdown-item"><a href="#">Conversación 2</a></li>
-            <li class="dropdown-item"><a href="#">Conversación 3</a></li>
-            <li class="dropdown-item"><a href="#">Conversación 4</a></li>
-            <li class="dropdown-item"><a href="#">Conversación 5</a></li>
-            <li class="dropdown-item"><a href="#">Ver todas</a></li>
+        {% get_recent_user_messages user as recent_user_messages %}
+        <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
+        {% for message in recent_user_messages %}
+            <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
+                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
+                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                    From: {{ message.user_from }}
+
+                    <p>{{ message.created_at }}</p>
+                </a>
+            </li>
+        {% endfor %}
+
+
+        {% if user_messages_count > 10 %}
+            <li class="dropdown-item text-center">
+                <a href="{% url 'account:inbox_view' %}">View all</a>
+            </li>
+        {% endif %}
         </ul>
     </li>
-    {% endcomment %}
 
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSettingsLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,3 +115,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="composeMessageModal" tabindex="-1" role="dialog" aria-labelledby="composeMessageModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Compose Message</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+              <div class="modal-body">
+                <div class="alert alert-success" role="alert" style="display:none;">
+                  Your message has been sent.
+                </div>
+
+                {% get_message_form as message_form %}
+                <form id="id_send_message_form" method="post" data-send-message-url="{% url 'account:send_user_mesasge' %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label>
+                            {{ message_form.user_message.label }}
+                            <span class="QJRequiredField">*</span>
+                        </label>
+
+                        {% render_field message_form.user_message class+="form-control" %}
+                        {{ message_form.user_message.errors }}
+                    </div>
+
+                    <div style="display:none;">{% render_field message_form.user_to_id %}</div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Send</button>
+                </form>
+              </div>
+        </div>
+    </div>
+</div>

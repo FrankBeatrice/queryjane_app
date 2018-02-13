@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h5 class="modal-title">
-    {% if notification.is_new_entrepreneur_admin %}
+    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer  %}
         {{ notification.venture_from }}
     {% endif %}
     </h5>
@@ -14,6 +14,10 @@
     <p>
         {{ notification.membership.created_by }} has sent you an invitation to administer <strong>{{ notification.membership.venture }}</strong>.
     </p>
+{% elif notification.is_interest_job_offer %}
+    <p>
+        <strong>{{ notification.venture_from }}</strong> has published a job offer that may interest you.
+    </p>
 {% endif %}
   </div>
 
@@ -24,5 +28,7 @@
     {% else %}
     <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">Answer</a>
     {% endif %}
+{% elif notification.is_interest_job_offer %}
+    <a href="{{ notification.job_offer.get_absolute_url }}" class="btn btn-primary">Check it out</a>
 {% endif %}
 </div>

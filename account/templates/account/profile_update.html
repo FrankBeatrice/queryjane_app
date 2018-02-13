@@ -16,83 +16,106 @@
             </div>
 
             <div class="panel-body QjaneAccountGeneralInfo">
-                <form id="id_user_profile_form" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <img style="max-width: 100%;" class="media-object thumbnail ProfileAvatar" src="{{ professional_profile.user.get_avatar }}" alt="{{ professional_profile }}">
 
-                    <div class="row">
-                        <div class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                <label>
-                                    {{ form.first_name.label }}
-                                    <span class="QJRequiredField">*</span>
-                                </label>
+                        <form id="id_profile_update_avatar_form" method="post" enctype="multipart/form-data" data-profile-update-avatar-url="{% url 'account:update_profile_avatar_form' %}" style="display:none;">
+                            {% csrf_token %}
+                            {% render_field avatar_form.avatar %}
 
-                                {% render_field form.first_name class+="form-control" %}
-                                {{ form.first_name.errors }}
-                            </div>
+                            <button type="submit" id="submit_avatar_link"></button>
+                        </form>
 
-                            <div class="form-group">
-                                <label>
-                                    {{ form.last_name.label }}
-                                    <span class="QJRequiredField">*</span>
-                                </label>
-
-                                {% render_field form.last_name class+="form-control" %}
-                                {{ form.last_name.errors }}
-                            </div>
-
-                            <div class="form-group">
-                                <label>
-                                    {{ form.email.label }}
-                                    <span class="QJRequiredField">*</span>
-                                </label>
-
-                                {% render_field form.email class+="form-control" %}
-                                {{ form.email.errors }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xs-12">
-                            <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
-                                <label>
-                                    Country
-                                    <span class="QJRequiredField">*</span>
-                                </label>
-                                <div>
-                                    {% render_field form.country_search class+="form-control" %}
-                                    <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
-                                    <p>{{ form.country_search.errors }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="display:none;">
-                                {% render_field form.country_code %}
-                                <p>{{ form.country_code.errors }}</p>
-                            </div>
-
-                            <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
-                                <label>
-                                    City
-                                    <span class="QJRequiredField">*</span>
-                                </label>
-                                <div>
-                                    {% render_field form.city_search class+="form-control" %}
-                                    <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
-                                    <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
-                                    <p>{{ form.city_search.errors }}</p>
-
-                                    <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>
-                                </div>
-
-                                <div class="form-group" style="display:none;">
-                                    {% render_field form.city_id %}
-                                </div>
-                            </div>
-                        </div>
+                        <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_profile_avatar_update_link">
+                            <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
+                            Update
+                        </a>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
+                    <div class="col-md-9 col-xs-12">
+                        <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">Profile updated successfully.</div>
+                        <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">There was an error. Reload the page and try again.</div>
+
+                        <form id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            {{ form.first_name.label }}
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+
+                                        {% render_field form.first_name class+="form-control" %}
+                                        {{ form.first_name.errors }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            {{ form.last_name.label }}
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+
+                                        {% render_field form.last_name class+="form-control" %}
+                                        {{ form.last_name.errors }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            {{ form.email.label }}
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+
+                                        {% render_field form.email class+="form-control" %}
+                                        {{ form.email.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <label>
+                                            Country
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field form.country_search class+="form-control" %}
+                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                                            <p>{{ form.country_search.errors }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="display:none;">
+                                        {% render_field form.country_code %}
+                                        <p>{{ form.country_code.errors }}</p>
+                                    </div>
+
+                                    <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <label>
+                                            City
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field form.city_search class+="form-control" %}
+                                            <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
+                                            <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                            <p>{{ form.city_search.errors }}</p>
+
+                                            <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            {% render_field form.city_id %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -117,7 +140,6 @@
         </div>
 
         <div class="QjaneProfileUpdateDescriptionContainer" data-update-profile-description-form="{% url 'account:update_profile_description_form' %}">
-
             <form id="id_profile_change_description_form" method="post">
                 {% csrf_token %}
                 <div class="js_lan_form_container">
@@ -159,11 +181,12 @@
                     </div>
                 </div>
 
-                <div class="js_lan_form_container" style="display:none;>
+                {% comment %}
+                <div class="js_lan_form_container">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title clearfix">
-                                <span class="pull-left">Spanish - Profissional profile description</span>
+                                <span class="pull-left">Spanish - Professional profile description</span>
 
                                 <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
                                     Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
@@ -197,7 +220,43 @@
                         </div>
                     </div>
                 </div>
+                {% endcomment %}
             </form>
+        </div>
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix">
+                    <span class="pull-left">Email notifications</span>
+                </h3>
+            </div>
+
+            <div class="panel-body text-center ManageEmailNotifications" data-update-email-notifications-url="{% url 'account:ax_email_notification_update' %}">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <h3>Job offers</h3>
+                        <p>Notify me about new job offers that fit my profile.</p>
+
+                        <div data-notification="email_jobs_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <h3>Private messages</h3>
+                        <p>notify me when I receive a new inbox message.</p>
+
+                        <div data-notification="email_messages_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

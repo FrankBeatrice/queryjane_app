@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
+from app.validators import FileSizeValidator
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
@@ -12,6 +13,7 @@ from django.utils import timezone
 
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_ENTREPRENEUR_ADMIN
+from .data import NEW_JOB_OFFER
 from entrepreneur.models import Venture
 
 
@@ -80,6 +82,13 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
+
+    avatar = models.ImageField(
+        verbose_name='profile image',
+        max_length=255,
+        blank=True,
+        validators=[FileSizeValidator(4000)],
+    )
 
     first_name = models.CharField(
         verbose_name='name',
@@ -162,6 +171,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     @property
+    def get_avatar(self):
+        avatar = '/static/img/profile_default_avatar.png'
+        if self.avatar:
+            avatar = self.avatar.url
+
+        return avatar
+
+    @property
     def get_country(self):
         country = None
 
@@ -220,15 +237,14 @@ class ProfessionalProfile(models.Model):
         blank=True,
     )
 
-    apply_jobs = models.BooleanField(
-        default=True,
-        choices=BOOL_CHOICES,
-        verbose_name='¿Deseas aplicar a ofertas de trabajo publicadas en tus sectores de interés?',
-    )
-
     email_jobs_notifications = models.BooleanField(
         default=True,
-        verbose_name='Recibir notificaciones de ofertas e trabajo via e-mail.',
+        verbose_name='receive notifications of job offers',
+    )
+
+    email_messages_notifications = models.BooleanField(
+        default=True,
+        verbose_name='receive notifications of new messages',
     )
 
     created_at = models.DateTimeField(
@@ -294,7 +310,7 @@ class UserNotification(models.Model):
 
     noty_to = models.ForeignKey(
         'account.User',
-        verbose_name='Notificar a',
+        verbose_name='Notify to',
     )
 
     venture_from = models.ForeignKey(
@@ -309,9 +325,15 @@ class UserNotification(models.Model):
         null=True,
     )
 
+    job_offer = models.ForeignKey(
+        'entrepreneur.JobOffer',
+        verbose_name='related job offer',
+        null=True,
+    )
+
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='creada por',
+        verbose_name='created by',
         related_name='creator',
     )
 
@@ -323,12 +345,46 @@ class UserNotification(models.Model):
     def is_new_entrepreneur_admin(self):
         return self.notification_type == NEW_ENTREPRENEUR_ADMIN
 
+    @property
+    def is_interest_job_offer(self):
+        return self.notification_type == NEW_JOB_OFFER
+
     class Meta:
         ordering = ('-created_at',)
 
     def __str__(self):
-        if self.is_new_entrepreneur_admin:
-            label = 'invitation from {}'.format(
-                self.created_by,
-            )
-        return label
+        return self.description
+
+
+class UserMessage(models.Model):
+    user_from = models.ForeignKey(
+        'account.User',
+        verbose_name='from',
+        related_name='user_from',
+    )
+
+    user_to = models.ForeignKey(
+        'account.User',
+        verbose_name='to',
+        related_name='user_to',
+    )
+
+    message = models.TextField(
+        verbose_name='message',
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    unread = models.BooleanField(
+        default=True,
+    )
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return 'message from {0}'.format(
+            self.user_from.get_full_name,
+        )

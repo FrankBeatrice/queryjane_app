@@ -1,19 +1,19 @@
 from django.conf.urls import url
 
-from .views import VentureFormView
-from .views import SettingsVentureFormView
-from .views import UpdateVentureLogoForm
-from .views import ContactVentureFormView
-from .views import AjaxContactVentureFormView
-from .views import AjaxLocationVentureFormView
-from .views import RolesVentureFormView
-from .views import JobOffersListView
-from .views import JobOfferFormView
-from .views import PrivacyVentureFormView
-from .views import MembershipLineView
-from .views import UpdateVentureDescriptionForm
-from .views import VentureCategoryView
-from .views import VentureSearch
+from .views.contact_venture_settings import AjaxContactVentureFormView
+from .views.contact_venture_settings import AjaxLocationVentureFormView
+from .views.contact_venture_settings import ContactVentureFormView
+from .views.general_venture_settings import GeneralVentureFormView
+from .views.general_venture_settings import UpdateVentureDescriptionForm
+from .views.general_venture_settings import UpdateVentureLogoForm
+from .views.general_venture_settings import VentureCategoryView
+from .views.manage_job_offers import JobOfferFormView
+from .views.manage_job_offers import JobOffersListView
+from .views.privacy_venture_settings import PrivacyVentureFormView
+from .views.roles_venture_settings import MembershipLineView
+from .views.roles_venture_settings import RolesVentureFormView
+from .views.venture_views import VentureFormView
+from .views.venture_views import VentureSearch
 
 
 urlpatterns = [
@@ -29,9 +29,9 @@ urlpatterns = [
     ),
 
     url(
-        r'^settings/(?P<slug>[-\w]+)/$',
-        SettingsVentureFormView.as_view(),
-        name='settings_venture_form',
+        r'^general/(?P<slug>[-\w]+)/$',
+        GeneralVentureFormView.as_view(),
+        name='general_venture_form',
     ),
 
     url(

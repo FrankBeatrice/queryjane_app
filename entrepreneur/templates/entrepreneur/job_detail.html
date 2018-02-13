@@ -2,7 +2,7 @@
 
 {% load static entrepreneur_tags %}
 
-{% block title %}{{ venture }}{% endblock %}
+{% block title %}{{ object }}{% endblock %}
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
@@ -73,6 +73,48 @@
                     </div>
                 {% endif %}
                 </div>
+
+            {% if can_manage %}
+                <h3>Applicants list</h3>
+                
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>application date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+
+                    <tbody>
+                    {% for applicant in object.applicant_set.all %}
+                        <tr>
+                          <td>{{ applicant.applicant }}</td>
+                          <td>{{ applicant.created_at }}</td>
+                          <td>
+                            <a href="{% url 'professional_detail' applicant.applicant.slug %}">
+                              View profile
+                            </a>
+                          </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                          <td>There are not applicants yet.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+                {% if can_apply %}
+                <a class="btn btn-primary" href="{% url 'job_offer_apply' object.slug %}">Apply</a>
+                {% endif %}
+
+                {% if has_applied %}
+                <div class="alert alert-success" role="alert">
+                  You have applied to this offer.
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
