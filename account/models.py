@@ -172,7 +172,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_avatar(self):
-        avatar = '/static/img/profile_default_avatar.png'
+        avatar = '/static/img/profile_default_avatar.svg'
         if self.avatar:
             avatar = self.avatar.url
 

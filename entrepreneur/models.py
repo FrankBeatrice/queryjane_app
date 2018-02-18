@@ -126,7 +126,7 @@ class Venture(models.Model):
 
     @property
     def get_logo(self):
-        logo = '/static/img/venture_default_logo.png'
+        logo = '/static/img/venture_default_logo.svg'
         if self.logo:
             logo = self.logo.url
 
