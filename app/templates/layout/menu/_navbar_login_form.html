@@ -4,14 +4,14 @@
         <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in</a>
 
         <ul class="dropdown-menu">
-            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
-                <span class="fa fa-facebook"></span>
-                Facebook login
-            </a>
-
             <li>
                 <div class="dropdown-item qjane-navbar-login-container">
-                {% get_login_form as login_form %}
+                    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                        <span class="fa fa-facebook"></span>
+                        Facebook login
+                    </a>
+
+                    {% get_login_form as login_form %}
                     <div class="qjane-login-forms-error-message"></div>
 
                     <form action="" method="POST" class="qjane-login-form" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
