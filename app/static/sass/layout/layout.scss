@@ -9,7 +9,26 @@
   background-color: #f5f5f5;
 }
 
-.form-group .error {
-  font-weight: 400;
-  font-style: italic;
+.form-group {
+
+  .form-control + label {
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  &.invalid {
+    .form-control {
+      border: 1px solid #ff530d;
+
+      & + label {
+        color: #ff530d;
+      }
+    }
+  }
+
+  &.valid {
+    .form-control {
+      border: 1px solid #00c61a;
+    }
+  }
 }

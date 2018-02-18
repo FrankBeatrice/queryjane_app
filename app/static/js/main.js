@@ -57,6 +57,24 @@ function getLocation() {
          }
     });
 
+    // Jquery validate defaults
+    $.validator.setDefaults({
+        validClass: 'valid',
+        errorClass: 'invalid',
+        highlight: function (element, errorClass, validClass) {
+            var $field = $(element);
+
+            $field.closest('.form-group').addClass(errorClass);
+            $field.closest('.form-group').removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            var $field = $(element);
+
+            $field.closest('.form-group').removeClass(errorClass);
+            $field.closest('.form-group').addClass(validClass);
+        }
+    });
+
     // Login inline validations
     $('.qjane-login-form').validate({
         rules: {
@@ -125,9 +143,9 @@ function getLocation() {
               email: true,
               required: true
           },
-          valid_password: {
-              required: true,
-              minlength: 8
+          password: {
+              minlength: 8,
+              required: true
           }
       }
   });
