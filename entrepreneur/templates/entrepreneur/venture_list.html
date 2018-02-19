@@ -7,11 +7,15 @@
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
 {% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/entrepreneur/venture_list.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <section class="account">
     <div class="container">
         <div class="QJVFilterForm">
-            <form id="id_QJVfilterForm" method="get" class="clearfix">
+            <form id="id_QJVfilterForm" method="get" class="venture-form clearfix">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
@@ -22,7 +26,7 @@
                             <div style="display:none">
                             {% render_field filter_form.country_code %}
                             </div>
-                        </div>                                
+                        </div>
                         <div class="form-group">
                             {{ filter_form.category.label_tag }}
                             {% render_field filter_form.category class+="form-control" %}
@@ -55,44 +59,80 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
+        <br>
 
-        <ul class="QJVentList">
-        {% for venture in venture_list %}
-            <li class="QJVentListItem clearfix">
-                <img style="max-width: 150px;" class="media-object thumbnail pull-left" src="{{ venture.get_logo }}" alt="{{ venture }}">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Companies</h3>
+            </div>
 
-                <div class="QJVentureListData pull-right clearfix">
-                    <div class="pull-left">
-                        <h3>{{ venture }}</h3>
-                        <div class="AjVentureListLocation">
-                            <img src="{{ venture.country.country.flag }}">
-                            <span>{{ venture.country }}</span>
-                            <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+            <div class="panel-body QJVentList">
+                <table class="table table-striped venture-table">
+                    <tbody>
+                        {% for venture in venture_list %}
+                        <tr>
+                            <td>
+                                <div class="QJVentListItem venture-item">
+                                    <div class="row">
+                                        <div class="hidden-xs col-sm-3 col-lg-2">
+                                            <img class="thumbnail img-responsive venture-item__company-img" src="{{ venture.get_logo }}" alt="{{ venture }}">
+                                        </div>
 
-                            <div>
-                            {% if venture.address %}
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span>{{ venture.address }}</span>
-                            {% endif %}
-                            </div>
-                        </div>
+                                        <div class="col-xs-12 col-sm-9 col-lg-10">
+                                            <div class="QJVentureListData">
+                                                <h3 class="venture-item__company-title">
+                                                    {{ venture }}
+                                                </h3>
 
-                        <ul class="QJventureListCategories">
-                        {% for category in venture.industry_categories.all %}
-                            <li>{{ category }}</li>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="AjVentureListLocation">
+                                                            <p>
+                                                                <img src="{{ venture.country.country.flag }}">
+                                                                <span>{{ venture.country }}</span>
+                                                                <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+                                                            </p>
+
+                                                            <p>
+                                                            {% if venture.address %}
+                                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                <span>{{ venture.address }}</span>
+                                                            {% endif %}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <ul class="QJventureListCategories">
+                                                        {% for category in venture.industry_categories.all %}
+                                                            <li>{{ category }}</li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-3 col-md-2">
+                                                        <a href="{{ venture.get_absolute_url }}" class="btn btn-block btn-primary">View</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>
+                                No companies found.
+                            </td>
+                        </tr>
                         {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="pull-right">
-                        <a href="{{ venture.get_absolute_url }}" class="btn btn-ghost-purple">View</a>
-                    </div>
-                </div>
-            </li>
-        {% empty %}
-            <li class="QJVentListEmptyMessage">No results.</li>
-        {% endfor %}
-        </ul>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

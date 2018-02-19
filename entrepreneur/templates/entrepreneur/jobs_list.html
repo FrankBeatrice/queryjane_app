@@ -68,15 +68,15 @@
             </div>
 
             <div class="panel-body QjaneVentureJobOffersList">
-                <table class="table table-striped">
+                <table class="table table-striped jobs-table">
                   <tbody>
                     {% for job_offer in jobs_list %}
                     <tr>
                       <td>
                         <div class="jobs-item">
                             <div class="row">
-                                <div class="col-xs-3">
-                                    <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3">
+                                    <div class="row hidden-xs">
                                         <div class="col-xs-8">
                                             <img class="thumbnail img-responsive" src="{{ job_offer.venture.get_logo }}" alt="{{ venture }}">
                                         </div>
@@ -98,10 +98,14 @@
                                         {% endif %}
                                         </div>
                                     </div>
+
+                                    <hr class="visible-xs">
                                 </div>
 
-                                <div class="col-xs-9">
-                                    <h2>{{ job_offer }}</h2>
+                                <div class="col-xs-12 col-sm-8 col-lg-9">
+                                    <h2 class="jobs-item__offer-title">
+                                        {{ job_offer }}
+                                    </h2>
 
                                     <ul class="QJVentureDetCats">
                                     {% for industry_category in job_offer.industry_categories.all %}
@@ -130,7 +134,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-12 col-sm-3 col-md-2">
                                             <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">View</a>
                                         </div>
                                     </div>
