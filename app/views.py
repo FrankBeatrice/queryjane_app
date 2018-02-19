@@ -47,15 +47,10 @@ class HomeView(TemplateView):
             country=country_instance,
         ).count()
 
-        country = None
-
-        if country_instance:
-            country = country_instance.country
-
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_authenticated():
             context['signup_form'] = SignUpForm()
-            context['country'] = country
+            context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
 
