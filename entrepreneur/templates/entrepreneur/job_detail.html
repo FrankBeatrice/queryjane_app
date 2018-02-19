@@ -16,7 +16,7 @@
                 <div class="media-object">
                     <div class="row">
                         <div class="col-xs-8 col-sm-11 col-md-9">
-                            <img class="img-responsive thumbnail" src="{{ object.venture.get_logo }}" alt="{{ object.venture }}">
+                            <img class="img-responsive thumbnail" src="{{ object.venture.get_logo }}" alt="{{ object.venture }}" style="margin-bottom: 0;">
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
 
             <div class="col-xs-12 col-sm-9">
                 <h1>{{ object }}</h1>
-                <p>Created at: {{ object.created_at }}</p>
+                <p><strong>Created at:</strong> {{ object.created_at }}</p>
 
                 <div class="QJVentureDetDescription">
                 {% if object.description %}
