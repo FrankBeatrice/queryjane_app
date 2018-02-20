@@ -14,7 +14,7 @@
                     {% get_login_form as login_form %}
                     <div class="qjane-login-forms-error-message"></div>
 
-                    <form action="" method="POST" class="qjane-login-form" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
+                    <form action="" method="POST" class="qjane-login-form-desktop" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
                         <div class="form-group">
                             {% render_field login_form.email class+="form-control" %}
                             {{ login_form.email.errors }}
@@ -33,8 +33,8 @@
     </li>
 </ul>
 
-<div class="row">
-    <div class="nav-item dropdown qjane-navbar-login-container visible-xs">
+<div class="row visible-xs">
+    <div class="nav-item dropdown qjane-navbar-login-container">
         <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
             <span class="fa fa-facebook"></span>
             Facebook login
@@ -43,7 +43,7 @@
         {% get_login_form as login_form %}
         <div class="qjane-login-forms-error-message"></div>
 
-        <form action="" method="POST" class="qjane-login-form" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
+        <form action="" method="POST" class="qjane-login-form-mobile" data-login-form-url="{% url 'ajax_login_form' %}" data-redirect-url="{% url 'home' %}">
             <div class="form-group">
                 {% render_field login_form.email class+="form-control" %}
                 {{ login_form.email.errors }}
