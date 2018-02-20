@@ -1,13 +1,13 @@
-from django.conf import settings
 from account.models import User
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.template.loader import render_to_string
 from django.db import transaction
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.views.generic import DetailView
 from django.views.generic import FormView
 from django.views.generic import ListView
@@ -15,11 +15,12 @@ from django.views.generic import TemplateView
 from django.views.generic import View
 
 from account.forms import SignUpForm
-from app.tasks import send_email
 from account.models import ProfessionalProfile
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
+from app.tasks import send_email
 from corporative.forms import ContactForm
+from entrepreneur.data import JOB_TYPE_CHOICES
 from entrepreneur.forms import JobOffersFilter
 from entrepreneur.forms import VentureFilter
 from entrepreneur.models import Applicant
@@ -142,6 +143,7 @@ class JobsList(ListView):
     def get_list_filter(self):
         list_filter = JobOffersFilter(
             self.request.GET,
+            job_type_choices=JOB_TYPE_CHOICES,
         )
 
         return list_filter
@@ -172,6 +174,11 @@ class JobsList(ListView):
 
             if venture_id:
                 queryset = queryset.filter(id=venture_id)
+
+            job_type = form.cleaned_data['job_type']
+
+            if job_type:
+                queryset = queryset.filter(job_type=job_type)
 
         return queryset
 

@@ -65,6 +65,7 @@
             <div class="col-sm-12 col-md-9 col-lg-9">
                 <h1>{{ object }}</h1>
                 <p>Created at: {{ object.created_at }}</p>
+                <p>Job type: {{ object.get_job_type_display }}</p>
 
                 <div class="QJVentureDetDescription">
                 {% if object.description %}

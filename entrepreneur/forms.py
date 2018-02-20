@@ -2,12 +2,13 @@ from django import forms
 from django.forms import Form
 from django.forms import ModelForm
 
-from .models import Venture
+from .data import ADMINISTRATOR_ROLES
+from .data import JOB_TYPE_CHOICES
 from .models import JobOffer
+from .models import Venture
+from account.models import IndustryCategory
 from place.models import City
 from place.models import Country
-from .data import ADMINISTRATOR_ROLES
-from account.models import IndustryCategory
 
 
 class VentureFilter(forms.Form):
@@ -110,8 +111,19 @@ class JobOffersFilter(forms.Form):
         label='company id',
     )
 
+    job_type = forms.ChoiceField(
+        choices=JOB_TYPE_CHOICES,
+        widget=forms.Select(),
+        required=False,
+    )
+
     def __init__(self, *args, **kwargs):
+        type_choices = kwargs.pop('job_type_choices')
         super().__init__(*args, **kwargs)
+
+        if type_choices:
+            self.fields['job_type'].choices = \
+                (('', ''),) + type_choices
 
 
 class VentureForm(ModelForm):
@@ -387,6 +399,7 @@ class JobOfferForm(forms.ModelForm):
         model = JobOffer
         fields = (
             'title',
+            'job_type',
             'description',
             'industry_categories',
             'country_search',

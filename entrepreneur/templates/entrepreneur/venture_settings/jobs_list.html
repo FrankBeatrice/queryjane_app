@@ -32,13 +32,15 @@
                               <td>
                                 <h2>{{ job_offer }}</h2>
 
+                                <strong>Category:</strong>
                                 <ul class="QJVentureDetCats">
                                 {% for industry_category in job_offer.industry_categories.all %}
                                     <li>{{ industry_category }}</li>
                                 {% endfor %}
                                 </ul>
 
-                                <p>Created at: {{ job_offer.created_at }}</p>
+                                <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
+                                <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
 
                                 {% if job_offer.country %}
                                 <div>
@@ -53,7 +55,6 @@
                                     <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
                                 </div>
                                 {% endif %}
-
                                 <br>
 
                                 <div>
