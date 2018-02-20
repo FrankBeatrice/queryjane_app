@@ -10,7 +10,6 @@
 }
 
 .form-group {
-
   label {
     font-weight: 400;
   }
@@ -22,6 +21,10 @@
   }
 
   &.invalid {
+    label {
+      color: #ff530d;
+    }
+
     .form-control {
       border: 1px solid #ff530d;
 
@@ -32,6 +35,10 @@
   }
 
   &.valid {
+    label {
+      color: #00c61a;
+    }
+
     .form-control {
       border: 1px solid #00c61a;
     }
