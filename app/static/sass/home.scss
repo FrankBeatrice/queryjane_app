@@ -21,11 +21,15 @@
   margin-bottom: 12%;
   background-color: rgba(0, 0, 0, .8);
   color: #fff;
-}
 
-.qj-home-register .panel-heading {
-  background-color: rgba(0, 0, 0, .8);
-  color: #fff; 
+  .panel-heading {
+    background-color: rgba(0, 0, 0, .8);
+    color: #fff;
+  }
+
+  .social-network-wrapper {
+    margin-bottom: 15px;
+  }
 }
 
 .QJHcountryCount .fa {
@@ -33,6 +37,6 @@
 }
 
 .QJHDivider {
-  margin-right: 5px;  
-  margin-left: 5px;  
+  margin-right: 5px;
+  margin-left: 5px;
 }
