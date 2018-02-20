@@ -11,9 +11,14 @@
 
 .form-group {
 
+  label {
+    font-weight: 400;
+  }
+
   .form-control + label {
     font-weight: 400;
     font-style: italic;
+    font-size: 14px;
   }
 
   &.invalid {

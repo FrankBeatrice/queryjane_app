@@ -61,6 +61,10 @@
                                         <div class="helpText">{{ field.help_text|safe }}</div>
                                     </div>
                                 </div>
+
+                                {% if field.name == 'last_name' %}
+                                    <div class="col-xs-12"></div>
+                                {% endif %}
                             {% endfor %}
                         </div>
 
@@ -68,7 +72,7 @@
                     </form>
 
                     <br>
-                    <p><i>By registering, you are accepting the <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">terms of use</a></i> and the <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">privacy policy</a>.</p>
+                    <p><i>By registering, you are accepting the <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">terms of use</a> and the <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">privacy policy</a>.</i></p>
                 </div>
             </div>
         </div>
