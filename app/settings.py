@@ -163,6 +163,7 @@ LOGGING = {
 BASE_URL = 'https://queryjane.net/'
 
 EMAIL_SUBJECT = 'QueryJane - {0}'
+ADMIN_EMAILS = []
 
 SOCIAL_AUTH_FACEBOOK_KEY = 'edit-it'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'edit-it'

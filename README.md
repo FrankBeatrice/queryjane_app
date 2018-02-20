@@ -42,7 +42,7 @@ your database first, you can do that by restoring a database from a file:
 
 To generate the file backup on deployment server, run:
     
-    pg_dump jd_db -U roadhouse_user -h localhost -F c > qj_backup.dump
+    pg_dump jd_db -U db_user -h localhost -F c > backup.dump
 
 To restore the database backup locally:
 

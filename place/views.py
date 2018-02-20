@@ -9,8 +9,8 @@ from place.models import Country
 
 def country_as_JSON(country):
     return {
-        'name': country.name,
-        'code': country.code,
+        'name': country.country.name,
+        'code': country.country.code,
         'flag': country.flag,
     }
 
@@ -26,7 +26,7 @@ class CountrySearch(View):
             ).distinct()
 
             for country in query_set:
-                country_list.append(country_as_JSON(country.country))
+                country_list.append(country_as_JSON(country))
 
         return JsonResponse(country_list, safe=False)
 
@@ -96,9 +96,7 @@ class CityCreate(View):
                 'city_id': city_object.id,
                 'country_name': country_instance.country.name,
                 'country_code': country_instance.country.code,
-                'country_gif': '/static/flags/{}.gif'.format(
-                    country_instance.country.code.lower(),
-                ),
+                'country_gif': country_instance.flag,
             }
 
         return JsonResponse(

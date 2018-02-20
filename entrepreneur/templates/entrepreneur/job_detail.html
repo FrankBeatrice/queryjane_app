@@ -15,7 +15,7 @@
             <div class="col-sm-12 col-md-3 col-lg-3">
                 <img style="max-width: 100%;" class="media-object thumbnail" src="{{ object.venture.get_logo }}" alt="{{ object.venture }}">
 
-                <h3><a href="{{ object.venture.get_abdolute_url }}">{{ object.venture }}</a></h3>
+                <h3><a href="{{ object.venture.get_absolute_url }}">{{ object.venture }}</a></h3>
 
                 <div class="QJVentureDetCategories">
                     <div class="panel panel-default">
@@ -45,7 +45,7 @@
                         <div class="panel-body">
                             {% if object.country %}
                             <div>
-                                <img src="{{ venture.country.country.flag }}">
+                                <img src="{{ object.country.flag }}">
                                 <span>{{ object.country }}</span>
                             </div>
                             {% endif %}
@@ -65,6 +65,7 @@
             <div class="col-sm-12 col-md-9 col-lg-9">
                 <h1>{{ object }}</h1>
                 <p>Created at: {{ object.created_at }}</p>
+                <p>Job type: {{ object.get_job_type_display }}</p>
 
                 <div class="QJVentureDetDescription">
                 {% if object.description %}

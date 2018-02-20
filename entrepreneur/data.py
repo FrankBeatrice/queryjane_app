@@ -19,3 +19,20 @@ MEMBERSHIP_STATUS_CHOICES = (
     (DEACTIVATED_MEMBERSHIP, 'Inactive membership'),
     (REJECTED_MEMBERSHIP, 'Rejected membership'),
 )
+
+
+FREELANCE = 100
+FULL_TIME = 110
+INTERNSHIP = 120
+PART_TIME = 130
+TEMPORARY = 140
+VOLUNTEER = 150
+
+JOB_TYPE_CHOICES = (
+    (FREELANCE, 'Freelance'),
+    (FULL_TIME, 'Full time'),
+    (INTERNSHIP, 'Internship'),
+    (PART_TIME, 'Part time'),
+    (TEMPORARY, 'Temporary'),
+    (VOLUNTEER, 'Volunteer'),
+)
