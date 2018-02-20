@@ -65,7 +65,7 @@ class Country(models.Model):
 
     @property
     def flag(self):
-        return '/static/img/flags/{}.png'.format(self.country.code)
+        return '/static/img/flags/{}.png'.format(self.country.code.lower())
 
     def __str__(self):
         return '{0}'.format(self.country.name)
