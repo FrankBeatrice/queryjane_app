@@ -1,27 +1,32 @@
+from django.conf import settings
+from account.models import User
+from django.contrib import auth
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template.loader import render_to_string
+from django.db import transaction
 from django.http import Http404
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib import auth
-from account.models import User
-from django.views.generic import ListView
+from django.shortcuts import redirect
 from django.views.generic import DetailView
-from django.views.generic import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import FormView
+from django.views.generic import ListView
 from django.views.generic import TemplateView
-
-from app.mixins import CustomUserMixin
-from account.models import ProfessionalProfile
-from entrepreneur.models import Venture
-from entrepreneur.models import Applicant
-from account.permissions import JobOfferPermissions
-from entrepreneur.permissions import EntrepreneurPermissions
-from entrepreneur.forms import VentureFilter
-from entrepreneur.forms import JobOffersFilter
-from entrepreneur.models import JobOffer
-from place.utils import get_user_country
+from django.views.generic import View
 
 from account.forms import SignUpForm
+from app.tasks import send_email
+from account.models import ProfessionalProfile
+from account.permissions import JobOfferPermissions
+from app.mixins import CustomUserMixin
+from corporative.forms import ContactForm
+from entrepreneur.forms import JobOffersFilter
+from entrepreneur.forms import VentureFilter
+from entrepreneur.models import Applicant
+from entrepreneur.models import JobOffer
+from entrepreneur.models import Venture
+from entrepreneur.permissions import EntrepreneurPermissions
+from place.utils import get_user_country
 
 
 class HomeView(TemplateView):
@@ -293,3 +298,60 @@ class JobOfferApplyView(CustomUserMixin, View):
             'job_offer_detail',
             job_offer.slug,
         )
+
+
+class ContactFormView(FormView):
+    form_class = ContactForm
+    template_name = 'corporative/contact_form.html'
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        user = self.request.user
+        name = ''
+        email = ''
+
+        if user.is_authenticated:
+            name = user.get_full_name
+            email = user.email
+
+        if user:
+            initial = {
+                'name': name,
+                'email': email,
+            }
+
+        return initial
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+
+        return kwargs
+
+    @transaction.atomic
+    def form_valid(self, form):
+        subject = form.cleaned_data['subject']
+        phone = form.cleaned_data['phone']
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        message = form.cleaned_data['message']
+
+        body = render_to_string(
+            'corporative/emails/user_message.html', {
+                'title': subject,
+                'phone': phone,
+                'name': name,
+                'email': email,
+                'message': message,
+                'base_url': settings.BASE_URL,
+            },
+        )
+
+        send_email(
+            subject=subject,
+            body=body,
+            mail_to=settings.ADMIN_EMAILS,
+        )
+
+        return redirect('contact_form_success')

@@ -1,0 +1,40 @@
+{% extends "layout/index.html" %}
+{% load widget_tweaks static %}
+
+{% block title %}Thank you for contacting us{% endblock %}
+
+{% block navbar %}
+{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="QJContactFormSuccess">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
+                    <h1 class="h1">Thank you for contacting us!!!</h1>
+
+                    <p class="h5">---</p>
+
+                    <p class="h4">We have received your message and we will get in touch with you soon.</p>
+
+                    <p class="h5">---</p>
+                    
+                    
+                    <a href="{% url 'home' %}" class="btn btn-primary">Go to home page</a>
+                    <br>
+                    <br>
+                    <a href="{% url 'venture_list' %}" class="btn btn-ghost-purple">Take a look to the companies list</a>
+                    <br>
+                    <br>
+                    <a href="{% url 'jobs_list' %}" class="btn btn-ghost-purple">Take a look to the job offers list</a>
+                    
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
