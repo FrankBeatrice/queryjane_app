@@ -10,7 +10,7 @@ class SignUpForm(Form):
     """Formulario de creación de usuarios
     """
     first_name = forms.CharField(
-        label='first name',
+        label='First name',
         required=True,
         max_length=50,
         error_messages={
@@ -19,7 +19,7 @@ class SignUpForm(Form):
     )
 
     last_name = forms.CharField(
-        label='last name',
+        label='Last name',
         required=True,
         max_length=50,
         error_messages={
@@ -28,7 +28,7 @@ class SignUpForm(Form):
     )
 
     email = forms.EmailField(
-        label=u'email',
+        label=u'Email',
         required=True,
         max_length=50,
         error_messages={
@@ -38,7 +38,7 @@ class SignUpForm(Form):
 
     password = forms.CharField(
         widget=forms.PasswordInput,
-        label=u"password",
+        label=u"Password",
     )
 
     def __init__(self, *args, **kwargs):

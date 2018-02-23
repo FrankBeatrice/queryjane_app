@@ -1,12 +1,34 @@
-.qjane-industry-categories-list {
-  list-style: none;
-  padding: 0;
-
-  li {
-  	display: inline-block;
-  }
-}
-
 #div_id_industry_categories {
   display: none;
+}
+
+.profile-form {
+  &__country,
+  &__city {
+    &__typeahead {
+      position: relative;
+
+      .form-control {
+        padding-left: 36px;
+      }
+
+      &__send-icon,
+      &__flag-icon,
+      &__spinner-icon {
+        position: absolute;
+        left: 9px;
+        top: 10px;
+        z-index: 2;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

@@ -57,8 +57,43 @@ function getLocation() {
          }
     });
 
+    // Jquery validate defaults
+    $.validator.setDefaults({
+        validClass: 'valid',
+        errorClass: 'invalid',
+        highlight: function (element, errorClass, validClass) {
+            var $field = $(element);
+
+            $field.closest('.form-group').addClass(errorClass);
+            $field.closest('.form-group').removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            var $field = $(element);
+
+            $field.closest('.form-group').removeClass(errorClass);
+            $field.closest('.form-group').addClass(validClass);
+        }
+    });
+
     // Login inline validations
-    $('.qjane-login-form').validate({
+    $('.qjane-login-form-desktop').validate({
+        rules: {
+            'login_form-email': {
+                minlength: 2,
+                maxlength: 40,
+                email: true,
+                required: true
+            },
+            'login_form-password': {
+                minlength: 8,
+                valid_password: true,
+                required: true,
+
+            }
+        }
+    });
+
+    $('.qjane-login-form-mobile').validate({
         rules: {
             'login_form-email': {
                 minlength: 2,
@@ -76,12 +111,13 @@ function getLocation() {
     });
 
     // Ajax_login form submit
-    $('.qjane-navbar-login-container').on('submit', '.qjane-login-form', function () {
+    $('.qjane-navbar-login-container').on('submit', '.qjane-login-form-desktop, .qjane-login-form-mobile', function () {
         'use strict';
 
-        var url = $('.qjane-login-form').data('login-form-url');
+        var url = $(this).data('login-form-url');
+        var $self = $(this);
 
-        $.post(url, $('.qjane-login-form').serialize(), function (response) {
+        $.post(url, $(this).serialize(), function (response) {
             if (response === 'fail') {
                 $('.qjane-login-forms-error-message')
                     .show()
@@ -101,7 +137,7 @@ function getLocation() {
                     .text('The account associated with this email is inactive.');
                 return;
             } else if (response === 'successful_login') {
-                window.location.href = $('.qjane-login-form').data('redirect-url');
+                window.location.href = $self.data('redirect-url');
                 return;
             }
         });
@@ -125,9 +161,9 @@ function getLocation() {
               email: true,
               required: true
           },
-          valid_password: {
-              required: true,
-              minlength: 8
+          password: {
+              minlength: 8,
+              required: true
           }
       }
   });

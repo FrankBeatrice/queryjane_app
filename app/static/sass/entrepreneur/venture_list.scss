@@ -1,0 +1,25 @@
+.venture-form {
+  #id_QjaneVFcountryAutImg {
+    position: absolute;
+  }
+}
+
+.venture-item {
+  padding: 8px 10px;
+
+  &__company-title {
+    margin-top: 0;
+
+    @media screen and (min-width: 768px) {
+      margin-top: 20px;
+    }
+  }
+
+  &__company-img {
+    margin-bottom: 0;
+  }
+}
+
+.venture-table {
+  margin-bottom: 0;
+}
