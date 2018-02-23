@@ -9,7 +9,7 @@
 
 {% block content %}
 <section class="account qjane-profile-update">
-    <div class="container">            
+    <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Basic information</h3>
@@ -17,8 +17,14 @@
 
             <div class="panel-body QjaneAccountGeneralInfo">
                 <div class="row">
-                    <div class="col-md-3 col-xs-12">
-                        <img style="max-width: 100%;" class="media-object thumbnail ProfileAvatar" src="{{ professional_profile.user.get_avatar }}" alt="{{ professional_profile }}">
+                    <div class="col-xs-12 col-sm-3">
+                        <div class="media-object">
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-11 col-md-9">
+                                    <img class="img-responsive thumbnail" src="{{ professional_profile.user.get_avatar }}" alt="{{ professional_profile }}">
+                                </div>
+                            </div>
+                        </div>
 
                         <form id="id_profile_update_avatar_form" method="post" enctype="multipart/form-data" data-profile-update-avatar-url="{% url 'account:update_profile_avatar_form' %}" style="display:none;">
                             {% csrf_token %}
@@ -33,11 +39,11 @@
                         </a>
                     </div>
 
-                    <div class="col-md-9 col-xs-12">
+                    <div class="col-xs-12 col-sm-9">
                         <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">Profile updated successfully.</div>
                         <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">There was an error. Reload the page and try again.</div>
 
-                        <form id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
+                        <form class="profile-form" id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             <div class="row">
@@ -74,14 +80,16 @@
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
-                                    <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                    <div id="id_QjaneVFcountryAut" class="form-group profile-form__country" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
                                             Country
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div>
+                                        <div class="profile-form__country__typeahead">
                                             {% render_field form.country_search class+="form-control" %}
-                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+                                            
+                                            <img id="id_QjaneVFcountryAutImg" class="profile-form__country__typeahead__flag-icon" src="{{ country_instance.flag }}">
+
                                             <p>{{ form.country_search.errors }}</p>
                                         </div>
                                     </div>
@@ -91,15 +99,15 @@
                                         <p>{{ form.country_code.errors }}</p>
                                     </div>
 
-                                    <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                    <div id="id_QjaneVFcityAut" class="form-group profile-form__city" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
                                             City
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div>
+                                        <div class="profile-form__city__typeahead">
                                             {% render_field form.city_search class+="form-control" %}
-                                            <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
-                                            <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                            <i class="fa fa-spinner fa-pulse fa-fw profile-form__city__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
+                                            <a class="fa fa-paper-plane profile-form__city__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                             <p>{{ form.city_search.errors }}</p>
 
                                             <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>

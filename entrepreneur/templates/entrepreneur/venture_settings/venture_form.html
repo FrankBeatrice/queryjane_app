@@ -43,14 +43,16 @@
                                         </div>
 
 
-                                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <div id="id_QjaneVFcountryAut" class="form-group profile-form__country" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                             <label>
                                                 Country
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div>
+                                            <div class="profile-form__country__typeahead">
                                                 {% render_field form.country_search  class+="form-control" %}
-                                                <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+
+                                                <img id="id_QjaneVFcountryAutImg" class="profile-form__country__typeahead__flag-icon" src="{{ country_instance.flag }}">
+
                                                 <p>{{ form.country_search.errors }}</p>
                                             </div>
                                         </div>
@@ -60,15 +62,15 @@
                                             <p>{{ form.country_code.errors }}</p>
                                         </div>
 
-                                        <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <div id="id_QjaneVFcityAut" class="form-group profile-form__city" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                             <label>
                                                 City
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div>
+                                            <div class="profile-form__city__typeahead">
                                                 {% render_field form.city_search  class+="form-control" %}
-                                                <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
-                                                <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                                <i class="fa fa-spinner fa-pulse fa-fw profile-form__city__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
+                                                <a class="fa fa-paper-plane profile-form__city__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                                 <p>{{ form.city_search.errors }}</p>
 
                                                 <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">Please, allow us to try to obtain your location</a> and register it in the application.</p>

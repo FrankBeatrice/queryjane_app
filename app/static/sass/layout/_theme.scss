@@ -29,6 +29,11 @@ a.text-primary:hover {
   color: $qj-purple;
 }
 
+// Btn default
+.btn-default {
+  border-radius: 0;
+}
+
 // Btn primary
 .btn-primary {
   color: #fff;
