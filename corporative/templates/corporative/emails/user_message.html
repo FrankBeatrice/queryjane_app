@@ -1,0 +1,15 @@
+{% extends 'layout/base_email.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>New message from user.</h1>
+
+<h3>Detail:</h3>
+
+<p><bold>Subject: </bold> {{ title }}</p>
+<p><bold>phone: </bold> {% if phone %}{{ phone }}{% else %}Not available{% endif %}</p>
+<p><bold>name: </bold> {{ name }}</p>
+<p><bold>email: </bold> {{ email }}</p>
+<p><bold>message: </bold> {{ message }}</p>
+{% endblock %}

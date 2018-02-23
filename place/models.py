@@ -63,6 +63,10 @@ class Country(models.Model):
         verbose_name='name',
     )
 
+    @property
+    def flag(self):
+        return '/static/img/flags/{}.png'.format(self.country.code.lower())
+
     def __str__(self):
         return '{0}'.format(self.country.name)
 

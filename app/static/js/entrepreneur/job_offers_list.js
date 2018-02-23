@@ -5,6 +5,7 @@ $(function () {
     $('#id_QJCleanJOfilter').on('click', function () {
       $('#id_QJJOfilterForm')[0].reset();
       $('#id_category').val('');
+      $('#id_job_type').val('');
       $('#id_QJJOfilterForm').submit();
     });
 

@@ -21,7 +21,7 @@
                         <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
                             {{ filter_form.country_search.label_tag }}
                             {% render_field filter_form.country_search class+="form-control" %}
-                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
 
                             <div style="display:none">
                             {% render_field filter_form.country_code %}
@@ -88,7 +88,7 @@
                                                     <div class="col-xs-12 col-sm-6">
                                                         <div class="AjVentureListLocation">
                                                             <p>
-                                                                <img src="{{ venture.country.country.flag }}">
+                                                                <img src="{{ venture.country.flag }}">
                                                                 <span>{{ venture.country }}</span>
                                                                 <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
                                                             </p>
@@ -141,4 +141,3 @@
 <script src="{% static 'js/place/place_autocomplete.js' %}"></script>
 <script src="{% static 'js/entrepreneur/venture_list.js' %}"></script>
 {% endblock %}
-

@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <h3><a href="{{ object.venture.get_abdolute_url }}">{{ object.venture }}</a></h3>
+                <h3><a href="{{ object.venture.get_absolute_url }}">{{ object.venture }}</a></h3>
 
                 <div class="QJVentureDetCategories">
                     <div class="panel panel-default">
@@ -51,7 +51,7 @@
                         <div class="panel-body">
                             {% if object.country %}
                             <div>
-                                <img src="{{ venture.country.country.flag }}">
+                                <img src="{{ object.country.flag }}">
                                 <span>{{ object.country }}</span>
                             </div>
                             {% endif %}
@@ -71,6 +71,7 @@
             <div class="col-xs-12 col-sm-9">
                 <h1>{{ object }}</h1>
                 <p><strong>Created at:</strong> {{ object.created_at }}</p>
+                <p><strong>Job type:</strong> {{ object.get_job_type_display }}</p>
 
                 <div class="QJVentureDetDescription">
                 {% if object.description %}

@@ -1,18 +1,20 @@
+from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import reverse_lazy
-from django.conf.urls import include
 from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
-from .views import HomeView
-from .views import VentureList
-from .views import VentureDetail
-from .views import JobsList
-from .views import ProfessionalDetail
 from .views import ajax_login_form
-from .views import user_logout
+from .views import ContactFormView
+from .views import HomeView
 from .views import JobOfferApplyView
 from .views import JobOfferDetail
+from .views import JobsList
+from .views import ProfessionalDetail
+from .views import user_logout
+from .views import VentureDetail
+from .views import VentureList
 from account.forms import UserPasswordResetForm
 
 admin.site.site_title = 'QueryJane'
@@ -50,6 +52,18 @@ urlpatterns = [
         r'^jobs/(?P<slug>[-\w]+)/apply/$',
         JobOfferApplyView.as_view(),
         name='job_offer_apply',
+    ),
+
+    url(
+        r'^contact_form/$',
+        ContactFormView.as_view(),
+        name='contact_form',
+    ),
+
+    url(
+        r'^contact_form_success/$',
+        TemplateView.as_view(template_name='corporative/contact_form_success.html'),
+        name='contact_form_success',
     ),
 
     url(

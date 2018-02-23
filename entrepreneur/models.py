@@ -1,14 +1,16 @@
-from django.db import models
-from django.core.urlresolvers import reverse
-from django.contrib.gis.db.models import PointField
 from app.validators import FileSizeValidator
+from django.contrib.gis.db.models import PointField
+from django.core.urlresolvers import reverse
+from django.db import models
 
+from .data import ACTIVE_MEMBERSHIP
 from .data import ADMINISTRATOR_ROLES
-from .data import QJANE_ADMIN
+from .data import FREELANCE
+from .data import JOB_TYPE_CHOICES
 from .data import MEMBERSHIP_STATUS_CHOICES
+from .data import QJANE_ADMIN
 from .data import REJECTED_MEMBERSHIP
 from .data import SENT_INVITATION
-from .data import ACTIVE_MEMBERSHIP
 
 
 class Venture(models.Model):
@@ -209,6 +211,12 @@ class JobOffer(models.Model):
     venture = models.ForeignKey(
         Venture,
         verbose_name='company',
+    )
+
+    job_type = models.PositiveSmallIntegerField(
+        choices=JOB_TYPE_CHOICES,
+        default=FREELANCE,
+        verbose_name='job type',
     )
 
     country = models.ForeignKey(

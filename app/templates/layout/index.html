@@ -87,18 +87,19 @@
                 <div class="row footer__content">
                     <div class="col-xs-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
-                            <a href="{% url 'corporative:corporative_detail' 'privacy-policy' %}">Privacy Policy</a>
+                            <a href="{% url 'corporative:user_agreement' %}">User agreement</a>
                             ·
-                            <a href="{% url 'corporative:corporative_detail' 'user-agreement' %}">Terms</a>
+                            <a href="{% url 'corporative:privacy_policy' %}">Privacy policy</a>
                             ·
                             <a href="{% url 'venture_list' %}">Companies</a>
                             ·
                             <a href="{% url 'jobs_list' %}">Jobs</a>
                             ·
-                            <!-- <a href="#">Contáctenos</a> -->
+                            <a href="{% url 'contact_form' %}">Contact us</a>
+                            ·
                         </div>
                         <p class="QJRHlink">
-                            QueryJane 2018 &copy; <!-- <a href="http://roadhousestudio.co/" target="_blank">Roadhouse Studio</a> -->
+                            QueryJane 2018 &copy;
                         </p>
                     </div>
 

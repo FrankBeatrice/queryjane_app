@@ -37,6 +37,18 @@
 
                             <div class="form-group">
                                 <label>
+                                    {{ form.job_type.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                <div>
+                                    {% render_field form.job_type class+="form-control" %}
+                                    <p>{{ form.job_type.errors }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
                                     {{ form.description.label }}
                                     <span class="QJRequiredField">*</span>
                                 </label>
@@ -79,7 +91,7 @@
                                         </label>
                                         <div>
                                             {% render_field form.country_search  class+="form-control" %}
-                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.country.flag }}">
+                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
                                             <p>{{ form.country_search.errors }}</p>
                                         </div>
                                     </div>
