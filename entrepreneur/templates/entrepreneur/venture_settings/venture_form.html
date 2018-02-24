@@ -83,7 +83,7 @@
 
                                         <div class="form-group">
                                             <label>
-                                                Address
+                                                Address <i>(Address will be public.)</i>
                                             </label>
                                             <div>
                                                 {% render_field form.address  class+="form-control" %}
@@ -97,7 +97,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-xs-12">
-                                        <p>Select the sector or sectors of your company's industry.</p>
+                                        <p>Select your company sector or sectors in the industry.</p>
 
                                         <ul class="qjane-industry-categories-list">
                                             {% for industry_category in industry_categories %}
@@ -111,19 +111,106 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>
-                                        Description
-                                        <span class="QJRequiredField">*</span>
-                                    </label>
-                                    <p><i>Add a very detailed description of your company.</i></p>
-                                    <div id="rich_editor_description_en"></div>
-                                    <p>{{ form.description_en.errors }}</p>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Company description</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>
+                                                English description
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+                                            <p><i>Add a very detailed description of your company.</i></p>
+                                            <div id="rich_editor_description_en"></div>
+                                            <p>{{ form.description_en.errors }}</p>
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            {% render_field form.description_en %}
+                                            {% render_field form.industry_categories %}
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-group" style="display:none;">
-                                    {% render_field form.description_en %}
-                                    {% render_field form.industry_categories %}
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Social media</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Web
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.url class+="form-control" %}
+                                                        <p>{{ form.url.errors }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>
+                                                        Facebook
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.facebook_url class+="form-control" %}
+                                                        <p>{{ form.facebook_url.errors }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>
+                                                        Twitter
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.twitter_url class+="form-control" %}
+                                                        <p>{{ form.twitter_url.errors }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Instagram
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.instagram_url class+="form-control" %}
+                                                        <p>{{ form.instagram_url.errors }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>
+                                                        Linkedin
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.linkedin_url class+="form-control" %}
+                                                        <p>{{ form.linkedin_url.errors }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>
+                                                        Google Plus
+                                                    </label>
+
+                                                    <div>
+                                                        {% render_field form.googleplus_url class+="form-control" %}
+                                                        <p>{{ form.googleplus_url.errors }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Next</button>

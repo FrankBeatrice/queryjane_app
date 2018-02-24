@@ -8,6 +8,7 @@ from django.views.generic import View
 
 from app.mixins import CustomUserMixin
 from entrepreneur.forms import ContactVentureForm
+from entrepreneur.forms import SocialMediaVentureForm
 from entrepreneur.forms import LocationVentureForm
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
@@ -30,6 +31,7 @@ class ContactVentureFormView(CustomUserMixin, TemplateView):
     def get(self, *args, **kwargs):
         venture = self.get_object()
         contact_form = ContactVentureForm(instance=venture)
+        media_form = SocialMediaVentureForm(instance=venture)
         location_form = LocationVentureForm(instance=venture)
 
         return self.render_to_response(
@@ -37,6 +39,7 @@ class ContactVentureFormView(CustomUserMixin, TemplateView):
                 venture=venture,
                 country_instance=venture.country,
                 contact_form=contact_form,
+                media_form=media_form,
                 location_form=location_form,
                 contact_active=True,
             )

@@ -182,6 +182,12 @@ class VentureForm(ModelForm):
             'coordinates',
             'description_en',
             'industry_categories',
+            'url',
+            'facebook_url',
+            'twitter_url',
+            'instagram_url',
+            'linkedin_url',
+            'googleplus_url',
         ]
 
     def clean(self):
@@ -250,6 +256,19 @@ class ContactVentureForm(ModelForm):
         fields = [
             'email',
             'phone_number',
+        ]
+
+
+class SocialMediaVentureForm(ModelForm):
+    class Meta:
+        model = Venture
+        fields = [
+            'url',
+            'facebook_url',
+            'twitter_url',
+            'instagram_url',
+            'linkedin_url',
+            'googleplus_url',
         ]
 
 
