@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from .views.contact_venture_settings import AjaxMediaVentureFormView
 from .views.contact_venture_settings import AjaxContactVentureFormView
 from .views.contact_venture_settings import AjaxLocationVentureFormView
 from .views.contact_venture_settings import ContactVentureFormView
@@ -68,6 +69,12 @@ urlpatterns = [
         r'^ax-update-venture-location/(?P<pk>\d+)/$',
         AjaxLocationVentureFormView.as_view(),
         name='ax_location_venture_form',
+    ),
+
+    url(
+        r'^ax-update-venture-media/(?P<pk>\d+)/$',
+        AjaxMediaVentureFormView.as_view(),
+        name='ax_media_venture_form',
     ),
 
     url(

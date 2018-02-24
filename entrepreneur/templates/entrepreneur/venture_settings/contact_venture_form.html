@@ -104,7 +104,7 @@
 
                                     <div class="form-group">
                                         <label>
-                                            Address
+                                            Address <i>(Address will be public)</i>
                                         </label>
                                         <div>
                                             {% render_field location_form.address class+="form-control" %}
@@ -131,39 +131,77 @@
                         <h3 class="panel-title">Social media</h3>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body QJVentureMediaUpdate">
                         <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form method="POST" id="id_venture_contact_form" data-venture-contact-form-url="{% url 'entrepreneur:ax_contact_venture_form' venture.id %}">
-                                    {% csrf_token %}
-                                    <div>
+                            <div class="alert alert-success" role="alert" style="display:none;">Social media information updted correctly.</div>
+                            <form method="POST" id="id_venture_media_form" data-venture-media-form-url="{% url 'entrepreneur:ax_media_venture_form' venture.id %}">
+                                {% csrf_token %}
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
                                         <label>
-                                        {{ contact_form.email.label_tag }}
+                                        {{ media_form.url.label_tag }}
                                         </label>
                                         <div class="form-group">
-                                        {% render_field contact_form.email class+="form-control" %}
-                                        {{ contact_form.email.errors }}
+                                        {% render_field media_form.url class+="form-control" %}
+                                        {{ media_form.url.errors }}
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div class="form-group">
                                         <label>
-                                        {{ contact_form.phone_number.label_tag }}
+                                        {{ media_form.facebook_url.label_tag }}
                                         </label>
                                         <div class="form-group">
-                                        {% render_field contact_form.phone_number class+="form-control" %}
-                                        {{ contact_form.phone_number.errors }}
+                                        {% render_field media_form.facebook_url class+="form-control" %}
+                                        {{ media_form.facebook_url.errors }}
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </form>
-                            </div>
+                                    <div class="form-group">
+                                        <label>
+                                        {{ media_form.twitter_url.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field media_form.twitter_url class+="form-control" %}
+                                        {{ media_form.twitter_url.errors }}
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <p>Email and phone number will be public.</p>
-                                <div class="alert alert-success" role="alert" style="display:none;">Contact data updated correctly.</div>
-                            </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>
+                                        {{ media_form.instagram_url.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field media_form.instagram_url class+="form-control" %}
+                                        {{ media_form.instagram_url.errors }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                        {{ media_form.linkedin_url.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field media_form.linkedin_url class+="form-control" %}
+                                        {{ media_form.linkedin_url.errors }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                        {{ media_form.googleplus_url.label_tag }}
+                                        </label>
+                                        <div class="form-group">
+                                        {% render_field media_form.googleplus_url class+="form-control" %}
+                                        {{ media_form.googleplus_url.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
                         </div>
                     </div>
             </div>

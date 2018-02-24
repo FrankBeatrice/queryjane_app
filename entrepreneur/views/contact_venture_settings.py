@@ -78,6 +78,38 @@ class AjaxContactVentureFormView(CustomUserMixin, View):
         raise Http404
 
 
+class AjaxMediaVentureFormView(CustomUserMixin, View):
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, id=self.kwargs.get('pk'))
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        media_form = SocialMediaVentureForm(
+            request.POST,
+        )
+
+        if media_form.is_valid():
+            venture = self.get_object()
+            venture.url = media_form.cleaned_data['url']
+            venture.facebook_url = media_form.cleaned_data['facebook_url']
+            venture.twitter_url = media_form.cleaned_data['twitter_url']
+            venture.instagram_url = media_form.cleaned_data['instagram_url']
+            venture.linkedin_url = media_form.cleaned_data['linkedin_url']
+            venture.googleplus_url = media_form.cleaned_data['googleplus_url']
+            venture.save()
+            return HttpResponse('success')
+        else:
+            return HttpResponse('fail')
+
+        raise Http404
+
+
 class AjaxLocationVentureFormView(CustomUserMixin, View):
     def test_func(self):
         return EntrepreneurPermissions.can_manage_venture(
