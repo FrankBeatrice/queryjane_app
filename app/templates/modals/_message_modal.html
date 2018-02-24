@@ -8,8 +8,20 @@
 </div>
 
   <div class="modal-body">
-    <p>{{ message.created_at }}</p>
-    {{ message.message }}
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#messageDetail">Message detail</a></li>
+      <li><a data-toggle="tab" href="#messageDetailConversation">Full conversation</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="messageDetail" class="tab-pane fade in active">
+        <p>{{ message.created_at }}</p>
+        <p>{{ message.message }}</p>
+      </div>
+      <div id="messageDetailConversation" class="tab-pane fade">
+        {% include 'modals/conversation_table.html' %}
+      </div>
+    </div>
   </div>
 
 <div class="modal-footer">

@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from account.views.messages import InboxView
 from account.views.messages import LoadMessageModal
+from account.views.messages import LoadConversationView
 from account.views.messages import UserMessageFormView
 from account.views.notifications import AdminNotificationAcceptView
 from account.views.notifications import AdminNotificationRejectView
@@ -89,6 +90,12 @@ urlpatterns = [
         r'^ax-post-message-load/(?P<pk>\d+)/$',
         LoadMessageModal.as_view(),
         name='ajax_post_message_load',
+    ),
+
+    url(
+        r'^ax-post-conversation-load/(?P<pk>\d+)/$',
+        LoadConversationView.as_view(),
+        name='ajax_post_conversation_load',
     ),
 
     url(

@@ -126,30 +126,54 @@
                 </button>
             </div>
 
-              <div class="modal-body">
-                <div class="alert alert-success" role="alert" style="display:none;">
-                  Your message has been sent.
-                </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#newMessage">New message</a></li>
+                  <li><a data-toggle="tab" href="#newMessageConversation">Full conversation</a></li>
+                </ul>
 
-                {% get_message_form as message_form %}
-                <form id="id_send_message_form" method="post" data-send-message-url="{% url 'account:send_user_mesasge' %}">
-                    {% csrf_token %}
-
-                    <div class="form-group">
-                        <label>
-                            {{ message_form.user_message.label }}
-                            <span class="QJRequiredField">*</span>
-                        </label>
-
-                        {% render_field message_form.user_message class+="form-control" %}
-                        {{ message_form.user_message.errors }}
+                <div class="tab-content">
+                  <div id="newMessage" class="tab-pane fade in active">
+                    <div class="alert alert-success" role="alert" style="display:none;">
+                      Your message has been sent.
                     </div>
 
-                    <div style="display:none;">{% render_field message_form.user_to_id %}</div>
+                    {% get_message_form as message_form %}
+                    <form id="id_send_message_form" method="post" data-send-message-url="{% url 'account:send_user_mesasge' %}">
+                        {% csrf_token %}
 
-                    <button type="submit" class="btn btn-primary btn-block">Send</button>
-                </form>
-              </div>
+                        <div class="form-group">
+                            <label>
+                                {{ message_form.user_message.label }}
+                                <span class="QJRequiredField">*</span>
+                            </label>
+
+                            {% render_field message_form.user_message class+="form-control" %}
+                            {{ message_form.user_message.errors }}
+                        </div>
+
+                        <div style="display:none;">{% render_field message_form.user_to_id %}</div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                    </form>
+                  </div>
+
+                  <div id="newMessageConversation" class="tab-pane fade">
+                    <table class="table table-striped">
+                    {% for previous_message in conversation %}
+                        <tr>
+                            <td>
+                                <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ previous_message.user_from.get_avatar }}" alt="{{ previous_message.user_from }}">
+                                <p>{{ previous_message.created_at }}</p>
+                                <p><strong>From: </strong>{{ previous_message.user_from }}</p>
+                                <p>{{ previous_message.message }}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                  </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
