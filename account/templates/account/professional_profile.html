@@ -20,7 +20,7 @@
                 </div>
 
                 {% if can_send_message %}
-                <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}">Send message</button>
+                <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' profile.user.id %}">Send message</button>
                 <br>
                 <br>
                 {% endif %}

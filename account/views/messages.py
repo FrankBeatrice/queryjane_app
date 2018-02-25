@@ -89,12 +89,18 @@ class LoadMessageModal(CustomUserMixin, View):
         message.unread = False
         message.save()
 
+        conversation = UserMessage.objects.filter(
+            user_to__in=(message.user_to, message.user_from),
+            user_from__in=(message.user_to, message.user_from),
+        ).distinct()
+
         return JsonResponse(
             {
                 'content': render_to_string(
                     'modals/_message_modal.html',
                     context={
                         'message': message,
+                        'conversation': conversation,
                     },
                     request=self.request,
                 ),
@@ -102,6 +108,38 @@ class LoadMessageModal(CustomUserMixin, View):
                     user_to=request.user,
                     unread=True,
                 ).count()
+            }
+        )
+
+    def get(self, *args, **kwargs):
+        raise Http404('Method not available')
+
+
+class LoadConversationView(LoginRequiredMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            User,
+            pk=self.kwargs['pk'],
+        )
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        user_converation = self.get_object()
+
+        conversation = UserMessage.objects.filter(
+            user_to__in=(user_converation, request.user),
+            user_from__in=(user_converation, request.user),
+        ).distinct()
+
+        return JsonResponse(
+            {
+                'content': render_to_string(
+                    'modals/conversation_table.html',
+                    context={
+                        'conversation': conversation,
+                    },
+                    request=self.request,
+                ),
             }
         )
 

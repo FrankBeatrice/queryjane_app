@@ -73,6 +73,24 @@ $(function () {
             industry_categories: {
                 required: true
             },
+            url: {
+                url: true
+            },
+            facebook_url: {
+                facebookURL: true
+            },
+            twitter_url: {
+                twitterURL: true
+            },
+            instagram_url: {
+                instagramURL: true
+            },
+            linkedin_url: {
+                linkedinURL: true
+            },
+            googleplus_url: {
+                GPlusURL: true
+            }
         },
         errorPlacement: function(error, element) {
             if (element.attr('name') === 'country_search') {

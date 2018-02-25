@@ -44,8 +44,8 @@
                 <div class="QJJobDetLocation">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>Location</span>
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                            <span>Job location</span>
                         </div>
 
                         <div class="panel-body">
@@ -58,7 +58,6 @@
 
                             {% if object.city %}
                             <div>
-                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
                                 <span>{{ object.city }} {% if object.state %}, {{ object.state }}.{% endif %}</span>
                             </div>
                             {% endif %}

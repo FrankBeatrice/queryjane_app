@@ -58,7 +58,7 @@
                 <div class="QJVentureDetLocation">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
                             <span>Location</span>
                         </div>
 
@@ -69,7 +69,6 @@
                             </div>
 
                             <div>
-                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
                                 <span>{{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
                             </div>
 
@@ -82,6 +81,64 @@
                         </div>
                     </div>
                 </div>
+
+                {% if venture.url %}
+                <div class="QJVenturWebPage">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-link" aria-hidden="true"></i>
+                            <span>Web page</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <a href="{{ venture.url }}" target="_blank">{{ venture.url }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if venture.facebook_url or venture.twitter_url or venture.instagram_url or venture.linkedin_url or venture.googleplus_url %}
+                <div class="QJVentureDetSocialMedia">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <span>Social media</span>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            {% if venture.facebook_url %}
+                            <a href="{{ venture.facebook_url }}" target="_blank">
+                                <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if venture.twitter_url %}
+                            <a href="{{ venture.twitter_url }}" target="_blank">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if venture.instagram_url %}
+                            <a href="{{ venture.instagram_url }}" target="_blank">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if venture.linkedin_url %}
+                            <a href="{{ venture.linkedin_url }}" target="_blank">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if venture.googleplus_url %}
+                            <a href="{{ venture.googleplus_url }}" target="_blank">
+                                <i class="fa fa-google-plus" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
 
                 {% if venture.phone_number or venture.email %}
                 <div class="QJVentureDetContact">

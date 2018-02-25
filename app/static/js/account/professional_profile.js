@@ -7,5 +7,9 @@ $(function () {
         $('#id_user_to_id').val(user_to_id);
 
         $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('user-to-name'));
+
+        $.post($(this).data('load-conversation-url')).done(function (response) {
+            $('#newMessageConversation').html(response.content);
+        });
     });
 })
