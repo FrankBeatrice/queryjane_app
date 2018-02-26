@@ -53,8 +53,28 @@ class MessagesPermissions(object):
 
 class JobOfferPermissions(object):
     @classmethod
+    def can_edit(self, user, job_offer):
+        if not user.is_authenticated:
+            return False
+
+        if not job_offer.is_active:
+            return False
+
+        if AdministratorMembership.objects.filter(
+            admin=user.professionalprofile,
+            venture=job_offer.venture,
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            return True
+
+        return False
+
+    @classmethod
     def can_apply(self, user, job_offer):
         if not user.is_authenticated:
+            return False
+
+        if not job_offer.is_active:
             return False
 
         professional_profile = user.professionalprofile

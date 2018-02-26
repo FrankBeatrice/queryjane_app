@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
@@ -10,6 +11,7 @@ from django.utils.text import slugify
 from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
+from django.views.generic import View
 
 from account.data import NEW_JOB_OFFER
 from account.models import IndustryCategory
@@ -21,6 +23,7 @@ from entrepreneur.forms import JobOfferForm
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
+from account.permissions import JobOfferPermissions
 from place.models import City
 from place.models import Country
 from place.utils import get_user_country
@@ -185,9 +188,9 @@ class JobOfferUpdateView(CustomUserMixin, UpdateView):
     template_name = 'entrepreneur/venture_settings/job_update.html'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
-            user=self.request.user,
-            venture=self.get_object().venture,
+        return JobOfferPermissions.can_edit(
+            self.request.user,
+            self.get_object(),
         )
 
     def get_object(self):
@@ -226,3 +229,22 @@ class JobOfferUpdateView(CustomUserMixin, UpdateView):
         return redirect(
             self.get_object().get_absolute_url()
         )
+
+
+class JobOfferCloseView(CustomUserMixin, View):
+    def test_func(self):
+        return JobOfferPermissions.can_edit(
+            self.request.user,
+            self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        job_offer = self.get_object()
+        job_offer.is_active = False
+        job_offer.save()
+
+        return HttpResponse('success')

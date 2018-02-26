@@ -149,7 +149,7 @@ class JobsList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = JobOffer.objects.filter(is_active=True)
+        queryset = JobOffer.objects.all()
 
         form = self.get_list_filter()
 
@@ -274,6 +274,12 @@ class JobOfferDetail(DetailView):
             self.request.user,
             job_offer.venture,
         )
+
+        context['can_edit'] = JobOfferPermissions.can_edit(
+            self.request.user,
+            job_offer,
+        )
+
         context['can_apply'] = JobOfferPermissions.can_apply(
             self.request.user,
             job_offer,

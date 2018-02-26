@@ -32,6 +32,14 @@
                               <td>
                                 <h2>{{ job_offer }}</h2>
 
+                                <p><strong>Status:</strong>
+                                {% if job_offer.is_active %}
+                                <span class="JODetailStatus label label-success">Active</span>
+                                {% else %}
+                                <span class="JODetailStatus label label-warning">Closed</span>
+                                {% endif %}
+                                </p>
+
                                 <strong>Category:</strong>
                                 <ul class="QJVentureDetCats">
                                 {% for industry_category in job_offer.industry_categories.all %}
@@ -62,7 +70,11 @@
                                 </div>
 
                                 <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+
+                                {% if job_offer.is_active %}
                                 <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
+                                {% endif %}
+
                               </td>
                             </tr>
                             {% empty %}

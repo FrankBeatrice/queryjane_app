@@ -69,6 +69,15 @@
 
             <div class="col-xs-12 col-sm-9">
                 <h1>{{ object }}</h1>
+
+                <p><strong>Status:</strong>
+                {% if object.is_active %}
+                <span class="JODetailStatus label label-success">Active</span>
+                {% else %}
+                <span class="JODetailStatus label label-warning">Closed</span>
+                {% endif %}
+                </p>
+
                 <p><strong>Created at:</strong> {{ object.created_at }}</p>
                 <p><strong>Job type:</strong> {{ object.get_job_type_display }}</p>
 
@@ -80,10 +89,15 @@
                 {% endif %}
                 </div>
 
-            {% if can_manage %}
-                <a href="{% url 'entrepreneur:job_offer_update' object.slug %}" class="btn btn-ghost-purple pull-right">Edit job offer</a>
-                <br>
+            {% if can_edit %}
+                <div class="pull-right jsJobDetailActions">
+                    <a href="{% url 'entrepreneur:job_offer_update' object.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
 
+                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ object.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' object.slug %}">Close job offer</a>
+                </div>
+            {% endif %}
+
+            {% if can_manage %}
                 <h3>Applicants list</h3>
 
                 <table class="table table-striped">
@@ -128,4 +142,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/job_offer_actions.js' %}"></script>
 {% endblock %}
