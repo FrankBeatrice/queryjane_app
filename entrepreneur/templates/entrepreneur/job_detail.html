@@ -81,6 +81,9 @@
                 </div>
 
             {% if can_manage %}
+                <a href="{% url 'entrepreneur:job_offer_update' object.slug %}" class="btn btn-ghost-purple pull-right">Edit job offer</a>
+                <br>
+
                 <h3>Applicants list</h3>
 
                 <table class="table table-striped">

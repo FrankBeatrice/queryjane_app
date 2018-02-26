@@ -1,0 +1,147 @@
+{% extends "layout/index.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ venture }} - Jobs offer form{% endblock %}
+
+{% block css %}
+<link href="{% static 'dist/css/entrepreneur/job_offer_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="account qjane-venture-settings">
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+            <div class="col-md-9 QjaneVentuerSettingsContent">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Create new job offer</h3>
+                    </div>
+
+                    <div class="panel-body QjaneVentureJobOfferForm">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label>
+                                    {{ form.title.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                <div>
+                                    {% render_field form.title class+="form-control" %}
+                                    <p>{{ form.title.errors }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    {{ form.job_type.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+
+                                <div>
+                                    {% render_field form.job_type class+="form-control" %}
+                                    <p>{{ form.job_type.errors }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    {{ form.description.label }}
+                                    <span class="QJRequiredField">*</span>
+                                </label>
+                                <p><i>Add a very detailed description of the job offer.</i></p>
+
+                                <div id="rich_editor_description">
+                                    {{ object.description|safe }}
+                                </div>
+
+                                <p>{{ form.description.errors }}</p>
+
+                                <div style="display:none;">
+                                    {% render_field form.description %}
+                                    {% render_field form.industry_categories %}
+                                </div>
+                            </div>
+
+                            <div class="IndustryCategoriesList">
+                                <p>Select the sector or sectors of your job offer.</p>
+
+                                <ul class="qjane-industry-categories-list">
+                                    {% for industry_category in industry_categories %}
+                                    <li>
+                                        <a class="btn {% if industry_category in object.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <p>{{ form.industry_categories.errors }}</p>
+                            </div>
+
+                            <br>
+
+                            <p class="h4">Where is the job?</p>
+                            <p>Fill these fields only if it is necessary for the applicant to live or move to a specific country or city.</p>
+
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <label>
+                                            Country
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field form.country_search  class+="form-control" %}
+                                            <img id="id_QjaneVFcountryAutImg" src="{{ job_offer.country.flag }}">
+                                            <p>{{ form.country_search.errors }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="display:none;">
+                                        {% render_field form.country_code %}
+                                        <p>{{ form.country_code.errors }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <label>
+                                            City
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+                                        <div>
+                                            {% render_field form.city_search  class+="form-control" %}
+                                            <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
+                                            <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                            <p>{{ form.city_search.errors }}</p>
+
+                                            <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">Please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            {% render_field form.city_id %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/place/show_position.js' %}"></script>
+<script src="{% static 'js/entrepreneur/job_offer_form.js' %}"></script>
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+{% endblock %}
+

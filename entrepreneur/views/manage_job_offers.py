@@ -3,11 +3,13 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 from django.views.generic import CreateView
 from django.views.generic import ListView
+from django.views.generic import UpdateView
 
 from account.data import NEW_JOB_OFFER
 from account.models import IndustryCategory
@@ -174,4 +176,53 @@ class JobOfferFormView(CustomUserMixin, CreateView):
                 'entrepreneur:job_offers_list',
                 args=[self.get_object().slug],
             )
+        )
+
+
+class JobOfferUpdateView(CustomUserMixin, UpdateView):
+    model = JobOffer
+    form_class = JobOfferForm
+    template_name = 'entrepreneur/venture_settings/job_update.html'
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object().venture,
+        )
+
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['industry_categories'] = IndustryCategory.objects.all()
+        context['venture'] = self.get_object().venture
+        context['job_offer'] = self.get_object()
+        context['jobs_active'] = True
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        job_offer = self.get_object()
+        form.save()
+
+        country_code = form.cleaned_data['country_code']
+        country_instance = get_object_or_404(
+            Country,
+            country=country_code,
+        )
+
+        city = get_object_or_404(
+            City,
+            id=int(form.cleaned_data['city_id']),
+        )
+
+        job_offer.country = country_instance
+        job_offer.city = city
+        job_offer.state = city.state
+        job_offer.save()
+
+        return redirect(
+            self.get_object().get_absolute_url()
         )

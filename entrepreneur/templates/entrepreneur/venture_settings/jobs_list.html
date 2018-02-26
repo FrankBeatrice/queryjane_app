@@ -62,6 +62,7 @@
                                 </div>
 
                                 <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+                                <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
                               </td>
                             </tr>
                             {% empty %}

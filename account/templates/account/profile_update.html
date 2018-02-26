@@ -88,7 +88,7 @@
                                         <div class="profile-form__country__typeahead">
                                             {% render_field form.country_search class+="form-control" %}
                                             
-                                            <img id="id_QjaneVFcountryAutImg" class="profile-form__country__typeahead__flag-icon" src="{{ country_instance.flag }}">
+                                            <img id="id_QjaneVFcountryAutImg" class="profile-form__country__typeahead__flag-icon" src="{{ professional_profile.user.country.flag }}">
 
                                             <p>{{ form.country_search.errors }}</p>
                                         </div>
