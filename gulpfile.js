@@ -9,7 +9,7 @@ var conf = {
   cssAssets: {
     src: [
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
-        './node_modules/bootstrap/dist/css/bootstrap.min.map',
+        './node_modules/bootstrap/dist/css/bootstrap.min.css.map',
         './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
     ],
     dest: './app/static/dist/assets/css/'
