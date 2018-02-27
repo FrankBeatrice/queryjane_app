@@ -28,7 +28,7 @@
                         <table class="table table-striped">
                           <tbody>
                             {% for job_offer in job_offers_list %}
-                            <tr>
+                            <tr class="JOContainer">
                               <td>
                                 <h2>{{ job_offer }}</h2>
 
@@ -72,15 +72,17 @@
                                 <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
 
                                 {% if job_offer.is_active %}
-                                <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
-                                {% endif %}
+                                <span class="jsJobActions">
+                                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
 
+                                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">Close job offer</a>
+                                </span>
+                                {% endif %}
                               </td>
                             </tr>
                             {% empty %}
                             <p class="h4">There are not published job offers yet.</p>
                             {% endfor %}
-
                           </tbody>
                         </table>
                     </div>
@@ -89,4 +91,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/job_offer_actions.js' %}"></script>
 {% endblock %}

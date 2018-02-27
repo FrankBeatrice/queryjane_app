@@ -67,7 +67,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-9">
+            <div class="col-xs-12 col-sm-9 JOContainer">
                 <h1>{{ object }}</h1>
 
                 <p><strong>Status:</strong>
@@ -90,7 +90,7 @@
                 </div>
 
             {% if can_edit %}
-                <div class="pull-right jsJobDetailActions">
+                <div class="pull-right jsJobActions">
                     <a href="{% url 'entrepreneur:job_offer_update' object.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
 
                     <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ object.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' object.slug %}">Close job offer</a>
@@ -127,6 +127,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <a href="{% url 'entrepreneur:job_offers_list' object.venture.slug %}" class="btn btn-ghost-purple">Go to job offers list administrator - {{ object.venture }}</a>
             {% endif %}
 
                 {% if can_apply %}
