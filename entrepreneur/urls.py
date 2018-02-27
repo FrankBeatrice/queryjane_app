@@ -9,7 +9,9 @@ from .views.general_venture_settings import UpdateVentureDescriptionForm
 from .views.general_venture_settings import UpdateVentureLogoForm
 from .views.general_venture_settings import VentureCategoryView
 from .views.manage_job_offers import JobOfferFormView
+from .views.manage_job_offers import JobOfferUpdateView
 from .views.manage_job_offers import JobOffersListView
+from .views.manage_job_offers import JobOfferCloseView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesVentureFormView
@@ -93,6 +95,18 @@ urlpatterns = [
         r'^settings/(?P<slug>[-\w]+)/job_offer_form/$',
         JobOfferFormView.as_view(),
         name='job_offer_form',
+    ),
+
+    url(
+        r'^settings/(?P<slug>[-\w]+)/job_offer_update/$',
+        JobOfferUpdateView.as_view(),
+        name='job_offer_update',
+    ),
+
+    url(
+        r'^ax-settings/(?P<slug>[-\w]+)/job_offer_close/$',
+        JobOfferCloseView.as_view(),
+        name='job_offer_close',
     ),
 
     url(

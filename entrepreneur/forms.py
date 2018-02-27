@@ -426,3 +426,22 @@ class JobOfferForm(forms.ModelForm):
             'city_search',
             'city_id',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        job_offer = kwargs.get('instance', None)
+
+        country = None
+        city = None
+
+        if job_offer:
+            country = job_offer.country
+            city = job_offer.city
+
+        if country:
+            self.fields['country_search'].initial = job_offer.country.name
+            self.fields['country_code'].initial = job_offer.country.country.code
+
+        if city:
+            self.fields['city_search'].initial = job_offer.city.name
+            self.fields['city_id'].initial = job_offer.city.id

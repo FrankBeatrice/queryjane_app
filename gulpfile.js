@@ -8,7 +8,8 @@ var sourcemaps   = require('gulp-sourcemaps');
 var conf = {
   cssAssets: {
     src: [
-        './node_modules/bootstrap/dist/css/bootstrap.min.css'
+        './node_modules/bootstrap/dist/css/bootstrap.min.css',
+        './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
     ],
     dest: './app/static/dist/assets/css/'
   },
@@ -19,6 +20,7 @@ var conf = {
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
       './node_modules/jquery-validation/dist/jquery.validate.js',
       './node_modules/jquery-validation/dist/additional-methods.js',
+      './node_modules/jquery-confirm/dist/jquery-confirm.min.js',
       './node_modules/typeahead.js/dist/typeahead.bundle.min.js'
     ],
     dest: './app/static/dist/assets/js/'

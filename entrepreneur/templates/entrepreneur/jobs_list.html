@@ -122,6 +122,14 @@
                                         {{ job_offer }}
                                     </h2>
 
+                                    <p><strong>Status:</strong>
+                                    {% if job_offer.is_active %}
+                                    <span class="JODetailStatus label label-success">Active</span>
+                                    {% else %}
+                                    <span class="JODetailStatus label label-warning">Closed</span>
+                                    {% endif %}
+                                    </p>
+
                                     <ul class="QJVentureDetCats">
                                     {% for industry_category in job_offer.industry_categories.all %}
                                         <li>{{ industry_category }}</li>
