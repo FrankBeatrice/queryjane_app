@@ -12,12 +12,21 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ user }}</div>
                     <div class="panel-body">
-                        <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
-                            <img class="" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
-                            
-                            <span>Visit your profile.</span>
-                        </a>
 
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                            <tr>
+                                <td>
+                                    <img class="img-responsive thumbnail" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
+                                </td>
+                                <td>
+                                    <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                                        <span>Visit your profile.</span>
+                                    </a>
+                                </td>
+                            </tr>
+                          </tbody>
+                        </table>
                         {% if user.professionalprofile.industry_categories.all %}
                         <ul>
                         {% for industry_category in user.professionalprofile.industry_categories.all %}
@@ -40,9 +49,9 @@
                     </div>
 
                     <div class="panel-body">
-                        <ul class="QJVentureDetCats">
+                        <ul>
                         {% for membership in user_venture_memberships %}
-                            <li class="dropdown-item">
+                            <li>
                                 <a href="{{ membership.venture.get_absolute_url }}">
                                     <img class="" src="{{ membership.venture.get_logo }}" alt="{{ user }}" style="width: 30px; height: 30px">
                                     {{ membership.venture }}
@@ -53,9 +62,51 @@
                     </div>
                 </div>
                 {% endif %}
-
             </div>
-            <div class="col-xs-12 col-sm-9">
+
+            <div class="col-xs-12 col-sm-6">
+                {% if interest_sector_jobs %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <span class="pull-left">Job offers that might interest you.</span>
+                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            View all
+                        </a>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for job_offer in interest_sector_jobs %}
+                            {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if lastest_jobs %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <span class="pull-left">Last job offers</span>
+                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            View all
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for job_offer in lastest_jobs %}
+                            {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

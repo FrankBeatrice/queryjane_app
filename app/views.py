@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -64,7 +65,26 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'account/dashboard.html'
 
     def get_context_data(self, **kwargs):
+        profile = self.request.user.professionalprofile
         context = super().get_context_data(**kwargs)
+
+        # Get job offers by country or interest sector.
+        interest_sector_jobs = JobOffer.objects.filter(
+            Q(country=self.request.user.country) |
+            Q(industry_categories__in=profile.industry_categories.all()),
+        ).exclude(
+            venture_id__in=profile.get_managed_venture_ids,
+        ).distinct()[:5]
+
+        exclude = list(interest_sector_jobs.values_list('id', flat=True))
+
+        # Get latest publised job offers
+        latest_jobs = JobOffer.objects.filter(
+            is_active=True,
+        ).exclude(id__in=exclude)[:5]
+
+        context['interest_sector_jobs'] = interest_sector_jobs
+        context['lastest_jobs'] = latest_jobs
 
         return context
 
