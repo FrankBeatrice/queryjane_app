@@ -1,0 +1,63 @@
+{% extends "layout/index.html" %}
+
+{% load static entrepreneur_tags %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="qjaneDashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{ user }}</div>
+                    <div class="panel-body">
+                        <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                            <img class="" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
+                            
+                            <span>Visit your profile.</span>
+                        </a>
+
+                        {% if user.professionalprofile.industry_categories.all %}
+                        <ul>
+                        {% for industry_category in user.professionalprofile.industry_categories.all %}
+                            <li class="label label-primary">{{ industry_category }}</li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                            <p>You have not added industry sectors yet. <a href="{% url 'account:profile_update' %}"> Go to edit your professional profile.</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% get_user_venture_memberships user as user_venture_memberships %}
+
+                {% if user_venture_memberships %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        <span>Your companies</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="QJVentureDetCats">
+                        {% for membership in user_venture_memberships %}
+                            <li class="dropdown-item">
+                                <a href="{{ membership.venture.get_absolute_url }}">
+                                    <img class="" src="{{ membership.venture.get_logo }}" alt="{{ user }}" style="width: 30px; height: 30px">
+                                    {{ membership.venture }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="col-xs-12 col-sm-9">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

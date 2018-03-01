@@ -35,10 +35,7 @@ class HomeView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(
-                'professional_detail',
-                slug=request.user.professionalprofile.slug,
-            )
+            return redirect('dashboard')
 
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)
@@ -59,6 +56,15 @@ class HomeView(TemplateView):
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
+
+        return context
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
         return context
 
