@@ -95,7 +95,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         local_companies = list(Venture.objects.filter(
             is_active=True,
             country=user_country,
-        ).order_by('?')[:2])
+        ).order_by('?')[:5])
 
         companies_to_exclude = []
 
