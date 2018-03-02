@@ -129,7 +129,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
         # Create potential applicants notifications.
         potential_applicants = ProfessionalProfile.objects.filter(
             industry_categories__in=job_offer.industry_categories.all(),
-        ).exclude(id__in=venture.get_active_administrator_ids)
+        ).distinct().exclude(id__in=venture.get_active_administrator_ids)
 
         if job_offer.country:
             potential_applicants = potential_applicants.filter(
@@ -207,23 +207,34 @@ class JobOfferUpdateView(CustomUserMixin, UpdateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        job_offer = self.get_object()
-        form.save()
+        job_offer = form.save()
 
         country_code = form.cleaned_data['country_code']
-        country_instance = get_object_or_404(
-            Country,
-            country=country_code,
-        )
 
-        city = get_object_or_404(
-            City,
-            id=int(form.cleaned_data['city_id']),
-        )
+        country_instance = None
+        state = None
+        city = None
+
+        if country_code:
+            country_instance = get_object_or_404(
+                Country,
+                country=country_code,
+            )
+
+        city_id = form.cleaned_data['city_id']
+
+        if city_id:
+            city = get_object_or_404(
+                City,
+                id=int(city_id),
+            )
+
+            state = city.state
 
         job_offer.country = country_instance
+        job_offer.state = state
         job_offer.city = city
-        job_offer.state = city.state
+
         job_offer.save()
 
         return redirect(

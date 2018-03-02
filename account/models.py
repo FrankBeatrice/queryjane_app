@@ -11,9 +11,11 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
 
-from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_ENTREPRENEUR_ADMIN
 from .data import NEW_JOB_OFFER
+from .data import NOTIFICATION_TYPE_CHOICES
+from entrepreneur.data import ACTIVE_MEMBERSHIP
+from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
 
 
@@ -259,6 +261,15 @@ class ProfessionalProfile(models.Model):
     @property
     def get_print(self):
         return self.user.get_full_name
+
+    @property
+    def get_managed_venture_ids(self):
+        memberships = AdministratorMembership.objects.filter(
+            admin=self,
+            status=ACTIVE_MEMBERSHIP,
+        )
+
+        return list(memberships.values_list('venture__id', flat=True))
 
 
 class IndustryCategory(models.Model):

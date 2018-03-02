@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from .views import ajax_login_form
 from .views import ContactFormView
 from .views import HomeView
+from .views import DashboardView
 from .views import JobOfferApplyView
 from .views import JobOfferDetail
 from .views import JobsList
@@ -28,6 +29,12 @@ urlpatterns = [
         r'^$',
         HomeView.as_view(),
         name='home',
+    ),
+
+    url(
+        r'^dashbaord/$',
+        DashboardView.as_view(),
+        name='dashboard',
     ),
 
     url(

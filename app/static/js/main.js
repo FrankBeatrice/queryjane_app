@@ -29,40 +29,40 @@ function getLocation() {
 
     $.validator.addMethod(
         'facebookURL',
-        function (value) {
-            return /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(value);
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(value);
         },
         'Please enter a valid Facebook url.'
     );
 
     $.validator.addMethod(
         'twitterURL',
-        function (value) {
-            return /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i.test(value);
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i.test(value);
         },
         'Please enter a valid Twitter url.'
     );
 
     $.validator.addMethod(
         'instagramURL',
-        function (value) {
-            return /^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(value);
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(value);
         },
         'Please enter a valid Instagram url.'
     );
 
     $.validator.addMethod(
         'linkedinURL',
-        function (value) {
-            return /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i.test(value);
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i.test(value);
         },
         'Please enter a valid Linkedin url.'
     );
 
     $.validator.addMethod(
         'GPlusURL',
-        function (value) {
-            return /^(https?:\/\/)?((w{3}\.)?)plus.google.com\/.*/i.test(value);
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)plus.google.com\/.*/i.test(value);
         },
         'Please enter a valid Google Plus url.'
     );
@@ -208,7 +208,7 @@ function getLocation() {
       }
   });
 
-    // Populate general message modal with notifications messages.
+    // Populate general notification modal with notifications messages.
     $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
 
@@ -221,6 +221,7 @@ function getLocation() {
         $.post(notification_url).done(function (response) {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
+                $('.NewNotificationsCounter').text(response.new_notifications_counter);
             }
         });
     });

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -16,6 +17,8 @@ from django.views.generic import View
 
 from account.forms import SignUpForm
 from account.models import ProfessionalProfile
+from account.models import UserMessage
+from account.models import UserNotification
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -35,10 +38,7 @@ class HomeView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(
-                'professional_detail',
-                slug=request.user.professionalprofile.slug,
-            )
+            return redirect('dashboard')
 
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)
@@ -59,6 +59,72 @@ class HomeView(TemplateView):
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
+
+        return context
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        profile = user.professionalprofile
+        user_country = user.country
+
+        context = super().get_context_data(**kwargs)
+
+        # Get job offers by country or interest sector.
+        interest_sector_jobs = list(JobOffer.objects.filter(
+            Q(country=user_country) |
+            Q(industry_categories__in=profile.industry_categories.all()),
+        ).exclude(
+            venture_id__in=profile.get_managed_venture_ids,
+        ).distinct()[:5])
+
+        jobs_to_exclude = []
+
+        for job_to_exclude in interest_sector_jobs:
+            jobs_to_exclude.append(job_to_exclude.id)
+
+        # Get latest publised job offers
+        last_jobs = list(JobOffer.objects.filter(
+            is_active=True,
+        ).exclude(id__in=jobs_to_exclude)[:5])
+
+        # Local companies
+        local_companies = list(Venture.objects.filter(
+            is_active=True,
+            country=user_country,
+        ).order_by('?')[:2])
+
+        companies_to_exclude = []
+
+        for company_to_exclude in local_companies:
+            companies_to_exclude.append(company_to_exclude.id)
+
+        # # Random companies
+        random_companies = list(Venture.objects.filter(
+            is_active=True,
+        ).exclude(id__in=companies_to_exclude).order_by('?')[:5])
+
+        # New messages
+        new_messages = UserMessage.objects.filter(
+            user_to=user,
+            unread=True,
+        )
+
+        # New messages
+        new_notifications = UserNotification.objects.filter(
+            noty_to=user,
+            was_seen=False,
+        )
+
+        context['interest_sector_jobs'] = interest_sector_jobs
+        context['last_jobs'] = last_jobs
+        context['local_companies'] = local_companies
+        context['random_companies'] = random_companies
+        context['new_messages'] = new_messages
+        context['new_notifications'] = new_notifications
 
         return context
 

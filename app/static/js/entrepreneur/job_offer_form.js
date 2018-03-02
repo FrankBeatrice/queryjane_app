@@ -50,7 +50,7 @@ $(function () {
         rules: {
             title: {
                 minlength: 3,
-                maxlength: 50,
+                maxlength: 80,
                 required: true
             },
             description: {
