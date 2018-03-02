@@ -220,6 +220,8 @@ function getLocation() {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewNotificationsCounter').text(response.new_notifications_counter);
+            } else {
+              alert('something is wrong. Please reload and try again.');
             }
         });
     });
@@ -236,6 +238,8 @@ function getLocation() {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewMessagesCounter').text(response.new_messages_counter);
+            } else {
+              alert('something is wrong. Please reload and try again.');
             }
         });
     });
