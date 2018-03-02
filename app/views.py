@@ -92,9 +92,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         exclude_companies = list(local_companies.values_list('id', flat=True))
 
-        print("exclude_companies")
-        print(exclude_companies)
-
         # Random companies
         random_companies = Venture.objects.filter(
             is_active=True,
