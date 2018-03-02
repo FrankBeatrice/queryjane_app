@@ -208,7 +208,7 @@ function getLocation() {
       }
   });
 
-    // Populate general message modal with notifications messages.
+    // Populate general notification modal with notifications messages.
     $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
 

@@ -17,6 +17,7 @@ from django.views.generic import View
 
 from account.forms import SignUpForm
 from account.models import ProfessionalProfile
+from account.models import UserMessage
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -65,8 +66,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'account/dashboard.html'
 
     def get_context_data(self, **kwargs):
-        profile = self.request.user.professionalprofile
-        user_country = self.request.user.country
+        user = self.request.user
+        profile = user.professionalprofile
+        user_country = user.country
 
         context = super().get_context_data(**kwargs)
         # Get job offers by country or interest sector.
@@ -97,10 +99,17 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             is_active=True,
         ).exclude(id__in=exclude_companies).order_by('?')[:5]
 
+        # New messages
+        new_messages = UserMessage.objects.filter(
+            user_to=user,
+            unread=True,
+        )
+
         context['interest_sector_jobs'] = interest_sector_jobs
         context['lastest_jobs'] = latest_jobs
         context['local_companies'] = local_companies
         context['random_companies'] = random_companies
+        context['new_messages'] = new_messages
 
         return context
 
