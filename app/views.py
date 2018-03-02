@@ -66,25 +66,44 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         profile = self.request.user.professionalprofile
-        context = super().get_context_data(**kwargs)
+        user_country = self.request.user.country
 
+        context = super().get_context_data(**kwargs)
         # Get job offers by country or interest sector.
         interest_sector_jobs = JobOffer.objects.filter(
-            Q(country=self.request.user.country) |
+            Q(country=user_country) |
             Q(industry_categories__in=profile.industry_categories.all()),
         ).exclude(
             venture_id__in=profile.get_managed_venture_ids,
         ).distinct()[:5]
 
-        exclude = list(interest_sector_jobs.values_list('id', flat=True))
+        exclude_jobs = list(interest_sector_jobs.values_list('id', flat=True))
 
         # Get latest publised job offers
         latest_jobs = JobOffer.objects.filter(
             is_active=True,
-        ).exclude(id__in=exclude)[:5]
+        ).exclude(id__in=exclude_jobs)[:5]
+
+        # Local companies
+        local_companies = Venture.objects.filter(
+            is_active=True,
+            country=user_country,
+        ).order_by('?')[:2]
+
+        exclude_companies = list(local_companies.values_list('id', flat=True))
+
+        print("exclude_companies")
+        print(exclude_companies)
+
+        # Random companies
+        random_companies = Venture.objects.filter(
+            is_active=True,
+        ).exclude(id__in=exclude_companies).order_by('?')[:5]
 
         context['interest_sector_jobs'] = interest_sector_jobs
         context['lastest_jobs'] = latest_jobs
+        context['local_companies'] = local_companies
+        context['random_companies'] = random_companies
 
         return context
 

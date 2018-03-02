@@ -1,0 +1,22 @@
+<tr>
+    <td>
+        <img class="thumbnail img-responsive" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: 80px">
+        <p class="h5">
+            <a href="{{ company.get_absolute_url }}">{{ company }}</a>
+
+            <p>
+                <img src="{{ company.country.flag }}">
+                <span>{{ company.country }}</span>
+            </p>
+
+            <p>{{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</p>
+        </p>
+    </td>
+    <td>
+        <ul>
+        {% for category in company.industry_categories.all %}
+            <li class="label label-primary">{{ category }}</li>
+        {% endfor %}
+        </ul>
+    </td>
+</tr>
