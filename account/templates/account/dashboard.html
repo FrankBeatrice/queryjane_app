@@ -139,7 +139,7 @@
                 </div>
                 {% endif %}
 
-                {% if lastest_jobs %}
+                {% if last_jobs %}
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
                         <span class="pull-left">Last job offers.</span>
@@ -151,8 +151,31 @@
                     <div class="panel-body">
                         <table class="table table-striped jobs-table">
                           <tbody>
-                        {% for job_offer in lastest_jobs %}
+                        {% for job_offer in last_jobs %}
                             {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if random_companies %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <span>Know some registered companies.</span>
+                        </div>
+                        <a href="{% url 'venture_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            View all
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for company in random_companies %}
+                            {% include 'account/dashboard_company_line.html' %}
                         {% endfor %}
                           </tbody>
                         </table>
@@ -178,29 +201,6 @@
                         <table class="table table-striped jobs-table">
                           <tbody>
                         {% for company in local_companies %}
-                            {% include 'account/dashboard_company_line.html' %}
-                        {% endfor %}
-                          </tbody>
-                        </table>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if random_companies %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <div class="pull-left">
-                            <span>Know some registered companies.</span>
-                        </div>
-                        <a href="{% url 'venture_list' %}" class="btn btn-primary pull-right">
-                            <i class="fa fa-list-ul"></i>
-                            View all
-                        </a>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-striped jobs-table">
-                          <tbody>
-                        {% for company in random_companies %}
                             {% include 'account/dashboard_company_line.html' %}
                         {% endfor %}
                           </tbody>

@@ -72,33 +72,40 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         user_country = user.country
 
         context = super().get_context_data(**kwargs)
+
         # Get job offers by country or interest sector.
-        interest_sector_jobs = JobOffer.objects.filter(
+        interest_sector_jobs = list(JobOffer.objects.filter(
             Q(country=user_country) |
             Q(industry_categories__in=profile.industry_categories.all()),
         ).exclude(
             venture_id__in=profile.get_managed_venture_ids,
-        ).distinct()[:5]
+        ).distinct()[:5])
 
-        exclude_jobs = list(interest_sector_jobs.values_list('id', flat=True))
+        jobs_to_exclude = []
+
+        for job_to_exclude in interest_sector_jobs:
+            jobs_to_exclude.append(job_to_exclude.id)
 
         # Get latest publised job offers
-        latest_jobs = JobOffer.objects.filter(
+        last_jobs = list(JobOffer.objects.filter(
             is_active=True,
-        ).exclude(id__in=exclude_jobs)[:5]
+        ).exclude(id__in=jobs_to_exclude)[:5])
 
         # Local companies
-        local_companies = Venture.objects.filter(
+        local_companies = list(Venture.objects.filter(
             is_active=True,
             country=user_country,
-        ).order_by('?')[:2]
+        ).order_by('?')[:2])
 
-        exclude_companies = list(local_companies.values_list('id', flat=True))
+        companies_to_exclude = []
 
-        # Random companies
-        random_companies = Venture.objects.filter(
+        for company_to_exclude in local_companies:
+            companies_to_exclude.append(company_to_exclude.id)
+
+        # # Random companies
+        random_companies = list(Venture.objects.filter(
             is_active=True,
-        ).exclude(id__in=exclude_companies).order_by('?')[:5]
+        ).exclude(id__in=companies_to_exclude).order_by('?')[:5])
 
         # New messages
         new_messages = UserMessage.objects.filter(
@@ -113,7 +120,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         )
 
         context['interest_sector_jobs'] = interest_sector_jobs
-        context['lastest_jobs'] = latest_jobs
+        context['last_jobs'] = last_jobs
         context['local_companies'] = local_companies
         context['random_companies'] = random_companies
         context['new_messages'] = new_messages
