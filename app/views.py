@@ -18,6 +18,7 @@ from django.views.generic import View
 from account.forms import SignUpForm
 from account.models import ProfessionalProfile
 from account.models import UserMessage
+from account.models import UserNotification
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -105,11 +106,18 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             unread=True,
         )
 
+        # New messages
+        new_notifications = UserNotification.objects.filter(
+            noty_to=user,
+            was_seen=False,
+        )
+
         context['interest_sector_jobs'] = interest_sector_jobs
         context['lastest_jobs'] = latest_jobs
         context['local_companies'] = local_companies
         context['random_companies'] = random_companies
         context['new_messages'] = new_messages
+        context['new_notifications'] = new_notifications
 
         return context
 

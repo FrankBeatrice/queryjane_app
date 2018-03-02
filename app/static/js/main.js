@@ -221,6 +221,7 @@ function getLocation() {
         $.post(notification_url).done(function (response) {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
+                $('.NewNotificationsCounter').text(response.new_notifications_counter);
             }
         });
     });

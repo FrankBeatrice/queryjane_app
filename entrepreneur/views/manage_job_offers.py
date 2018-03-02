@@ -129,7 +129,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
         # Create potential applicants notifications.
         potential_applicants = ProfessionalProfile.objects.filter(
             industry_categories__in=job_offer.industry_categories.all(),
-        ).exclude(id__in=venture.get_active_administrator_ids)
+        ).distinct().exclude(id__in=venture.get_active_administrator_ids)
 
         if job_offer.country:
             potential_applicants = potential_applicants.filter(
