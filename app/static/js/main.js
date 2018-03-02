@@ -208,14 +208,12 @@ function getLocation() {
       }
   });
 
-    // Populate general notification modal with notifications messages.
+    // Populate general message modal with new notification detail.
     $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
 
         // Remove active class
         $(this).closest('tr').removeClass("active");
-
-        // Change envelope ico to opened envelope
         $(this).parent().find('.JSNotificationStatus').removeClass('fa-eye-slash').addClass('fa-eye');
 
         $.post(notification_url).done(function (response) {
@@ -226,14 +224,12 @@ function getLocation() {
         });
     });
 
-    // Populate send message modal form.
+    // Populate general message modal with received message detail.
     $('.header-messages-list, .QjaneInboxList').on('click', '.qjane-messages-link', function () {
         var message_url = $(this).data('message-url');
 
         // Remove active class
         $(this).closest('tr').removeClass("active");
-
-        // Change envelope ico to opened envelope
         $(this).parent().find('.JSMessagestatus').removeClass('fa-envelope').addClass('fa-envelope-open');
 
         $.post(message_url).done(function (response) {
