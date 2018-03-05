@@ -6,6 +6,12 @@
 {% block meta_title %}{{ venture }}{% endblock %}
 {% block meta_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
 
+{% block meta_image %}
+{% get_company_logo_extension venture.get_logo as company_logo_extension %}
+<meta property="og:image" content="{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}">
+<meta property="og:image:type" content="image/{{ company_logo_extension }}">
+{% endblock %}
+
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
 {% endblock %}
