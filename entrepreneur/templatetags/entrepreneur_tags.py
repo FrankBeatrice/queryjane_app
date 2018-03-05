@@ -40,3 +40,8 @@ def get_user_venture_admin_notification(user, venture):
         venture_from=venture,
         membership=pa_m,
     ).first()
+
+
+@register.assignment_tag
+def get_company_logo_extension(logo_str):
+    return logo_str.split('.')[-1]
