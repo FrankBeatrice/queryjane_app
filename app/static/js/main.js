@@ -203,6 +203,7 @@ function getLocation() {
           },
           password: {
               minlength: 8,
+              valid_password: true,
               required: true
           }
       }
@@ -262,7 +263,6 @@ function getLocation() {
 
       return false;
     });
-
 
     // Set global methods
     qjGlobal.mqDetector = mqDetector;
