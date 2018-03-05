@@ -64,6 +64,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'app.context_processors.facebook_app_id',
+                'app.context_processors.permissions',
             ],
         },
     },
