@@ -3,6 +3,8 @@
 {% load static entrepreneur_tags %}
 
 {% block title %}{{ object }}{% endblock %}
+{% block meta_title %}{{ object }}{% endblock %}
+{% block meta_description %}{{ object.description|safe|truncatechars_html:200 }}{% endblock %}
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}

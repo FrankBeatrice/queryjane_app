@@ -3,6 +3,8 @@
 {% load static entrepreneur_tags %}
 
 {% block title %}{{ venture }}{% endblock %}
+{% block meta_title %}{{ venture }}{% endblock %}
+{% block meta_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
@@ -23,6 +25,13 @@
 
                 {% if can_manage %}
                     <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">Settings</a>
+                    <br>
+                    <br>
+
+                    <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Create job offer
+                </a>
                     <br>
                     <br>
                 {% endif %}
