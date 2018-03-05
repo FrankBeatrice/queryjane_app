@@ -91,12 +91,25 @@
                     <i class="fa fa-briefcase pull-right" aria-hidden="true"></i>
                 </a>
             </li>
+            <li role="separator" class="divider"></li>
         {% get_user_venture_memberships user as user_venture_memberships %}
 
         {% if user_venture_memberships %}
         {% for membership in user_venture_memberships %}
             <li class="dropdown-item"><a href="{{ membership.venture.get_absolute_url }}">{{ membership.venture }}</a></li>
         {% endfor %}
+
+        {% if permission_app.manage_admin_views %}
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-item">
+                <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
+                    <span class="pull-left">Admin Dashboard</span>
+                    <i class="fa fa-star pull-right" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li role="separator" class="divider"></li>
+        {% endif %}
+
         {% endif %}
             <li class="dropdown-item">
                 <a href="{% url 'user_logout' %}" class="clearfix">
