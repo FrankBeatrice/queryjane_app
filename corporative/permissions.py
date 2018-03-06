@@ -5,3 +5,13 @@ class AdminPermissions(object):
             return True
 
         return False
+
+    @classmethod
+    def can_share_venture_twitter(self, user, venture):
+        if not venture.is_active or venture.shared_on_twitter:
+            return False
+
+        if user.is_staff:
+            return True
+
+        return False

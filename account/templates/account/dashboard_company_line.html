@@ -21,9 +21,9 @@
 
         {{ company.description_en|safe|truncatechars_html:150 }}
 
-        <div class="pull-right">
+        <div class="pull-right JSCompanyActions">
             {% if permission_app.manage_admin_views %}
-            <a href="" class="btn btn-ghost-purple">
+            <a href="javascript:void(0)" class="JStwitterShareCompany btn btn-ghost-purple" data-twitter-share-url="{% url 'corporative:ax_twitter_share_venture' company.slug %}">
                 <i class="fa fa-twitter"></i> Share
             </a>
             {% endif %}

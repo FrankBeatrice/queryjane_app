@@ -1,4 +1,8 @@
+from django.db import transaction
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
+from django.views.generic import View
 
 from .permissions import AdminPermissions
 from app.mixins import CustomUserMixin
@@ -6,6 +10,7 @@ from entrepreneur.data import JOB_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
+from corporative.tasks import share_company_on_twitter
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):
@@ -33,3 +38,20 @@ class AdminDashboardView(CustomUserMixin, TemplateView):
         context['unshared_jobs_list'] = unshared_jobs_list
 
         return context
+
+
+class TwitterShareVentureView(CustomUserMixin, View):
+    def test_func(self):
+        return AdminPermissions.can_share_venture_twitter(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        share_company_on_twitter(self.get_object())
+
+        return HttpResponse('success')
