@@ -3,13 +3,27 @@
 {% load static entrepreneur_tags %}
 
 {% block title %}{{ object }} | {{ object.venture }}{% endblock %}
+
 {% block meta_title %}{{ object }} | {{ object.venture }}{% endblock %}
 {% block meta_description %}{{ object.description|safe|truncatechars_html:200 }}{% endblock %}
 
 {% block meta_image %}
+{% if not object.venture.logo %}https://queryjane.net{% endif %}{{ object.venture.get_logo }}
+{% endblock %}
+
 {% get_company_logo_extension object.venture.get_logo as company_logo_extension %}
-<meta property="og:image" content="{% if not object.venture.logo %}https://queryjane.net{% endif %}{{ object.venture.get_logo }}">
-<meta property="og:image:type" content="image/{{ company_logo_extension }}">
+{% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
+
+{% block meta_twitter_title %}
+{{ object }} | {{ object.venture }}
+{% endblock %}
+
+{% block meta_twitter_description %}
+{{ object.description|safe|truncatechars_html:200 }}
+{% endblock %}
+
+{% block meta_twitter_image %}
+{% if not object.venture.logo %}https://queryjane.net{% endif %}{{ object.venture.get_logo }}
 {% endblock %}
 
 {% block navbar %}
