@@ -98,6 +98,7 @@
         {% for membership in user_venture_memberships %}
             <li class="dropdown-item"><a href="{{ membership.venture.get_absolute_url }}">{{ membership.venture }}</a></li>
         {% endfor %}
+        {% endif %}
 
         {% if permission_app.manage_admin_views %}
             <li role="separator" class="divider"></li>
@@ -110,7 +111,6 @@
             <li role="separator" class="divider"></li>
         {% endif %}
 
-        {% endif %}
             <li class="dropdown-item">
                 <a href="{% url 'user_logout' %}" class="clearfix">
                     <span class="pull-left">Log out</span>
