@@ -31,6 +31,14 @@
         {% endfor %}
         </ul>
 
-        <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary pull-right">View</a>
+        <div class="pull-right JSJobActions">
+            {% if permission_app.manage_admin_views %}
+            <a href="javascript:void(0)" class="JStwitterShareJob btn btn-ghost-purple" data-twitter-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}">
+                <i class="fa fa-twitter"></i> Share
+            </a>
+            {% endif %}
+
+            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+        </div>
     </td>
 </tr>

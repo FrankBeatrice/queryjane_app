@@ -1,7 +1,7 @@
 <tr>
     <td>
         <img class="thumbnail img-responsive" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
-        <p class="h5">
+        <p class="h4">
             <a href="{{ company.get_absolute_url }}">{{ company }}</a>
 
             <p>
@@ -18,5 +18,17 @@
             <li class="label label-primary">{{ category }}</li>
         {% endfor %}
         </ul>
+
+        {{ company.description_en|safe|truncatechars_html:150 }}
+
+        <div class="pull-right JSCompanyActions">
+            {% if permission_app.manage_admin_views %}
+            <a href="javascript:void(0)" class="JStwitterShareCompany btn btn-ghost-purple" data-twitter-share-url="{% url 'corporative:ax_twitter_share_venture' company.slug %}">
+                <i class="fa fa-twitter"></i> Share
+            </a>
+            {% endif %}
+
+            <a href="{{ company.get_absolute_url }}" class="btn btn-primary">View</a>
+        </div>
     </td>
 </tr>

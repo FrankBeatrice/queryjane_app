@@ -264,6 +264,44 @@ function getLocation() {
       return false;
     });
 
+    // Share company on twitter.
+    $('.JSCompanyActions').on('click', '.JStwitterShareCompany', function() {
+      var tr_object = $(this).closest('tr');
+        $.post($(this).data('twitter-share-url'), function (response) {
+            if (response === 'success') {
+              $.alert({
+                  title: 'Shared!',
+                  content: 'Company has been successfully shared on Twitter!',
+              });
+              tr_object.remove();
+            } else {
+              $.alert({
+                  title: 'Error!',
+                  content: 'something is wrong. Please reload and try again.',
+              });
+            }
+        });
+    });
+
+    // Share job on twitter.
+    $('.JSJobActions').on('click', '.JStwitterShareJob', function() {
+      var tr_object = $(this).closest('tr');
+        $.post($(this).data('twitter-share-url'), function (response) {
+            if (response === 'success') {
+              $.alert({
+                  title: 'Shared!',
+                  content: 'Job offer has been successfully shared on Twitter!',
+              });
+              tr_object.remove();
+            } else {
+              $.alert({
+                  title: 'Error!',
+                  content: 'something is wrong. Please reload and try again.',
+              });
+            }
+        });
+    });
+
     // Set global methods
     qjGlobal.mqDetector = mqDetector;
 })();

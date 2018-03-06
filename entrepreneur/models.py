@@ -6,14 +6,28 @@ from django.db import models
 from .data import ACTIVE_MEMBERSHIP
 from .data import ADMINISTRATOR_ROLES
 from .data import FREELANCE
+from .data import JOB_STATUS_ACTIVE
+from .data import JOB_STATUS_CHOICES
+from .data import JOB_STATUS_CLOSED
+from .data import JOB_STATUS_HIDDEN
 from .data import JOB_TYPE_CHOICES
 from .data import MEMBERSHIP_STATUS_CHOICES
 from .data import QJANE_ADMIN
 from .data import REJECTED_MEMBERSHIP
 from .data import SENT_INVITATION
+from .data import VENTURE_STATUS_ACTIVE
+from .data import VENTURE_STATUS_CHOICES
+from .data import VENTURE_STATUS_HIDDEN
+from .data import VENTURE_STATUS_INACTIVE
 
 
 class Venture(models.Model):
+    status = models.PositiveSmallIntegerField(
+        choices=VENTURE_STATUS_CHOICES,
+        default=VENTURE_STATUS_ACTIVE,
+        verbose_name='status',
+    )
+
     name = models.CharField(
         max_length=50,
         verbose_name='name',
@@ -111,13 +125,14 @@ class Venture(models.Model):
         verbose_name='Google plus url',
     )
 
-    is_active = models.BooleanField(
-        default=True,
-    )
-
     owner = models.ForeignKey(
         'account.ProfessionalProfile',
         verbose_name='created by',
+    )
+
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name='shared on twitter',
     )
 
     created_at = models.DateTimeField(
@@ -125,6 +140,18 @@ class Venture(models.Model):
     )
 
     slug = models.SlugField()
+
+    @property
+    def is_active(self):
+        return self.status == VENTURE_STATUS_ACTIVE
+
+    @property
+    def is_inactive(self):
+        return self.status == VENTURE_STATUS_INACTIVE
+
+    @property
+    def is_hidden(self):
+        return self.status == VENTURE_STATUS_HIDDEN
 
     @property
     def get_logo(self):
@@ -208,6 +235,12 @@ class AdministratorMembership(models.Model):
 
 
 class JobOffer(models.Model):
+    status = models.PositiveSmallIntegerField(
+        choices=JOB_STATUS_CHOICES,
+        default=JOB_STATUS_ACTIVE,
+        verbose_name='status',
+    )
+
     venture = models.ForeignKey(
         Venture,
         verbose_name='company',
@@ -252,9 +285,9 @@ class JobOffer(models.Model):
         'account.IndustryCategory',
     )
 
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='is active',
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name='shared on twitter',
     )
 
     created_at = models.DateTimeField(
@@ -267,6 +300,18 @@ class JobOffer(models.Model):
             'job_offer_detail',
             args=[self.slug],
         )
+
+    @property
+    def is_active(self):
+        return self.status == JOB_STATUS_ACTIVE
+
+    @property
+    def is_closed(self):
+        return self.status == JOB_STATUS_CLOSED
+
+    @property
+    def is_hidden(self):
+        return self.status == JOB_STATUS_HIDDEN
 
     def __str__(self):
         return self.title

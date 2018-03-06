@@ -161,7 +161,7 @@ LOGGING = {
     },
 }
 
-BASE_URL = 'https://queryjane.net/'
+BASE_URL = 'https://queryjane.net'
 
 EMAIL_SUBJECT = 'QueryJane - {0}'
 ADMIN_EMAILS = []

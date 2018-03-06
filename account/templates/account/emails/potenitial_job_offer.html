@@ -5,10 +5,10 @@
 {% block content %}
 <h1>This may interest you.</h1>
 
-<p>Hi {{ profile.user.first_name }}. <a href="{{ base_url }}{{ job_offer.venture.slug }}">{{ job_offer.venture }}</a> has published a new Job Offer that may interest you:</p>
+<p>Hi {{ profile.user.first_name }}. <a href="{{ base_url }}/{{ job_offer.venture.slug }}">{{ job_offer.venture }}</a> has published a new Job Offer that may interest you:</p>
 
 <h3>
-    <a href="{{ base_url }}{{ job_offer.slug }}">{{ job_offer }}</a>
+    <a href="{{ base_url }}/{{ job_offer.slug }}">{{ job_offer }}</a>
 </h3>
 
 {{ job_offer.description|safe|truncatechars_html:130 }}
@@ -21,5 +21,5 @@
 <p>City: {{ job_offer.city }}</p>
 {% endif %}
 
-<p>Go to <a href="{{ base_url }}{{ job_offer.slug }}">apply</a></p>
+<p>Go to <a href="{{ base_url }}/{{ job_offer.slug }}">apply</a></p>
 {% endblock %}
