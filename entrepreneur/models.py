@@ -120,6 +120,11 @@ class Venture(models.Model):
         verbose_name='created by',
     )
 
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name='shared on twitter',
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -255,6 +260,11 @@ class JobOffer(models.Model):
     is_active = models.BooleanField(
         default=True,
         verbose_name='is active',
+    )
+
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name='shared on twitter',
     )
 
     created_at = models.DateTimeField(

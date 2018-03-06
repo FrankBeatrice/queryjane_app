@@ -6,6 +6,46 @@
 {% block content %}
 <section class="AdminDashboard">
     <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Unshared companies</div>
+                    <div class="panel-body">
+                        {% if unshared_ventures_list %}
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for company in unshared_ventures_list %}
+                            {% include 'account/dashboard_company_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                        {% else %}
+                        <p class="h4">There are not registered companies in your country yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Unshared job offers</div>
+                    <div class="panel-body">
+                        {% if unshared_jobs_list %}
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for job_offer in unshared_jobs_list %}
+                            {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                        {% else %}
+                        <p class="h5">There are not unshared job offers</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
