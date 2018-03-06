@@ -15,3 +15,13 @@ class AdminPermissions(object):
             return True
 
         return False
+
+    @classmethod
+    def can_share_job_twitter(self, user, job):
+        if not job.is_active or job.shared_on_twitter:
+            return False
+
+        if user.is_staff:
+            return True
+
+        return False

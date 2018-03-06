@@ -11,6 +11,7 @@ from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
 from corporative.tasks import share_company_on_twitter
+from corporative.tasks import share_job_on_twitter
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):
@@ -53,5 +54,22 @@ class TwitterShareVentureView(CustomUserMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         share_company_on_twitter(self.get_object())
+
+        return HttpResponse('success')
+
+
+class TwitterShareJobView(CustomUserMixin, View):
+    def test_func(self):
+        return AdminPermissions.can_share_job_twitter(
+            user=self.request.user,
+            job=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        share_job_on_twitter(self.get_object())
 
         return HttpResponse('success')
