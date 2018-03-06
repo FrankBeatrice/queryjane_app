@@ -3,14 +3,24 @@
 {% load static entrepreneur_tags %}
 
 {% block title %}{{ venture }}{% endblock %}
+
 {% block meta_title %}{{ venture }}{% endblock %}
 {% block meta_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
 
 {% block meta_image %}
-{% get_company_logo_extension venture.get_logo as company_logo_extension %}
-<meta property="og:image" content="{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}">
-<meta property="og:image:type" content="image/{{ company_logo_extension }}">
+{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
 {% endblock %}
+
+{% get_company_logo_extension venture.get_logo as company_logo_extension %}
+{% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
+
+{% block meta_twitter_title %}{{ venture }}{% endblock %}
+{% block meta_twitter_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
+{% block meta_twitter_image %}
+{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
+{% endblock %}
+
+<meta property="og:image:type" content="image/{{ company_logo_extension }}">
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}

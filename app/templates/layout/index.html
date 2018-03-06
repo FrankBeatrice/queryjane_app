@@ -13,20 +13,21 @@
         <meta property="og:site_name" content="QueryJane">
         <meta itemprop="name" property="og:title" content="{% block meta_title %}QueryJane | The Cannabis Industry Network{% endblock %}">
         <meta itemprop="description" property="og:description" name="description" content="{% block meta_description %}QueryJane, the Cannabis Industry Network. Connect with companies and experts in different sectors of the cannabis industry.{% endblock %}">
-
         <meta property="og:url" content="https://{{ request.get_host }}{{ request.get_full_path }}">
-
-        {% block meta_image %}
-        <meta property="og:image" content="https://queryjane.net{% static 'img/qjane-logo-share.png' %}">
-        <meta property="og:image:type" content="image/png">
-        {% endblock %}
+        <meta property="og:image" content="{% block meta_image %}https://queryjane.net{% static 'img/qjane-logo-share.png' %}{% endblock %}">
+        <meta property="og:image:type" content="image/{% block meta_image_type %}png{% endblock %}">
         <meta property="og:image:width" content="600">
         <meta property="og:image:height" content="315">
+        <meta name="format-detection" content="telephone=no">
 
         <!-- Twitter card protocol -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="@queryjane">
-        <meta name="format-detection" content="telephone=no">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:creator" content="@queryjane">
+        <meta property="twitter:site" content="QueryJane">
+        <meta property="twitter:title" content="{% block meta_twitter_title %}QueryJane | The Cannabis Industry Network{% endblock %}">
+        <meta property="twitter:description" content="{% block meta_twitter_description %}QueryJane, the Cannabis Industry Network. Connect with companies and experts in different sectors of the cannabis industry.{% endblock %}">
+        <meta property="twitter:image" content="{% block meta_twitter_image %}https://queryjane.net{% static 'img/qjane-logo-share.png' %}{% endblock %}">
+        <meta property="twitter:url" content="https://{{ request.get_host }}{{ request.get_full_path }}">
 
         <meta name="apple-mobile-web-app-title" content="QueryJane">
         <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
