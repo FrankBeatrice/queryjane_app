@@ -32,7 +32,7 @@
         </ul>
 
         <div class="pull-right JSJobActions">
-            {% if permission_app.manage_admin_views %}
+            {% if permission_app.manage_admin_views and not job_offer.shared_on_twitter %}
             <a href="javascript:void(0)" class="JStwitterShareJob btn btn-ghost-purple" data-twitter-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}">
                 <i class="fa fa-twitter"></i> Share
             </a>
