@@ -17,13 +17,14 @@ from account.data import NEW_JOB_OFFER
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import UserNotification
+from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
+from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.forms import JobOfferForm
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
-from account.permissions import JobOfferPermissions
 from place.models import City
 from place.models import Country
 from place.utils import get_user_country
@@ -255,7 +256,7 @@ class JobOfferCloseView(CustomUserMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         job_offer = self.get_object()
-        job_offer.is_active = False
+        job_offer.status = JOB_STATUS_CLOSED
         job_offer.save()
 
         return HttpResponse('success')

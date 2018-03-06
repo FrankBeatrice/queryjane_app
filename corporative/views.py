@@ -1,9 +1,11 @@
 from django.views.generic import TemplateView
 
-from app.mixins import CustomUserMixin
 from .permissions import AdminPermissions
-from entrepreneur.models import Venture
+from app.mixins import CustomUserMixin
+from entrepreneur.data import JOB_STATUS_ACTIVE
+from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.models import JobOffer
+from entrepreneur.models import Venture
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):
@@ -18,12 +20,12 @@ class AdminDashboardView(CustomUserMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         unshared_ventures_list = Venture.objects.filter(
-            is_active=True,
+            status=VENTURE_STATUS_ACTIVE,
             shared_on_twitter=False
         )
 
         unshared_jobs_list = JobOffer.objects.filter(
-            is_active=True,
+            status=JOB_STATUS_ACTIVE,
             shared_on_twitter=False
         )
 

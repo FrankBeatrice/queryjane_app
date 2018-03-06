@@ -23,7 +23,10 @@ from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
 from corporative.forms import ContactForm
+from entrepreneur.data import JOB_STATUS_ACTIVE
+from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.data import JOB_TYPE_CHOICES
+from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.forms import JobOffersFilter
 from entrepreneur.forms import VentureFilter
 from entrepreneur.models import Applicant
@@ -77,6 +80,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         interest_sector_jobs = list(JobOffer.objects.filter(
             Q(country=user_country) |
             Q(industry_categories__in=profile.industry_categories.all()),
+            status=JOB_STATUS_ACTIVE,
         ).exclude(
             venture_id__in=profile.get_managed_venture_ids,
         ).distinct()[:5])
@@ -88,12 +92,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         # Get latest publised job offers
         last_jobs = list(JobOffer.objects.filter(
-            is_active=True,
+            status=JOB_STATUS_ACTIVE,
         ).exclude(id__in=jobs_to_exclude)[:5])
 
         # Local companies
         local_companies = list(Venture.objects.filter(
-            is_active=True,
+            status=VENTURE_STATUS_ACTIVE,
             country=user_country,
         ).order_by('?')[:5])
 
@@ -104,7 +108,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         # # Random companies
         random_companies = list(Venture.objects.filter(
-            is_active=True,
+            status=VENTURE_STATUS_ACTIVE,
         ).exclude(id__in=companies_to_exclude).order_by('?')[:5])
 
         # New messages
@@ -142,7 +146,7 @@ class VentureList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = Venture.objects.filter(is_active=True)
+        queryset = Venture.objects.filter(status=VENTURE_STATUS_ACTIVE)
 
         form = self.get_list_filter()
 
@@ -183,6 +187,7 @@ class VentureDetail(DetailView):
     def get_object(self, queryset=None):
         venture = get_object_or_404(
             Venture,
+            status=VENTURE_STATUS_ACTIVE,
             slug=self.kwargs['slug'],
         )
 
@@ -215,7 +220,12 @@ class JobsList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = JobOffer.objects.all()
+        queryset = JobOffer.objects.filter(
+            status__in=(
+                JOB_STATUS_ACTIVE,
+                JOB_STATUS_CLOSED,
+            ),
+        )
 
         form = self.get_list_filter()
 
@@ -321,7 +331,14 @@ class JobOfferDetail(DetailView):
     template_name = 'entrepreneur/job_detail.html'
 
     def get_object(self):
-        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            JobOffer,
+            status__in=(
+                JOB_STATUS_ACTIVE,
+                JOB_STATUS_CLOSED,
+            ),
+            slug=self.kwargs.get('slug'),
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
