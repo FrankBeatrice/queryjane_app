@@ -91,10 +91,10 @@
                     <i class="fa fa-briefcase pull-right" aria-hidden="true"></i>
                 </a>
             </li>
-            <li role="separator" class="divider"></li>
         {% get_user_venture_memberships user as user_venture_memberships %}
 
         {% if user_venture_memberships %}
+        <li role="separator" class="divider"></li>
         {% for membership in user_venture_memberships %}
             <li class="dropdown-item"><a href="{{ membership.venture.get_absolute_url }}">{{ membership.venture }}</a></li>
         {% endfor %}
