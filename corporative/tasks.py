@@ -15,7 +15,7 @@ def share_company_on_twitter(venture):
 
     hashtags = '#cannabiscompany #cannabisindustry #cannabiscommunity'
 
-    text = 'Cannabis companies | take a look at {0} #cannabis {1} - {2}'.format(
+    text = 'Cannabis companies | take a look at {0} #cannabis {1} {2}'.format(
         venture,
         hashtags,
         settings.BASE_URL + venture.get_absolute_url(),
@@ -37,7 +37,7 @@ def share_job_on_twitter(job):
 
     hashtags = '#cannabisjobs #cannabisindustry #cannabiscommunity'
 
-    text = 'Cannabis jobs | {0} - {1} #cannabis {2} - {3}'.format(
+    text = 'Cannabis jobs | {0} - {1} #cannabis {2} {3}'.format(
         job,
         job.venture,
         hashtags,
