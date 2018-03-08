@@ -266,6 +266,8 @@ function getLocation() {
 
     // Share company on twitter and facebook.
     $('.JSCompanyActions').on('click', '.JSShareCompany', function() {
+        var share_url = $(this).data('share-url');
+        var share_button = $(this);
         $.confirm({
             title: 'Do you want to share this company?',
             content: 'Company profile will be shared on QJane Twitter and Facebook pages.',
@@ -273,14 +275,13 @@ function getLocation() {
                 share: {
                     btnClass: 'btn-primary',
                     action: function(){
-                      var tr_object = $(this).closest('tr');
-                      $.post($(this).data('share-url'), function (response) {
+                      $.post(share_url, function (response) {
                           if (response === 'success') {
                             $.alert({
                                 title: 'Shared!',
-                                content: 'Company has been successfully shared on Twitter!',
+                                content: 'Company has been successfully shared on Twitter and Facebook pages!',
                             });
-                            tr_object.remove();
+                            share_button.remove();
                           } else {
                             $.alert({
                                 title: 'Error!',
@@ -297,6 +298,8 @@ function getLocation() {
 
     // Share job on twitter and facebook.
     $('.JSJobActions').on('click', '.JSShareJob', function() {
+        var share_url = $(this).data('share-url');
+        var share_button = $(this);
         $.confirm({
             title: 'Do you want to share this job offer?',
             content: 'Job offer detail will be shared on QJane Twitter and Facebook pages.',
@@ -304,14 +307,13 @@ function getLocation() {
                 share: {
                     btnClass: 'btn-primary',
                     action: function(){
-                      var tr_object = $(this).closest('tr');
-                      $.post($(this).data('share-url'), function (response) {
+                      $.post(share_url, function (response) {
                           if (response === 'success') {
                             $.alert({
                                 title: 'Shared!',
-                                content: 'Job offer has been successfully shared on Twitter!',
+                                content: 'Job offer has been successfully shared on Twitter and Facebook pages!',
                             });
-                            tr_object.remove();
+                            share_button.remove();
                           } else {
                             $.alert({
                                 title: 'Error!',

@@ -191,6 +191,27 @@
                     </div>
                 </div>
                 {% endif %}
+
+                {% if permission_app.manage_admin_views %}
+                <div class="QJStaffVentureActions">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>Qjane Admin</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="JSCompanyActions">
+                                {% if not company.shared_on_twitter %}
+                                <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' venture.slug %}">
+                                    <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
 
             <div class="col-xs-12 col-sm-9">
