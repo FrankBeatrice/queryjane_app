@@ -264,40 +264,64 @@ function getLocation() {
       return false;
     });
 
-    // Share company on twitter.
-    $('.JSCompanyActions').on('click', '.JStwitterShareCompany', function() {
-      var tr_object = $(this).closest('tr');
-        $.post($(this).data('twitter-share-url'), function (response) {
-            if (response === 'success') {
-              $.alert({
-                  title: 'Shared!',
-                  content: 'Company has been successfully shared on Twitter!',
-              });
-              tr_object.remove();
-            } else {
-              $.alert({
-                  title: 'Error!',
-                  content: 'something is wrong. Please reload and try again.',
-              });
+    // Share company on twitter and facebook.
+    $('.JSCompanyActions').on('click', '.JSShareCompany', function() {
+        $.confirm({
+            title: 'Do you want to share this company?',
+            content: 'Company profile will be shared on QJane Twitter and Facebook pages.',
+            buttons: {
+                share: {
+                    btnClass: 'btn-primary',
+                    action: function(){
+                      var tr_object = $(this).closest('tr');
+                      $.post($(this).data('share-url'), function (response) {
+                          if (response === 'success') {
+                            $.alert({
+                                title: 'Shared!',
+                                content: 'Company has been successfully shared on Twitter!',
+                            });
+                            tr_object.remove();
+                          } else {
+                            $.alert({
+                                title: 'Error!',
+                                content: 'something is wrong. Please reload and try again.',
+                            });
+                          }
+                      });
+                    }
+                },
+                cancel: function () {}
             }
         });
     });
 
-    // Share job on twitter.
-    $('.JSJobActions').on('click', '.JStwitterShareJob', function() {
-      var tr_object = $(this).closest('tr');
-        $.post($(this).data('twitter-share-url'), function (response) {
-            if (response === 'success') {
-              $.alert({
-                  title: 'Shared!',
-                  content: 'Job offer has been successfully shared on Twitter!',
-              });
-              tr_object.remove();
-            } else {
-              $.alert({
-                  title: 'Error!',
-                  content: 'something is wrong. Please reload and try again.',
-              });
+    // Share job on twitter and facebook.
+    $('.JSJobActions').on('click', '.JSShareJob', function() {
+        $.confirm({
+            title: 'Do you want to share this job offer?',
+            content: 'Job offer detail will be shared on QJane Twitter and Facebook pages.',
+            buttons: {
+                share: {
+                    btnClass: 'btn-primary',
+                    action: function(){
+                      var tr_object = $(this).closest('tr');
+                      $.post($(this).data('share-url'), function (response) {
+                          if (response === 'success') {
+                            $.alert({
+                                title: 'Shared!',
+                                content: 'Job offer has been successfully shared on Twitter!',
+                            });
+                            tr_object.remove();
+                          } else {
+                            $.alert({
+                                title: 'Error!',
+                                content: 'something is wrong. Please reload and try again.',
+                            });
+                          }
+                      });
+                    }
+                },
+                cancel: function () {}
             }
         });
     });
