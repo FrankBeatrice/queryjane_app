@@ -8,6 +8,7 @@ from .permissions import AdminPermissions
 from app.mixins import CustomUserMixin
 from entrepreneur.data import JOB_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
+from entrepreneur.data import VENTURE_STATUS_HIDDEN
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
 from corporative.tasks import share_company_on_twitter
@@ -73,3 +74,41 @@ class TwitterShareJobView(CustomUserMixin, View):
         share_job_on_twitter(self.get_object())
 
         return HttpResponse('success')
+
+
+class HideVentureView(CustomUserMixin, View):
+    def test_func(self):
+        return AdminPermissions.can_hide_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        venture = self.get_object()
+        venture.status = VENTURE_STATUS_HIDDEN
+        venture.save()
+
+        return HttpResponse(venture.get_status_display())
+
+
+class ActivateVentureView(CustomUserMixin, View):
+    def test_func(self):
+        return AdminPermissions.can_activate_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        venture = self.get_object()
+        venture.status = VENTURE_STATUS_ACTIVE
+        venture.save()
+
+        return HttpResponse(venture.get_status_display())

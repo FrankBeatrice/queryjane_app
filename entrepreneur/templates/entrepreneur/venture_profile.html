@@ -29,6 +29,15 @@
 {% block content %}
 <section class="qjane-venture-profile">
     <div class="container">
+        {% if venture.is_inactive %}
+        <div class="alert alert-danger" role="alert">
+          {{ venture }} is inactive.
+        </div>
+        {% elif venture.is_hidden %}
+        <div class="alert alert-warning" role="alert">
+          {{ venture }} has been hidden by a QueryJane administrator.
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-xs-12 col-sm-3">
                 <div class="media-object">
@@ -202,11 +211,19 @@
 
                         <div class="panel-body">
                             <div class="JSCompanyActions">
-                                {% if not company.shared_on_twitter %}
+                                {% if not venture.shared_on_twitter %}
                                 <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' venture.slug %}">
                                     <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
                                 </a>
                                 {% endif %}
+
+                                <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_venture' venture.slug %}" style="{% if venture.is_hidden %}display:none;{% endif %}">
+                                    <i class="fa fa-eye-slash"></i> Hide
+                                </a>
+
+                                <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_venture' venture.slug %}" style="{% if not venture.is_hidden %}display:none;{% endif %}">
+                                    <i class="fa fa-fire"></i> Activate
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -228,4 +245,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/corporative/staff_venture_profile.js' %}"></script>
 {% endblock %}
