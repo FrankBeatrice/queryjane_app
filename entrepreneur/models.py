@@ -1,7 +1,9 @@
+from django.core.exceptions import ValidationError
 from app.validators import FileSizeValidator
 from django.contrib.gis.db.models import PointField
 from django.core.urlresolvers import reverse
 from django.db import models
+from model_utils import FieldTracker
 
 from .data import ACTIVE_MEMBERSHIP
 from .data import ADMINISTRATOR_ROLES
@@ -27,6 +29,8 @@ class Venture(models.Model):
         default=VENTURE_STATUS_ACTIVE,
         verbose_name='status',
     )
+
+    status_tracker = FieldTracker(fields=['status'])
 
     name = models.CharField(
         max_length=50,
@@ -140,6 +144,28 @@ class Venture(models.Model):
     )
 
     slug = models.SlugField()
+
+    def clean(self):
+        if not self.status_tracker.has_changed('status') or not self.id:
+            return
+
+        msg = 'Invalid previous status for {0}'
+        previous = self.status_tracker.previous('status')
+
+        if (
+            self.status == VENTURE_STATUS_INACTIVE and
+            previous != VENTURE_STATUS_HIDDEN
+        ):
+            raise ValidationError({
+                'status': msg.format('VENTURE_STATUS_INACTIVE')
+            })
+        elif (
+            self.status == VENTURE_STATUS_HIDDEN and
+            previous != VENTURE_STATUS_INACTIVE
+        ):
+            raise ValidationError({
+                'status': msg.format('VENTURE_STATUS_HIDDEN')
+            })
 
     @property
     def is_active(self):

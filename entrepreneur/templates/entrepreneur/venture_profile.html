@@ -211,7 +211,7 @@
 
                         <div class="panel-body">
                             <div class="JSCompanyActions">
-                                {% if not venture.shared_on_twitter %}
+                                {% if not venture.shared_on_twitter and venture.is_active %}
                                 <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' venture.slug %}">
                                     <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
                                 </a>

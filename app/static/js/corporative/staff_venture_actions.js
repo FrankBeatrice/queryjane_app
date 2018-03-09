@@ -20,6 +20,7 @@ $(function () {
                             });
                             $('.js_hideCompany').hide();
                             $('.js_activateCompany').show();
+                            hide_button.closest('.JSCompanyActions').find('.JSShareCompany').hide();
                           } else {
                             $.alert({
                                 title: 'Error!',
@@ -37,7 +38,6 @@ $(function () {
     // Activate company profile.
     $('.JSCompanyActions').on('click', '.js_activateCompany', function() {
         var hide_url = $(this).data('activate-url');
-        var activate_button = $(this);
         $.confirm({
             title: 'Do you want to activate this company?',
             content: 'Company profile will activated.',

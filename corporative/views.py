@@ -36,8 +36,13 @@ class AdminDashboardView(CustomUserMixin, TemplateView):
             shared_on_twitter=False
         )
 
+        hidden_companies = Venture.objects.filter(
+            status=VENTURE_STATUS_HIDDEN,
+        )
+
         context['unshared_ventures_list'] = unshared_ventures_list
         context['unshared_jobs_list'] = unshared_jobs_list
+        context['hidden_companies'] = hidden_companies
 
         return context
 
