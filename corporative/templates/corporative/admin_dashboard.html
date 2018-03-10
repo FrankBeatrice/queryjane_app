@@ -6,46 +6,102 @@
 {% block content %}
 <section class="AdminDashboard">
     <div class="container">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#companiesAdmin">Companies</a></li>
+          <li><a data-toggle="tab" href="#socialnetworksAdmin">Social Networks</a></li>
+        </ul>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Companies to share</div>
-                    <div class="panel-body">
-                        {% if unshared_ventures_list %}
-                        <table class="table table-striped jobs-table">
-                          <tbody>
-                        {% for company in unshared_ventures_list %}
-                            {% include 'account/dashboard_company_line.html' %}
-                        {% endfor %}
-                          </tbody>
-                        </table>
-                        {% else %}
-                        <p class="h4">There are not registered companies in your country yet.</p>
-                        {% endif %}
+        <div class="tab-content">
+          <div id="companiesAdmin" class="tab-pane fade in active">
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Hidden companies</div>
+                        <div class="panel-body">
+                            {% if hidden_companies %}
+                            <table class="table table-striped jobs-table">
+                              <tbody>
+                            {% for company in hidden_companies %}
+                                {% include 'account/dashboard_company_line.html' %}
+                            {% endfor %}
+                              </tbody>
+                            </table>
+                            {% else %}
+                            <p class="h4">There are not hidden companies.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Hidden Job offers</div>
+                        <div class="panel-body">
+                            {% if hidden_job_offer %}
+                            <table class="table table-striped jobs-table">
+                              <tbody>
+                            {% for job_offer in hidden_job_offer %}
+                                {% include 'account/dashboard_job_offer_line.html' %}
+                            {% endfor %}
+                              </tbody>
+                            </table>
+                            {% else %}
+                            <p class="h4">There are not hidden job offers.</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
+          </div>
 
-            <div class="col-xs-12 col-sm-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Job offers to share</div>
-                    <div class="panel-body">
-                        {% if unshared_jobs_list %}
-                        <table class="table table-striped jobs-table">
-                          <tbody>
-                        {% for job_offer in unshared_jobs_list %}
-                            {% include 'account/dashboard_job_offer_line.html' %}
-                        {% endfor %}
-                          </tbody>
-                        </table>
-                        {% else %}
-                        <p class="h5">There are not unshared job offers</p>
-                        {% endif %}
+          <div id="socialnetworksAdmin" class="tab-pane fade">
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Companies to share</div>
+                        <div class="panel-body">
+                            {% if unshared_ventures_list %}
+                            <table class="table table-striped jobs-table">
+                              <tbody>
+                            {% for company in unshared_ventures_list %}
+                                {% include 'account/dashboard_company_line.html' %}
+                            {% endfor %}
+                              </tbody>
+                            </table>
+                            {% else %}
+                            <p class="h4">There are not unshared companies.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Job offers to share</div>
+                        <div class="panel-body">
+                            {% if unshared_jobs_list %}
+                            <table class="table table-striped jobs-table">
+                              <tbody>
+                            {% for job_offer in unshared_jobs_list %}
+                                {% include 'account/dashboard_job_offer_line.html' %}
+                            {% endfor %}
+                              </tbody>
+                            </table>
+                            {% else %}
+                            <p class="h5">There are not unshared job offers</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
+          </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/corporative/staff_venture_actions.js' %}"></script>
 {% endblock %}

@@ -187,11 +187,27 @@ class VentureDetail(DetailView):
     def get_object(self, queryset=None):
         venture = get_object_or_404(
             Venture,
-            status=VENTURE_STATUS_ACTIVE,
             slug=self.kwargs['slug'],
         )
 
         return venture
+
+    def get(self, request, *args, **kwargs):
+        venture = self.get_object()
+        user = request.user
+
+        if venture.is_inactive or venture.is_hidden:
+            if user:
+                if not user.is_staff:
+                    raise Http404
+
+                if not EntrepreneurPermissions.can_manage_venture(
+                    self.request.user,
+                    venture,
+                ):
+                    raise Http404
+
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -333,12 +349,25 @@ class JobOfferDetail(DetailView):
     def get_object(self):
         return get_object_or_404(
             JobOffer,
-            status__in=(
-                JOB_STATUS_ACTIVE,
-                JOB_STATUS_CLOSED,
-            ),
             slug=self.kwargs.get('slug'),
         )
+
+    def get(self, request, *args, **kwargs):
+        job_offer = self.get_object()
+        user = request.user
+
+        if job_offer.is_closed or job_offer.is_hidden:
+            if user:
+                if not user.is_staff:
+                    raise Http404
+
+                if not EntrepreneurPermissions.can_manage_venture(
+                    self.request.user,
+                    job_offer.venture,
+                ):
+                    raise Http404
+
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -353,6 +382,7 @@ class JobOfferDetail(DetailView):
             ):
                 has_applied = True
 
+        context['job_offer'] = job_offer
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
             job_offer.venture,
