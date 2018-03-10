@@ -18,9 +18,9 @@ $(function () {
                                 title: 'Hidden!',
                                 content: 'This company has been hidden.',
                             });
-                            $('.js_hideCompany').hide();
-                            $('.js_activateCompany').show();
+                            hide_button.closest('.JSCompanyActions').find('.js_activateCompany').show();
                             hide_button.closest('.JSCompanyActions').find('.JSShareCompany').hide();
+                            hide_button.hide();
                           } else {
                             $.alert({
                                 title: 'Error!',
@@ -38,6 +38,7 @@ $(function () {
     // Activate company profile.
     $('.JSCompanyActions').on('click', '.js_activateCompany', function() {
         var hide_url = $(this).data('activate-url');
+        var activate_button = $(this);
         $.confirm({
             title: 'Do you want to activate this company?',
             content: 'Company profile will activated.',
@@ -51,8 +52,9 @@ $(function () {
                                 title: 'Activated!',
                                 content: 'This company has been activated.',
                             });
-                            $('.js_hideCompany').show();
-                            $('.js_activateCompany').hide();
+                            activate_button.closest('.JSCompanyActions').find('.JSShareCompany').show();
+                            activate_button.closest('.JSCompanyActions').find('.js_hideCompany').show();
+                            activate_button.hide();
                           } else {
                             $.alert({
                                 title: 'Error!',
@@ -84,9 +86,9 @@ $(function () {
                                 title: 'Hidden!',
                                 content: 'This job offer has been hidden.',
                             });
-                            $('.js_hideJobOffer').hide();
-                            $('.js_activateJobOffer').show();
+                            hide_button.closest('.JSJobActions').find('.js_activateJobOffer').show();
                             hide_button.closest('.JSJobActions').find('.JSShareJob').hide();
+                            hide_button.hide();
                           } else {
                             $.alert({
                                 title: 'Error!',
@@ -117,8 +119,10 @@ $(function () {
                                 title: 'Activated!',
                                 content: 'This job offer has been activated.',
                             });
-                            $('.js_hideJobOffer').show();
-                            $('.js_activateJobOffer').hide();
+
+                            activate_button.closest('.JSJobActions').find('.JSShareJob').show();
+                            activate_button.closest('.JSJobActions').find('.js_hideJobOffer').show();
+                            activate_button.hide();
                           } else {
                             $.alert({
                                 title: 'Error!',
