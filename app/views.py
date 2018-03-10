@@ -349,12 +349,25 @@ class JobOfferDetail(DetailView):
     def get_object(self):
         return get_object_or_404(
             JobOffer,
-            status__in=(
-                JOB_STATUS_ACTIVE,
-                JOB_STATUS_CLOSED,
-            ),
             slug=self.kwargs.get('slug'),
         )
+
+    def get(self, request, *args, **kwargs):
+        job_offer = self.get_object()
+        user = request.user
+
+        if job_offer.is_closed or job_offer.is_hidden:
+            if user:
+                if not user.is_staff:
+                    raise Http404
+
+                if not EntrepreneurPermissions.can_manage_venture(
+                    self.request.user,
+                    job_offer.venture,
+                ):
+                    raise Http404
+
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

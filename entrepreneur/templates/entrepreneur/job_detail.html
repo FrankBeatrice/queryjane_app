@@ -97,11 +97,19 @@
 
                     <div class="panel-body">
                         <div class="JSJobActions">
-                            {% if not object.shared_on_twitter %}
+                            {% if not object.shared_on_twitter and object.is_active %}
                             <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' object.slug %}">
                                 <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
                             </a>
                             {% endif %}
+
+                            <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' object.slug %}" style="{% if object.is_hidden %}display:none;{% endif %}">
+                                <i class="fa fa-eye-slash"></i> Hide
+                            </a>
+
+                            <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' object.slug %}" style="{% if not object.is_hidden %}display:none;{% endif %}">
+                                <i class="fa fa-fire"></i> Activate
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -189,4 +197,5 @@
 
 {% block js %}
 <script src="{% static 'js/entrepreneur/job_offer_actions.js' %}"></script>
+<script src="{% static 'js/corporative/staff_venture_actions.js' %}"></script>
 {% endblock %}

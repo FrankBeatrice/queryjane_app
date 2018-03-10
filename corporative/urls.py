@@ -6,6 +6,8 @@ from .views import TwitterShareVentureView
 from .views import TwitterShareJobView
 from .views import HideVentureView
 from .views import ActivateVentureView
+from .views import HideJobOfferView
+from .views import ActivateJobOfferView
 
 urlpatterns = [
     url(
@@ -48,5 +50,17 @@ urlpatterns = [
         r'^ax-activate/(?P<slug>[-\w]+)/venture/$',
         ActivateVentureView.as_view(),
         name='ax_activate_venture',
+    ),
+
+    url(
+        r'^ax-hide/(?P<slug>[-\w]+)/job_offer/$',
+        HideJobOfferView.as_view(),
+        name='ax_hide_job_offer',
+    ),
+
+    url(
+        r'^ax-activate/(?P<slug>[-\w]+)/job_offer/$',
+        ActivateJobOfferView.as_view(),
+        name='ax_activate_job_offer',
     ),
 ]

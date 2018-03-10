@@ -267,6 +267,8 @@ class JobOffer(models.Model):
         verbose_name='status',
     )
 
+    status_tracker = FieldTracker(fields=['status'])
+
     venture = models.ForeignKey(
         Venture,
         verbose_name='company',
@@ -320,6 +322,29 @@ class JobOffer(models.Model):
         auto_now_add=True,
         verbose_name='created at',
     )
+
+    def clean(self):
+        if not self.status_tracker.has_changed('status') or not self.id:
+            return
+
+        msg = 'Invalid previous status for {0}'
+        previous = self.status_tracker.previous('status')
+
+        if (
+            self.status == JOB_STATUS_CLOSED and
+            previous != JOB_STATUS_HIDDEN
+        ):
+            raise ValidationError({
+                'status': msg.format('JOB_STATUS_CLOSED')
+            })
+        elif (
+            self.status == JOB_STATUS_HIDDEN and
+            previous != JOB_STATUS_CLOSED
+        ):
+            raise ValidationError({
+                'status': msg.format('JOB_STATUS_HIDDEN')
+            })
+
 
     def get_absolute_url(self):
         return reverse(
