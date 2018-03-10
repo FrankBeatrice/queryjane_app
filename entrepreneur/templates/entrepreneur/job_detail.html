@@ -2,28 +2,28 @@
 
 {% load static entrepreneur_tags %}
 
-{% block title %}{{ object }} | {{ object.venture }}{% endblock %}
+{% block title %}{{ job_offer }} | {{ job_offer.venture }}{% endblock %}
 
-{% block meta_title %}{{ object }} | {{ object.venture }}{% endblock %}
-{% block meta_description %}{{ object.description|safe|truncatechars_html:200 }}{% endblock %}
+{% block meta_title %}{{ job_offer }} | {{ job_offer.venture }}{% endblock %}
+{% block meta_description %}{{ job_offer.description|safe|truncatechars_html:200 }}{% endblock %}
 
 {% block meta_image %}
-{% if not object.venture.logo %}https://queryjane.net{% endif %}{{ object.venture.get_logo }}
+{% if not job_offer.venture.logo %}https://queryjane.net{% endif %}{{ job_offer.venture.get_logo }}
 {% endblock %}
 
-{% get_company_logo_extension object.venture.get_logo as company_logo_extension %}
+{% get_company_logo_extension job_offer.venture.get_logo as company_logo_extension %}
 {% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
 
 {% block meta_twitter_title %}
-{{ object }} | {{ object.venture }}
+{{ job_offer }} | {{ job_offer.venture }}
 {% endblock %}
 
 {% block meta_twitter_description %}
-{{ object.description|safe|truncatechars_html:200 }}
+{{ job_offer.description|safe|truncatechars_html:200 }}
 {% endblock %}
 
 {% block meta_twitter_image %}
-{% if not object.venture.logo %}https://queryjane.net{% endif %}{{ object.venture.get_logo }}
+{% if not job_offer.venture.logo %}https://queryjane.net{% endif %}{{ job_offer.venture.get_logo }}
 {% endblock %}
 
 {% block navbar %}
@@ -38,23 +38,23 @@
                 <div class="media-object">
                     <div class="row">
                         <div class="col-xs-8 col-sm-11 col-md-9">
-                            <img class="img-responsive thumbnail" src="{{ object.venture.get_logo }}" alt="{{ object.venture }}" style="margin-bottom: 0;">
+                            <img class="img-responsive thumbnail" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}" style="margin-bottom: 0;">
                         </div>
                     </div>
                 </div>
 
-                <h3><a href="{{ object.venture.get_absolute_url }}">{{ object.venture }}</a></h3>
+                <h3><a href="{{ job_offer.venture.get_absolute_url }}">{{ job_offer.venture }}</a></h3>
 
                 <div class="QJVentureDetCategories">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>Job offer {% if object.industry_categories.count > 1 %}categories{% else %}category{% endif %}</span>
+                            <span>Job offer {% if job_offer.industry_categories.count > 1 %}categories{% else %}category{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
                             <ul class="QJVentureDetCats">
-                            {% for industry_category in object.industry_categories.all %}
+                            {% for industry_category in job_offer.industry_categories.all %}
                                 <li>{{ industry_category }}</li>
                             {% endfor %}
                             </ul>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                {% if object.country or object.city %}
+                {% if job_offer.country or job_offer.city %}
                 <div class="QJJobDetLocation">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -71,16 +71,16 @@
                         </div>
 
                         <div class="panel-body">
-                            {% if object.country %}
+                            {% if job_offer.country %}
                             <div>
-                                <img src="{{ object.country.flag }}">
-                                <span>{{ object.country }}</span>
+                                <img src="{{ job_offer.country.flag }}">
+                                <span>{{ job_offer.country }}</span>
                             </div>
                             {% endif %}
 
-                            {% if object.city %}
+                            {% if job_offer.city %}
                             <div>
-                                <span>{{ object.city }} {% if object.state %}, {{ object.state }}.{% endif %}</span>
+                                <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
                             </div>
                             {% endif %}
                         </div>
@@ -97,17 +97,17 @@
 
                     <div class="panel-body">
                         <div class="JSJobActions">
-                            {% if not object.shared_on_twitter and object.is_active %}
-                            <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' object.slug %}">
+                            {% if not job_offer.shared_on_twitter and job_offer.is_active %}
+                            <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}">
                                 <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
                             </a>
                             {% endif %}
 
-                            <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' object.slug %}" style="{% if object.is_hidden %}display:none;{% endif %}">
+                            <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' job_offer.slug %}" style="{% if job_offer.is_hidden %}display:none;{% endif %}">
                                 <i class="fa fa-eye-slash"></i> Hide
                             </a>
 
-                            <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' object.slug %}" style="{% if not object.is_hidden %}display:none;{% endif %}">
+                            <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' job_offer.slug %}" style="{% if not job_offer.is_hidden %}display:none;{% endif %}">
                                 <i class="fa fa-fire"></i> Activate
                             </a>
                         </div>
@@ -117,32 +117,34 @@
             </div>
 
             <div class="col-xs-12 col-sm-9 JOContainer">
-                <h1>{{ object }}</h1>
+                <h1>{{ job_offer }}</h1>
 
                 <p><strong>Status:</strong>
-                {% if object.is_active %}
+                {% if job_offer.is_active %}
                 <span class="JODetailStatus label label-success">Active</span>
+                {% elif job_offer.is_hidden %}
+                <span class="JODetailStatus label label-warning">Hidden</span>
                 {% else %}
                 <span class="JODetailStatus label label-warning">Closed</span>
                 {% endif %}
                 </p>
 
-                <p><strong>Created at:</strong> {{ object.created_at }}</p>
-                <p><strong>Job type:</strong> {{ object.get_job_type_display }}</p>
+                <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
+                <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
 
                 <div class="QJVentureDetDescription">
-                {% if object.description %}
+                {% if job_offer.description %}
                     <div class="QJRedactorContent">
-                        {{ object.description|safe }}
+                        {{ job_offer.description|safe }}
                     </div>
                 {% endif %}
                 </div>
 
             {% if can_edit %}
                 <div class="pull-right jsJobActions">
-                    <a href="{% url 'entrepreneur:job_offer_update' object.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
+                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
 
-                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ object.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' object.slug %}">Close job offer</a>
+                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ job_offer.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">Close job offer</a>
                 </div>
             {% endif %}
 
@@ -159,7 +161,7 @@
                   </thead>
 
                     <tbody>
-                    {% for applicant in object.applicant_set.all %}
+                    {% for applicant in job_offer.applicant_set.all %}
                         <tr>
                           <td>{{ applicant.applicant }}</td>
                           <td>{{ applicant.created_at }}</td>
@@ -177,11 +179,11 @@
                     </tbody>
                 </table>
 
-                <a href="{% url 'entrepreneur:job_offers_list' object.venture.slug %}" class="btn btn-ghost-purple">Go to job offers list administrator - {{ object.venture }}</a>
+                <a href="{% url 'entrepreneur:job_offers_list' job_offer.venture.slug %}" class="btn btn-ghost-purple">Go to job offers list administrator - {{ job_offer.venture }}</a>
             {% endif %}
 
                 {% if can_apply %}
-                <a class="btn btn-primary" href="{% url 'job_offer_apply' object.slug %}">Apply</a>
+                <a class="btn btn-primary" href="{% url 'job_offer_apply' job_offer.slug %}">Apply</a>
                 {% endif %}
 
                 {% if has_applied %}

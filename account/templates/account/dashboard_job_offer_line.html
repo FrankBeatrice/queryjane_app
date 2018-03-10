@@ -32,11 +32,18 @@
         </ul>
 
         <div class="pull-right JSJobActions">
-            {% if permission_app.manage_admin_views and not job_offer.shared_on_twitter %}
-            <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}">
+            <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}" style="{% if not permission_app.manage_admin_views or job_offer.shared_on_twitter or not job_offer.is_active %}display:none;{% endif %}">
                 <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
             </a>
-            {% endif %}
+
+            <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' job_offer.slug %}" style="{% if job_offer.is_hidden %}display:none;{% endif %}">
+                <i class="fa fa-eye-slash"></i> Hide
+            </a>
+
+            <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' job_offer.slug %}" style="{% if not job_offer.is_hidden %}display:none;{% endif %}">
+                <i class="fa fa-fire"></i> Activate
+            </a>
+
 
             <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
         </div>

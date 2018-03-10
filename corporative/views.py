@@ -41,9 +41,14 @@ class AdminDashboardView(CustomUserMixin, TemplateView):
             status=VENTURE_STATUS_HIDDEN,
         )
 
+        hidden_job_offer = JobOffer.objects.filter(
+            status=JOB_STATUS_HIDDEN,
+        )
+
         context['unshared_ventures_list'] = unshared_ventures_list
         context['unshared_jobs_list'] = unshared_jobs_list
         context['hidden_companies'] = hidden_companies
+        context['hidden_job_offer'] = hidden_job_offer
 
         return context
 

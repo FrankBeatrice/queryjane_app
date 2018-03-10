@@ -382,6 +382,7 @@ class JobOfferDetail(DetailView):
             ):
                 has_applied = True
 
+        context['job_offer'] = job_offer
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
             job_offer.venture,

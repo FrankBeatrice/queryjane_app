@@ -33,6 +33,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Hidden Job offers</div>
+                        <div class="panel-body">
+                            {% if hidden_job_offer %}
+                            <table class="table table-striped jobs-table">
+                              <tbody>
+                            {% for job_offer in hidden_job_offer %}
+                                {% include 'account/dashboard_job_offer_line.html' %}
+                            {% endfor %}
+                              </tbody>
+                            </table>
+                            {% else %}
+                            <p class="h4">There are not hidden job offers.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
 
