@@ -106,6 +106,7 @@ $(function () {
     // Activate Job offer.
     $('.JSJobActions').on('click', '.js_activateJobOffer', function() {
         var hide_url = $(this).data('activate-url');
+        var activate_button = $(this);
         $.confirm({
             title: 'Do you want to activate this job offer?',
             content: 'Job offer will activated.',

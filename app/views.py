@@ -198,12 +198,12 @@ class VentureDetail(DetailView):
 
         if venture.is_inactive or venture.is_hidden:
             if user:
-                if not user.is_staff:
-                    raise Http404
-
-                if not EntrepreneurPermissions.can_manage_venture(
-                    self.request.user,
-                    venture,
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_venture(
+                        self.request.user,
+                        venture,
+                    )
                 ):
                     raise Http404
 
@@ -358,12 +358,12 @@ class JobOfferDetail(DetailView):
 
         if job_offer.is_closed or job_offer.is_hidden:
             if user:
-                if not user.is_staff:
-                    raise Http404
-
-                if not EntrepreneurPermissions.can_manage_venture(
-                    self.request.user,
-                    job_offer.venture,
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_venture(
+                        self.request.user,
+                        job_offer.venture,
+                    )
                 ):
                     raise Http404
 
