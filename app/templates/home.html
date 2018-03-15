@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load widget_tweaks static %}
+{% load widget_tweaks static i18n %}
 
-{% block title %}Cannabis Industry Network{% endblock %}
+{% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'dist/css/home.css' %}">
@@ -24,26 +24,26 @@
 
                         <span class="QJHcountryCount pull-right">
                             <span class="fa fa-user"></span>
-                            <span>{{ country_users_count }} users</span>
+                            <span>{{ country_users_count }} {% trans 'users' %}</span>
 
                             <span class="QJHDivider">|</span>
 
                             <span class="fa fa-briefcase"></span>
-                            <span>{{ country_ventures_count }} companies</span>
+                            <span>{{ country_ventures_count }} {% trans 'companies' %}</span>
                         </span>
 
                     </div>
                 </div>
 
                 <div class="panel-body">
-                    <h2>The Cannabis Industry Network</h2>
-                    <p>Connect with companies and experts in different sectors of the cannabis industry.</p>
+                    <h2>{% trans 'The Cannabis Industry Network' %}</h2>
+                    <p>{% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}</p>
 
                     <div class="row social-network-wrapper">
                         <div class="col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
                             <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
                                 <span class="fa fa-facebook"></span>
-                                Facebook login
+                                {% trans 'Facebook login' %}
                             </a>
                         </div>
                     </div>
@@ -68,11 +68,11 @@
                             {% endfor %}
                         </div>
 
-                        <button type="submit" class="btn btn-ghost-white btn-lg">Sign up</button>
+                        <button type="submit" class="btn btn-ghost-white btn-lg">{% trans 'Sign up' %}</button>
                     </form>
 
                     <br>
-                    <p><i>By registering, you are accepting the <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">user agreement</a> and the <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">privacy policy</a>.</i></p>
+                    <p><i>{% trans 'By registering, you are accepting the' %} <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">{% trans 'user agreement' %}</a> {% trans 'and the' %} <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">{% trans 'privacy policy' %}</a>.</i></p>
                 </div>
             </div>
         </div>

@@ -345,7 +345,6 @@ class JobOffer(models.Model):
                 'status': msg.format('JOB_STATUS_HIDDEN')
             })
 
-
     def get_absolute_url(self):
         return reverse(
             'job_offer_detail',

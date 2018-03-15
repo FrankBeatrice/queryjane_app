@@ -1,10 +1,10 @@
-{% load entrepreneur_tags notifications messages general_forms widget_tweaks %}
+{% load entrepreneur_tags notifications messages general_forms widget_tweaks i18n %}
 <ul class="nav navbar-nav navbar-right">
 
     {% get_user_notifications_count user as user_notifications_count %}
     {% get_new_user_notifications_count user as new_user_notifications_count %}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" {% if user_notifications_count %}href="#" id="navbarDropdownNotificationsLink" data-toggle="dropdown"{% endif %} title="{% if user_notifications_count %}Notifications{% else %}There are not new notifications{% endif %}">
+        <a class="nav-link dropdown-toggle" {% if user_notifications_count %}href="#" id="navbarDropdownNotificationsLink" data-toggle="dropdown"{% endif %} title="{% if user_notifications_count %}{% trans 'Notifications' %}{% else %}{% trans 'There are not new notifications' %}{% endif %}">
 
         {% if user_notifications_count %}
             <i class="fa fa-bell" aria-hidden="true"></i>
@@ -27,7 +27,7 @@
         {% endfor %}
 
         {% if user_notifications_count > 10 %}
-            <li class="dropdown-item text-center"><a href="{% url 'account:notifications_view' %}">View all</a></li>
+            <li class="dropdown-item text-center"><a href="{% url 'account:notifications_view' %}">{% trans 'View all' %}</a></li>
         {% endif %}
         </ul>
     </li>
@@ -35,7 +35,7 @@
     {% get_user_messages_count user as user_messages_count %}
     {% get_new_user_messages_count user as new_user_messages_count %}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" {% if user_messages_count %}href="#" id="navbarDropdownMessagesLink" data-toggle="dropdown"{% endif %} title="{% if user_messages_count %}Messages{% else %}There are not new messages{% endif %}">
+        <a class="nav-link dropdown-toggle" {% if user_messages_count %}href="#" id="navbarDropdownMessagesLink" data-toggle="dropdown"{% endif %} title="{% if user_messages_count %}{% trans 'Messages' %}{% else %}{% trans 'There are not new messages' %}{% endif %}">
 
             <i class="fa {% if new_user_messages_count %}fa-envelope{% else %}fa-inbox{% endif %}" aria-hidden="true"></i>
 
@@ -47,7 +47,7 @@
         {% for message in recent_user_messages %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
                 <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
-                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New message' %}{% else %}{% trans 'Viewed message' %}{% endif %}"></i>
                     From: {{ message.user_from }}
 
                     <p>{{ message.created_at }}</p>
@@ -58,7 +58,7 @@
 
         {% if user_messages_count > 10 %}
             <li class="dropdown-item text-center">
-                <a href="{% url 'account:inbox_view' %}">View all</a>
+                <a href="{% url 'account:inbox_view' %}">{% trans 'View all' %}</a>
             </li>
         {% endif %}
         </ul>
@@ -73,21 +73,21 @@
         <ul class="dropdown-menu"  aria-labelledby="navbarDropdownSettingsLink">
             <li class="dropdown-item">
                 <a href="{% url 'professional_detail' user.professionalprofile.slug %}" class="clearfix">
-                    <span class="pull-left">Profile</span>
+                    <span class="pull-left">{% trans 'Profile' %}</span>
                     <i class="fa fa-user pull-right" aria-hidden="true"></i>
                 </a>
             </li>
 
             <li class="dropdown-item">
                 <a href="{% url 'account:profile_update' %}" class="clearfix">
-                    <span class="pull-left">Account</span>
+                    <span class="pull-left">{% trans 'Account' %}</span>
                     <i class="fa fa-cog pull-right" aria-hidden="true"></i>
                  </a>
              </li>
 
             <li class="dropdown-item">
                 <a href="{% url 'entrepreneur:venture_form' %}" class="clearfix">
-                    <span class="pull-left">New company</span>
+                    <span class="pull-left">{% trans 'New company' %}</span>
                     <i class="fa fa-briefcase pull-right" aria-hidden="true"></i>
                 </a>
             </li>
@@ -104,7 +104,7 @@
             <li role="separator" class="divider"></li>
             <li class="dropdown-item">
                 <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
-                    <span class="pull-left">Qjane Admin</span>
+                    <span class="pull-left">{% trans 'Qjane Admin' %}</span>
                     <i class="fa fa-star pull-right" aria-hidden="true"></i>
                 </a>
             </li>
@@ -113,7 +113,7 @@
 
             <li class="dropdown-item">
                 <a href="{% url 'user_logout' %}" class="clearfix">
-                    <span class="pull-left">Log out</span>
+                    <span class="pull-left">{% trans 'Log out' %}</span>
                     <i class="fa fa-power-off pull-right" aria-hidden="true"></i>
                 </a>
             </li>
@@ -132,7 +132,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Compose Message</h5>
+                <h5 class="modal-title">{% trans 'Compose Message' %}</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -141,14 +141,14 @@
 
             <div class="modal-body">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#newMessage">New message</a></li>
-                  <li><a data-toggle="tab" href="#newMessageConversation">Full conversation</a></li>
+                  <li class="active"><a data-toggle="tab" href="#newMessage">{% trans 'New message' %}</a></li>
+                  <li><a data-toggle="tab" href="#newMessageConversation">{% trans 'Full conversation' %}</a></li>
                 </ul>
 
                 <div class="tab-content">
                   <div id="newMessage" class="tab-pane fade in active">
                     <div class="alert alert-success" role="alert" style="display:none;">
-                      Your message has been sent.
+                      {% trans 'Your message has been sent.' %}
                     </div>
 
                     {% get_message_form as message_form %}
@@ -167,7 +167,7 @@
 
                         <div style="display:none;">{% render_field message_form.user_to_id %}</div>
 
-                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
                     </form>
                   </div>
 
