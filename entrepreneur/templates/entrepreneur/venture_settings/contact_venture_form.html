@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - Configuración de contácto{% endblock %}
+{% block title %}{{ venture }} - {% trans 'Contact settings' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings">
@@ -12,7 +12,7 @@
             <div class="col-md-9 QjaneVentuerSettingsContent">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Contact information</h3>
+                        <h3 class="panel-title">{% trans 'Contact information' %}</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureContactForm">
@@ -40,13 +40,13 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
                                 </form>
                             </div>
 
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <p>Email and phone number will be public.</p>
-                                <div class="alert alert-success" role="alert" style="display:none;">Contact data updated correctly.</div>
+                                <p>{% trans 'Email and phone number will be public.' %}</p>
+                                <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Contact data updated correctly.' %}</div>
                             </div>
                         </div>
                     </div>
@@ -54,21 +54,21 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Location</h3>
+                        <h3 class="panel-title">{% trans 'Location' %}</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureLocationForm">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="alert alert-success" role="alert" style="display:none;">Contact data updated correctly.</div>
-                                <div class="alert alert-danger" role="alert" style="display:none;">Hay errores en el formulario. Asegurate de que la ciudad corresponde al país que has elegido.</div>
+                                <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Contact data updated correctly.' %}</div>
+                                <div class="alert alert-danger" role="alert" style="display:none;">{% trans 'There are errors in the form. Make sure that the city corresponds to the country you have chosen.' %}</div>
 
                                 <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' venture.id %}">
                                     {% csrf_token %}
 
                                     <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
-                                            Country
+                                            {% trans 'Country' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
@@ -85,7 +85,7 @@
 
                                     <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
-                                            City
+                                            {% trans 'City' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
@@ -94,7 +94,7 @@
                                             <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                             <p>{{ location_form.city_search.errors }}</p>
 
-                                            <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                            <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>
                                         </div>
 
                                         <div class="form-group" style="display:none;">
@@ -104,7 +104,7 @@
 
                                     <div class="form-group">
                                         <label>
-                                            Address <i>(Address will be public)</i>
+                                            {% trans 'Address' %} <i>({% trans 'Address will be public' %})</i>
                                         </label>
                                         <div>
                                             {% render_field location_form.address class+="form-control" %}
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
                                 </form>
                             </div>
 
@@ -128,12 +128,12 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Social media</h3>
+                        <h3 class="panel-title">{% trans 'Social media' %}</h3>
                     </div>
 
                     <div class="panel-body QJVentureMediaUpdate">
                         <div class="row">
-                            <div class="alert alert-success" role="alert" style="display:none;">Social media information updted correctly.</div>
+                            <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Social media information updted correctly.' %}</div>
                             <form method="POST" id="id_venture_media_form" data-venture-media-form-url="{% url 'entrepreneur:ax_media_venture_form' venture.id %}">
                                 {% csrf_token %}
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -200,7 +200,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
                             </form>
                         </div>
                     </div>

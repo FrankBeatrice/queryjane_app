@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - Jobs offer form{% endblock %}
+{% block title %}{{ venture }} - {% trans 'Job offer form' %}{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/job_offer_form.css' %}" rel="stylesheet">
@@ -16,7 +16,7 @@
             <div class="col-md-9 QjaneVentuerSettingsContent">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Create new job offer</h3>
+                        <h3 class="panel-title">{% trans 'Create new job offer' %}</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureJobOfferForm">
@@ -52,7 +52,7 @@
                                     {{ form.description.label }}
                                     <span class="QJRequiredField">*</span>
                                 </label>
-                                <p><i>Add a very detailed description of the job offer.</i></p>
+                                <p><i>{% trans 'Add a very detailed description of the job offer.' %}</i></p>
                                 <div id="rich_editor_description"></div>
 
                                 <p>{{ form.description.errors }}</p>
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="IndustryCategoriesList">
-                                <p>Select the sector or sectors of your job offer.</p>
+                                <p>{% trans 'Select the sector or sectors of your job offer.' %}</p>
 
                                 <ul class="qjane-industry-categories-list">
                                     {% for industry_category in industry_categories %}
@@ -79,14 +79,14 @@
 
                             <br>
 
-                            <p class="h4">Where is the job?</p>
-                            <p>Fill these fields only if it is necessary for the applicant to live or move to a specific country or city.</p>
+                            <p class="h4">{% trans 'Where is the job?' %}</p>
+                            <p>{% trans 'Fill these fields only if it is necessary for the applicant to live or move to a specific country or city.' %}</p>
 
                             <div class="row">
                                 <div class="col-md-6 col-xs-12">
                                     <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
-                                            Country
+                                            {% trans 'Country' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
