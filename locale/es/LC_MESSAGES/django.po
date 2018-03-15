@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-15 19:15+0000\n"
+"POT-Creation-Date: 2018-03-15 20:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,379 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/templates/account/auth/login.html:4
+#: account/templates/account/auth/login.html:19
+#: account/templates/account/auth/login.html:42
+msgid "Login"
+msgstr ""
+
+#: account/templates/account/auth/login.html:40
+msgid "Forgot my password"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_confirm.html:16
+#: account/templates/account/auth/password_reset_confirm.html:33
+msgid "Confirm new password"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_confirm.html:28
+msgid "New password"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_confirm.html:38
+msgid "Recovery"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_done.html:4
+#: account/templates/account/auth/password_reset_form.html:4
+#: account/templates/account/auth/password_reset_form.html:18
+msgid "Password recovery"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_done.html:18
+msgid "Password recovery."
+msgstr ""
+
+#: account/templates/account/auth/password_reset_done.html:22
+msgid "We have sent you an email with instruction to recovery your passowd."
+msgstr ""
+
+#: account/templates/account/auth/password_reset_done.html:24
+msgid "Home"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_email.html:2
+#, python-format
+msgid "Best regard %(user.first_name)s"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_email.html:4
+msgid ""
+"We sent this message because you have requested to reset your password. "
+"Please, follow this link:"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_email.html:8
+msgid "Your registered email address is:"
+msgstr ""
+
+#: account/templates/account/auth/password_reset_form.html:22
+msgid ""
+"Enter your email address and we will sent you instrunction to recovery your "
+"password."
+msgstr ""
+
+#: account/templates/account/auth/password_reset_form.html:36
+msgid "Request password recovery"
+msgstr ""
+
+#: account/templates/account/dashboard.html:23
+msgid "Visit your profile."
+msgstr ""
+
+#: account/templates/account/dashboard.html:36
+msgid "You have not added industry sectors yet."
+msgstr ""
+
+#: account/templates/account/dashboard.html:36
+msgid "Go to edit your professional profile."
+msgstr ""
+
+#: account/templates/account/dashboard.html:47
+msgid "Your companies."
+msgstr ""
+
+#: account/templates/account/dashboard.html:71
+msgid "New messages"
+msgstr ""
+
+#: account/templates/account/dashboard.html:82
+#: account/templates/account/inbox.html:26
+msgid "From:"
+msgstr ""
+
+#: account/templates/account/dashboard.html:97
+#: account/templates/account/notifications.html:17
+#: app/templates/layout/menu/_navbar_user_menu.html:7
+msgid "Notifications"
+msgstr ""
+
+#: account/templates/account/dashboard.html:122
+msgid "Job offers that might interest you."
+msgstr ""
+
+#: account/templates/account/dashboard.html:125
+#: account/templates/account/dashboard.html:147
+#: account/templates/account/dashboard.html:170
+#: account/templates/account/dashboard.html:195
+#: app/templates/layout/menu/_navbar_user_menu.html:30
+#: app/templates/layout/menu/_navbar_user_menu.html:61
+msgid "View all"
+msgstr ""
+
+#: account/templates/account/dashboard.html:144
+msgid "Last job offers."
+msgstr ""
+
+#: account/templates/account/dashboard.html:166
+msgid "Know some registered companies."
+msgstr ""
+
+#: account/templates/account/dashboard.html:191
+msgid "Some local companies."
+msgstr ""
+
+#: account/templates/account/dashboard.html:208
+msgid "There are not registered companies in your country yet."
+msgstr ""
+
+#: account/templates/account/dashboard_company_line.html:27
+#: account/templates/account/dashboard_job_offer_line.html:37
+msgid "Share"
+msgstr ""
+
+#: account/templates/account/dashboard_company_line.html:31
+#: account/templates/account/dashboard_job_offer_line.html:41
+msgid "Hide"
+msgstr ""
+
+#: account/templates/account/dashboard_company_line.html:38
+#: account/templates/account/dashboard_job_offer_line.html:49
+msgid "View"
+msgstr ""
+
+#: account/templates/account/dashboard_job_offer_line.html:12
+msgid "Created at:"
+msgstr ""
+
+#: account/templates/account/dashboard_job_offer_line.html:13
+msgid "Job type:"
+msgstr ""
+
+#: account/templates/account/dashboard_job_offer_line.html:45
+msgid "Activate"
+msgstr ""
+
+#: account/templates/account/emails/new_private_message.html:7
+msgid "New private message"
+msgstr ""
+
+#: account/templates/account/emails/new_private_message.html:9
+#, python-format
+msgid "Hi %(message.user_to.first_name)s. You have received a new message from"
+msgstr ""
+
+#: account/templates/account/emails/new_private_message.html:13
+msgid "Go to your"
+msgstr ""
+
+#: account/templates/account/emails/new_private_message.html:13
+msgid "inbox"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:7
+msgid "This may interest you."
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:9
+#: app/templatetags/greetings.py:28
+msgid "Hi"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:9
+msgid "has published a new Job Offer that may interest you:"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:18
+msgid "Country:"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:22
+msgid "City:"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:25
+msgid "Go to"
+msgstr ""
+
+#: account/templates/account/emails/potenitial_job_offer.html:25
+msgid "apply"
+msgstr ""
+
+#: account/templates/account/inbox.html:4
+#: account/templates/account/inbox.html:17
+msgid "Inbox"
+msgstr ""
+
+#: account/templates/account/inbox.html:17
+msgid "new messages."
+msgstr ""
+
+#: account/templates/account/notifications.html:4
+msgid "Notification"
+msgstr ""
+
+#: account/templates/account/notifications.html:17
+msgid "new notifications."
+msgstr ""
+
+#: account/templates/account/professional_profile.html:22
+msgid "Send message"
+msgstr ""
+
+#: account/templates/account/professional_profile.html:31
+msgid "Sectors"
+msgstr ""
+
+#: account/templates/account/professional_profile.html:31
+msgid "Sector"
+msgstr ""
+
+#: account/templates/account/professional_profile.html:39
+msgid "has not added industry sectors."
+msgstr ""
+
+#: account/templates/account/professional_profile.html:51
+msgid "Location"
+msgstr ""
+
+#: account/templates/account/professional_profile.html:81
+msgid "There is not information about this profile."
+msgstr ""
+
+#: account/templates/account/profile_update.html:4
+msgid "Profile update"
+msgstr ""
+
+#: account/templates/account/profile_update.html:15
+msgid "Basic information"
+msgstr ""
+
+#: account/templates/account/profile_update.html:38
+msgid "Update"
+msgstr ""
+
+#: account/templates/account/profile_update.html:43
+msgid "Profile updated successfully."
+msgstr ""
+
+#: account/templates/account/profile_update.html:44
+msgid "There was an error. Reload the page and try again."
+msgstr ""
+
+#: account/templates/account/profile_update.html:85
+msgid "Country"
+msgstr ""
+
+#: account/templates/account/profile_update.html:104
+msgid "City"
+msgstr ""
+
+#: account/templates/account/profile_update.html:113
+msgid ""
+"If when writing the name of the city, it does not appear available in the "
+"list,"
+msgstr ""
+
+#: account/templates/account/profile_update.html:113
+msgid "please, allow us to try to obtain your location"
+msgstr ""
+
+#: account/templates/account/profile_update.html:113
+msgid "and register it in the application."
+msgstr ""
+
+#: account/templates/account/profile_update.html:123
+#: account/templates/account/profile_update.html:179
+msgid "Save"
+msgstr ""
+
+#: account/templates/account/profile_update.html:133
+msgid "Industry sectors"
+msgstr ""
+
+#: account/templates/account/profile_update.html:157
+msgid "English - Professional profile description"
+msgstr ""
+
+#: account/templates/account/profile_update.html:160
+#: account/templates/account/profile_update.html:199
+msgid "Edit"
+msgstr ""
+
+#: account/templates/account/profile_update.html:196
+msgid "Spanish - Professional profile description"
+msgstr ""
+
+#: account/templates/account/profile_update.html:237
+msgid "Email notifications"
+msgstr ""
+
+#: account/templates/account/profile_update.html:244
+msgid "Job offers"
+msgstr ""
+
+#: account/templates/account/profile_update.html:245
+msgid "Notify me about new job offers that fit my profile."
+msgstr ""
+
+#: account/templates/account/profile_update.html:248
+#: account/templates/account/profile_update.html:259
+msgid "Yes"
+msgstr ""
+
+#: account/templates/account/profile_update.html:250
+#: account/templates/account/profile_update.html:261
+msgid "No"
+msgstr ""
+
+#: account/templates/account/profile_update.html:255
+msgid "Private messages"
+msgstr ""
+
+#: account/templates/account/profile_update.html:256
+msgid "notify me when I receive a new inbox message."
+msgstr ""
+
+#: account/templates/account/signup_landing.html:4
+msgid "Registra tu perfil profesional o tu empresa."
+msgstr ""
+
+#: account/templates/account/signup_landing.html:16
+msgid ""
+"welcome to QueryJane, the network to connect with experts and companies in "
+"different sectors of the cannabis industry."
+msgstr ""
+
+#: account/templates/account/signup_landing.html:23
+msgid "Register professional profile"
+msgstr ""
+
+#: account/templates/account/signup_landing.html:26
+msgid ""
+"If you are an expert in any sector of the industry and want to receive job "
+"offers, submit  your professional profile."
+msgstr ""
+
+#: account/templates/account/signup_landing.html:28
+msgid "Select sectors of the industry."
+msgstr ""
+
+#: account/templates/account/signup_landing.html:40
+msgid "Account settings"
+msgstr ""
+
+#: account/templates/account/signup_landing.html:47
+#: account/templates/account/signup_landing.html:52
+msgid "Register company"
+msgstr ""
+
+#: account/templates/account/signup_landing.html:50
+msgid ""
+"If you have a company in any sector of the cannabis industry, create your "
+"company profile."
+msgstr ""
 
 #: app/settings.py:184
 msgid "English"
@@ -119,16 +492,7 @@ msgid "Log in"
 msgstr ""
 
 #: app/templates/layout/menu/_navbar_user_menu.html:7
-msgid "Notifications"
-msgstr ""
-
-#: app/templates/layout/menu/_navbar_user_menu.html:7
 msgid "There are not new notifications"
-msgstr ""
-
-#: app/templates/layout/menu/_navbar_user_menu.html:30
-#: app/templates/layout/menu/_navbar_user_menu.html:61
-msgid "View all"
 msgstr ""
 
 #: app/templates/layout/menu/_navbar_user_menu.html:38
@@ -200,4 +564,20 @@ msgstr ""
 
 #: app/templates/modals/conversation_table.html:8
 msgid "From"
+msgstr ""
+
+#: app/templatetags/greetings.py:20
+msgid "Good evening"
+msgstr ""
+
+#: app/templatetags/greetings.py:23
+msgid "Good morning"
+msgstr ""
+
+#: app/templatetags/greetings.py:25
+msgid "Good afternoon"
+msgstr ""
+
+#: app/validators.py:9
+msgid "The file must have a maximum of 4MB"
 msgstr ""

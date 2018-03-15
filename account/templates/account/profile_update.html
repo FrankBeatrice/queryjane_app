@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
-{% block title %}Profile update{% endblock %}
+{% block title %}{% trans 'Profile update' %}{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/account/profile_edit.css' %}" rel="stylesheet">
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Basic information</h3>
+                <h3 class="panel-title">{% trans 'Basic information' %}</h3>
             </div>
 
             <div class="panel-body QjaneAccountGeneralInfo">
@@ -35,13 +35,13 @@
 
                         <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_profile_avatar_update_link">
                             <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
-                            Update
+                            {% trans 'Update' %}
                         </a>
                     </div>
 
                     <div class="col-xs-12 col-sm-9">
-                        <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">Profile updated successfully.</div>
-                        <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">There was an error. Reload the page and try again.</div>
+                        <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">{% trans 'Profile updated successfully.' %}</div>
+                        <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">{% trans 'There was an error. Reload the page and try again.' %}</div>
 
                         <form class="profile-form" id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -82,7 +82,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div id="id_QjaneVFcountryAut" class="form-group profile-form__country" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
-                                            Country
+                                            {% trans 'Country' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div class="profile-form__country__typeahead">
@@ -101,7 +101,7 @@
 
                                     <div id="id_QjaneVFcityAut" class="form-group profile-form__city" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
-                                            City
+                                            {% trans 'City' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div class="profile-form__city__typeahead">
@@ -110,7 +110,7 @@
                                             <a class="fa fa-paper-plane profile-form__city__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                             <p>{{ form.city_search.errors }}</p>
 
-                                            <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                            <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>
                                         </div>
 
                                         <div class="form-group" style="display:none;">
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
                         </form>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title clearfix">
-                    <span class="pull-left">Industry sectors</span>
+                    <span class="pull-left">{% trans 'Industry sectors' %}</span>
                 </h3>
             </div>
 
@@ -154,10 +154,10 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title clearfix">
-                                <span class="pull-left">English - Professional profile description</span>
+                                <span class="pull-left">{% trans 'English - Professional profile description' %}</span>
 
                                 <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                    Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                    {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                 </a>
                             </h3>
                         </div>
@@ -176,7 +176,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mt-xs">
-                                    Save
+                                    {% trans 'Save' %}
                                 </button>
                             </div>
 
@@ -189,15 +189,14 @@
                     </div>
                 </div>
 
-                {% comment %}
                 <div class="js_lan_form_container">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title clearfix">
-                                <span class="pull-left">Spanish - Professional profile description</span>
+                                <span class="pull-left">{% trans 'Spanish - Professional profile description' %}</span>
 
                                 <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                    Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                    {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                 </a>
                             </h3>
                         </div>
@@ -228,7 +227,6 @@
                         </div>
                     </div>
                 </div>
-                {% endcomment %}
             </form>
         </div>
 
@@ -236,31 +234,31 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title clearfix">
-                    <span class="pull-left">Email notifications</span>
+                    <span class="pull-left">{% trans 'Email notifications' %}</span>
                 </h3>
             </div>
 
             <div class="panel-body text-center ManageEmailNotifications" data-update-email-notifications-url="{% url 'account:ax_email_notification_update' %}">
                 <div class="row">
                     <div class="col-md-6 col-xs-12">
-                        <h3>Job offers</h3>
-                        <p>Notify me about new job offers that fit my profile.</p>
+                        <h3>{% trans 'Job offers' %}</h3>
+                        <p>{% trans 'Notify me about new job offers that fit my profile.' %}</p>
 
                         <div data-notification="email_jobs_notifications">
-                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'Yes' %}</button>
 
-                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'No' %}</button>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-xs-12">
-                        <h3>Private messages</h3>
-                        <p>notify me when I receive a new inbox message.</p>
+                        <h3>{% trans 'Private messages' %}</h3>
+                        <p>{% trans 'notify me when I receive a new inbox message.' %}</p>
 
                         <div data-notification="email_messages_notifications">
-                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">Yes</button>
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'Yes' %}</button>
 
-                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">No</button>
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'No' %}</button>
                         </div>
                     </div>
                 </div>
