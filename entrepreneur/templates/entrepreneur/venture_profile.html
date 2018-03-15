@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static entrepreneur_tags %}
+{% load static entrepreneur_tags i18n %}
 
 {% block title %}{{ venture }}{% endblock %}
 
@@ -35,7 +35,7 @@
         </div>
         {% elif venture.is_hidden %}
         <div class="alert alert-warning" role="alert">
-          {{ venture }} has been hidden by a QueryJane administrator.
+          {{ venture }} {% trans 'has been hidden by a QueryJane administrator.' %}
         </div>
         {% endif %}
         <div class="row">
@@ -49,13 +49,13 @@
                 </div>
 
                 {% if can_manage %}
-                    <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">Settings</a>
+                    <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
                     <br>
                     <br>
 
                     <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Create job offer
+                    {% trans 'Create job offer' %}
                 </a>
                     <br>
                     <br>
@@ -65,10 +65,10 @@
 
                 {% if user_venture_admin_notification %}
                     <div class="QJAdminnotification">
-                        <p>You have a management request for this company.</p>
+                        <p>{% trans 'You have a management request for this company.' %}</p>
 
-                        <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">Reject</a>
-                        <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">Accept</a>
+                        <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">{% trans 'Reject' %}</a>
+                        <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">{% trans 'Accept' %}</a>
                     </div>
                 {% endif %}
 
@@ -76,7 +76,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if venture.industry_categories.count > 1 %}Sectors{% else %}Sector{% endif %}</span>
+                            <span>{% if venture.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -93,7 +93,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                            <span>Location</span>
+                            <span>{% trans 'Location' %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -121,7 +121,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-link" aria-hidden="true"></i>
-                            <span>Web page</span>
+                            <span>{% trans 'Web page' %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -136,7 +136,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>Social media</span>
+                            <span>{% trans 'Social media' %}</span>
                         </div>
 
                         <div class="panel-body text-center">
@@ -179,7 +179,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                            <span>Contact</span>
+                            <span>{% trans 'Contact' %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -206,23 +206,23 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-star" aria-hidden="true"></i>
-                            <span>Qjane Admin</span>
+                            <span>{% trans 'Qjane Admin' %}</span>
                         </div>
 
                         <div class="panel-body">
                             <div class="JSCompanyActions">
                                 {% if not venture.shared_on_twitter and venture.is_active %}
                                 <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' venture.slug %}">
-                                    <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
+                                    <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
                                 </a>
                                 {% endif %}
 
                                 <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_venture' venture.slug %}" style="{% if venture.is_hidden %}display:none;{% endif %}">
-                                    <i class="fa fa-eye-slash"></i> Hide
+                                    <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
                                 </a>
 
                                 <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_venture' venture.slug %}" style="{% if not venture.is_hidden %}display:none;{% endif %}">
-                                    <i class="fa fa-fire"></i> Activate
+                                    <i class="fa fa-fire"></i> {% trans 'Activate' %}
                                 </a>
                             </div>
                         </div>
