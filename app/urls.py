@@ -23,6 +23,7 @@ admin.site.site_header = 'QueryJane - Administrador'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^social/', include('social_django.urls', namespace='social')),
 
     url(

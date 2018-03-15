@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-15 22:05+0000\n"
+"POT-Creation-Date: 2018-03-15 22:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgid "country code"
 msgstr ""
 
 #: account/forms.py:93 account/models.py:155 entrepreneur/forms.py:157
-#: entrepreneur/models.py:75 entrepreneur/models.py:299
+#: entrepreneur/models.py:75 entrepreneur/models.py:299 place/models.py:30
 msgid "city"
 msgstr ""
 
@@ -102,7 +102,8 @@ msgid "profile image"
 msgstr ""
 
 #: account/models.py:97 corporative/forms.py:16 entrepreneur/forms.py:133
-#: entrepreneur/models.py:38
+#: entrepreneur/models.py:38 place/models.py:11 place/models.py:37
+#: place/models.py:61
 msgid "name"
 msgstr ""
 
@@ -111,11 +112,13 @@ msgid "last name"
 msgstr ""
 
 #: account/models.py:143 entrepreneur/forms.py:143 entrepreneur/models.py:63
-#: entrepreneur/models.py:287
+#: entrepreneur/models.py:287 place/models.py:22 place/models.py:42
+#: place/models.py:73
 msgid "country"
 msgstr ""
 
 #: account/models.py:149 entrepreneur/models.py:69 entrepreneur/models.py:293
+#: place/models.py:17 place/models.py:50
 msgid "state"
 msgstr ""
 
@@ -1431,4 +1434,16 @@ msgstr ""
 
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:204
 msgid "Next"
+msgstr ""
+
+#: place/models.py:31
+msgid "cities"
+msgstr ""
+
+#: place/models.py:51
+msgid "states"
+msgstr ""
+
+#: place/models.py:74
+msgid "countries"
 msgstr ""
