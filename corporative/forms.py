@@ -1,26 +1,27 @@
 from django import forms
+from django.utils.translation import ugettext as _
 
 
 class ContactForm(forms.Form):
     subject = forms.CharField(
-        label='subject',
+        label=_('subject'),
     )
 
     phone = forms.CharField(
         required=False,
-        label='phone',
+        label=_('phone'),
     )
 
     name = forms.CharField(
-        label='name',
+        label=_('name'),
     )
 
     email = forms.EmailField(
-        label='email',
+        label=_('email'),
     )
 
     message = forms.CharField(
-        label='message',
+        label=_('message'),
         widget=forms.Textarea,
     )
 

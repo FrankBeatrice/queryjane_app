@@ -1,15 +1,16 @@
 {% extends 'layout/base_email.html' %}
+{% load i18n %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>New message from user.</h1>
+<h1>{% trans 'New message from user.' %}</h1>
 
-<h3>Detail:</h3>
+<h3>{% trans 'Detail:' %}</h3>
 
-<p><bold>Subject: </bold> {{ title }}</p>
-<p><bold>phone: </bold> {% if phone %}{{ phone }}{% else %}Not available{% endif %}</p>
-<p><bold>name: </bold> {{ name }}</p>
-<p><bold>email: </bold> {{ email }}</p>
-<p><bold>message: </bold> {{ message }}</p>
+<p><bold>{% trans 'Subject:' %} </bold> {{ title }}</p>
+<p><bold>{% trans 'phone:' %} </bold> {% if phone %}{{ phone }}{% else %}{% trans 'Not available' %}{% endif %}</p>
+<p><bold>{% trans 'name:' %} </bold> {{ name }}</p>
+<p><bold>{% trans 'email:' %} </bold> {{ email }}</p>
+<p><bold>{% trans 'message:' %} </bold> {{ message }}</p>
 {% endblock %}

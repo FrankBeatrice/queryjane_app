@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load widget_tweaks static %}
+{% load widget_tweaks static i18n %}
 
-{% block title %}Thank you for contacting us{% endblock %}
+{% block title %}{% trans 'Thank you for contacting us' %}{% endblock %}
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
@@ -13,23 +13,22 @@
         <div class="QJContactFormSuccess">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
-                    <h1 class="h1">Thank you for contacting us!!!</h1>
+                    <h1 class="h1">{% trans 'Thank you for contacting us!!!' %}</h1>
 
                     <p class="h5">---</p>
 
-                    <p class="h4">We have received your message and we will get in touch with you soon.</p>
+                    <p class="h4">{% trans 'We have received your message and we will get in touch with you soon.' %}</p>
 
                     <p class="h5">---</p>
                     
                     
-                    <a href="{% url 'home' %}" class="btn btn-primary">Go to home page</a>
+                    <a href="{% url 'home' %}" class="btn btn-primary">{% trans 'Go to home page' %}</a>
                     <br>
                     <br>
-                    <a href="{% url 'venture_list' %}" class="btn btn-ghost-purple">Take a look to the companies list</a>
+                    <a href="{% url 'venture_list' %}" class="btn btn-ghost-purple">{% trans 'Take a look to the companies list' %}</a>
                     <br>
                     <br>
-                    <a href="{% url 'jobs_list' %}" class="btn btn-ghost-purple">Take a look to the job offers list</a>
-                    
+                    <a href="{% url 'jobs_list' %}" class="btn btn-ghost-purple">{% trans 'Take a look to the job offers list' %}</a>
                     <br>
                     <br>
                 </div>

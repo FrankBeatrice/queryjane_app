@@ -103,7 +103,7 @@ class HideVentureView(CustomUserMixin, View):
         venture.status = VENTURE_STATUS_HIDDEN
         venture.save()
 
-        return HttpResponse(venture.get_status_display())
+        return HttpResponse('Hidden')
 
 
 class ActivateVentureView(CustomUserMixin, View):
@@ -122,7 +122,7 @@ class ActivateVentureView(CustomUserMixin, View):
         venture.status = VENTURE_STATUS_ACTIVE
         venture.save()
 
-        return HttpResponse(venture.get_status_display())
+        return HttpResponse('Active')
 
 
 class HideJobOfferView(CustomUserMixin, View):
@@ -141,7 +141,7 @@ class HideJobOfferView(CustomUserMixin, View):
         job_offer.status = JOB_STATUS_HIDDEN
         job_offer.save()
 
-        return HttpResponse(job_offer.get_status_display())
+        return HttpResponse('Hidden')
 
 
 class ActivateJobOfferView(CustomUserMixin, View):
@@ -160,4 +160,4 @@ class ActivateJobOfferView(CustomUserMixin, View):
         job_offer.status = JOB_STATUS_ACTIVE
         job_offer.save()
 
-        return HttpResponse(job_offer.get_status_display())
+        return HttpResponse('Active')

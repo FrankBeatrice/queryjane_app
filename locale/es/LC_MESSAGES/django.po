@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-15 20:01+0000\n"
+"POT-Creation-Date: 2018-03-15 20:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,172 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/data.py:7
+msgid "Invitation to administer company."
+msgstr ""
+
+#: account/data.py:8
+msgid "New job offer that may interest you."
+msgstr ""
+
+#: account/forms.py:14
+msgid "First name"
+msgstr ""
+
+#: account/forms.py:18 account/forms.py:27 account/forms.py:36
+#: account/forms.py:55 account/forms.py:65
+msgid "This field is required."
+msgstr ""
+
+#: account/forms.py:23
+msgid "Last name"
+msgstr ""
+
+#: account/forms.py:32
+msgid "Email"
+msgstr ""
+
+#: account/forms.py:42
+msgid "Password"
+msgstr ""
+
+#: account/forms.py:51 account/forms.py:72 account/models.py:125
+#: corporative/forms.py:20
+msgid "email"
+msgstr ""
+
+#: account/forms.py:61 account/forms.py:73
+msgid "password"
+msgstr ""
+
+#: account/forms.py:82
+msgid "Type the contry name and select one from the list."
+msgstr ""
+
+#: account/forms.py:89
+msgid "country code"
+msgstr ""
+
+#: account/forms.py:93 account/models.py:155
+msgid "city"
+msgstr ""
+
+#: account/forms.py:96
+msgid "Type the city name."
+msgstr ""
+
+#: account/forms.py:102
+msgid "city id"
+msgstr ""
+
+#: account/forms.py:137 account/forms.py:144 account/models.py:303
+msgid "description"
+msgstr ""
+
+#: account/forms.py:165
+msgid "Search by name, email or username"
+msgstr ""
+
+#: account/forms.py:174 account/models.py:376 corporative/forms.py:24
+msgid "message"
+msgstr ""
+
+#: account/models.py:33
+msgid "Users must have an email address"
+msgstr ""
+
+#: account/models.py:90
+msgid "profile image"
+msgstr ""
+
+#: account/models.py:97 corporative/forms.py:16
+msgid "name"
+msgstr ""
+
+#: account/models.py:111
+msgid "last name"
+msgstr ""
+
+#: account/models.py:143
+msgid "country"
+msgstr ""
+
+#: account/models.py:149
+msgid "state"
+msgstr ""
+
+#: account/models.py:159
+msgid "address"
+msgstr ""
+
+#: account/models.py:166
+msgid "created at"
+msgstr ""
+
+#: account/models.py:202 account/models.py:210
+msgid "user"
+msgstr ""
+
+#: account/models.py:203 app/templates/home.html:27
+msgid "users"
+msgstr ""
+
+#: account/models.py:215 account/models.py:287
+msgid "English description"
+msgstr ""
+
+#: account/models.py:220 account/models.py:276
+msgid "Spanish description"
+msgstr ""
+
+#: account/models.py:226
+msgid "Phone number"
+msgstr ""
+
+#: account/models.py:236
+msgid "receive notifications of job offers"
+msgstr ""
+
+#: account/models.py:241
+msgid "receive notifications of new messages"
+msgstr ""
+
+#: account/models.py:270
+msgid "Spanish name"
+msgstr ""
+
+#: account/models.py:281
+msgid "English name"
+msgstr ""
+
+#: account/models.py:316
+msgid "Notify to"
+msgstr ""
+
+#: account/models.py:321
+msgid "from venture"
+msgstr ""
+
+#: account/models.py:327
+msgid "membership invitation"
+msgstr ""
+
+#: account/models.py:333
+msgid "related job offer"
+msgstr ""
+
+#: account/models.py:339
+msgid "created by"
+msgstr ""
+
+#: account/models.py:365
+msgid "from"
+msgstr ""
+
+#: account/models.py:371
+msgid "to"
+msgstr ""
 
 #: account/templates/account/auth/login.html:4
 #: account/templates/account/auth/login.html:19
@@ -403,10 +569,6 @@ msgstr ""
 msgid "Cannabis Industry Network"
 msgstr ""
 
-#: app/templates/home.html:27
-msgid "users"
-msgstr ""
-
 #: app/templates/home.html:32
 msgid "companies"
 msgstr ""
@@ -466,6 +628,7 @@ msgid "Privacy policy"
 msgstr ""
 
 #: app/templates/layout/index.html:108
+#: corporative/templates/corporative/admin_dashboard.html:10
 msgid "Companies"
 msgstr ""
 
@@ -580,4 +743,134 @@ msgstr ""
 
 #: app/validators.py:9
 msgid "The file must have a maximum of 4MB"
+msgstr ""
+
+#: corporative/forms.py:7
+msgid "subject"
+msgstr ""
+
+#: corporative/forms.py:12
+msgid "phone"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:4
+msgid "Admin dashboard"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:11
+msgid "Social Networks"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:20
+msgid "Hidden companies"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:31
+msgid "There are not hidden companies."
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:39
+msgid "Hidden Job offers"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:50
+msgid "There are not hidden job offers."
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:63
+msgid "Companies to share"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:74
+msgid "There are not unshared companies."
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:82
+msgid "Job offers to share"
+msgstr ""
+
+#: corporative/templates/corporative/admin_dashboard.html:93
+msgid "There are not unshared job offers"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:4
+msgid "Contact Us"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:16
+msgid "Contact Us!"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:18
+msgid "Do you think we can help you with advice in the cannabis industry?"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:19
+msgid "Do you have questions about the use of the platform?"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:22
+msgid ""
+"Feel free to contact us, we will be happy to talk about how we can help "
+"boost the cannabis industry and to listen to your doubts and suggestions."
+msgstr ""
+
+#: corporative/templates/corporative/contact_form.html:55
+msgid "send"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:4
+msgid "Thank you for contacting us"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:16
+msgid "Thank you for contacting us!!!"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:20
+msgid "We have received your message and we will get in touch with you soon."
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:25
+msgid "Go to home page"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:28
+msgid "Take a look to the companies list"
+msgstr ""
+
+#: corporative/templates/corporative/contact_form_success.html:31
+msgid "Take a look to the job offers list"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:7
+msgid "New message from user."
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:9
+msgid "Detail:"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:11
+msgid "Subject:"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:12
+msgid "phone:"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:12
+msgid "Not available"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:13
+msgid "name:"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:14
+msgid "email:"
+msgstr ""
+
+#: corporative/templates/corporative/emails/user_message.html:15
+msgid "message:"
 msgstr ""
