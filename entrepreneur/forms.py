@@ -33,7 +33,7 @@ class VentureFilter(forms.Form):
         label=_('City'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Type de city name.'),
+                'placeholder': _('Type the city name.'),
             },
         ),
     )
@@ -85,7 +85,7 @@ class JobOffersFilter(forms.Form):
         label='City',
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Type de city name.'),
+                'placeholder': _('Type the city name.'),
             },
         ),
     )
@@ -239,7 +239,7 @@ class VentureDescriptionForm(Form):
     description_en = forms.CharField(
         required=False,
         min_length=40,
-        label=_('Englis description'),
+        label=_('English description'),
         widget=forms.Textarea,
     )
 
@@ -293,7 +293,7 @@ class LocationVentureForm(ModelForm):
         label=_('City'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('type de the city name.'),
+                'placeholder': _('type the city name.'),
             },
         ),
     )
@@ -405,7 +405,7 @@ class JobOfferForm(forms.ModelForm):
         label=_('City'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': _('Type de city name.'),
+                'placeholder': _('Type the city name.'),
             },
         ),
     )

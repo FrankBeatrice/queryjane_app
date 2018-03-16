@@ -105,7 +105,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
-                                            City
+                                            {% trans 'City' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
                                         <div>
@@ -114,7 +114,7 @@
                                             <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                             <p>{{ form.city_search.errors }}</p>
 
-                                            <p class="QJgUbicationMessage">If when writing the name of the city, it does not appear available in the list, <a href="javascript:void(0)" class="QjaneShareGPStext">Please, allow us to try to obtain your location</a> and register it in the application.</p>
+                                            <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'Please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>
                                         </div>
 
                                         <div class="form-group" style="display:none;">
@@ -126,7 +126,7 @@
 
                             <br>
 
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">{% trans 'Create' %}</button>
                         </form>
                     </div>
                 </div>
