@@ -111,22 +111,6 @@
                             ·
                             <a href="{% url 'contact_form' %}">{% trans "Contact us" %}</a>
                             ·
-
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% get_available_languages as languages %}
-
-                            {% for lang_code, lang_name in languages %}
-                                {% if LANGUAGE_CODE != lang_code %}
-                                {% language lang_code %}
-                                <a href="{% url 'home' %}">
-                                    {% if  lang_name == 'Spanish' %}
-                                        Español
-                                    {% else %}
-                                    English
-                                    {% endif %}</a>
-                                {% endlanguage %}
-                                {% endif %}
-                            {% endfor %}
                         </div>
 
                         <p class="QJRHlink">
@@ -134,7 +118,22 @@
                         </p>
                     </div>
 
-                    <div class="col-xs-12 col-md-3 footer__content__social-network">
+                    <div class="col-xs-12 col-md-3">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as languages %}
+
+                        {% for lang_code, lang_name in languages %}
+                            {% if LANGUAGE_CODE != lang_code %}
+                            {% language lang_code %}
+                            <a href="{% url 'home' %}">
+                                {% if  lang_name == 'Spanish' %}
+                                    Español
+                                {% else %}
+                                English
+                                {% endif %}</a>
+                            {% endlanguage %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
