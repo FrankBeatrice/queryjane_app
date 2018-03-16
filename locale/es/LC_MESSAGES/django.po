@@ -622,7 +622,7 @@ msgstr "Configuraciones de cuenta"
 #: account/templates/account/signup_landing.html:52
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:4
 msgid "Register company"
-msgstr "Registrar compañia"
+msgstr "Registrar empresa"
 
 #: account/templates/account/signup_landing.html:50
 msgid ""
@@ -657,7 +657,7 @@ msgid ""
 "Connect with companies and experts in different sectors of the cannabis "
 "industry."
 msgstr ""
-"Conecta con compañias y expertos en diferentes sectores dela industria del "
+"Conecta con empresas y expertos en diferentes sectores dela industria del "
 "cannabis"
 
 #: app/templates/home.html:46
