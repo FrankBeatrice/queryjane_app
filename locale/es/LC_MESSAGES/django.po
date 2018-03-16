@@ -657,8 +657,8 @@ msgid ""
 "Connect with companies and experts in different sectors of the cannabis "
 "industry."
 msgstr ""
-"Conecta con empresas y expertos en diferentes sectores dela industria del "
-"cannabis"
+"Conecta con empresas y expertos en diferentes sectores de la industria del "
+"cannabis."
 
 #: app/templates/home.html:46
 #: app/templates/layout/menu/_navbar_login_form.html:11
