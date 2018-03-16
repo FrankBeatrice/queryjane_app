@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.conf.urls.i18n import i18n_patterns
 
 from .views import ajax_login_form
 from .views import ContactFormView
@@ -23,9 +24,12 @@ admin.site.site_header = 'QueryJane - Administrador'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^social/', include('social_django.urls', namespace='social')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+]
 
+
+urlpatterns += i18n_patterns(
     url(
         r'^$',
         HomeView.as_view(),
@@ -156,4 +160,4 @@ urlpatterns = [
         ProfessionalDetail.as_view(),
         name='professional_detail',
     ),
-]
+)
