@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.utils.text import slugify
+from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
 from app.validators import FileSizeValidator
 
@@ -29,7 +30,7 @@ class UserManager(BaseUserManager):
         is_active=True,
     ):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('Users must have an email address'))
 
         user = self.model(
             email=UserManager.normalize_email(email),
@@ -86,14 +87,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     avatar = models.ImageField(
-        verbose_name='profile image',
+        verbose_name=_('profile image'),
         max_length=255,
         blank=True,
         validators=[FileSizeValidator(4000)],
     )
 
     first_name = models.CharField(
-        verbose_name='name',
+        verbose_name=_('name'),
         max_length=128,
         blank=False,
         validators=[
@@ -107,7 +108,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     last_name = models.CharField(
-        verbose_name='last name',
+        verbose_name=_('last name'),
         max_length=128,
         blank=False,
         validators=[
@@ -121,7 +122,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     email = models.EmailField(
-        verbose_name='email',
+        verbose_name=_('email'),
         unique=True,
         blank=False,
     )
@@ -129,44 +130,40 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         'staff status',
         default=False,
-        help_text='Indica si el usuario puede entrar en este sitio '
-                  'de administración.',
     )
 
     is_active = models.BooleanField(
         'Activo',
         default=True,
-        help_text='Indica si el usuario puede ser tratado como activo. '
-                  'Desmarque esta opción en lugar de borrar la cuenta.',
     )
 
     country = models.ForeignKey(
         'place.Country',
         null=True,
-        verbose_name='country',
+        verbose_name=_('country'),
     )
 
     state = models.ForeignKey(
         'place.State',
         null=True,
-        verbose_name='state',
+        verbose_name=_('state'),
     )
 
     city = models.ForeignKey(
         'place.City',
         null=True,
-        verbose_name='city',
+        verbose_name=_('city'),
     )
 
     address = models.CharField(
-        verbose_name='dirección',
+        verbose_name=_('address'),
         max_length=80,
         null=True,
         blank=True,
     )
 
     date_joined = models.DateTimeField(
-        verbose_name='fecha de creación',
+        verbose_name=_('created at'),
         default=timezone.now,
     )
 
@@ -202,36 +199,31 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.get_full_name
 
     class Meta:
-        verbose_name = 'usuario'
-        verbose_name_plural = 'usuarios'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
         ordering = ('email',)
 
 
 class ProfessionalProfile(models.Model):
-    BOOL_CHOICES = (
-        (True, 'Si'),
-        (False, 'No')
-    )
-
     user = models.OneToOneField(
         'account.User',
-        verbose_name='Cuenta de usuario',
+        verbose_name=_('user'),
     )
 
     description_en = models.TextField(
         blank=True,
-        verbose_name='description',
+        verbose_name=_('English description'),
     )
 
     description_es = models.TextField(
         blank=True,
-        verbose_name='description',
+        verbose_name=_('Spanish description'),
     )
 
     phone_number = models.CharField(
         max_length=50,
         blank=True,
-        verbose_name='Phone number',
+        verbose_name=_('Phone number'),
     )
 
     industry_categories = models.ManyToManyField(
@@ -241,12 +233,12 @@ class ProfessionalProfile(models.Model):
 
     email_jobs_notifications = models.BooleanField(
         default=True,
-        verbose_name='receive notifications of job offers',
+        verbose_name=_('receive notifications of job offers'),
     )
 
     email_messages_notifications = models.BooleanField(
         default=True,
-        verbose_name='receive notifications of new messages',
+        verbose_name=_('receive notifications of new messages'),
     )
 
     created_at = models.DateTimeField(
@@ -275,24 +267,24 @@ class ProfessionalProfile(models.Model):
 class IndustryCategory(models.Model):
     name_es = models.CharField(
         max_length=50,
-        verbose_name='spanish name',
+        verbose_name=_('Spanish name'),
     )
 
     description_es = models.TextField(
         blank=True,
         null=True,
-        verbose_name='spanish description',
+        verbose_name=_('Spanish description'),
     )
 
     name_en = models.CharField(
         max_length=50,
-        verbose_name='english name',
+        verbose_name=_('English name'),
     )
 
     description_en = models.TextField(
         blank=True,
         null=True,
-        verbose_name='english description',
+        verbose_name=_('English description'),
     )
 
     class Meta:
@@ -308,7 +300,7 @@ class UserNotification(models.Model):
     )
 
     description = models.TextField(
-        verbose_name='description',
+        verbose_name=_('description'),
     )
 
     created_at = models.DateTimeField(
@@ -321,30 +313,30 @@ class UserNotification(models.Model):
 
     noty_to = models.ForeignKey(
         'account.User',
-        verbose_name='Notify to',
+        verbose_name=_('Notify to'),
     )
 
     venture_from = models.ForeignKey(
         'entrepreneur.Venture',
-        verbose_name='from venture',
+        verbose_name=_('from venture'),
         null=True,
     )
 
     membership = models.ForeignKey(
         'entrepreneur.AdministratorMembership',
-        verbose_name='membership invitation',
+        verbose_name=_('membership invitation'),
         null=True,
     )
 
     job_offer = models.ForeignKey(
         'entrepreneur.JobOffer',
-        verbose_name='related job offer',
+        verbose_name=_('related job offer'),
         null=True,
     )
 
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='created by',
+        verbose_name=_('created by'),
         related_name='creator',
     )
 
@@ -370,18 +362,18 @@ class UserNotification(models.Model):
 class UserMessage(models.Model):
     user_from = models.ForeignKey(
         'account.User',
-        verbose_name='from',
+        verbose_name=_('from'),
         related_name='user_from',
     )
 
     user_to = models.ForeignKey(
         'account.User',
-        verbose_name='to',
+        verbose_name=_('to'),
         related_name='user_to',
     )
 
     message = models.TextField(
-        verbose_name='message',
+        verbose_name=_('message'),
     )
 
     created_at = models.DateTimeField(

@@ -1,5 +1,6 @@
-from django.utils import timezone
 from datetime import time
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 from django import template
 
@@ -16,14 +17,14 @@ def get_general_greeting():
 
     now = timezone.now()
     current_time = now.time()
-    general_greeting = 'Good evening'
+    general_greeting = _('Good evening')
 
     if current_time > morning_init and current_time < morning_end:
-        general_greeting = 'Good morning'
+        general_greeting = _('Good morning')
     if current_time > afternoon_init and current_time < afternoon_end:
-        general_greeting = 'Good afternoon'
+        general_greeting = _('Good afternoon')
 
     # TODO: FIX TIME ZONE
-    general_greeting = 'Hi'
+    general_greeting = _('Hi')
 
     return general_greeting

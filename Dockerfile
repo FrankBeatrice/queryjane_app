@@ -29,6 +29,7 @@ RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.24.6
 RUN ln -s /root/.yarn/bin/yarn /usr/local/bin/yarn
 
 RUN easy_install -U pip
+RUN apt-get update && apt-get install -y gettext libgettextpo-dev
 
 RUN mkdir /code
 WORKDIR /code

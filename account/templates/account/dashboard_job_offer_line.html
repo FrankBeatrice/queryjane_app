@@ -1,3 +1,4 @@
+{% load i18n %}
 <tr>
     <td>
         <img class="thumbnail img-responsive" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}" style="width: 80px; height: auto">
@@ -8,8 +9,8 @@
     <td>
         <p class="h4">{{ job_offer }}</p>
 
-        <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
-        <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
+        <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
+        <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
         {% if job_offer.country %}
         <div>
             <img src="{{ venture.country.flag }}">
@@ -33,19 +34,19 @@
 
         <div class="pull-right JSJobActions">
             <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}" style="{% if not permission_app.manage_admin_views or job_offer.shared_on_twitter or not job_offer.is_active %}display:none;{% endif %}">
-                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
+                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
             </a>
 
             <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' job_offer.slug %}" style="{% if job_offer.is_hidden %}display:none;{% endif %}">
-                <i class="fa fa-eye-slash"></i> Hide
+                <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
             </a>
 
             <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' job_offer.slug %}" style="{% if not job_offer.is_hidden %}display:none;{% endif %}">
-                <i class="fa fa-fire"></i> Activate
+                <i class="fa fa-fire"></i> {% trans 'Activate' %}
             </a>
 
 
-            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">{% trans 'View' %}</a>
         </div>
     </td>
 </tr>

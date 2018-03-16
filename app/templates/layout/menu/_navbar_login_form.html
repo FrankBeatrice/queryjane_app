@@ -1,14 +1,14 @@
-{% load static general_forms widget_tweaks %}
+{% load static general_forms widget_tweaks i18n %}
 <ul class="nav navbar-nav navbar-right main-nav-items hidden-xs">
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log in</a>
+        <a class="nav-link dropdown-toggle main-nav-items__item" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'log in' %}</a>
 
         <ul class="dropdown-menu">
             <li>
                 <div class="dropdown-item qjane-navbar-login-container">
                     <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
                         <span class="fa fa-facebook"></span>
-                        Facebook login
+                        {% trans 'Facebook login' %}
                     </a>
 
                     {% get_login_form as login_form %}
@@ -24,8 +24,8 @@
                             {{ login_form.password.errors }}
                         </div>
 
-                        <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">Forgot password?</a>
-                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                        <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">{% trans 'Forgot password?' %}</a>
+                        <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
                     </form>
                 </div>
             </li>
@@ -37,7 +37,7 @@
     <div class="nav-item dropdown qjane-navbar-login-container">
         <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
             <span class="fa fa-facebook"></span>
-            Facebook login
+            {% trans 'Facebook login' %}
         </a>
 
         {% get_login_form as login_form %}
@@ -53,8 +53,8 @@
                 {{ login_form.password.errors }}
             </div>
 
-            <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">Forgot password?</a>
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            <a class="btn btn-ghost-purple btn-block mb-xs" href="{% url 'password_reset' %}">{% trans 'Forgot password?' %}</a>
+            <button type="submit" class="btn btn-primary btn-block">{% trans 'Log in' %}</button>
         </form>
     </div>
 </div>

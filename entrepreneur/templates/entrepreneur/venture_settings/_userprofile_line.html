@@ -1,4 +1,4 @@
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 <li class="media qjane-userprofile-line">
     <div class="media-left">
         <a href="#">
@@ -19,7 +19,7 @@
             {% render_field role_form.role %}
             </div>
 
-            <button type="submit" class="btn btn-success btn-sm">Add</button>
+            <button type="submit" class="btn btn-success btn-sm">{% tran 'Add' %}</button>
         </form>
     </div>
 </li>

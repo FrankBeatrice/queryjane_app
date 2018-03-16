@@ -1,14 +1,14 @@
 {% extends "layout/index.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Admin dashboard{% endblock %}
+{% block title %}{% trans 'Admin dashboard' %}{% endblock %}
 
 {% block content %}
 <section class="AdminDashboard">
     <div class="container">
         <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#companiesAdmin">Companies</a></li>
-          <li><a data-toggle="tab" href="#socialnetworksAdmin">Social Networks</a></li>
+          <li class="active"><a data-toggle="tab" href="#companiesAdmin">{% trans 'Companies' %}</a></li>
+          <li><a data-toggle="tab" href="#socialnetworksAdmin">{% trans 'Social Networks' %}</a></li>
         </ul>
 
         <div class="tab-content">
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Hidden companies</div>
+                        <div class="panel-heading">{% trans 'Hidden companies' %}</div>
                         <div class="panel-body">
                             {% if hidden_companies %}
                             <table class="table table-striped jobs-table">
@@ -28,7 +28,7 @@
                               </tbody>
                             </table>
                             {% else %}
-                            <p class="h4">There are not hidden companies.</p>
+                            <p class="h4">{% trans 'There are not hidden companies.' %}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -36,7 +36,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Hidden Job offers</div>
+                        <div class="panel-heading">{% trans 'Hidden Job offers' %}</div>
                         <div class="panel-body">
                             {% if hidden_job_offer %}
                             <table class="table table-striped jobs-table">
@@ -47,7 +47,7 @@
                               </tbody>
                             </table>
                             {% else %}
-                            <p class="h4">There are not hidden job offers.</p>
+                            <p class="h4">{% trans 'There are not hidden job offers.' %}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Companies to share</div>
+                        <div class="panel-heading">{% trans 'Companies to share' %}</div>
                         <div class="panel-body">
                             {% if unshared_ventures_list %}
                             <table class="table table-striped jobs-table">
@@ -71,7 +71,7 @@
                               </tbody>
                             </table>
                             {% else %}
-                            <p class="h4">There are not unshared companies.</p>
+                            <p class="h4">{% trans 'There are not unshared companies.' %}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -79,7 +79,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Job offers to share</div>
+                        <div class="panel-heading">{% trans 'Job offers to share' %}</div>
                         <div class="panel-body">
                             {% if unshared_jobs_list %}
                             <table class="table table-striped jobs-table">
@@ -90,7 +90,7 @@
                               </tbody>
                             </table>
                             {% else %}
-                            <p class="h5">There are not unshared job offers</p>
+                            <p class="h5">{% trans 'There are not unshared job offers' %}</p>
                             {% endif %}
                         </div>
                     </div>

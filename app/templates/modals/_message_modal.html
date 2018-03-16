@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="modal-header">
     <h5 class="modal-title">
-        Message from {{ message.user_from }}
+        {% trans 'Message from' %} {{ message.user_from }}
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -9,8 +10,10 @@
 
   <div class="modal-body">
     <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#messageDetail">Message detail</a></li>
-      <li><a data-toggle="tab" href="#messageDetailConversation">Full conversation</a></li>
+      <li class="active">
+        <a data-toggle="tab" href="#messageDetail">{% trans 'Message detail' %}</a>
+      </li>
+      <li><a data-toggle="tab" href="#messageDetailConversation">{% trans 'Full conversation' %}</a></li>
     </ul>
 
     <div class="tab-content">
@@ -25,5 +28,7 @@
   </div>
 
 <div class="modal-footer">
-    Visit {{ message.user_from.first_name}}'s <a href="{% url 'professional_detail' message.user_from.professionalprofile.slug %}">profile</a>.
+    <a href="{% url 'professional_detail' message.user_from.professionalprofile.slug %}">
+      {% blocktrans %}Visit {{ message.user_from.first_name}}'s profile{% endblocktrans %}
+    </a>.
 </div>

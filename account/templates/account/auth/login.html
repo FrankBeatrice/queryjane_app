@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load widget_tweaks static %}
+{% load widget_tweaks static i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'dist/css/home.css' %}">
@@ -16,7 +16,7 @@
 
             <div class="panel panel-default LoginForm qj-home-register">
                 <div class="panel-heading">
-                    <h3>Login</h3>
+                    <h3>{% trans 'Login' %}</h3>
                 </div>
 
                 <div class="panel-body">
@@ -37,9 +37,9 @@
                         </div>
                     {% endfor %}
                         <p>
-                            <a href="{% url 'password_reset' %}">Forgot my password</a>
+                            <a href="{% url 'password_reset' %}">{% trans 'Forgot my password' %}</a>
                         </p>
-                        <button type="submit" class="btn btn-ghost-white btn-lg">Login</button>
+                        <button type="submit" class="btn btn-ghost-white btn-lg">{% trans 'Login' %}</button>
                     </form>
                 </div>
             </div>

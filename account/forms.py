@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import Form
 from django.forms import ModelForm
+from django.utils.translation import ugettext as _
 from django.contrib.auth.forms import PasswordResetForm
 
 from account.models import User
@@ -10,35 +11,35 @@ class SignUpForm(Form):
     """Formulario de creación de usuarios
     """
     first_name = forms.CharField(
-        label='First name',
+        label=_('First name'),
         required=True,
         max_length=50,
         error_messages={
-            'required': 'This field is required.',
+            'required': _('This field is required.'),
         },
     )
 
     last_name = forms.CharField(
-        label='Last name',
+        label=_('Last name'),
         required=True,
         max_length=50,
         error_messages={
-            'required': 'This field is required.',
+            'required': _('This field is required.'),
         },
     )
 
     email = forms.EmailField(
-        label=u'Email',
+        label=_('Email'),
         required=True,
         max_length=50,
         error_messages={
-            'required': 'This field is required.',
+            'required': _('This field is required.'),
         },
     )
 
     password = forms.CharField(
         widget=forms.PasswordInput,
-        label=u"Password",
+        label=_("Password"),
     )
 
     def __init__(self, *args, **kwargs):
@@ -47,29 +48,29 @@ class SignUpForm(Form):
 
 class LoginForm(Form):
     email = forms.EmailField(
-        label=u'email',
+        label=_('email'),
         required=True,
         max_length=50,
         error_messages={
-            'required': 'This field is required.',
+            'required': _('This field is required.'),
         },
     )
 
     password = forms.CharField(
         widget=forms.PasswordInput,
-        label=u'password',
+        label=_('password'),
         required=True,
         max_length=50,
         error_messages={
-            'required': 'This field is required.',
+            'required': _('This field is required.'),
         },
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['email'].widget.attrs['placeholder'] = 'email'
-        self.fields['password'].widget.attrs['placeholder'] = 'password'
+        self.fields['email'].widget.attrs['placeholder'] = _('email')
+        self.fields['password'].widget.attrs['placeholder'] = _('password')
 
 
 class ProfileForm(ModelForm):
@@ -78,27 +79,27 @@ class ProfileForm(ModelForm):
         label='country',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Type the contry name and select one from the list.',
+                'placeholder': _('Type the contry name and select one from the list.'),
             },
         ),
     )
 
     country_code = forms.CharField(
         required=True,
-        label='country code',
+        label=_('country code'),
     )
 
     city_search = forms.CharField(
-        label='city',
+        label=_('city'),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Type the city name.',
+                'placeholder': _('Type the city name.'),
             },
         ),
     )
 
     city_id = forms.CharField(
-        label='city id',
+        label=_('city id'),
     )
 
     class Meta:
@@ -133,14 +134,14 @@ class ProfileDescriptionForm(Form):
     description_en = forms.CharField(
         required=False,
         min_length=40,
-        label='description',
+        label=_('description'),
         widget=forms.Textarea,
     )
 
     description_es = forms.CharField(
         required=False,
         min_length=40,
-        label='description',
+        label=_('description'),
         widget=forms.Textarea,
     )
 
@@ -161,7 +162,7 @@ class ProfileAutocompleteForm(Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Search by name, email or username',
+                'placeholder': _('Search by name, email or username'),
             },
         ),
         label='',
@@ -170,7 +171,7 @@ class ProfileAutocompleteForm(Form):
 
 class UserMessageForm(Form):
     user_message = forms.CharField(
-        label='message',
+        label=_('message'),
         widget=forms.Textarea,
     )
 

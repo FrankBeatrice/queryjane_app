@@ -1,6 +1,5 @@
 {% extends "layout/index.html" %}
-
-{% load static entrepreneur_tags %}
+{% load static entrepreneur_tags i18n %}
 
 {% block title %}{{ job_offer }} | {{ job_offer.venture }}{% endblock %}
 
@@ -49,7 +48,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>Job offer {% if job_offer.industry_categories.count > 1 %}categories{% else %}category{% endif %}</span>
+                            <span>{% trans 'Job offer' %} {% if job_offer.industry_categories.count > 1 %}categories{% else %}{% trans 'category' %}{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -67,7 +66,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                            <span>Job location</span>
+                            <span>{% trans 'Job location' %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -92,23 +91,23 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-star" aria-hidden="true"></i>
-                        <span>Qjane Admin</span>
+                        <span>{% trans 'Qjane Admin' %}</span>
                     </div>
 
                     <div class="panel-body">
                         <div class="JSJobActions">
                             {% if not job_offer.shared_on_twitter and job_offer.is_active %}
                             <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}">
-                                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> Share
+                                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
                             </a>
                             {% endif %}
 
                             <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' job_offer.slug %}" style="{% if job_offer.is_hidden %}display:none;{% endif %}">
-                                <i class="fa fa-eye-slash"></i> Hide
+                                <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
                             </a>
 
                             <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' job_offer.slug %}" style="{% if not job_offer.is_hidden %}display:none;{% endif %}">
-                                <i class="fa fa-fire"></i> Activate
+                                <i class="fa fa-fire"></i> {% trans 'Activate' %}
                             </a>
                         </div>
                     </div>
@@ -121,16 +120,16 @@
 
                 <p><strong>Status:</strong>
                 {% if job_offer.is_active %}
-                <span class="JODetailStatus label label-success">Active</span>
+                <span class="JODetailStatus label label-success">{% trans 'Active' %}</span>
                 {% elif job_offer.is_hidden %}
-                <span class="JODetailStatus label label-warning">Hidden</span>
+                <span class="JODetailStatus label label-warning">{% trans 'Hidden' %}</span>
                 {% else %}
-                <span class="JODetailStatus label label-warning">Closed</span>
+                <span class="JODetailStatus label label-warning">{% trans 'Closed' %}</span>
                 {% endif %}
                 </p>
 
-                <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
-                <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
+                <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
+                <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
 
                 <div class="QJVentureDetDescription">
                 {% if job_offer.description %}
@@ -142,21 +141,21 @@
 
             {% if can_edit %}
                 <div class="pull-right jsJobActions">
-                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
+                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">{% trans 'Edit job offer' %}</a>
 
-                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ job_offer.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">Close job offer</a>
+                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-job-offer-id="{{ job_offer.id }}" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">{% trans 'Close job offer' %}</a>
                 </div>
             {% endif %}
 
             {% if can_manage %}
-                <h3>Applicants list</h3>
+                <h3>{% trans 'Applicants list' %}</h3>
 
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>application date</th>
-                      <th>Actions</th>
+                      <th>{% trans 'Name' %}</th>
+                      <th>{% trans 'application date' %}</th>
+                      <th>{% trans 'Actions' %}</th>
                     </tr>
                   </thead>
 
@@ -167,19 +166,19 @@
                           <td>{{ applicant.created_at }}</td>
                           <td>
                             <a href="{% url 'professional_detail' applicant.applicant.slug %}">
-                              View profile
+                              {% trans 'View profile' %}
                             </a>
                           </td>
                         </tr>
                     {% empty %}
                         <tr>
-                          <td>There are not applicants yet.</td>
+                          <td>{% trans 'There are not applicants yet.' %}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
 
-                <a href="{% url 'entrepreneur:job_offers_list' job_offer.venture.slug %}" class="btn btn-ghost-purple">Go to job offers list administrator - {{ job_offer.venture }}</a>
+                <a href="{% url 'entrepreneur:job_offers_list' job_offer.venture.slug %}" class="btn btn-ghost-purple">{% trans 'Go to job offers list administrator' %} - {{ job_offer.venture }}</a>
             {% endif %}
 
                 {% if can_apply %}
@@ -188,7 +187,7 @@
 
                 {% if has_applied %}
                 <div class="alert alert-success" role="alert">
-                  You have applied to this offer.
+                  {% trans 'You have applied to this offer.' %}
                 </div>
                 {% endif %}
             </div>

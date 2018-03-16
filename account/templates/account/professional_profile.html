@@ -1,6 +1,5 @@
 {% extends "layout/index.html" %}
-
-{% load static %}
+{% load static i18n %}
 
 {% block title %}{{ profile }}{% endblock %}
 
@@ -20,7 +19,7 @@
                 </div>
 
                 {% if can_send_message %}
-                <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' profile.user.id %}">Send message</button>
+                <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' profile.user.id %}">{% trans 'Send message' %}</button>
                 <br>
                 <br>
                 {% endif %}
@@ -29,7 +28,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if profile.industry_categories.count > 1 %}Sectors{% else %}Sector{% endif %}</span>
+                            <span>{% if profile.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -37,7 +36,7 @@
                             {% for industry_category in profile.industry_categories.all %}
                                 <li>{{ industry_category }}</li>
                             {% empty %}
-                                <li>{{ profile.user.first_name }} has not added industry sectors.</li>
+                                <li>{{ profile.user.first_name }} {% trans 'has not added industry sectors.' %}</li>
                             {% endfor %}
                             </ul>
                         </div>
@@ -49,7 +48,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>Location</span>
+                            <span>{% trans 'Location' %}</span>
                         </div>
 
                         <div class="panel-body">
@@ -79,7 +78,7 @@
                         {{ profile.description_en|safe }}
                     </div>
                 {% else %}
-                <p>There is not information about this profile.</p>
+                <p>{% trans 'There is not information about this profile.' %}</p>
                 {% endif %}
                 </div>
             </div>

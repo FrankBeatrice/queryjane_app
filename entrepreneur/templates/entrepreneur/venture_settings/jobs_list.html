@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - Jobs offers{% endblock %}
+{% block title %}{{ venture }} - {% trans 'Jobs offers' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings">
@@ -13,7 +13,7 @@
 
                 <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Create job offer
+                    {% trans 'Create job offer' %}
                 </a>
 
                 <br>
@@ -21,7 +21,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Job offers</h3>
+                        <h3 class="panel-title">{% trans 'Job offers' %}</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureJobOffersList">
@@ -32,23 +32,27 @@
                               <td>
                                 <h2>{{ job_offer }}</h2>
 
-                                <p><strong>Status:</strong>
+                                <p><strong>{% trans 'Status:' %}</strong>
                                 {% if job_offer.is_active %}
-                                <span class="JODetailStatus label label-success">Active</span>
+                                <span class="JODetailStatus label label-success">{% trans 'Active' %}</span>
                                 {% else %}
-                                <span class="JODetailStatus label label-warning">Closed</span>
+                                <span class="JODetailStatus label label-warning">{% trans 'Closed' %}</span>
                                 {% endif %}
                                 </p>
 
-                                <strong>Category:</strong>
+                                <strong>{% trans 'Category:' %}</strong>
                                 <ul class="QJVentureDetCats">
                                 {% for industry_category in job_offer.industry_categories.all %}
                                     <li>{{ industry_category }}</li>
                                 {% endfor %}
                                 </ul>
 
-                                <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
-                                <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
+                                <p>
+                                    <strong>{% trans 'Created at' %}:</strong> {{ job_offer.created_at }}
+                                </p>
+                                <p>
+                                    <strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}
+                                </p>
 
                                 {% if job_offer.country %}
                                 <div>
@@ -69,19 +73,19 @@
                                     {{ job_offer.description|safe|truncatechars_html:230 }}
                                 </div>
 
-                                <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">View</a>
+                                <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">{% trans 'View' %}</a>
 
                                 {% if job_offer.is_active %}
                                 <span class="jsJobActions">
-                                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">Edit job offer</a>
+                                    <a href="{% url 'entrepreneur:job_offer_update' job_offer.slug %}" class="btn btn-ghost-purple">{% trans 'Edit job offer' %}</a>
 
-                                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">Close job offer</a>
+                                    <a href="javascript:void(0)" class="btn btn-danger job_offer_close_link" data-close-job-url="{% url 'entrepreneur:job_offer_close' job_offer.slug %}">{% trans 'Close job offer' %}</a>
                                 </span>
                                 {% endif %}
                               </td>
                             </tr>
                             {% empty %}
-                            <p class="h4">There are not published job offers yet.</p>
+                            <p class="h4">{% trans 'There are not published job offers yet.' %}</p>
                             {% endfor %}
                           </tbody>
                         </table>
