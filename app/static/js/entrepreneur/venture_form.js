@@ -11,7 +11,7 @@ $(function () {
 
     var initial_country_code = $('#id_country_code').val();
     if (initial_country_code) {
-      var flag_url = '/static/flags/' + initial_country_code.toLowerCase() + '.gif';
+      var flag_url = '/static/img/flags/' + initial_country_code.toLowerCase() + '.png';
 
       $('#id_QjaneVFcountryAutImg').attr('src', flag_url);
     }
