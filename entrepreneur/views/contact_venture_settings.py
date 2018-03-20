@@ -8,6 +8,7 @@ from django.views.generic import View
 
 from app.mixins import CustomUserMixin
 from entrepreneur.forms import ContactVentureForm
+from entrepreneur.forms import SocialMediaVentureForm
 from entrepreneur.forms import LocationVentureForm
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
@@ -30,6 +31,7 @@ class ContactVentureFormView(CustomUserMixin, TemplateView):
     def get(self, *args, **kwargs):
         venture = self.get_object()
         contact_form = ContactVentureForm(instance=venture)
+        media_form = SocialMediaVentureForm(instance=venture)
         location_form = LocationVentureForm(instance=venture)
 
         return self.render_to_response(
@@ -37,6 +39,7 @@ class ContactVentureFormView(CustomUserMixin, TemplateView):
                 venture=venture,
                 country_instance=venture.country,
                 contact_form=contact_form,
+                media_form=media_form,
                 location_form=location_form,
                 contact_active=True,
             )
@@ -67,6 +70,38 @@ class AjaxContactVentureFormView(CustomUserMixin, View):
 
             venture.email = email
             venture.phone_number = phone_number
+            venture.save()
+            return HttpResponse('success')
+        else:
+            return HttpResponse('fail')
+
+        raise Http404
+
+
+class AjaxMediaVentureFormView(CustomUserMixin, View):
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_venture(
+            user=self.request.user,
+            venture=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(Venture, id=self.kwargs.get('pk'))
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        media_form = SocialMediaVentureForm(
+            request.POST,
+        )
+
+        if media_form.is_valid():
+            venture = self.get_object()
+            venture.url = media_form.cleaned_data['url']
+            venture.facebook_url = media_form.cleaned_data['facebook_url']
+            venture.twitter_url = media_form.cleaned_data['twitter_url']
+            venture.instagram_url = media_form.cleaned_data['instagram_url']
+            venture.linkedin_url = media_form.cleaned_data['linkedin_url']
+            venture.googleplus_url = media_form.cleaned_data['googleplus_url']
             venture.save()
             return HttpResponse('success')
         else:

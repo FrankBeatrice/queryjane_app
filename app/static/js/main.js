@@ -16,7 +16,7 @@ function getLocation() {
 (function () {
     $.validator.addMethod("valid_password", function(value, element) {
         return this.optional(element) || /^(?=.*\d)(?!.*\s)(?=.*[a-zA-Z]).{8,}$/.test(value);
-    }, "La contraseña debe tener al menos una letra y un número. Los caracteres no pueden ser todos iguales");
+    }, "La contraseña debe tener al menos una letra y un número. Los caracteres no pueden ser todos iguales.");
 
 
     $.validator.addMethod(
@@ -24,7 +24,47 @@ function getLocation() {
         function (value, element, param) {
             return this.optional(element) || (element.files[0].size <= param)
         },
-        'El tamaño del archivo debe ser inferior a 4MB'
+        'El tamaño del archivo debe ser inferior a 4MB.'
+    );
+
+    $.validator.addMethod(
+        'facebookURL',
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(value);
+        },
+        'Please enter a valid Facebook url.'
+    );
+
+    $.validator.addMethod(
+        'twitterURL',
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i.test(value);
+        },
+        'Please enter a valid Twitter url.'
+    );
+
+    $.validator.addMethod(
+        'instagramURL',
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(value);
+        },
+        'Please enter a valid Instagram url.'
+    );
+
+    $.validator.addMethod(
+        'linkedinURL',
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i.test(value);
+        },
+        'Please enter a valid Linkedin url.'
+    );
+
+    $.validator.addMethod(
+        'GPlusURL',
+        function (value, element) {
+            return this.optional(element) || /^(https?:\/\/)?((w{3}\.)?)plus.google.com\/.*/i.test(value);
+        },
+        'Please enter a valid Google Plus url.'
     );
 
     var mqDetector;
@@ -163,42 +203,44 @@ function getLocation() {
           },
           password: {
               minlength: 8,
+              valid_password: true,
               required: true
           }
       }
   });
 
-    // Populate general message modal with notifications messages.
+    // Populate general message modal with new notification detail.
     $('.header-notification-list, .QjaneNotificationsList').on('click', '.qjane-notification-link', function () {
         var notification_url = $(this).data('notification-url');
 
         // Remove active class
         $(this).closest('tr').removeClass("active");
-
-        // Change envelope ico to opened envelope
         $(this).parent().find('.JSNotificationStatus').removeClass('fa-eye-slash').addClass('fa-eye');
 
         $.post(notification_url).done(function (response) {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
+                $('.NewNotificationsCounter').text(response.new_notifications_counter);
+            } else {
+              alert('something is wrong. Please reload and try again.');
             }
         });
     });
 
-    // Populate send message modal form.
+    // Populate general message modal with received message detail.
     $('.header-messages-list, .QjaneInboxList').on('click', '.qjane-messages-link', function () {
         var message_url = $(this).data('message-url');
 
         // Remove active class
         $(this).closest('tr').removeClass("active");
-
-        // Change envelope ico to opened envelope
         $(this).parent().find('.JSMessagestatus').removeClass('fa-envelope').addClass('fa-envelope-open');
 
         $.post(message_url).done(function (response) {
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewMessagesCounter').text(response.new_messages_counter);
+            } else {
+              alert('something is wrong. Please reload and try again.');
             }
         });
     });
@@ -221,7 +263,6 @@ function getLocation() {
 
       return false;
     });
-
 
     // Set global methods
     qjGlobal.mqDetector = mqDetector;

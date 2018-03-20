@@ -1,0 +1,52 @@
+{% load i18n %}
+<tr>
+    <td>
+        <img class="thumbnail img-responsive" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}" style="width: 80px; height: auto">
+        <p class="h4">
+            <a href="{{ job_offer.venture.get_absolute_url }}">{{ job_offer.venture }}</a>
+        </p>
+    </td>
+    <td>
+        <p class="h4">{{ job_offer }}</p>
+
+        <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
+        <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
+        {% if job_offer.country %}
+        <div>
+            <img src="{{ venture.country.flag }}">
+            <span>{{ job_offer.country }}</span>
+        </div>
+        {% endif %}
+
+        {% if job_offer.city %}
+        <div>
+            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+            <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
+        </div>
+        {% endif %}
+
+
+        <ul>
+        {% for industry_category in job_offer.industry_categories.all %}
+            <li class="label label-primary">{{ industry_category }}</li>
+        {% endfor %}
+        </ul>
+
+        <div class="pull-right JSJobActions">
+            <a href="javascript:void(0)" class="JSShareJob btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_job' job_offer.slug %}" style="{% if not permission_app.manage_admin_views or job_offer.shared_on_twitter or not job_offer.is_active %}display:none;{% endif %}">
+                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
+            </a>
+
+            <a href="javascript:void(0)" class="js_hideJobOffer btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_job_offer' job_offer.slug %}" style="{% if job_offer.is_hidden %}display:none;{% endif %}">
+                <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
+            </a>
+
+            <a href="javascript:void(0)" class="js_activateJobOffer btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_job_offer' job_offer.slug %}" style="{% if not job_offer.is_hidden %}display:none;{% endif %}">
+                <i class="fa fa-fire"></i> {% trans 'Activate' %}
+            </a>
+
+
+            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-primary">{% trans 'View' %}</a>
+        </div>
+    </td>
+</tr>

@@ -1,22 +1,41 @@
 from app.validators import FileSizeValidator
 from django.contrib.gis.db.models import PointField
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.translation import ugettext as _
+from model_utils import FieldTracker
 
 from .data import ACTIVE_MEMBERSHIP
 from .data import ADMINISTRATOR_ROLES
 from .data import FREELANCE
+from .data import JOB_STATUS_ACTIVE
+from .data import JOB_STATUS_CHOICES
+from .data import JOB_STATUS_CLOSED
+from .data import JOB_STATUS_HIDDEN
 from .data import JOB_TYPE_CHOICES
 from .data import MEMBERSHIP_STATUS_CHOICES
 from .data import QJANE_ADMIN
 from .data import REJECTED_MEMBERSHIP
 from .data import SENT_INVITATION
+from .data import VENTURE_STATUS_ACTIVE
+from .data import VENTURE_STATUS_CHOICES
+from .data import VENTURE_STATUS_HIDDEN
+from .data import VENTURE_STATUS_INACTIVE
 
 
 class Venture(models.Model):
+    status = models.PositiveSmallIntegerField(
+        choices=VENTURE_STATUS_CHOICES,
+        default=VENTURE_STATUS_ACTIVE,
+        verbose_name=_('status'),
+    )
+
+    status_tracker = FieldTracker(fields=['status'])
+
     name = models.CharField(
         max_length=50,
-        verbose_name='name',
+        verbose_name=_('name'),
     )
 
     logo = models.ImageField(
@@ -27,11 +46,11 @@ class Venture(models.Model):
     )
 
     description_es = models.TextField(
-        verbose_name='spanish description',
+        verbose_name=_('spanish description'),
     )
 
     description_en = models.TextField(
-        verbose_name='english description',
+        verbose_name=_('english description'),
     )
 
     industry_categories = models.ManyToManyField(
@@ -41,29 +60,29 @@ class Venture(models.Model):
     country = models.ForeignKey(
         'place.Country',
         null=True,
-        verbose_name='country',
+        verbose_name=_('country'),
     )
 
     state = models.ForeignKey(
         'place.State',
         null=True,
-        verbose_name='state',
+        verbose_name=_('state'),
     )
 
     city = models.ForeignKey(
         'place.City',
         null=True,
-        verbose_name='city',
+        verbose_name=_('city'),
     )
 
     address = models.CharField(
         max_length=50,
         blank=True,
-        verbose_name='address',
+        verbose_name=_('address'),
     )
 
     point = PointField(
-        verbose_name='location',
+        verbose_name=_('location'),
         null=True,
         blank=True,
     )
@@ -71,53 +90,54 @@ class Venture(models.Model):
     email = models.EmailField(
         null=True,
         blank=True,
-        verbose_name='contact email',
+        verbose_name=_('contact email'),
     )
 
     phone_number = models.CharField(
         null=True,
         blank=True,
         max_length=50,
-        verbose_name='contact phone',
+        verbose_name=_('contact phone'),
     )
 
     url = models.URLField(
         blank=True,
-        verbose_name='webpage',
+        verbose_name=_('webpage'),
     )
 
     facebook_url = models.URLField(
         blank=True,
-        verbose_name='Facebook url',
+        verbose_name=_('Facebook url'),
     )
 
     twitter_url = models.URLField(
         blank=True,
-        verbose_name='Twitter url',
+        verbose_name=_('Twitter url'),
     )
 
     instagram_url = models.URLField(
         blank=True,
-        verbose_name='Instagram url',
+        verbose_name=_('Instagram url'),
     )
 
     linkedin_url = models.URLField(
         blank=True,
-        verbose_name='Linkedin url',
+        verbose_name=_('Linkedin url'),
     )
 
     googleplus_url = models.URLField(
         blank=True,
-        verbose_name='Google plus url',
-    )
-
-    is_active = models.BooleanField(
-        default=True,
+        verbose_name=_('Google plus url'),
     )
 
     owner = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='created by',
+        verbose_name=_('created by'),
+    )
+
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name=_('shared on twitter'),
     )
 
     created_at = models.DateTimeField(
@@ -125,6 +145,40 @@ class Venture(models.Model):
     )
 
     slug = models.SlugField()
+
+    def clean(self):
+        if not self.status_tracker.has_changed('status') or not self.id:
+            return
+
+        msg = 'Invalid previous status for {0}'
+        previous = self.status_tracker.previous('status')
+
+        if (
+            self.status == VENTURE_STATUS_INACTIVE and
+            previous != VENTURE_STATUS_HIDDEN
+        ):
+            raise ValidationError({
+                'status': msg.format('VENTURE_STATUS_INACTIVE')
+            })
+        elif (
+            self.status == VENTURE_STATUS_HIDDEN and
+            previous != VENTURE_STATUS_INACTIVE
+        ):
+            raise ValidationError({
+                'status': msg.format('VENTURE_STATUS_HIDDEN')
+            })
+
+    @property
+    def is_active(self):
+        return self.status == VENTURE_STATUS_ACTIVE
+
+    @property
+    def is_inactive(self):
+        return self.status == VENTURE_STATUS_INACTIVE
+
+    @property
+    def is_hidden(self):
+        return self.status == VENTURE_STATUS_HIDDEN
 
     @property
     def get_logo(self):
@@ -160,12 +214,12 @@ class Venture(models.Model):
 class AdministratorMembership(models.Model):
     admin = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='Administrator',
+        verbose_name=_('Administrator'),
     )
 
     venture = models.ForeignKey(
         'entrepreneur.Venture',
-        verbose_name='company',
+        verbose_name=_('company'),
     )
 
     status = models.PositiveSmallIntegerField(
@@ -181,7 +235,7 @@ class AdministratorMembership(models.Model):
     created_by = models.ForeignKey(
         'account.ProfessionalProfile',
         related_name='membership_owner',
-        verbose_name='Administrator',
+        verbose_name=_('Administrator'),
     )
 
     created_at = models.DateTimeField(
@@ -208,59 +262,89 @@ class AdministratorMembership(models.Model):
 
 
 class JobOffer(models.Model):
+    status = models.PositiveSmallIntegerField(
+        choices=JOB_STATUS_CHOICES,
+        default=JOB_STATUS_ACTIVE,
+        verbose_name=_('status'),
+    )
+
+    status_tracker = FieldTracker(fields=['status'])
+
     venture = models.ForeignKey(
         Venture,
-        verbose_name='company',
+        verbose_name=_('company'),
     )
 
     job_type = models.PositiveSmallIntegerField(
         choices=JOB_TYPE_CHOICES,
         default=FREELANCE,
-        verbose_name='job type',
+        verbose_name=_('job type'),
     )
 
     country = models.ForeignKey(
         'place.Country',
         null=True,
-        verbose_name='country',
+        verbose_name=_('country'),
     )
 
     state = models.ForeignKey(
         'place.State',
         null=True,
-        verbose_name='state',
+        verbose_name=_('state'),
     )
 
     city = models.ForeignKey(
         'place.City',
         null=True,
-        verbose_name='city',
+        verbose_name=_('city'),
     )
 
     title = models.CharField(
         max_length=80,
-        verbose_name='title (position)',
+        verbose_name=_('title (position)'),
     )
 
     slug = models.SlugField()
 
     description = models.TextField(
-        verbose_name='description',
+        verbose_name=_('description'),
     )
 
     industry_categories = models.ManyToManyField(
         'account.IndustryCategory',
     )
 
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='is active',
+    shared_on_twitter = models.BooleanField(
+        default=False,
+        verbose_name=_('shared on twitter'),
     )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='created at',
+        verbose_name=_('created at'),
     )
+
+    def clean(self):
+        if not self.status_tracker.has_changed('status') or not self.id:
+            return
+
+        msg = 'Invalid previous status for {0}'
+        previous = self.status_tracker.previous('status')
+
+        if (
+            self.status == JOB_STATUS_CLOSED and
+            previous != JOB_STATUS_HIDDEN
+        ):
+            raise ValidationError({
+                'status': msg.format('JOB_STATUS_CLOSED')
+            })
+        elif (
+            self.status == JOB_STATUS_HIDDEN and
+            previous != JOB_STATUS_CLOSED
+        ):
+            raise ValidationError({
+                'status': msg.format('JOB_STATUS_HIDDEN')
+            })
 
     def get_absolute_url(self):
         return reverse(
@@ -268,32 +352,44 @@ class JobOffer(models.Model):
             args=[self.slug],
         )
 
+    @property
+    def is_active(self):
+        return self.status == JOB_STATUS_ACTIVE
+
+    @property
+    def is_closed(self):
+        return self.status == JOB_STATUS_CLOSED
+
+    @property
+    def is_hidden(self):
+        return self.status == JOB_STATUS_HIDDEN
+
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'job offer'
-        verbose_name_plural = 'job offers'
+        verbose_name = _('job offer')
+        verbose_name_plural = _('job offers')
         ordering = ('-created_at',)
 
 
 class Applicant(models.Model):
     job_offer = models.ForeignKey(
         'entrepreneur.JobOffer',
-        verbose_name='job offer',
+        verbose_name=_('job offer'),
     )
 
     applicant = models.ForeignKey(
         'account.ProfessionalProfile',
-        verbose_name='applicant',
+        verbose_name=_('applicant'),
     )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='created at',
+        verbose_name=_('created at'),
     )
 
     class Meta:
-        verbose_name = 'applicant'
-        verbose_name_plural = 'applicants'
+        verbose_name = _('applicant')
+        verbose_name_plural = _('applicants')
         ordering = ('-created_at',)

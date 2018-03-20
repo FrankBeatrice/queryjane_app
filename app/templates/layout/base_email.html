@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html>
 <head>
     <title>{% block title %}{% endblock %} | QueryJane</title>
@@ -27,7 +28,7 @@
         </tr>
 
         <tr>
-            <a href="{{ base_url }}account/update/" style="color:gray;">Go to manage email notifications.</a>
+            <a href="{{ base_url }}/account/update/" style="color:gray;">{% trans 'Go to manage email notifications.' %}</a>
         </tr>
 
         <tr style="text-align: center;">

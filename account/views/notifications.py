@@ -46,13 +46,21 @@ class LoadNotificationModal(CustomUserMixin, View):
         notification.was_seen = True
         notification.save()
 
-        return JsonResponse({'content': render_to_string(
-            'modals/_notification_modal.html',
-            context={
-                'notification': notification,
-            },
-            request=self.request,
-        )})
+        return JsonResponse(
+            {
+                'content': render_to_string(
+                    'modals/_notification_modal.html',
+                    context={
+                        'notification': notification,
+                    },
+                    request=self.request,
+                ),
+                'new_notifications_counter': UserNotification.objects.filter(
+                    noty_to=request.user,
+                    was_seen=False,
+                ).count()
+            }
+        )
 
     def get(self, *args, **kwargs):
         raise Http404('Method not available')

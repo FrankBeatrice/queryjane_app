@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load widget_tweaks static %}
+{% load widget_tweaks static i18n %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}{% trans 'Contact Us' %}{% endblock %}
 
 {% block navbar %}
 {% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
@@ -13,13 +13,13 @@
         <div class="QJContactForm">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                    <h1 class="text-center">Contact Us!</h1>
+                    <h1 class="text-center">{% trans 'Contact Us!' %}</h1>
                     
-                    <p class="h5 text-center">Do you think we can help you with advice in the cannabis industry?</p>
-                    <p class="h5 text-center">Do you have questions about the use of the platform?</p>
+                    <p class="h5 text-center">{% trans 'Do you think we can help you with advice in the cannabis industry?' %}</p>
+                    <p class="h5 text-center">{% trans 'Do you have questions about the use of the platform?' %}</p>
                     <p class="h5 text-center">---</p>
 
-                    <p class="h5">Feel free to contact us, we will be happy to talk about how we can help boost the cannabis industry and to listen to your doubts and suggestions.</p>
+                    <p class="h5">{% trans 'Feel free to contact us, we will be happy to talk about how we can help boost the cannabis industry and to listen to your doubts and suggestions.' %}</p>
 
                     <form method="post" id="idContactForm">
                         {% csrf_token %}
@@ -35,13 +35,11 @@
                             {{ form.name.errors }}
                         </div>
 
-                        {% if not user.is_authenticated %}
-                        <div class="form-group email">
+                        <div class="form-group email" {% if user.is_authenticated %}style="display:none;"{% endif %}>
                             {{ form.email.label_tag }}
                             {% render_field form.email class+="form-control" %}
                             {{ form.email.errors }}
                         </div>
-                        {% endif %}
 
                         <div class="form-group phone">
                             {{ form.phone.label_tag }}
@@ -54,7 +52,7 @@
                             {% render_field form.message class+="form-control" %}
                             {{ form.message.errors }}
                         </div>
-                        <button type="submit" class="btn btn-primary">send</button>
+                        <button type="submit" class="btn btn-primary">{% trans 'send' %}</button>
                     </form>
                     <br>
                     <br>

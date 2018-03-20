@@ -11,11 +11,11 @@ $(function () {
         $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
     });
 
-    // var quill_es = new Quill('#rich_editor_description_es', {
-    //     theme: 'snow'
-    // }).on('text-change', function () {
-    //     $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
-    // });
+    var quill_es = new Quill('#rich_editor_description_es', {
+        theme: 'snow'
+    }).on('text-change', function () {
+        $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
+    });
 
     // ---------Avatar form - init ------------- //
     // avatar Validation

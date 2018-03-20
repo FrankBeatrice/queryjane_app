@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -16,11 +17,16 @@ from django.views.generic import View
 
 from account.forms import SignUpForm
 from account.models import ProfessionalProfile
+from account.models import UserMessage
+from account.models import UserNotification
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
 from corporative.forms import ContactForm
+from entrepreneur.data import JOB_STATUS_ACTIVE
+from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.data import JOB_TYPE_CHOICES
+from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.forms import JobOffersFilter
 from entrepreneur.forms import VentureFilter
 from entrepreneur.models import Applicant
@@ -35,10 +41,7 @@ class HomeView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(
-                'professional_detail',
-                slug=request.user.professionalprofile.slug,
-            )
+            return redirect('dashboard')
 
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)
@@ -63,6 +66,73 @@ class HomeView(TemplateView):
         return context
 
 
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        profile = user.professionalprofile
+        user_country = user.country
+
+        context = super().get_context_data(**kwargs)
+
+        # Get job offers by country or interest sector.
+        interest_sector_jobs = list(JobOffer.objects.filter(
+            Q(country=user_country) |
+            Q(industry_categories__in=profile.industry_categories.all()),
+            status=JOB_STATUS_ACTIVE,
+        ).exclude(
+            venture_id__in=profile.get_managed_venture_ids,
+        ).distinct()[:5])
+
+        jobs_to_exclude = []
+
+        for job_to_exclude in interest_sector_jobs:
+            jobs_to_exclude.append(job_to_exclude.id)
+
+        # Get latest publised job offers
+        last_jobs = list(JobOffer.objects.filter(
+            status=JOB_STATUS_ACTIVE,
+        ).exclude(id__in=jobs_to_exclude)[:5])
+
+        # Local companies
+        local_companies = list(Venture.objects.filter(
+            status=VENTURE_STATUS_ACTIVE,
+            country=user_country,
+        ).order_by('?')[:5])
+
+        companies_to_exclude = []
+
+        for company_to_exclude in local_companies:
+            companies_to_exclude.append(company_to_exclude.id)
+
+        # # Random companies
+        random_companies = list(Venture.objects.filter(
+            status=VENTURE_STATUS_ACTIVE,
+        ).exclude(id__in=companies_to_exclude).order_by('?')[:5])
+
+        # New messages
+        new_messages = UserMessage.objects.filter(
+            user_to=user,
+            unread=True,
+        )
+
+        # New messages
+        new_notifications = UserNotification.objects.filter(
+            noty_to=user,
+            was_seen=False,
+        )
+
+        context['interest_sector_jobs'] = interest_sector_jobs
+        context['last_jobs'] = last_jobs
+        context['local_companies'] = local_companies
+        context['random_companies'] = random_companies
+        context['new_messages'] = new_messages
+        context['new_notifications'] = new_notifications
+
+        return context
+
+
 class VentureList(ListView):
     model = Venture
     template_name = 'entrepreneur/venture_list.html'
@@ -76,7 +146,7 @@ class VentureList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = Venture.objects.filter(is_active=True)
+        queryset = Venture.objects.filter(status=VENTURE_STATUS_ACTIVE)
 
         form = self.get_list_filter()
 
@@ -122,6 +192,23 @@ class VentureDetail(DetailView):
 
         return venture
 
+    def get(self, request, *args, **kwargs):
+        venture = self.get_object()
+        user = request.user
+
+        if venture.is_inactive or venture.is_hidden:
+            if user:
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_venture(
+                        self.request.user,
+                        venture,
+                    )
+                ):
+                    raise Http404
+
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         venture = self.get_object()
@@ -149,7 +236,12 @@ class JobsList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = JobOffer.objects.filter(is_active=True)
+        queryset = JobOffer.objects.filter(
+            status__in=(
+                JOB_STATUS_ACTIVE,
+                JOB_STATUS_CLOSED,
+            ),
+        )
 
         form = self.get_list_filter()
 
@@ -255,7 +347,27 @@ class JobOfferDetail(DetailView):
     template_name = 'entrepreneur/job_detail.html'
 
     def get_object(self):
-        return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            JobOffer,
+            slug=self.kwargs.get('slug'),
+        )
+
+    def get(self, request, *args, **kwargs):
+        job_offer = self.get_object()
+        user = request.user
+
+        if job_offer.is_closed or job_offer.is_hidden:
+            if user:
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_venture(
+                        self.request.user,
+                        job_offer.venture,
+                    )
+                ):
+                    raise Http404
+
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -270,10 +382,17 @@ class JobOfferDetail(DetailView):
             ):
                 has_applied = True
 
+        context['job_offer'] = job_offer
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
             job_offer.venture,
         )
+
+        context['can_edit'] = JobOfferPermissions.can_edit(
+            self.request.user,
+            job_offer,
+        )
+
         context['can_apply'] = JobOfferPermissions.can_apply(
             self.request.user,
             job_offer,

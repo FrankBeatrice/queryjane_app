@@ -1,5 +1,5 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
 {% block title %}Job offers{% endblock %}
 
@@ -71,15 +71,15 @@
                         </div>
                     </div>
                 </div>
-                <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">Clean</a>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
+                <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
             </form>
         </div>
         <br>
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Job offers</h3>
+                <h3 class="panel-title">{% trans 'Job offers' %}</h3>
             </div>
 
             <div class="panel-body QjaneVentureJobOffersList">
@@ -101,7 +101,7 @@
 
                                     <div class="AjVentureListLocation">
                                         <p>
-                                            <img src="{{ job_offer.venture.country.country.flag }}">
+                                            <img src="{{ job_offer.venture.country.flag }}">
                                             <span>{{ job_offer.venture.country }}</span>
                                             <span> - {{ job_offer.venture.city }} {% if job_offer.venture.state %}, {{ job_offer.venture.state }}.{% endif %}</span>
                                         </p>
@@ -122,14 +122,22 @@
                                         {{ job_offer }}
                                     </h2>
 
+                                    <p><strong>Status:</strong>
+                                    {% if job_offer.is_active %}
+                                    <span class="JODetailStatus label label-success">{% trans 'Active' %}</span>
+                                    {% else %}
+                                    <span class="JODetailStatus label label-warning">{% trans 'Closed' %}</span>
+                                    {% endif %}
+                                    </p>
+
                                     <ul class="QJVentureDetCats">
                                     {% for industry_category in job_offer.industry_categories.all %}
                                         <li>{{ industry_category }}</li>
                                     {% endfor %}
                                     </ul>
                               
-                                    <p><strong>Created at:</strong> {{ job_offer.created_at }}</p>
-                                    <p><strong>Job type:</strong> {{ job_offer.get_job_type_display }}</p>
+                                    <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
+                                    <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
 
                                     {% if job_offer.country %}
                                     <div>
@@ -151,7 +159,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-3 col-md-2">
-                                            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">View</a>
+                                            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +170,7 @@
                     {% empty %}
                     <tr>
                         <td>
-                            No job offers found.
+                            {% trans 'No job offers found.' %}
                         </td>
                     </tr>
                     {% endfor %}

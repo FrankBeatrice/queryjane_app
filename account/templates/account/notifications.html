@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static notifications %}
+{% load static notifications i18n %}
 
-{% block title %}Notification{% endblock %}
+{% block title %}{% trans 'Notification' %}{% endblock %}
 
 {% block content %}
 <section class="QjaneNotifications">
@@ -14,7 +14,7 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Notifications - <span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span> new notifications.</h3>
+                    <h3 class="panel-title">{% trans 'Notifications' %} - <span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span> {% trans 'new notifications.' %}</h3>
                 </div>
 
                 <div class="panel-body QjaneNotificationsList">

@@ -1,30 +1,44 @@
 <!DOCTYPE html>
-{% load static %}
+{% load static i18n %}
 
 <html class="qj-html" lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head -->
-
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}{% endblock %} | QueryJane</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}">
         <meta itemprop="type" property="og:type" content="website">
+
         <meta property="og:site_name" content="QueryJane">
+        <meta itemprop="name" property="og:title" content="{% block meta_title %}QueryJane | The Cannabis Industry Network{% endblock %}">
+        <meta itemprop="description" property="og:description" name="description" content="{% block meta_description %}{% trans 'QueryJane, the Cannabis Industry Network. Connect with companies and experts in different sectors of the cannabis industry.' %}{% endblock %}">
         <meta property="og:url" content="https://{{ request.get_host }}{{ request.get_full_path }}">
+        <meta property="og:image" content="{% block meta_image %}https://queryjane.net{% static 'img/qjane-logo-share.png' %}{% endblock %}">
+        <meta property="og:image:type" content="image/{% block meta_image_type %}png{% endblock %}">
+        <meta property="og:image:width" content="600">
+        <meta property="og:image:height" content="315">
+        <meta name="format-detection" content="telephone=no">
 
-        <meta name="description" content="">
-        <meta name="author" content="QueryJane">
+        <!-- Twitter card protocol -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:creator" content="@queryjane">
+        <meta property="twitter:site" content="QueryJane">
+        <meta property="twitter:title" content="{% block meta_twitter_title %}QueryJane | {% trans 'The Cannabis Industry Network' %}{% endblock %}">
+        <meta property="twitter:description" content="{% block meta_twitter_description %}{% trans 'QueryJane, the Cannabis Industry Network. Connect with companies and experts in different sectors of the cannabis industry.' %}{% endblock %}">
+        <meta property="twitter:image" content="{% block meta_twitter_image %}https://queryjane.net{% static 'img/qjane-logo-share.png' %}{% endblock %}">
+        <meta property="twitter:url" content="https://{{ request.get_host }}{{ request.get_full_path }}">
 
+        <meta name="apple-mobile-web-app-title" content="QueryJane">
         <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'img/apple-touch-icon.png' %}">
         <link rel="icon" href="{% static 'img/favicon.ico' %}">
-
-        <title>{% block title %}{% endblock %} | QueryJane</title>
 
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
 
         <link href="{% static 'dist/assets/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'dist/assets/css/jquery-confirm.min.css' %}" rel="stylesheet">
 
         <link href="//cdn.quilljs.com/1.3.4/quill.snow.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">        
@@ -59,12 +73,12 @@
                         <a class="navbar-brand logotype-wrapper--authenticated" href="/">
                             <img class="logotype-wrapper__image--authenticated" src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
                         </a>
-                        <span style="color: white; margin-left: 10px; font-size: 25px;">(Beta)</span>
                     {% else %}
                         <a class="navbar-brand logotype-wrapper" href="/">
                             <img class="logotype-wrapper__image" src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
                         </a>
                     {% endif %}
+                        <span style="color: white; margin-left: 10px; font-size: 25px;">(Beta)</span>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -87,23 +101,39 @@
                 <div class="row footer__content">
                     <div class="col-xs-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
-                            <a href="{% url 'corporative:user_agreement' %}">User agreement</a>
+                            <a href="{% url 'corporative:user_agreement' %}">{% trans "User agreement" %}</a>
                             ·
-                            <a href="{% url 'corporative:privacy_policy' %}">Privacy policy</a>
+                            <a href="{% url 'corporative:privacy_policy' %}">{% trans "Privacy policy" %}</a>
                             ·
-                            <a href="{% url 'venture_list' %}">Companies</a>
+                            <a href="{% url 'venture_list' %}">{% trans "Companies" %}</a>
                             ·
-                            <a href="{% url 'jobs_list' %}">Jobs</a>
+                            <a href="{% url 'jobs_list' %}">{% trans "Jobs" %}</a>
                             ·
-                            <a href="{% url 'contact_form' %}">Contact us</a>
+                            <a href="{% url 'contact_form' %}">{% trans "Contact us" %}</a>
                             ·
                         </div>
+
                         <p class="QJRHlink">
                             QueryJane 2018 &copy;
                         </p>
                     </div>
 
-                    <div class="col-xs-12 col-md-3 footer__content__social-network">
+                    <div class="col-xs-12 col-md-3">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as languages %}
+
+                        {% for lang_code, lang_name in languages %}
+                            {% if LANGUAGE_CODE != lang_code %}
+                            {% language lang_code %}
+                            <a href="{% url 'home' %}">
+                                {% if  lang_name == 'Spanish' %}
+                                    Español
+                                {% else %}
+                                English
+                                {% endif %}</a>
+                            {% endlanguage %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -125,6 +155,7 @@
         <script src="{% static 'dist/assets/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'dist/assets/js/typeahead.bundle.min.js' %}"></script>
         <script src="{% static 'dist/assets/js/jquery.validate.js' %}"></script>
+        <script src="{% static 'dist/assets/js/jquery-confirm.min.js' %}"></script>
         <script src="{% static 'dist/assets/js/additional-methods.js' %}"></script>
 
         <!-- Global variables -->

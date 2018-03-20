@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -39,6 +40,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -58,12 +60,14 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'app.context_processors.facebook_app_id',
+                'app.context_processors.permissions',
             ],
         },
     },
@@ -103,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = 'auth_login'
-LOGIN_REDIRECT_URL = 'account:signup_landing'
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'user_logout'
 LOGOUT_REDIRECT_URL = 'home'
 
@@ -160,7 +164,7 @@ LOGGING = {
     },
 }
 
-BASE_URL = 'https://queryjane.net/'
+BASE_URL = 'https://queryjane.net'
 
 EMAIL_SUBJECT = 'QueryJane - {0}'
 ADMIN_EMAILS = []
@@ -168,11 +172,20 @@ ADMIN_EMAILS = []
 SOCIAL_AUTH_FACEBOOK_KEY = 'edit-it'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'edit-it'
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('es', _('Spanish')),
+]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

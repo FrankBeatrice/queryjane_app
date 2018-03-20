@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <li class="media">
     <div class="media-left">
         <a href="{% url 'professional_detail' membership.admin.slug %}">
@@ -16,7 +16,7 @@
         <p>{{ membership.get_status_display }}</p>
 
     {% if membership.is_rejected %}
-        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">Resend</a>
+        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">{% trans 'Resend' %}</a>
     {% endif %}
     </div>
 </li>

@@ -1,0 +1,220 @@
+{% extends "layout/index.html" %}
+{% load static entrepreneur_tags i18n %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="qjaneDashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{ user }}</div>
+                    <div class="panel-body">
+
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                            <tr>
+                                <td>
+                                    <img class="img-responsive thumbnail" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
+                                </td>
+                                <td>
+                                    <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                                        <span>{% trans 'Visit your profile.' %}</span>
+                                    </a>
+                                </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        {% if user.professionalprofile.industry_categories.all %}
+                        <ul>
+                        {% for industry_category in user.professionalprofile.industry_categories.all %}
+                            <li class="label label-primary">{{ industry_category }}</li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                            <p>{% trans 'You have not added industry sectors yet.' %} <a href="{% url 'account:profile_update' %}"> {% trans 'Go to edit your professional profile.' %}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% get_user_venture_memberships user as user_venture_memberships %}
+
+                {% if user_venture_memberships %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        <span>{% trans 'Your companies.' %}</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table">
+                        {% for membership in user_venture_memberships %}
+                            <tr>
+                                <td>
+                                    <a href="{{ membership.venture.get_absolute_url }}">
+                                        <img class="" src="{{ membership.venture.get_logo }}" alt="{{ user }}" style="width: 30px; height: 30px">
+                                        {{ membership.venture }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if new_messages %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <span>{% trans 'New messages' %} (<span class="NewMessagesCounter">{{ new_messages.count }}</span>)</span>
+                    </div>
+
+                    <div class="panel-body QjaneInboxList">
+                        <table class="table">
+                        {% for message in new_messages %}
+                            <tr class="{% if message.unread %}active{% endif %}">
+                                <td>
+                                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+
+                                    <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
+                                        <span> - {% trans 'From:' %} {{ message.user_from }}</span>
+                                        <p>{{ message.created_at }}</p>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if new_notifications %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <span>{% trans 'Notifications' %} (<span class="NewNotificationsCounter">{{ new_notifications.count }}</span>)</span>
+                    </div>
+
+                    <div class="panel-body QjaneNotificationsList">
+                        <table class="table">
+                        {% for notification in new_notifications %}
+                            <tr data-toggle="modal" data-target="#generalModalMessage">
+                                <td>
+                                    <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
+                                        <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
+                                        {{ notification }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-xs-12 col-sm-5">
+                {% if interest_sector_jobs %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <span class="pull-left">{% trans 'Job offers that might interest you.' %}</span>
+                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            {% trans 'View all' %}
+                        </a>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for job_offer in interest_sector_jobs %}
+                            {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if last_jobs %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <span class="pull-left">{% trans 'Last job offers.' %}</span>
+                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            {% trans 'View all' %}
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for job_offer in last_jobs %}
+                            {% include 'account/dashboard_job_offer_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if random_companies %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <span>{% trans 'Know some registered companies.' %}</span>
+                        </div>
+                        <a href="{% url 'venture_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            {% trans 'View all' %}
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for company in random_companies %}
+                            {% include 'account/dashboard_company_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <img id="id_QjaneVFcountryAutImg" src="{{ user.country.flag }}">
+                            <span>{% trans 'Some local companies.' %}</span>
+                        </div>
+                        <a href="{% url 'venture_list' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list-ul"></i>
+                            {% trans 'View all' %}
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        {% if local_companies %}
+                        <table class="table table-striped jobs-table">
+                          <tbody>
+                        {% for company in local_companies %}
+                            {% include 'account/dashboard_company_line.html' %}
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                        {% else %}
+                        <p class="h4">{% trans 'There are not registered companies in your country yet.' %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/corporative/staff_venture_actions.js' %}"></script>
+{% endblock %}

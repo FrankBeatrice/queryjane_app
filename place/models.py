@@ -1,7 +1,5 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# Author: Angel App
 from __future__ import unicode_literals
+from django.utils.translation import ugettext as _
 from django_countries.fields import CountryField
 
 from django.db import models
@@ -10,18 +8,18 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name='name',
+        verbose_name=_('name'),
     )
 
     state = models.ForeignKey(
         'place.State',
         null=True,
-        verbose_name='state',
+        verbose_name=_('state'),
     )
 
     country = models.ForeignKey(
         'place.Country',
-        verbose_name='country',
+        verbose_name=_('country'),
     )
 
     def __str__(self):
@@ -29,19 +27,19 @@ class City(models.Model):
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'city'
-        verbose_name_plural = 'cities'
+        verbose_name = _('city')
+        verbose_name_plural = _('cities')
 
 
 class State(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name='name',
+        verbose_name=_('name'),
     )
 
     country = models.ForeignKey(
         'place.Country',
-        verbose_name='country',
+        verbose_name=_('country'),
     )
 
     def __str__(self):
@@ -49,8 +47,8 @@ class State(models.Model):
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'state'
-        verbose_name_plural = 'states'
+        verbose_name = _('state')
+        verbose_name_plural = _('states')
 
 
 class Country(models.Model):
@@ -60,7 +58,7 @@ class Country(models.Model):
 
     name = models.CharField(
         max_length=100,
-        verbose_name='name',
+        verbose_name=_('name'),
     )
 
     @property
@@ -72,5 +70,5 @@ class Country(models.Model):
 
     class Meta:
         ordering = ('country',)
-        verbose_name = 'country'
-        verbose_name_plural = 'countries'
+        verbose_name = _('country')
+        verbose_name_plural = _('countries')

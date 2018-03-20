@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
-{% load static widget_tweaks %}
+{% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - Settings{% endblock %}
+{% block title %}{{ venture }} - {% trans 'Settings' %}{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/general_venture_form.css' %}" rel="stylesheet">
@@ -16,12 +16,12 @@
             <div class="col-md-9 QjaneVentuerSettingsContent">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">General information</h3>
+                        <h3 class="panel-title">{% trans 'General information' %}</h3>
                     </div>
 
                     <div class="panel-body QjaneVentureGeneralInfo">
                     {% if not venture.logo %}
-                        <div class="alert alert-warning" role="alert">Update the company logo to generate greater impact and brand recall.</div>
+                        <div class="alert alert-warning" role="alert">{% trans 'Update the company logo to generate greater impact and brand recall.' %}</div>
                     {% endif %}
 
                         <div class="row">
@@ -40,12 +40,12 @@
 
                                 <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_venture_logo_update_link">
                                     <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
-                                    Update
+                                    {% trans 'Update' %}
                                 </a>
                             </div>
 
                             <div class="col-md-9 col-xs-12">
-                                <p>Industry sectors</p>
+                                <p>{% trans 'Industry sectors' %}</p>
 
                                 <ul class="qjane-industry-categories-list" data-update-venture-category-url="{% url 'entrepreneur:ax_update_venture_category' venture.slug %}">
                                     {% for industry_category in industry_categories %}
@@ -69,10 +69,10 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title clearfix">
-                                        <span class="pull-left">English description</span>
+                                        <span class="pull-left">{% trans 'English description' %}</span>
 
                                         <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                            Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                            {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                         </a>
                                     </h3>
                                 </div>
@@ -91,7 +91,7 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary mt-xs">
-                                            Save
+                                            {% trans 'Save' %}
                                         </button>
                                     </div>
 
@@ -104,14 +104,14 @@
                             </div>
                         </div>
 
-                        <div class="js_lan_form_container" style="display:none;>
+                        <div class="js_lan_form_container">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title clearfix">
-                                        <span class="pull-left">Spanish description</span>
+                                        <span class="pull-left">{% trans 'Spanish description' %}</span>
 
                                         <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                            Edit <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
+                                            {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
                                         </a>
                                     </h3>
                                 </div>
@@ -130,7 +130,7 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary mt-xs">
-                                            Save
+                                            {% trans 'Save' %}
                                         </button>
                                     </div>
 
