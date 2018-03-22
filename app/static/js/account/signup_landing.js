@@ -23,15 +23,10 @@ $(function () {
         $.post(pp_category_url, {'category_id': category_id, 'new_status': new_status}, function (response) {
             var account_url = $('.qjane-industry-categories-list').data('account-url');
 
-            if (response == parseInt(response, 10)) {
-                alert("response");
-                if (response > 0) {
-                    $('.QjanePPnextbutton').html('<a href="' + account_url + '" class="btn btn-primary">Completar perfil</a>');
-                } else {
-                    $('.QjanePPnextbutton').html('');
-                }
+            if (response === 'success') {
+                $('.QjanePPnextbutton').html('<a href="' + account_url + '" class="btn btn-primary">Completar perfil</a>');
             }  else {
-                alert("Ha ocurrido un error, por favor recarga la página e intenta de nuevo.")
+                alert("something is wrong. Please reload and try again.")
             }
         });
     });

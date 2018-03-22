@@ -7,11 +7,11 @@
 <div class="qjaneDashboard">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-xs-12 col-sm-4">
+                {% get_user_venture_memberships user as user_venture_memberships %}
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ user }}</div>
                     <div class="panel-body">
-
                         <table class="table table-striped jobs-table">
                           <tbody>
                             <tr>
@@ -43,10 +43,14 @@
                         {% else %}
                             <p>{% trans 'You have not added industry sectors yet.' %} <a href="{% url 'account:profile_update' %}"> {% trans 'Go to edit your professional profile.' %}</a></p>
                         {% endif %}
+
+                        {% if not user_venture_memberships%}
+                        <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-ghost-purple">
+                        <i class="fa fa-briefcase"></i> {% trans 'Create company' %}
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
-
-                {% get_user_venture_memberships user as user_venture_memberships %}
 
                 {% if user_venture_memberships %}
                 <div class="panel panel-primary">
@@ -71,8 +75,9 @@
                     </div>
                 </div>
                 {% endif %}
+            </div>
 
-                {% if new_messages %}
+            <div class="col-xs-12 col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -80,6 +85,7 @@
                     </div>
 
                     <div class="panel-body QjaneInboxList">
+                        {% if new_messages %}
                         <table class="table">
                         {% for message in new_messages %}
                             <tr class="{% if message.unread %}active{% endif %}">
@@ -94,18 +100,22 @@
                             </tr>
                         {% endfor %}
                         </table>
+                        {% else %}
+                        <p class="h5">You don't have new messages.</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
+            </div>
 
-                {% if new_notifications %}
+            <div class="col-xs-12 col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <i class="fa fa-bell" aria-hidden="true"></i>
                         <span>{% trans 'Notifications' %} (<span class="NewNotificationsCounter">{{ new_notifications.count }}</span>)</span>
                     </div>
 
                     <div class="panel-body QjaneNotificationsList">
+                        {% if new_notifications %}
                         <table class="table">
                         {% for notification in new_notifications %}
                             <tr data-toggle="modal" data-target="#generalModalMessage">
@@ -118,12 +128,16 @@
                             </tr>
                         {% endfor %}
                         </table>
+                        {% else %}
+                        <p class="h5">You don't have new notifications.</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
             </div>
+        </div>
 
-            <div class="col-xs-12 col-sm-5">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
                 {% if interest_sector_jobs %}
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
@@ -191,7 +205,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
                         <div class="pull-left">
