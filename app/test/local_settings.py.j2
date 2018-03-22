@@ -1,0 +1,72 @@
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+SECRET_KEY = 'super-secret'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
+}
+
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+
+
+HUEY = {
+    'connection': {'host': REDIS_HOST, 'port': REDIS_PORT, 'db': 3},
+    'consumer': {'workers': 2, 'worker_type': 'thread', 'utc': False},
+    'always_eager': False,
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            '{0}:{1}'.format(REDIS_HOST, REDIS_PORT)
+        ],
+        'OPTIONS': {
+            'DB': 1,
+        }
+    },
+    'sessions': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            '{0}:{1}'.format(REDIS_HOST, REDIS_PORT)
+        ],
+        'OPTIONS': {
+            'DB': 2,
+        }
+    },
+}
+
+ADMIN_EMAILS = ['admin_email@example.com']
+
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''
+AWS_S3_CUSTOM_DOMAIN = ''
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'app.storage_backends.MediaStorage'
+
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+
+TWITTER_APP_KEY = ''
+TWITTER_APP_SECRET = ''
+TWITTER_OAUTH_TOKEN = ''
+TWITTER_OAUTH_TOKEN_SECRET = ''
