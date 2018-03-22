@@ -14,9 +14,16 @@
         </p>
     </td>
     <td>
+        {% get_current_language as LANGUAGE_CODE %}
         <ul>
         {% for category in company.industry_categories.all %}
-            <li class="label label-primary">{{ category }}</li>
+            <li class="label label-primary">
+            {% if LANGUAGE_CODE == 'es' %}
+            {{ category.name_es }}
+            {% else %}
+            {{ category.name_en }}
+            {% endif %}
+            </li>
         {% endfor %}
         </ul>
 

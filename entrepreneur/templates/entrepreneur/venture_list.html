@@ -103,9 +103,16 @@
                                                     </div>
 
                                                     <div class="col-xs-12 col-sm-6">
+                                                        {% get_current_language as LANGUAGE_CODE %}
                                                         <ul class="QJventureListCategories">
                                                         {% for category in venture.industry_categories.all %}
-                                                            <li>{{ category }}</li>
+                                                            <li>
+                                                            {% if LANGUAGE_CODE == 'es' %}
+                                                            {{ category.name_es }}
+                                                            {% else %}
+                                                            {{ category.name_en }}
+                                                            {% endif %}
+                                                            </li>
                                                         {% endfor %}
                                                         </ul>
                                                     </div>

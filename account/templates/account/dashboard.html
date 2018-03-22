@@ -28,8 +28,16 @@
                         </table>
                         {% if user.professionalprofile.industry_categories.all %}
                         <ul>
+                        {% get_current_language as LANGUAGE_CODE %}
+
                         {% for industry_category in user.professionalprofile.industry_categories.all %}
-                            <li class="label label-primary">{{ industry_category }}</li>
+                            <li class="label label-primary">
+                            {% if LANGUAGE_CODE == 'es' %}
+                            {{ industry_category.name_es }}
+                            {% else %}
+                            {{ industry_category.name_en }}
+                            {% endif %}
+                            </li>
                         {% endfor %}
                         </ul>
                         {% else %}

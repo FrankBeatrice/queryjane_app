@@ -66,10 +66,18 @@
                             <div class="IndustryCategoriesList">
                                 <p>{% trans 'Select the sector or sectors of your job offer.' %}</p>
 
+                                {% get_current_language as LANGUAGE_CODE %}
+
                                 <ul class="qjane-industry-categories-list">
                                     {% for industry_category in industry_categories %}
                                     <li>
-                                        <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                                        <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                                        {% if LANGUAGE_CODE == 'es' %}
+                                        {{ industry_category.name_es }}
+                                        {% else %}
+                                        {{ industry_category.name_en }}
+                                        {% endif %}
+                                        </a>
                                     </li>
                                     {% endfor %}
                                 </ul>
