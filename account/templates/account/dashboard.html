@@ -87,7 +87,7 @@
                     <div class="panel-body QjaneInboxList">
                         {% if new_messages %}
                         <table class="table">
-                        {% for message in new_messages %}
+                        {% for message in new_messages|slice:":4" %}
                             <tr class="{% if message.unread %}active{% endif %}">
                                 <td>
                                     <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
@@ -100,6 +100,12 @@
                             </tr>
                         {% endfor %}
                         </table>
+                        {% if new_messages.count > 3 %}
+                        <a href="{% url 'account:inbox_view' %}" class="btn btn-ghost-purple">
+                        {% trans 'View all' %}
+                        </a>
+                        {% endif %}
+
                         {% else %}
                         <p class="h5">You don't have new messages.</p>
                         {% endif %}
@@ -117,7 +123,7 @@
                     <div class="panel-body QjaneNotificationsList">
                         {% if new_notifications %}
                         <table class="table">
-                        {% for notification in new_notifications %}
+                        {% for notification in new_notifications|slice:":4" %}
                             <tr data-toggle="modal" data-target="#generalModalMessage">
                                 <td>
                                     <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
@@ -128,6 +134,12 @@
                             </tr>
                         {% endfor %}
                         </table>
+
+                        {% if new_notifications.count > 3 %}
+                        <a href="{% url 'account:notifications_view' %}" class="btn btn-ghost-purple">
+                        {% trans 'View all' %}
+                        </a>
+                        {% endif %}
                         {% else %}
                         <p class="h5">You don't have new notifications.</p>
                         {% endif %}
