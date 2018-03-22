@@ -56,3 +56,14 @@ def get_company_description(context, company):
         company_description = company.description_es
 
     return company_description
+
+
+@register.assignment_tag(takes_context=True)
+def get_profile_description(context, profile):
+    current_lan = context['request'].LANGUAGE_CODE
+    profile_description = profile.description_en
+
+    if current_lan == 'es' and profile.description_es:
+        profile_description = profile.description_es
+
+    return profile_description

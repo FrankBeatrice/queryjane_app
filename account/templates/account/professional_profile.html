@@ -1,5 +1,5 @@
 {% extends "layout/index.html" %}
-{% load static i18n %}
+{% load static i18n entrepreneur_tags %}
 
 {% block title %}{{ profile }}{% endblock %}
 
@@ -80,11 +80,9 @@
             </div>
 
             <div class="col-xs-12 col-sm-9">
-                <div class="QJProfileDetDescription">
-                {% if profile.description_en %}
-                    <div class="QJRedactorContent">
-                        {{ profile.description_en|safe }}
-                    </div>
+            {% get_profile_description profile as profile_description %}
+                {% if profile_description %}
+                {{ profile_description|safe }}
                 {% else %}
                 <p>{% trans 'There is not information about this profile.' %}</p>
                 {% endif %}
