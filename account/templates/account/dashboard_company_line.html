@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n entrepreneur_tags %}
 <tr>
     <td>
         <img class="thumbnail img-responsive" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
@@ -14,13 +14,18 @@
         </p>
     </td>
     <td>
+        {% get_current_language as LANGUAGE_CODE %}
         <ul>
         {% for category in company.industry_categories.all %}
-            <li class="label label-primary">{{ category }}</li>
+            <li class="label label-primary">
+            {% if LANGUAGE_CODE == 'es' %}
+            {{ category.name_es }}
+            {% else %}
+            {{ category.name_en }}
+            {% endif %}
+            </li>
         {% endfor %}
         </ul>
-
-        {{ company.description_en|safe|truncatechars_html:150 }}
 
         <div class="pull-right JSCompanyActions">
             <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' company.slug %}" style="{% if not permission_app.manage_admin_views or company.shared_on_twitter or not company.is_active %}display:none;{% endif %}">

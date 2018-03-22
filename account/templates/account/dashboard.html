@@ -7,11 +7,11 @@
 <div class="qjaneDashboard">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-xs-12 col-sm-4">
+                {% get_user_venture_memberships user as user_venture_memberships %}
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ user }}</div>
                     <div class="panel-body">
-
                         <table class="table table-striped jobs-table">
                           <tbody>
                             <tr>
@@ -28,17 +28,29 @@
                         </table>
                         {% if user.professionalprofile.industry_categories.all %}
                         <ul>
+                        {% get_current_language as LANGUAGE_CODE %}
+
                         {% for industry_category in user.professionalprofile.industry_categories.all %}
-                            <li class="label label-primary">{{ industry_category }}</li>
+                            <li class="label label-primary">
+                            {% if LANGUAGE_CODE == 'es' %}
+                            {{ industry_category.name_es }}
+                            {% else %}
+                            {{ industry_category.name_en }}
+                            {% endif %}
+                            </li>
                         {% endfor %}
                         </ul>
                         {% else %}
                             <p>{% trans 'You have not added industry sectors yet.' %} <a href="{% url 'account:profile_update' %}"> {% trans 'Go to edit your professional profile.' %}</a></p>
                         {% endif %}
+
+                        {% if not user_venture_memberships%}
+                        <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-ghost-purple">
+                        <i class="fa fa-briefcase"></i> {% trans 'Create company' %}
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
-
-                {% get_user_venture_memberships user as user_venture_memberships %}
 
                 {% if user_venture_memberships %}
                 <div class="panel panel-primary">
@@ -63,8 +75,9 @@
                     </div>
                 </div>
                 {% endif %}
+            </div>
 
-                {% if new_messages %}
+            <div class="col-xs-12 col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -72,8 +85,9 @@
                     </div>
 
                     <div class="panel-body QjaneInboxList">
+                        {% if new_messages %}
                         <table class="table">
-                        {% for message in new_messages %}
+                        {% for message in new_messages|slice:":4" %}
                             <tr class="{% if message.unread %}active{% endif %}">
                                 <td>
                                     <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
@@ -86,20 +100,30 @@
                             </tr>
                         {% endfor %}
                         </table>
+                        {% if new_messages.count > 3 %}
+                        <a href="{% url 'account:inbox_view' %}" class="btn btn-ghost-purple">
+                        {% trans 'View all' %}
+                        </a>
+                        {% endif %}
+
+                        {% else %}
+                        <p class="h5">You don't have new messages.</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
+            </div>
 
-                {% if new_notifications %}
+            <div class="col-xs-12 col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <i class="fa fa-bell" aria-hidden="true"></i>
                         <span>{% trans 'Notifications' %} (<span class="NewNotificationsCounter">{{ new_notifications.count }}</span>)</span>
                     </div>
 
                     <div class="panel-body QjaneNotificationsList">
+                        {% if new_notifications %}
                         <table class="table">
-                        {% for notification in new_notifications %}
+                        {% for notification in new_notifications|slice:":4" %}
                             <tr data-toggle="modal" data-target="#generalModalMessage">
                                 <td>
                                     <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
@@ -110,12 +134,22 @@
                             </tr>
                         {% endfor %}
                         </table>
+
+                        {% if new_notifications.count > 3 %}
+                        <a href="{% url 'account:notifications_view' %}" class="btn btn-ghost-purple">
+                        {% trans 'View all' %}
+                        </a>
+                        {% endif %}
+                        {% else %}
+                        <p class="h5">You don't have new notifications.</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
             </div>
+        </div>
 
-            <div class="col-xs-12 col-sm-5">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
                 {% if interest_sector_jobs %}
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
@@ -183,7 +217,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
                         <div class="pull-left">

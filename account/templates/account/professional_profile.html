@@ -1,5 +1,5 @@
 {% extends "layout/index.html" %}
-{% load static i18n %}
+{% load static i18n entrepreneur_tags %}
 
 {% block title %}{{ profile }}{% endblock %}
 
@@ -32,9 +32,17 @@
                         </div>
 
                         <div class="panel-body">
+                            {% get_current_language as LANGUAGE_CODE %}
+
                             <ul class="QJVentureDetCats">
                             {% for industry_category in profile.industry_categories.all %}
-                                <li>{{ industry_category }}</li>
+                                <li>
+                                {% if LANGUAGE_CODE == 'es' %}
+                                {{ industry_category.name_es }}
+                                {% else %}
+                                {{ industry_category.name_en }}
+                                {% endif %}
+                                </li>
                             {% empty %}
                                 <li>{{ profile.user.first_name }} {% trans 'has not added industry sectors.' %}</li>
                             {% endfor %}
@@ -72,11 +80,9 @@
             </div>
 
             <div class="col-xs-12 col-sm-9">
-                <div class="QJProfileDetDescription">
-                {% if profile.description_en %}
-                    <div class="QJRedactorContent">
-                        {{ profile.description_en|safe }}
-                    </div>
+            {% get_profile_description profile as profile_description %}
+                {% if profile_description %}
+                {{ profile_description|safe }}
                 {% else %}
                 <p>{% trans 'There is not information about this profile.' %}</p>
                 {% endif %}

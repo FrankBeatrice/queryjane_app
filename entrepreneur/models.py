@@ -46,10 +46,14 @@ class Venture(models.Model):
     )
 
     description_es = models.TextField(
+        blank=True,
+        null=True,
         verbose_name=_('spanish description'),
     )
 
     description_en = models.TextField(
+        blank=True,
+        null=True,
         verbose_name=_('english description'),
     )
 

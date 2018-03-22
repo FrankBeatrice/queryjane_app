@@ -28,6 +28,12 @@
                             <form method="POST">
                                 {% csrf_token %}
 
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                {% endif %}
+
                                 <div class="row">
                                     <div class="col-md-6 col-xs-12 form-group">
                                         <div class="form-group">
@@ -97,12 +103,19 @@
                                     </div>
 
                                     <div class="col-md-6 col-xs-12">
+                                        {% get_current_language as LANGUAGE_CODE %}
                                         <p>{% trans 'Select your company sector or sectors in the industry.' %}</p>
 
                                         <ul class="qjane-industry-categories-list">
                                             {% for industry_category in industry_categories %}
                                             <li>
-                                                <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                                                <a class="btn btn-ghost-purple" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                                                {% if LANGUAGE_CODE == 'es' %}
+                                                {{ industry_category.name_es }}
+                                                {% else %}
+                                                {{ industry_category.name_en }}
+                                                {% endif %}
+                                                </a>
                                             </li>
                                             {% endfor %}
                                         </ul>
@@ -127,8 +140,19 @@
                                             <p>{{ form.description_en.errors }}</p>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>
+                                                {% trans 'Spanish description' %}
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+                                            <p><i>{% trans 'Add a very detailed description of your company.' %}</i></p>
+                                            <div id="rich_editor_description_es"></div>
+                                            <p>{{ form.description_es.errors }}</p>
+                                        </div>
+
                                         <div class="form-group" style="display:none;">
                                             {% render_field form.description_en %}
+                                            {% render_field form.description_es %}
                                             {% render_field form.industry_categories %}
                                         </div>
                                     </div>
