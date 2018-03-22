@@ -21,7 +21,12 @@ and stable operating system and libraries.
 
 ## Installation
 
+Generate *local_settings.py* file by running the following command:
+
+    $ test ! -e app/local_settings.py && cp app/test/local_settings.py.j2 app/local_settings.py
+
 With docker and docker-compose installed run:
+
     $ docker-compose build
 
 ## Running
