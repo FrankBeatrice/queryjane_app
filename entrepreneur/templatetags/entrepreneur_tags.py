@@ -45,3 +45,14 @@ def get_user_venture_admin_notification(user, venture):
 @register.assignment_tag
 def get_company_logo_extension(logo_str):
     return logo_str.split('.')[-1]
+
+
+@register.assignment_tag(takes_context=True)
+def get_company_description(context, company):
+    current_lan = context['request'].LANGUAGE_CODE
+    company_description = company.description_en
+
+    if current_lan == 'es' and company.description_es:
+        company_description = company.description_es
+
+    return company_description

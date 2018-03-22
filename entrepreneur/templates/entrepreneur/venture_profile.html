@@ -5,7 +5,11 @@
 {% block title %}{{ venture }}{% endblock %}
 
 {% block meta_title %}{{ venture }}{% endblock %}
-{% block meta_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
+
+{% block meta_description %}
+{% get_company_description venture as company_description %}
+{{ company_description|safe|truncatechars_html:200 }}
+{% endblock %}
 
 {% block meta_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
@@ -15,7 +19,11 @@
 {% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
 
 {% block meta_twitter_title %}{{ venture }}{% endblock %}
-{% block meta_twitter_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
+
+{% block meta_twitter_description %}
+{% get_company_description venture as company_description %}
+{{ company_description|safe|truncatechars_html:200 }}
+{% endblock %}
 {% block meta_twitter_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
 {% endblock %}
@@ -240,14 +248,8 @@
 
             <div class="col-xs-12 col-sm-9">
                 <h1>{{ venture }}</h1>
-
-                <div class="QJVentureDetDescription">
-                {% if venture.description_en %}
-                    <div class="QJRedactorContent">
-                        {{ venture.description_en|safe }}
-                    </div>
-                {% endif %}
-                </div>
+                {% get_company_description venture as company_description %}
+                {{ company_description|safe }}
             </div>
         </div>
     </div>
