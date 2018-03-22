@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 00:44+0000\n"
+"POT-Creation-Date: 2018-03-22 03:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,8 +61,8 @@ msgid "Type the contry name and select one from the list."
 msgstr "Escribe el nombre de país y seleccionalo de la lista."
 
 #: account/forms.py:89 entrepreneur/forms.py:28 entrepreneur/forms.py:80
-#: entrepreneur/forms.py:153 entrepreneur/forms.py:289
-#: entrepreneur/forms.py:400
+#: entrepreneur/forms.py:153 entrepreneur/forms.py:298
+#: entrepreneur/forms.py:409
 msgid "country code"
 msgstr "código del país"
 
@@ -72,12 +72,12 @@ msgid "city"
 msgstr "ciudad"
 
 #: account/forms.py:96 entrepreneur/forms.py:36 entrepreneur/forms.py:88
-#: entrepreneur/forms.py:160 entrepreneur/forms.py:408
+#: entrepreneur/forms.py:160 entrepreneur/forms.py:417
 msgid "Type the city name."
 msgstr "Escribe el nombre de la ciudad."
 
 #: account/forms.py:102 entrepreneur/forms.py:43 entrepreneur/forms.py:95
-#: entrepreneur/forms.py:166 entrepreneur/forms.py:415
+#: entrepreneur/forms.py:166 entrepreneur/forms.py:424
 msgid "city id"
 msgstr "código de la ciudad"
 
@@ -139,14 +139,15 @@ msgstr "usuario"
 msgid "users"
 msgstr "usuarios"
 
-#: account/models.py:215 account/models.py:287 entrepreneur/forms.py:242
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:72
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:122
+#: account/models.py:215 account/models.py:287 entrepreneur/forms.py:251
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:80
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:135
 msgid "English description"
 msgstr "Descripción en inglés"
 
-#: account/models.py:220 account/models.py:276 entrepreneur/forms.py:249
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:111
+#: account/models.py:220 account/models.py:276 entrepreneur/forms.py:258
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:119
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:145
 msgid "Spanish description"
 msgstr "Descripción en español"
 
@@ -272,100 +273,100 @@ msgstr "Solicitar restauración de contraseña"
 msgid "Visit your profile."
 msgstr "Visita tu perfil."
 
-#: account/templates/account/dashboard.html:36
+#: account/templates/account/dashboard.html:44
 msgid "You have not added industry sectors yet."
 msgstr "No has agregado sectores en la industria aún."
 
-#: account/templates/account/dashboard.html:36
+#: account/templates/account/dashboard.html:44
 msgid "Go to edit your professional profile."
 msgstr "Ve a editar tu perfil profesional."
 
-#: account/templates/account/dashboard.html:47
+#: account/templates/account/dashboard.html:55
 msgid "Your companies."
 msgstr "Tus empresas."
 
-#: account/templates/account/dashboard.html:71
+#: account/templates/account/dashboard.html:79
 msgid "New messages"
 msgstr "Nuevos mensajes"
 
-#: account/templates/account/dashboard.html:82
+#: account/templates/account/dashboard.html:90
 #: account/templates/account/inbox.html:26
 msgid "From:"
 msgstr "De:"
 
-#: account/templates/account/dashboard.html:97
+#: account/templates/account/dashboard.html:105
 #: account/templates/account/notifications.html:17
 #: app/templates/layout/menu/_navbar_user_menu.html:7
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: account/templates/account/dashboard.html:122
+#: account/templates/account/dashboard.html:130
 msgid "Job offers that might interest you."
 msgstr "Ofertas de trabajo que podrían interesarte."
 
-#: account/templates/account/dashboard.html:125
-#: account/templates/account/dashboard.html:147
-#: account/templates/account/dashboard.html:170
-#: account/templates/account/dashboard.html:195
+#: account/templates/account/dashboard.html:133
+#: account/templates/account/dashboard.html:155
+#: account/templates/account/dashboard.html:178
+#: account/templates/account/dashboard.html:203
 #: app/templates/layout/menu/_navbar_user_menu.html:30
 #: app/templates/layout/menu/_navbar_user_menu.html:61
 msgid "View all"
 msgstr "Ver todos"
 
-#: account/templates/account/dashboard.html:144
+#: account/templates/account/dashboard.html:152
 msgid "Last job offers."
 msgstr "Últimas ofertas de trabajo."
 
-#: account/templates/account/dashboard.html:166
+#: account/templates/account/dashboard.html:174
 msgid "Know some registered companies."
 msgstr "Conoce algunas empresas registradas."
 
-#: account/templates/account/dashboard.html:191
+#: account/templates/account/dashboard.html:199
 msgid "Some local companies."
 msgstr "Algúnas empresas en tu país."
 
-#: account/templates/account/dashboard.html:208
+#: account/templates/account/dashboard.html:216
 msgid "There are not registered companies in your country yet."
 msgstr "No hay empresas registradas en tu país aún."
 
-#: account/templates/account/dashboard_company_line.html:27
-#: account/templates/account/dashboard_job_offer_line.html:37
-#: entrepreneur/templates/entrepreneur/job_detail.html:101
-#: entrepreneur/templates/entrepreneur/venture_profile.html:216
+#: account/templates/account/dashboard_company_line.html:34
+#: account/templates/account/dashboard_job_offer_line.html:45
+#: entrepreneur/templates/entrepreneur/job_detail.html:108
+#: entrepreneur/templates/entrepreneur/venture_profile.html:223
 msgid "Share"
 msgstr "Compartir"
 
-#: account/templates/account/dashboard_company_line.html:31
-#: account/templates/account/dashboard_job_offer_line.html:41
-#: entrepreneur/templates/entrepreneur/job_detail.html:106
-#: entrepreneur/templates/entrepreneur/venture_profile.html:221
+#: account/templates/account/dashboard_company_line.html:38
+#: account/templates/account/dashboard_job_offer_line.html:49
+#: entrepreneur/templates/entrepreneur/job_detail.html:113
+#: entrepreneur/templates/entrepreneur/venture_profile.html:228
 msgid "Hide"
 msgstr "Ocultar"
 
-#: account/templates/account/dashboard_company_line.html:38
-#: account/templates/account/dashboard_job_offer_line.html:49
-#: entrepreneur/templates/entrepreneur/jobs_list.html:162
-#: entrepreneur/templates/entrepreneur/venture_list.html:116
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:76
+#: account/templates/account/dashboard_company_line.html:45
+#: account/templates/account/dashboard_job_offer_line.html:57
+#: entrepreneur/templates/entrepreneur/jobs_list.html:169
+#: entrepreneur/templates/entrepreneur/venture_list.html:123
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:83
 msgid "View"
 msgstr "Ver"
 
 #: account/templates/account/dashboard_job_offer_line.html:12
-#: entrepreneur/templates/entrepreneur/job_detail.html:131
-#: entrepreneur/templates/entrepreneur/jobs_list.html:139
+#: entrepreneur/templates/entrepreneur/job_detail.html:138
+#: entrepreneur/templates/entrepreneur/jobs_list.html:146
 msgid "Created at:"
 msgstr "Fecha de creación:"
 
 #: account/templates/account/dashboard_job_offer_line.html:13
-#: entrepreneur/templates/entrepreneur/job_detail.html:132
-#: entrepreneur/templates/entrepreneur/jobs_list.html:140
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:54
+#: entrepreneur/templates/entrepreneur/job_detail.html:139
+#: entrepreneur/templates/entrepreneur/jobs_list.html:147
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:61
 msgid "Job type:"
 msgstr "Tipo de trabajo:"
 
-#: account/templates/account/dashboard_job_offer_line.html:45
-#: entrepreneur/templates/entrepreneur/job_detail.html:110
-#: entrepreneur/templates/entrepreneur/venture_profile.html:225
+#: account/templates/account/dashboard_job_offer_line.html:53
+#: entrepreneur/templates/entrepreneur/job_detail.html:117
+#: entrepreneur/templates/entrepreneur/venture_profile.html:232
 msgid "Activate"
 msgstr "Activar"
 
@@ -446,17 +447,17 @@ msgstr "Sectores"
 msgid "Sector"
 msgstr "Sector"
 
-#: account/templates/account/professional_profile.html:39
+#: account/templates/account/professional_profile.html:47
 msgid "has not added industry sectors."
 msgstr "no ha agregado sectores de la industria."
 
-#: account/templates/account/professional_profile.html:51
-#: entrepreneur/templates/entrepreneur/venture_profile.html:96
+#: account/templates/account/professional_profile.html:59
+#: entrepreneur/templates/entrepreneur/venture_profile.html:103
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:57
 msgid "Location"
 msgstr "Ubicación"
 
-#: account/templates/account/professional_profile.html:81
+#: account/templates/account/professional_profile.html:89
 msgid "There is not information about this profile."
 msgstr "No hay información sobre este perfil."
 
@@ -483,28 +484,28 @@ msgid "There was an error. Reload the page and try again."
 msgstr "Hubo un error. Recarga la página e intentalo de nuevo."
 
 #: account/templates/account/profile_update.html:85 entrepreneur/forms.py:18
-#: entrepreneur/forms.py:70 entrepreneur/forms.py:279
+#: entrepreneur/forms.py:70 entrepreneur/forms.py:288
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:71
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:89
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:97
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:92
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:48
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:54
 msgid "Country"
 msgstr "País"
 
 #: account/templates/account/profile_update.html:104 entrepreneur/forms.py:33
-#: entrepreneur/forms.py:293 entrepreneur/forms.py:405
+#: entrepreneur/forms.py:302 entrepreneur/forms.py:414
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:88
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:108
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:116
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:111
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:67
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:73
 msgid "City"
 msgstr "Ciudad"
 
 #: account/templates/account/profile_update.html:113
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:97
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:117
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:125
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:120
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:76
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:82
 msgid ""
 "If when writing the name of the city, it does not appear available in the "
 "list,"
@@ -518,71 +519,72 @@ msgstr "por favor, permítemos obtener tu ubicación"
 
 #: account/templates/account/profile_update.html:113
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:97
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:117
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:125
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:120
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:76
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:82
 msgid "and register it in the application."
 msgstr "y registrarla en la aplicación."
 
 #: account/templates/account/profile_update.html:123
-#: account/templates/account/profile_update.html:179
+#: account/templates/account/profile_update.html:186
+#: account/templates/account/profile_update.html:225
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:43
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:119
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:203
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:94
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:133
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:102
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:141
 msgid "Save"
 msgstr "Guardar"
 
 #: account/templates/account/profile_update.html:133
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:48
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:50
 msgid "Industry sectors"
 msgstr "Sectores de la industria"
 
-#: account/templates/account/profile_update.html:157
+#: account/templates/account/profile_update.html:164
 msgid "English - Professional profile description"
 msgstr "Inglés - Descripción del perfil profesioinal"
 
-#: account/templates/account/profile_update.html:160
-#: account/templates/account/profile_update.html:199
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:75
-#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:114
+#: account/templates/account/profile_update.html:167
+#: account/templates/account/profile_update.html:206
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:83
+#: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:122
 msgid "Edit"
 msgstr "Editar"
 
-#: account/templates/account/profile_update.html:196
+#: account/templates/account/profile_update.html:203
 msgid "Spanish - Professional profile description"
 msgstr "Español - Descripción de perfil profesional"
 
-#: account/templates/account/profile_update.html:237
+#: account/templates/account/profile_update.html:244
 msgid "Email notifications"
 msgstr "Notificaciones por correo electrónico"
 
-#: account/templates/account/profile_update.html:244
+#: account/templates/account/profile_update.html:251
 #: entrepreneur/templates/entrepreneur/jobs_list.html:82
 #: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:24
 msgid "Job offers"
 msgstr "Ofertas de trabajo"
 
-#: account/templates/account/profile_update.html:245
+#: account/templates/account/profile_update.html:252
 msgid "Notify me about new job offers that fit my profile."
 msgstr "Notificarme sobre nuevas ofertas de trabajo que se ajusten a mi perfil"
 
-#: account/templates/account/profile_update.html:248
-#: account/templates/account/profile_update.html:259
+#: account/templates/account/profile_update.html:255
+#: account/templates/account/profile_update.html:266
 msgid "Yes"
 msgstr "Si"
 
-#: account/templates/account/profile_update.html:250
-#: account/templates/account/profile_update.html:261
+#: account/templates/account/profile_update.html:257
+#: account/templates/account/profile_update.html:268
 msgid "No"
 msgstr "No"
 
-#: account/templates/account/profile_update.html:255
+#: account/templates/account/profile_update.html:262
 msgid "Private messages"
 msgstr "Mensajes privados"
 
-#: account/templates/account/profile_update.html:256
+#: account/templates/account/profile_update.html:263
 msgid "notify me when I receive a new inbox message."
 msgstr "Notificarme cuando reciba un nuevo mensaje"
 
@@ -614,17 +616,17 @@ msgstr ""
 msgid "Select sectors of the industry."
 msgstr ""
 
-#: account/templates/account/signup_landing.html:40
+#: account/templates/account/signup_landing.html:48
 msgid "Account settings"
 msgstr "Configuraciones de cuenta"
 
-#: account/templates/account/signup_landing.html:47
-#: account/templates/account/signup_landing.html:52
+#: account/templates/account/signup_landing.html:55
+#: account/templates/account/signup_landing.html:60
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:4
 msgid "Register company"
 msgstr "Registrar empresa"
 
-#: account/templates/account/signup_landing.html:50
+#: account/templates/account/signup_landing.html:58
 msgid ""
 "If you have a company in any sector of the cannabis industry, create your "
 "company profile."
@@ -632,11 +634,11 @@ msgstr ""
 "Si tienes una empresa en algún sector de la industra del cannabis, "
 "registrala y crea el perfil de tu empresa."
 
-#: app/settings.py:184
+#: app/settings.py:186
 msgid "English"
 msgstr "Inglés"
 
-#: app/settings.py:185
+#: app/settings.py:187
 msgid "Spanish"
 msgstr "Español"
 
@@ -769,8 +771,8 @@ msgid "New company"
 msgstr "Nueva empresa"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:107
-#: entrepreneur/templates/entrepreneur/job_detail.html:94
-#: entrepreneur/templates/entrepreneur/venture_profile.html:209
+#: entrepreneur/templates/entrepreneur/job_detail.html:101
+#: entrepreneur/templates/entrepreneur/venture_profile.html:216
 msgid "Qjane Admin"
 msgstr "Qjane Admin"
 
@@ -893,9 +895,13 @@ msgid "Do you have questions about the use of the platform?"
 msgstr "¿Tienes preguntas acerca del uso de la plataforma?"
 
 #: corporative/templates/corporative/contact_form.html:22
+#, fuzzy
+#| msgid ""
+#| "Feel free to contact us, we will be happy to talk about how we can help "
+#| "boost the cannabis industry and to listen to your doubts and suggestions."
 msgid ""
 "Feel free to contact us, we will be happy to talk about how we can help "
-"boost the cannabis industry and to listen to your doubts and suggestions."
+"boost the cannabis industry and to listen your doubts and suggestions."
 msgstr ""
 "Sientete libre de contactarnos, vamos a estar felices de hablar sobre como "
 "podemos ayudar a impulsar el crecimiento de la industria del cannabis y de "
@@ -987,7 +993,7 @@ msgid "Rejected membership"
 msgstr "Membresía rechazada"
 
 #: entrepreneur/data.py:31 entrepreneur/data.py:41
-#: entrepreneur/templates/entrepreneur/job_detail.html:123
+#: entrepreneur/templates/entrepreneur/job_detail.html:130
 #: entrepreneur/templates/entrepreneur/jobs_list.html:127
 #: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:37
 msgid "Active"
@@ -998,12 +1004,12 @@ msgid "Inactive"
 msgstr "Inactiva"
 
 #: entrepreneur/data.py:33 entrepreneur/data.py:43
-#: entrepreneur/templates/entrepreneur/job_detail.html:125
+#: entrepreneur/templates/entrepreneur/job_detail.html:132
 msgid "Hidden"
 msgstr "Oculta"
 
 #: entrepreneur/data.py:42
-#: entrepreneur/templates/entrepreneur/job_detail.html:127
+#: entrepreneur/templates/entrepreneur/job_detail.html:134
 #: entrepreneur/templates/entrepreneur/jobs_list.html:129
 #: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:39
 msgid "Closed"
@@ -1033,7 +1039,7 @@ msgstr "Temporal"
 msgid "Volunteer"
 msgstr "Voluntariado"
 
-#: entrepreneur/forms.py:21 entrepreneur/forms.py:73 entrepreneur/forms.py:393
+#: entrepreneur/forms.py:21 entrepreneur/forms.py:73 entrepreneur/forms.py:402
 msgid "Type the country name and select one from the list."
 msgstr "Escribe el nombre del país y seleccionalo de la lista."
 
@@ -1061,26 +1067,30 @@ msgstr "Empresa"
 msgid "Company name."
 msgstr "Nombre de la empresa."
 
-#: entrepreneur/forms.py:171 entrepreneur/forms.py:307
+#: entrepreneur/forms.py:171 entrepreneur/forms.py:316
 msgid "coordinates"
 msgstr "coordenadas"
 
-#: entrepreneur/forms.py:202 entrepreneur/forms.py:282
-#: entrepreneur/forms.py:339
+#: entrepreneur/forms.py:203 entrepreneur/forms.py:291
+#: entrepreneur/forms.py:348
 msgid "Type the country name and select it from the list."
 msgstr "Escribe el nombre del país y seleccionalo de la lista."
 
-#: entrepreneur/forms.py:208 entrepreneur/forms.py:345
+#: entrepreneur/forms.py:209 entrepreneur/forms.py:354
 msgid "Type the city name and select it from the list."
 msgstr "Escribe el nombre de la ciudad y seleccionalo de la lista."
 
-#: entrepreneur/forms.py:296
+#: entrepreneur/forms.py:239
+msgid "you must add the description of your company in at least one language."
+msgstr "Debes agregar la descripción de tu empresa en al menos un idioma."
+
+#: entrepreneur/forms.py:305
 #, fuzzy
 #| msgid "Type the city name."
 msgid "type the city name."
 msgstr "Escribe el nombre de la ciudad."
 
-#: entrepreneur/forms.py:302
+#: entrepreneur/forms.py:311
 msgid "City id"
 msgstr "id de la ciudad"
 
@@ -1172,49 +1182,49 @@ msgstr "oferta de trabajo"
 msgid "category"
 msgstr "categoría"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:69
+#: entrepreneur/templates/entrepreneur/job_detail.html:76
 msgid "Job location"
 msgstr "ubicación del trabajo"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:144
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:80
+#: entrepreneur/templates/entrepreneur/job_detail.html:151
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:87
 msgid "Edit job offer"
 msgstr "Editar oferta de trabajo"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:146
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:82
+#: entrepreneur/templates/entrepreneur/job_detail.html:153
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:89
 msgid "Close job offer"
 msgstr "Cerrar oferta de trabajo"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:151
+#: entrepreneur/templates/entrepreneur/job_detail.html:158
 msgid "Applicants list"
 msgstr "Lista de aplicantes"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:156
+#: entrepreneur/templates/entrepreneur/job_detail.html:163
 msgid "Name"
 msgstr "Nombre"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:157
+#: entrepreneur/templates/entrepreneur/job_detail.html:164
 msgid "application date"
 msgstr "fecha de aplicación"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:158
+#: entrepreneur/templates/entrepreneur/job_detail.html:165
 msgid "Actions"
 msgstr "Acciones"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:169
+#: entrepreneur/templates/entrepreneur/job_detail.html:176
 msgid "View profile"
 msgstr "Ver perfil"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:175
+#: entrepreneur/templates/entrepreneur/job_detail.html:182
 msgid "There are not applicants yet."
 msgstr "No hay aplicantes aún."
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:181
+#: entrepreneur/templates/entrepreneur/job_detail.html:188
 msgid "Go to job offers list administrator"
 msgstr "Ir al administrador de ofertas de trabajo"
 
-#: entrepreneur/templates/entrepreneur/job_detail.html:190
+#: entrepreneur/templates/entrepreneur/job_detail.html:197
 msgid "You have applied to this offer."
 msgstr "Has aplicado a esta oferta de trabajo."
 
@@ -1228,11 +1238,11 @@ msgstr "Limpiar"
 msgid "Search"
 msgstr "Buscar"
 
-#: entrepreneur/templates/entrepreneur/jobs_list.html:173
+#: entrepreneur/templates/entrepreneur/jobs_list.html:180
 msgid "No job offers found."
 msgstr "No se encontraron ofertas de trabajo."
 
-#: entrepreneur/templates/entrepreneur/venture_list.html:128
+#: entrepreneur/templates/entrepreneur/venture_list.html:135
 msgid "No companies found."
 msgstr "No se encontraron empresas."
 
@@ -1262,17 +1272,17 @@ msgstr "Rechazar"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:124
+#: entrepreneur/templates/entrepreneur/venture_profile.html:131
 msgid "Web page"
 msgstr "Página web"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:139
+#: entrepreneur/templates/entrepreneur/venture_profile.html:146
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:131
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:139
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:163
 msgid "Social media"
 msgstr "Social media"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:182
+#: entrepreneur/templates/entrepreneur/venture_profile.html:189
 #: entrepreneur/templates/entrepreneur/venture_settings/settings_menu.html:22
 msgid "Contact"
 msgstr "Contacto"
@@ -1307,7 +1317,7 @@ msgstr ""
 "que has seleccionado."
 
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:107
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:86
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:92
 msgid "Address"
 msgstr "Dirección"
 
@@ -1347,12 +1357,12 @@ msgstr "Agrega una descripción muy detallada de la oferta de trabajo."
 msgid "Select the sector or sectors of your job offer."
 msgstr "Selecciona el sector o sectores de la oferta de trabajo."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:82
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:90
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:85
 msgid "Where is the job?"
 msgstr "¿Donde es el trabajo?"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:83
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:91
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:86
 msgid ""
 "Fill these fields only if it is necessary for the applicant to live or move "
@@ -1361,13 +1371,13 @@ msgstr ""
 "Diligencia estos campos solo si es necesario para los aplicantes vivir o "
 "trasladarse a una ciudad específica."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:117
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:125
 #: entrepreneur/templates/entrepreneur/venture_settings/job_update.html:120
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:76
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:82
 msgid "Please, allow us to try to obtain your location"
 msgstr "Por favor, poermítenos tratar de obtener tu ubicación"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:129
+#: entrepreneur/templates/entrepreneur/venture_settings/job_form.html:137
 #, fuzzy
 #| msgid "Created at"
 msgid "Create"
@@ -1389,11 +1399,11 @@ msgstr "Estado:"
 msgid "Category:"
 msgstr "Categoría:"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:51
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:58
 msgid "Created at"
 msgstr "Fecha de creación"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:88
+#: entrepreneur/templates/entrepreneur/venture_settings/jobs_list.html:95
 msgid "There are not published job offers yet."
 msgstr "No hay ofertas de trabajo publicadas aún."
 
@@ -1437,31 +1447,32 @@ msgstr "Ofertas de trabajo"
 msgid "REGISTER COMPANY"
 msgstr "REGISTRAR EMPRESA"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:35
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:41
 msgid "Company name"
 msgstr "Nombre de la empresa"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:86
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:92
 msgid "Address will be public."
 msgstr "La dirección será pública."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:100
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:107
 msgid "Select your company sector or sectors in the industry."
 msgstr "Selecciona el sector o sectores de tu empresa en la industria."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:116
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:129
 msgid "Company description"
 msgstr "Descripción de la empresa"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:125
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:138
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:148
 msgid "Add a very detailed description of your company."
 msgstr "Agrega una descripción muy detallada de tu emrpesa."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:146
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:170
 msgid "Web"
 msgstr "Página web"
 
-#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:204
+#: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:228
 msgid "Next"
 msgstr "Siguiente"
 

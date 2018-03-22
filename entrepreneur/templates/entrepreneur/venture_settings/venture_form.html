@@ -28,6 +28,12 @@
                             <form method="POST">
                                 {% csrf_token %}
 
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                {% endif %}
+
                                 <div class="row">
                                     <div class="col-md-6 col-xs-12 form-group">
                                         <div class="form-group">
@@ -134,8 +140,19 @@
                                             <p>{{ form.description_en.errors }}</p>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>
+                                                {% trans 'Spanish description' %}
+                                                <span class="QJRequiredField">*</span>
+                                            </label>
+                                            <p><i>{% trans 'Add a very detailed description of your company.' %}</i></p>
+                                            <div id="rich_editor_description_es"></div>
+                                            <p>{{ form.description_es.errors }}</p>
+                                        </div>
+
                                         <div class="form-group" style="display:none;">
-                                            {% render_field form.description_en %}
+                                            {% render_field form.description_en class+="description-group" %}
+                                            {% render_field form.description_es class+="description-group" %}
                                             {% render_field form.industry_categories %}
                                         </div>
                                     </div>
