@@ -62,6 +62,7 @@ def new_applicants_notifications():
                     noty_to=admin_m.admin.user,
                     answered=True,
                     job_offer=job_offer,
+                    venture_from=job_offer.venture,
                     description=description,
                 )
 
