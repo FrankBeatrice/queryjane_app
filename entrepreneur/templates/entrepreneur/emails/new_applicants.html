@@ -4,9 +4,11 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>{{ new_applicants }} {% trans 'new applicants to your job offer:' %}</h1>
+<h1>{{ new_applicants }} {% trans 'new applicants for your job offer:' %}</h1>
 
 <h3>
     <a href="{{ base_url }}/{{ job_offer.slug }}">{{ job_offer }}</a>
 </h3>
+
+<p>Job offer published by <strong>{{ job_offer.venture }}</strong>.</p>
 {% endblock %}

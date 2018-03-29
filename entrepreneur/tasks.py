@@ -52,7 +52,7 @@ def new_applicants_notifications():
                         mail_to=[admin_m.admin.user.email],
                     )
 
-                description = 'New applicants to "{}".'.format(
+                description = 'New applicants for "{}".'.format(
                     job_offer,
                 )
 
@@ -67,7 +67,7 @@ def new_applicants_notifications():
                 )
 
                 logger.info(
-                    'Created notifications to %s',
+                    'Created notifications for %s',
                     admin_m.admin.user.email,
                 )
 
