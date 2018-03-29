@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 15:35+0000\n"
+"POT-Creation-Date: 2018-03-29 16:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: account/data.py:7
+#: account/data.py:8
 msgid "Invitation to administer company."
 msgstr "Invitación para administrar empresa"
 
-#: account/data.py:8
+#: account/data.py:9
 msgid "New job offer that may interest you."
 msgstr "Nueva oferta de trabajo que podría interesarte."
+
+#: account/data.py:10
+#, fuzzy
+#| msgid "new applicants to your job offer:"
+msgid "New applicants to my job offer."
+msgstr "nuevos aplicantes para tu oferta de trabajo"
 
 #: account/forms.py:14
 msgid "First name"
@@ -47,7 +53,7 @@ msgstr "Correo electrónico"
 msgid "Password"
 msgstr "Contraseña"
 
-#: account/forms.py:51 account/forms.py:72 account/models.py:125
+#: account/forms.py:51 account/forms.py:72 account/models.py:126
 #: corporative/forms.py:20
 msgid "email"
 msgstr "Correo electrónico"
@@ -66,7 +72,7 @@ msgstr "Escribe el nombre de país y seleccionalo de la lista."
 msgid "country code"
 msgstr "código del país"
 
-#: account/forms.py:93 account/models.py:155 entrepreneur/forms.py:157
+#: account/forms.py:93 account/models.py:156 entrepreneur/forms.py:157
 #: entrepreneur/models.py:79 entrepreneur/models.py:303 place/models.py:30
 msgid "city"
 msgstr "ciudad"
@@ -81,7 +87,7 @@ msgstr "Escribe el nombre de la ciudad."
 msgid "city id"
 msgstr "código de la ciudad"
 
-#: account/forms.py:137 account/forms.py:144 account/models.py:303
+#: account/forms.py:137 account/forms.py:144 account/models.py:309
 #: entrepreneur/models.py:314
 msgid "description"
 msgstr "descripción"
@@ -90,112 +96,118 @@ msgstr "descripción"
 msgid "Search by name, email or username"
 msgstr "Busca por nombre, correo electrónico o nombre de usuario"
 
-#: account/forms.py:174 account/models.py:376 corporative/forms.py:24
+#: account/forms.py:174 account/models.py:388 corporative/forms.py:24
 msgid "message"
 msgstr "mensaje"
 
-#: account/models.py:33
+#: account/models.py:34
 msgid "Users must have an email address"
 msgstr "Los usuarios deben tener una dirección de correo electrónico"
 
-#: account/models.py:90
+#: account/models.py:91
 msgid "profile image"
 msgstr "imagen de perfil"
 
-#: account/models.py:97 corporative/forms.py:16 entrepreneur/forms.py:133
+#: account/models.py:98 corporative/forms.py:16 entrepreneur/forms.py:133
 #: entrepreneur/models.py:38 place/models.py:11 place/models.py:37
 #: place/models.py:61
 msgid "name"
 msgstr "nombre"
 
-#: account/models.py:111
+#: account/models.py:112
 msgid "last name"
 msgstr "apellido"
 
-#: account/models.py:143 entrepreneur/forms.py:143 entrepreneur/models.py:67
+#: account/models.py:144 entrepreneur/forms.py:143 entrepreneur/models.py:67
 #: entrepreneur/models.py:291 place/models.py:22 place/models.py:42
 #: place/models.py:73
 msgid "country"
 msgstr "país"
 
-#: account/models.py:149 entrepreneur/models.py:73 entrepreneur/models.py:297
+#: account/models.py:150 entrepreneur/models.py:73 entrepreneur/models.py:297
 #: place/models.py:17 place/models.py:50
 msgid "state"
 msgstr "estado"
 
-#: account/models.py:159 entrepreneur/models.py:85
+#: account/models.py:160 entrepreneur/models.py:85
 msgid "address"
 msgstr "dirección"
 
-#: account/models.py:166 entrepreneur/models.py:328 entrepreneur/models.py:398
+#: account/models.py:167 entrepreneur/models.py:328 entrepreneur/models.py:398
 msgid "created at"
 msgstr "fecha de creación"
 
-#: account/models.py:202 account/models.py:210
+#: account/models.py:203 account/models.py:211
 msgid "user"
 msgstr "usuario"
 
-#: account/models.py:203 app/templates/home.html:27
+#: account/models.py:204 app/templates/home.html:27
 msgid "users"
 msgstr "usuarios"
 
-#: account/models.py:215 account/models.py:287 entrepreneur/forms.py:251
+#: account/models.py:216 account/models.py:293 entrepreneur/forms.py:251
 #: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:80
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:135
 msgid "English description"
 msgstr "Descripción en inglés"
 
-#: account/models.py:220 account/models.py:276 entrepreneur/forms.py:258
+#: account/models.py:221 account/models.py:282 entrepreneur/forms.py:258
 #: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:119
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:145
 msgid "Spanish description"
 msgstr "Descripción en español"
 
-#: account/models.py:226
+#: account/models.py:227
 msgid "Phone number"
 msgstr "número telefónico"
 
-#: account/models.py:236
+#: account/models.py:237
 msgid "receive notifications of job offers"
 msgstr "recibir notificaciones de ofertas de trabajo"
 
-#: account/models.py:241
+#: account/models.py:242
 msgid "receive notifications of new messages"
 msgstr "recibir notificaciones de nuevos mensajes"
 
-#: account/models.py:270
+#: account/models.py:247
+#, fuzzy
+#| msgid "receive notifications of job offers"
+msgid "receive notifications of new applicants to job offers"
+msgstr "recibir notificaciones de ofertas de trabajo"
+
+#: account/models.py:276
 msgid "Spanish name"
 msgstr "Nombre en español"
 
-#: account/models.py:281
+#: account/models.py:287
 msgid "English name"
 msgstr "Nombre en inglés"
 
-#: account/models.py:316
+#: account/models.py:322
 msgid "Notify to"
 msgstr "Notificar a"
 
-#: account/models.py:321
+#: account/models.py:327
 msgid "from venture"
 msgstr "de empresa"
 
-#: account/models.py:327
+#: account/models.py:333
 msgid "membership invitation"
 msgstr "Invitación a membresía"
 
-#: account/models.py:333
+#: account/models.py:339
 msgid "related job offer"
 msgstr "oferta de trabajo relacionada"
 
-#: account/models.py:339 entrepreneur/models.py:139
+#: account/models.py:345 entrepreneur/models.py:139
 msgid "created by"
 msgstr "creado por"
 
-#: account/models.py:365
+#: account/models.py:377
 msgid "from"
 msgstr "de"
 
-#: account/models.py:371
+#: account/models.py:383
 msgid "to"
 msgstr "para"
 
@@ -580,11 +592,13 @@ msgstr "Notificarme sobre nuevas ofertas de trabajo que se ajusten a mi perfil"
 
 #: account/templates/account/profile_update.html:255
 #: account/templates/account/profile_update.html:266
+#: account/templates/account/profile_update.html:277
 msgid "Yes"
 msgstr "Si"
 
 #: account/templates/account/profile_update.html:257
 #: account/templates/account/profile_update.html:268
+#: account/templates/account/profile_update.html:279
 msgid "No"
 msgstr "No"
 
@@ -595,6 +609,17 @@ msgstr "Mensajes privados"
 #: account/templates/account/profile_update.html:263
 msgid "notify me when I receive a new inbox message."
 msgstr "Notificarme cuando reciba un nuevo mensaje"
+
+#: account/templates/account/profile_update.html:273
+#, fuzzy
+#| msgid "applicants"
+msgid "New applicants"
+msgstr "aplicante"
+
+#: account/templates/account/profile_update.html:274
+msgid ""
+"notify me when users apply to job offers published by companies I manage."
+msgstr ""
 
 #: account/templates/account/signup_landing.html:4
 msgid "Register your company or your profile."
