@@ -5,6 +5,8 @@ from django.template.loader import render_to_string
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
+from account.data import NEW_APPLICANTS
+from account.models import UserNotification
 from app.tasks import send_email
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import JOB_STATUS_ACTIVE
@@ -50,8 +52,21 @@ def new_applicants_notifications():
                         mail_to=[admin_m.admin.user.email],
                     )
 
+                description = 'New applicants to "{}".'.format(
+                    job_offer,
+                )
+
+                # Create platform notification.
+                UserNotification.objects.create(
+                    notification_type=NEW_APPLICANTS,
+                    noty_to=admin_m.admin.user,
+                    answered=True,
+                    job_offer=job_offer,
+                    description=description,
+                )
+
                 logger.info(
-                    'Email sent to %s',
+                    'Created notifications to %s',
                     admin_m.admin.user.email,
                 )
 
