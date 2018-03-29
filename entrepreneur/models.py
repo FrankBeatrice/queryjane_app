@@ -328,6 +328,11 @@ class JobOffer(models.Model):
         verbose_name=_('created at'),
     )
 
+    applicants_record = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name=_('applicants register'),
+    )
+
     def clean(self):
         if not self.status_tracker.has_changed('status') or not self.id:
             return

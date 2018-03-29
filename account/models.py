@@ -14,6 +14,7 @@ from django.utils import timezone
 
 from .data import NEW_ENTREPRENEUR_ADMIN
 from .data import NEW_JOB_OFFER
+from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
@@ -241,6 +242,11 @@ class ProfessionalProfile(models.Model):
         verbose_name=_('receive notifications of new messages'),
     )
 
+    new_applicants_notifications = models.BooleanField(
+        default=True,
+        verbose_name=_('receive notifications of new applicants to job offers'),
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -338,6 +344,8 @@ class UserNotification(models.Model):
         'account.ProfessionalProfile',
         verbose_name=_('created by'),
         related_name='creator',
+        null=True,
+        blank=True,
     )
 
     answered = models.BooleanField(
@@ -351,6 +359,10 @@ class UserNotification(models.Model):
     @property
     def is_interest_job_offer(self):
         return self.notification_type == NEW_JOB_OFFER
+
+    @property
+    def is_new_job_offer_applicants(self):
+        return self.notification_type == NEW_APPLICANTS
 
     class Meta:
         ordering = ('-created_at',)

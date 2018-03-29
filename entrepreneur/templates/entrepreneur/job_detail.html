@@ -48,7 +48,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% trans 'Job offer' %} {% if job_offer.industry_categories.count > 1 %}categories{% else %}{% trans 'category' %}{% endif %}</span>
+                            <span>{% trans 'Job offer' %}: {% if job_offer.industry_categories.count > 1 %}{% trans 'categories' %}{% else %}{% trans 'category' %}{% endif %}</span>
                         </div>
 
                         <div class="panel-body">

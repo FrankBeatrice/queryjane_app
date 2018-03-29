@@ -105,10 +105,7 @@ class NewUserLandingView(LoginRequiredMixin, TemplateView):
         professional_profile = request.user.professionalprofile
 
         if professional_profile.industry_categories.count():
-            return redirect(
-                'professional_detail',
-                professional_profile.slug,
-            )
+            return redirect('dashboard')
 
         return super().get(request, *args, **kwargs)
 
