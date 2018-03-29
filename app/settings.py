@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = 'auth_login'
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'account:signup_landing'
 LOGOUT_URL = 'user_logout'
 LOGOUT_REDIRECT_URL = 'home'
 
