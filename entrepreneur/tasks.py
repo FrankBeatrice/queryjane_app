@@ -29,24 +29,26 @@ def new_applicants_notifications():
             )
 
             for admin_m in admins_m:
-                subject = '{0} new applicants to your job offer.'.format(
-                    new_applicants,
-                )
+                # Send email notification.
+                if admin_m.admin.new_applicants_notifications:
+                    subject = '{0} new applicants to your job offer.'.format(
+                        new_applicants,
+                    )
 
-                body = render_to_string(
-                    'entrepreneur/emails/new_applicants.html', {
-                        'title': subject,
-                        'job_offer': job_offer,
-                        'new_applicants': new_applicants,
-                        'base_url': settings.BASE_URL,
-                    },
-                )
+                    body = render_to_string(
+                        'entrepreneur/emails/new_applicants.html', {
+                            'title': subject,
+                            'job_offer': job_offer,
+                            'new_applicants': new_applicants,
+                            'base_url': settings.BASE_URL,
+                        },
+                    )
 
-                send_email(
-                    subject=subject,
-                    body=body,
-                    mail_to=[admin_m.admin.user.email],
-                )
+                    send_email(
+                        subject=subject,
+                        body=body,
+                        mail_to=[admin_m.admin.user.email],
+                    )
 
                 logger.info(
                     'Email sent to %s',

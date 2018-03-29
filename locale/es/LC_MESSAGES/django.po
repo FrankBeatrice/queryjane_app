@@ -1200,7 +1200,7 @@ msgstr "oferta de trabajo"
 #, fuzzy
 #| msgid "category"
 msgid "categories"
-msgstr "categoría"
+msgstr "categorías"
 
 #: entrepreneur/templates/entrepreneur/job_detail.html:51
 msgid "category"
