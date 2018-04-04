@@ -131,7 +131,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^ax_add_user_to_address_book/$',
+        r'^ax_add_user_to_address_book/(?P<pk>\d+)/$',
         AddUserToAddressBookView.as_view(),
         name='ajax_add_user_to_address_book',
     ),

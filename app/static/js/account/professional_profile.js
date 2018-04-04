@@ -15,12 +15,12 @@ $(function () {
 
     // Add contact to address book.
     $('#id_add_user_to_address_book').on('click', function () {
-        var user_for_add_id = $(this).data('user-for-add-id');
         var user_for_add_name = $(this).data('user-for-add-name');
 
-        $.post($(this).data('add-user-to-address-book-url'), {'user_for_add_id': user_for_add_id}, function (response) {
+        $.post($(this).data('add-user-to-address-book-url'), function (response) {
             if (response === 'success') {
                 $('#id_add_user_to_address_book').hide();
+                $('#id_remove_user_from_address_book').show();
 
                 $.alert({
                     title: 'Well done!',

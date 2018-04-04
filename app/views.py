@@ -19,6 +19,7 @@ from account.forms import SignUpForm
 from account.models import ProfessionalProfile
 from account.models import UserMessage
 from account.models import UserNotification
+from account.permissions import AddressBookPermissions
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -303,6 +304,15 @@ class ProfessionalDetail(LoginRequiredMixin, DetailView):
             can_send_message = False
 
         context['can_send_message'] = can_send_message
+        context['can_add_to_address_book'] = AddressBookPermissions.can_add_user(
+            owner=self.request.user.professionalprofile,
+            user_for_add=self.get_object(),
+        )
+
+        context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_user(
+            owner=self.request.user.professionalprofile,
+            user_for_remove=self.get_object(),
+        )
 
         return context
 

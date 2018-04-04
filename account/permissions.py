@@ -1,4 +1,5 @@
 from account.models import UserNotification
+from account.models import UserContact
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Applicant
 from account.data import NEW_ENTREPRENEUR_ADMIN
@@ -46,6 +47,28 @@ class MessagesPermissions(object):
     @classmethod
     def can_view(self, user, message):
         if message.user_to == user:
+            return True
+
+        return False
+
+
+class AddressBookPermissions(object):
+    @classmethod
+    def can_add_user(self, owner, user_for_add):
+        if not UserContact.objects.filter(
+            owner=owner,
+            user_contact=user_for_add,
+        ):
+            return True
+
+        return False
+
+    @classmethod
+    def can_remove_user(self, owner, user_for_remove):
+        if UserContact.objects.filter(
+            owner=owner,
+            user_contact=user_for_remove,
+        ):
             return True
 
         return False
