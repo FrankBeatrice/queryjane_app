@@ -1,0 +1,23 @@
+{% extends "layout/index.html" %}
+{% load static messages i18n %}
+
+{% block title %}{% trans 'Address book' %}{% endblock %}
+
+{% block content %}
+<section class="QjaneInbox">
+    <div class="container">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#contacts">{% trans 'Contacts' %}</a></li>
+          <li><a data-toggle="tab" href="#socialnetworksAdmin">{% trans 'Companies' %}</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="companiesAdmin" class="tab-pane fade in active">
+          </div>
+
+          <div id="socialnetworksAdmin" class="tab-pane fade">
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

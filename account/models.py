@@ -403,3 +403,43 @@ class UserMessage(models.Model):
         return 'message from {0}'.format(
             self.user_from.get_full_name,
         )
+
+
+class UserContact(models.Model):
+    owner = models.ForeignKey(
+        'account.ProfessionalProfile',
+        verbose_name=_('owner'),
+        related_name='address_book_owner',
+    )
+
+    user_contact = models.ForeignKey(
+        'account.ProfessionalProfile',
+        verbose_name=_('contact'),
+    )
+
+    class Meta:
+        ordering = ('user_contact',)
+
+    def __str__(self):
+        return 'contact: {0}'.format(
+            self.user_contact.user.get_full_name,
+        )
+
+
+class CompanyContact(models.Model):
+    owner = models.ForeignKey(
+        'account.ProfessionalProfile',
+        verbose_name=_('owner'),
+    )
+
+    company = models.ForeignKey(
+        'entrepreneur.Venture',
+    )
+
+    class Meta:
+        ordering = ('company',)
+
+    def __str__(self):
+        return 'contact: {0}'.format(
+            self.company.name,
+        )

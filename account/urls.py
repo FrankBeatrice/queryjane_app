@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from account.views.address_book import AddressBookView
 from account.views.messages import InboxView
 from account.views.messages import LoadMessageModal
 from account.views.messages import LoadConversationView
@@ -42,6 +43,12 @@ urlpatterns = [
         r'^update/$',
         UpdateProfileFormView.as_view(),
         name='profile_update',
+    ),
+
+    url(
+        r'^address-book/$',
+        AddressBookView.as_view(),
+        name='address_book',
     ),
 
     url(
