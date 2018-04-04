@@ -251,12 +251,6 @@ class EmailNotificationsUpdateView(LoginRequiredMixin, View):
         if value == 'notify':
             new_value = True
 
-        print("notification")
-        print(notification)
-
-        print("new_value")
-        print(new_value)
-
         setattr(professionalprofile, notification, new_value)
         professionalprofile.save()
 

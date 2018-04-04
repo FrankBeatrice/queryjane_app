@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from account.views.address_book import AddressBookView
+from account.views.address_book import AddUserToAddressBookView
 from account.views.messages import InboxView
 from account.views.messages import LoadMessageModal
 from account.views.messages import LoadConversationView
@@ -127,5 +128,11 @@ urlpatterns = [
         r'^ax_email_notification_update/$',
         EmailNotificationsUpdateView.as_view(),
         name='ax_email_notification_update',
+    ),
+
+    url(
+        r'^ax_add_user_to_address_book/$',
+        AddUserToAddressBookView.as_view(),
+        name='ajax_add_user_to_address_book',
     ),
 ]

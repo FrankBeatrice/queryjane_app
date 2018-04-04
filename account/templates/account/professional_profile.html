@@ -20,9 +20,15 @@
 
                 {% if can_send_message %}
                 <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' profile.user.id %}">{% trans 'Send message' %}</button>
+
                 <br>
                 <br>
+
+                <button type="button" id="id_add_user_to_address_book" class="btn btn-success" data-add-user-to-address-book-url="{% url 'account:ajax_add_user_to_address_book' %}" data-user-for-add-id="{{ profile.user.id }}" data-user-for-add-name="{{ profile.user.first_name }}">{% trans 'Add to my address book' %}</button>
                 {% endif %}
+
+                <br>
+                <br>
 
                 <div class="QJProfileDetCategories">
                     <div class="panel panel-default">
