@@ -220,6 +220,11 @@ class VentureDetail(DetailView):
             venture,
         )
 
+        context['can_add_to_address_book'] = AddressBookPermissions.can_add_company(
+            self.request.user.professionalprofile,
+            venture,
+        )
+
         return context
 
 

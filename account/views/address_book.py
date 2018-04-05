@@ -7,8 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from app.mixins import CustomUserMixin
 from account.models import UserContact
+from account.models import CompanyContact
 from account.models import ProfessionalProfile
 from account.permissions import AddressBookPermissions
+from entrepreneur.models import Venture
 
 
 class AddressBookView(LoginRequiredMixin, TemplateView):
@@ -64,5 +66,28 @@ class RemoveUserFromAddressBookView(CustomUserMixin, View):
             owner=self.request.user.professionalprofile,
             user_contact=self.get_object(),
         ).delete()
+
+        return HttpResponse("success")
+
+
+class AddCompanyToAddressBookView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            id=self.kwargs.get('pk'),
+        )
+
+    def test_func(self):
+        return AddressBookPermissions.can_add_company(
+            owner=self.request.user.professionalprofile,
+            company=self.get_object(),
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        CompanyContact.objects.create(
+            owner=self.request.user.professionalprofile,
+            company=self.get_object(),
+        )
 
         return HttpResponse("success")

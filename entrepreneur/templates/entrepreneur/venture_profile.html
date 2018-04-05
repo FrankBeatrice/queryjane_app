@@ -80,6 +80,11 @@
                     </div>
                 {% endif %}
 
+                <button type="button" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
+
+                <br>
+                <br>
+
                 <div class="QJVentureDetCategories">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -258,4 +263,5 @@
 
 {% block js %}
 <script src="{% static 'js/corporative/staff_venture_actions.js' %}"></script>
+<script src="{% static 'js/entrepreneur/company_detail.js' %}"></script>
 {% endblock %}
