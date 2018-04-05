@@ -20,9 +20,17 @@
 
                 {% if can_send_message %}
                 <button type="button" id="id_send_message_button" class="btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' profile.user.id %}">{% trans 'Send message' %}</button>
-                <br>
-                <br>
                 {% endif %}
+
+                <br>
+                <br>
+
+                <button type="button" id="id_add_user_to_address_book" class="btn btn-info" data-add-user-to-address-book-url="{% url 'account:ajax_add_user_to_address_book' profile.id %}" data-user-for-add-name="{{ profile.user.first_name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
+
+                <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' profile.id %}" data-user-for-remove-name="{{ profile.user.first_name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
+
+                <br>
+                <br>
 
                 <div class="QJProfileDetCategories">
                     <div class="panel panel-default">

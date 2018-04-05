@@ -1,0 +1,94 @@
+{% extends "layout/index.html" %}
+{% load static messages i18n %}
+
+{% block title %}{% trans 'Address book' %}{% endblock %}
+
+{% block content %}
+<section class="QjaneInbox">
+    <div class="container">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#ABcontactsList">{% trans 'Contacts' %}</a></li>
+          <li><a data-toggle="tab" href="#ABCompaniesList">{% trans 'Companies' %}</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="ABcontactsList" class="tab-pane fade in active">
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans 'Contacts' %}</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        {% if contacts %}
+                        <table class="table">
+                            {% for contact in contacts %}
+                            <tr>
+                                <td class="media">
+                                  <div class="media-left">
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">
+                                          <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ contact.user_contact.user.get_avatar }}" alt="{{ contact }}">
+                                      </a>
+                                  </div>
+
+                                  <div class="media-body">
+                                      <h4 class="media-heading">{{ contact.user_contact.get_print }}</h4>
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">{% trans 'Visit profile' %}</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% else %}
+                        <p class="h5">{% trans 'There are not contacts yet.' %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="ABCompaniesList" class="tab-pane fade">
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans 'Companies' %}</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        {% if companies %}
+                        <table class="table">
+                            {% for company_contact in companies %}
+                            <tr>
+                                <td class="media">
+                                  <div class="media-left">
+                                    <a href="{{ company_contact.company.get_absolute_url }}">
+                                        <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ company_contact.company.get_logo }}" alt="{{ company_contact.company }}">
+                                    </a>
+                                  </div>
+
+                                  <div class="media-body">
+                                    <h4 class="media-heading">{{ company_contact.company }}</h4>
+                                    <a href="{{ company_contact.company.get_absolute_url }}">Visit company</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% else %}
+                        <p class="h5">{% trans 'There are not companies yet.' %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

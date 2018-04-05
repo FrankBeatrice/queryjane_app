@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 16:32+0000\n"
+"POT-Creation-Date: 2018-04-05 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,6 +211,58 @@ msgstr "de"
 msgid "to"
 msgstr "para"
 
+#: account/models.py:411 account/models.py:432
+#, fuzzy
+#| msgid "Owner"
+msgid "owner"
+msgstr "Administrador principal"
+
+#: account/models.py:417
+#, fuzzy
+#| msgid "Contact"
+msgid "contact"
+msgstr "Contacto"
+
+#: account/templates/account/address_book/address_book.html:4
+#, fuzzy
+#| msgid "Address"
+msgid "Address book"
+msgstr "Dirección"
+
+#: account/templates/account/address_book/address_book.html:10
+#: account/templates/account/address_book/address_book.html:22
+#, fuzzy
+#| msgid "Contact"
+msgid "Contacts"
+msgstr "Contacto"
+
+#: account/templates/account/address_book/address_book.html:11
+#: account/templates/account/address_book/address_book.html:61
+#: app/templates/layout/index.html:108
+#: corporative/templates/corporative/admin_dashboard.html:10
+#: entrepreneur/templates/entrepreneur/venture_list.html:4
+#: entrepreneur/templates/entrepreneur/venture_list.html:66
+msgid "Companies"
+msgstr "Empresas"
+
+#: account/templates/account/address_book/address_book.html:39
+#, fuzzy
+#| msgid "Visit  profile"
+msgid "Visit profile"
+msgstr "Visita el perfil de %(message.user_from.first_name)s's"
+
+#: account/templates/account/address_book/address_book.html:46
+#, fuzzy
+#| msgid "There are not applicants yet."
+msgid "There are not contacts yet."
+msgstr "No hay aplicantes aún."
+
+#: account/templates/account/address_book/address_book.html:85
+#, fuzzy
+#| msgid "There are not hidden companies."
+msgid "There are not companies yet."
+msgstr "No hay empresas ocultas."
+
 #: account/templates/account/auth/login.html:4
 #: account/templates/account/auth/login.html:19
 #: account/templates/account/auth/login.html:42
@@ -352,14 +404,14 @@ msgstr "No hay empresas registradas en tu país aún."
 #: account/templates/account/dashboard_company_line.html:32
 #: account/templates/account/dashboard_job_offer_line.html:45
 #: entrepreneur/templates/entrepreneur/job_detail.html:108
-#: entrepreneur/templates/entrepreneur/venture_profile.html:231
+#: entrepreneur/templates/entrepreneur/venture_profile.html:238
 msgid "Share"
 msgstr "Compartir"
 
 #: account/templates/account/dashboard_company_line.html:36
 #: account/templates/account/dashboard_job_offer_line.html:49
 #: entrepreneur/templates/entrepreneur/job_detail.html:113
-#: entrepreneur/templates/entrepreneur/venture_profile.html:236
+#: entrepreneur/templates/entrepreneur/venture_profile.html:243
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -386,7 +438,7 @@ msgstr "Tipo de trabajo:"
 
 #: account/templates/account/dashboard_job_offer_line.html:53
 #: entrepreneur/templates/entrepreneur/job_detail.html:117
-#: entrepreneur/templates/entrepreneur/venture_profile.html:240
+#: entrepreneur/templates/entrepreneur/venture_profile.html:247
 msgid "Activate"
 msgstr "Activar"
 
@@ -457,27 +509,37 @@ msgstr "nuevas notificaciones."
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: account/templates/account/professional_profile.html:31
-#: entrepreneur/templates/entrepreneur/venture_profile.html:87
+#: account/templates/account/professional_profile.html:28
+#: entrepreneur/templates/entrepreneur/venture_profile.html:83
+msgid "Add to my address book"
+msgstr "Agregar al directorio"
+
+#: account/templates/account/professional_profile.html:30
+#: entrepreneur/templates/entrepreneur/venture_profile.html:85
+msgid "Remove from my address book"
+msgstr "Eliminar del directorio"
+
+#: account/templates/account/professional_profile.html:39
+#: entrepreneur/templates/entrepreneur/venture_profile.html:94
 msgid "Sectors"
 msgstr "Sectores"
 
-#: account/templates/account/professional_profile.html:31
-#: entrepreneur/templates/entrepreneur/venture_profile.html:87
+#: account/templates/account/professional_profile.html:39
+#: entrepreneur/templates/entrepreneur/venture_profile.html:94
 msgid "Sector"
 msgstr "Sector"
 
-#: account/templates/account/professional_profile.html:47
+#: account/templates/account/professional_profile.html:55
 msgid "has not added industry sectors."
 msgstr "no ha agregado sectores de la industria."
 
-#: account/templates/account/professional_profile.html:59
-#: entrepreneur/templates/entrepreneur/venture_profile.html:111
+#: account/templates/account/professional_profile.html:67
+#: entrepreneur/templates/entrepreneur/venture_profile.html:118
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:57
 msgid "Location"
 msgstr "Ubicación"
 
-#: account/templates/account/professional_profile.html:87
+#: account/templates/account/professional_profile.html:95
 msgid "There is not information about this profile."
 msgstr "No hay información sobre este perfil."
 
@@ -618,8 +680,10 @@ msgstr "aplicante"
 
 #: account/templates/account/profile_update.html:274
 msgid ""
-"notify me when users apply to job offers published by companies I manage."
+"notify me when users apply for job offers published by companies I manage."
 msgstr ""
+"Notificarme cuando usuarios apliquen a ofertas de trabajo publicadas "
+"por las empresas que administro."
 
 #: account/templates/account/signup_landing.html:4
 msgid "Register your company or your profile."
@@ -741,13 +805,6 @@ msgstr "Términos de uso"
 msgid "Privacy policy"
 msgstr "Política de privacidad"
 
-#: app/templates/layout/index.html:108
-#: corporative/templates/corporative/admin_dashboard.html:10
-#: entrepreneur/templates/entrepreneur/venture_list.html:4
-#: entrepreneur/templates/entrepreneur/venture_list.html:66
-msgid "Companies"
-msgstr "Empresas"
-
 #: app/templates/layout/index.html:110
 msgid "Jobs"
 msgstr "Trabajos"
@@ -783,7 +840,7 @@ msgid "There are not new messages"
 msgstr "No hay nuevos mensajes"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:50
-#: app/templates/layout/menu/_navbar_user_menu.html:144
+#: app/templates/layout/menu/_navbar_user_menu.html:151
 msgid "New message"
 msgstr "Nuevos mensajes"
 
@@ -803,30 +860,36 @@ msgstr "Cuenta"
 msgid "New company"
 msgstr "Nueva empresa"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:107
+#: app/templates/layout/menu/_navbar_user_menu.html:97
+#, fuzzy
+#| msgid "address"
+msgid "address book"
+msgstr "dirección"
+
+#: app/templates/layout/menu/_navbar_user_menu.html:114
 #: entrepreneur/templates/entrepreneur/job_detail.html:101
-#: entrepreneur/templates/entrepreneur/venture_profile.html:224
+#: entrepreneur/templates/entrepreneur/venture_profile.html:231
 msgid "Qjane Admin"
 msgstr "Qjane Admin"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:116
+#: app/templates/layout/menu/_navbar_user_menu.html:123
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:135
+#: app/templates/layout/menu/_navbar_user_menu.html:142
 msgid "Compose Message"
 msgstr "Crear mensaje"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:145
+#: app/templates/layout/menu/_navbar_user_menu.html:152
 #: app/templates/modals/_message_modal.html:16
 msgid "Full conversation"
 msgstr "Conversación completa"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:151
+#: app/templates/layout/menu/_navbar_user_menu.html:158
 msgid "Your message has been sent."
 msgstr "Tu mensaje ha sido enviado"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:170
+#: app/templates/layout/menu/_navbar_user_menu.html:177
 msgid "Send"
 msgstr "Enviar"
 
@@ -1214,7 +1277,9 @@ msgid "applicants"
 msgstr "aplicante"
 
 #: entrepreneur/templates/entrepreneur/emails/new_applicants.html:7
-msgid "new applicants to your job offer:"
+#, fuzzy
+#| msgid "new applicants to your job offer:"
+msgid "new applicants for your job offer:"
 msgstr "nuevos aplicantes para tu oferta de trabajo"
 
 #: entrepreneur/templates/entrepreneur/job_detail.html:51
@@ -1321,17 +1386,17 @@ msgstr "Rechazar"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:139
+#: entrepreneur/templates/entrepreneur/venture_profile.html:146
 msgid "Web page"
 msgstr "Página web"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:154
+#: entrepreneur/templates/entrepreneur/venture_profile.html:161
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:131
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:163
 msgid "Social media"
 msgstr "Social media"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:197
+#: entrepreneur/templates/entrepreneur/venture_profile.html:204
 #: entrepreneur/templates/entrepreneur/venture_settings/settings_menu.html:22
 msgid "Contact"
 msgstr "Contacto"
@@ -1339,6 +1404,12 @@ msgstr "Contacto"
 #: entrepreneur/templates/entrepreneur/venture_settings/_membership_line.html:19
 msgid "Resend"
 msgstr "Reenviar"
+
+#: entrepreneur/templates/entrepreneur/venture_settings/_userprofile_line.html:22
+#, fuzzy
+#| msgid "Address"
+msgid "Add"
+msgstr "Dirección"
 
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:4
 msgid "Contact settings"
@@ -1536,6 +1607,3 @@ msgstr "estados"
 #: place/models.py:74
 msgid "countries"
 msgstr "países"
-
-#~ msgid "Visit  profile"
-#~ msgstr "Visita el perfil de %(message.user_from.first_name)s's"
