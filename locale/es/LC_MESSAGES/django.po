@@ -1409,7 +1409,7 @@ msgstr "Reenviar"
 #, fuzzy
 #| msgid "Address"
 msgid "Add"
-msgstr "Dirección"
+msgstr "Agregar"
 
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:4
 msgid "Contact settings"
