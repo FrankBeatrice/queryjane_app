@@ -82,6 +82,8 @@
 
                 <button type="button" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
 
+                <button type="button" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' venture.id %}" data-company-for-remove-name="{{ venture.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
+
                 <br>
                 <br>
 

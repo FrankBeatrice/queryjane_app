@@ -4,6 +4,7 @@ from account.views.address_book import AddressBookView
 from account.views.address_book import AddUserToAddressBookView
 from account.views.address_book import AddCompanyToAddressBookView
 from account.views.address_book import RemoveUserFromAddressBookView
+from account.views.address_book import RemoveCompanyToAddressBookView
 from account.views.messages import InboxView
 from account.views.messages import LoadMessageModal
 from account.views.messages import LoadConversationView
@@ -148,5 +149,11 @@ urlpatterns = [
         r'^ax_add_company_to_address_book/(?P<pk>\d+)/$',
         AddCompanyToAddressBookView.as_view(),
         name='ajax_add_company_to_address_book',
+    ),
+
+    url(
+        r'^ax_remove_company_to_address_book/(?P<pk>\d+)/$',
+        RemoveCompanyToAddressBookView.as_view(),
+        name='ajax_remove_company_from_address_book',
     ),
 ]

@@ -96,6 +96,16 @@ class AddressBookPermissions(object):
 
         return False
 
+    @classmethod
+    def can_remove_company(self, owner, company):
+        if CompanyContact.objects.filter(
+            owner=owner,
+            company=company,
+        ):
+            return True
+
+        return False
+
 
 class JobOfferPermissions(object):
     @classmethod

@@ -21,6 +21,10 @@ class AddressBookView(LoginRequiredMixin, TemplateView):
         context['contacts'] = UserContact.objects.filter(
             owner=self.request.user.professionalprofile,
         )
+        context['companies'] = CompanyContact.objects.filter(
+            owner=self.request.user.professionalprofile,
+        )
+
         return context
 
 
@@ -89,5 +93,28 @@ class AddCompanyToAddressBookView(CustomUserMixin, View):
             owner=self.request.user.professionalprofile,
             company=self.get_object(),
         )
+
+        return HttpResponse("success")
+
+
+class RemoveCompanyToAddressBookView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            id=self.kwargs.get('pk'),
+        )
+
+    def test_func(self):
+        return AddressBookPermissions.can_remove_company(
+            owner=self.request.user.professionalprofile,
+            company=self.get_object(),
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        CompanyContact.objects.filter(
+            owner=self.request.user.professionalprofile,
+            company=self.get_object(),
+        ).delete()
 
         return HttpResponse("success")

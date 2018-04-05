@@ -225,6 +225,11 @@ class VentureDetail(DetailView):
             venture,
         )
 
+        context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
+            self.request.user.professionalprofile,
+            venture,
+        )
+
         return context
 
 
