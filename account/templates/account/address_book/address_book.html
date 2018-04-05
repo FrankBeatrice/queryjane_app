@@ -7,15 +7,47 @@
 <section class="QjaneInbox">
     <div class="container">
         <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#contacts">{% trans 'Contacts' %}</a></li>
-          <li><a data-toggle="tab" href="#socialnetworksAdmin">{% trans 'Companies' %}</a></li>
+          <li class="active"><a data-toggle="tab" href="#ABcontactsList">{% trans 'Contacts' %}</a></li>
+          <li><a data-toggle="tab" href="#ABCompaniesList">{% trans 'Companies' %}</a></li>
         </ul>
 
         <div class="tab-content">
-          <div id="companiesAdmin" class="tab-pane fade in active">
+          <div id="ABcontactsList" class="tab-pane fade in active">
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans 'Contacts' %}</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table">
+                            {% for contact in contacts %}
+                            <tr>
+                                <td class="media">
+                                  <div class="media-left">
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">
+                                          <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ contact.user_contact.user.get_avatar }}" alt="{{ contact }}">
+                                      </a>
+                                  </div>
+
+                                  <div class="media-body">
+                                      <h4 class="media-heading">{{ contact.user_contact.get_print }}</h4>
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">Visit profile</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div id="socialnetworksAdmin" class="tab-pane fade">
+          <div id="ABCompaniesList" class="tab-pane fade">
           </div>
         </div>
     </div>
