@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from account.views.address_book import AddressBookView
 from account.views.address_book import AddUserToAddressBookView
+from account.views.address_book import RemoveUserFromAddressBookView
 from account.views.messages import InboxView
 from account.views.messages import LoadMessageModal
 from account.views.messages import LoadConversationView
@@ -134,5 +135,11 @@ urlpatterns = [
         r'^ax_add_user_to_address_book/(?P<pk>\d+)/$',
         AddUserToAddressBookView.as_view(),
         name='ajax_add_user_to_address_book',
+    ),
+
+    url(
+        r'^ax_remove_user_from_address_book/(?P<pk>\d+)/$',
+        RemoveUserFromAddressBookView.as_view(),
+        name='ajax_remove_user_from_address_book',
     ),
 ]

@@ -34,4 +34,26 @@ $(function () {
             }
         });
     });
+
+    // remove contact from address book.
+    $('#id_remove_user_from_address_book').on('click', function () {
+        var user_for_remove_name = $(this).data('user-for-remove-name');
+
+        $.post($(this).data('remove-user-from-address-book-url'), function (response) {
+            if (response === 'success') {
+                $('#id_add_user_to_address_book').show();
+                $('#id_remove_user_from_address_book').hide();
+
+                $.alert({
+                    title: 'Well done!',
+                    content: user_for_remove_name + ' has been removed from your address book.',
+                });
+            } else {
+                $.alert({
+                    title: 'Error!',
+                    content: 'something is wrong. Please reload and try again.',
+                });
+            }
+        });
+    });
 })

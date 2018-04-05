@@ -40,3 +40,26 @@ class AddUserToAddressBookView(CustomUserMixin, View):
         )
 
         return HttpResponse("success")
+
+
+class RemoveUserFromAddressBookView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            ProfessionalProfile,
+            id=self.kwargs.get('pk'),
+        )
+
+    def test_func(self):
+        return AddressBookPermissions.can_remove_user(
+            owner=self.request.user.professionalprofile,
+            user_for_remove=self.get_object(),
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        UserContact.objects.filter(
+            owner=self.request.user.professionalprofile,
+            user_contact=self.get_object(),
+        ).delete()
+
+        return HttpResponse("success")
