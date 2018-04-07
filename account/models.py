@@ -248,6 +248,11 @@ class ProfessionalProfile(models.Model):
         verbose_name=_('receive notifications of new applicants to job offers'),
     )
 
+    new_company_messages_notifications = models.BooleanField(
+        default=True,
+        verbose_name=_('receive notifications when companies I manage receive messages from users'),
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )

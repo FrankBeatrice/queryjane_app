@@ -91,30 +91,33 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                 status=ACTIVE_MEMBERSHIP,
                 role__in=(OWNER, QJANE_ADMIN),
             ):
+                user = membership.admin.user
+
                 UserNotification.objects.create(
                     notification_type=NEW_MESSAGE_TO_COMPANY,
-                    noty_to=membership.admin.user,
+                    noty_to=user,
                     answered=True,
                     description=description,
                     venture_to=company_to,
                     created_by=self.request.user.professionalprofile,
                 )
 
-                subject = description
+                if user.professionalprofile.new_company_messages_notifications:
+                    subject = description
 
-                body = render_to_string(
-                    'account/emails/new_private_message.html', {
-                        'title': subject,
-                        'message': message,
-                        'base_url': settings.BASE_URL,
-                    },
-                )
+                    body = render_to_string(
+                        'account/emails/new_private_message.html', {
+                            'title': subject,
+                            'message': message,
+                            'base_url': settings.BASE_URL,
+                        },
+                    )
 
-                send_email(
-                    subject=subject,
-                    body=body,
-                    mail_to=[membership.admin.user.email],
-                )
+                    send_email(
+                        subject=subject,
+                        body=body,
+                        mail_to=[user.email],
+                    )
 
         return HttpResponse('success')
 
