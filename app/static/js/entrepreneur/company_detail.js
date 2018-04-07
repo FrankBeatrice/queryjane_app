@@ -52,8 +52,8 @@ $(function () {
 
         $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('company-to-name'));
 
-        // $.post($(this).data('load-conversation-url')).done(function (response) {
-        //     $('#newMessageConversation').html(response.content);
-        // });
+        $.post($(this).data('load-conversation-url')).done(function (response) {
+            $('#newMessageConversation').html(response.content);
+        });
     });
 })

@@ -2,6 +2,7 @@ from django.conf import settings
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -181,6 +182,38 @@ class LoadConversationView(LoginRequiredMixin, View):
         conversation = UserMessage.objects.filter(
             user_to__in=(user_converation, request.user),
             user_from__in=(user_converation, request.user),
+        ).distinct()
+
+        return JsonResponse(
+            {
+                'content': render_to_string(
+                    'modals/conversation_table.html',
+                    context={
+                        'conversation': conversation,
+                    },
+                    request=self.request,
+                ),
+            }
+        )
+
+    def get(self, *args, **kwargs):
+        raise Http404('Method not available')
+
+
+class LoadCompanyConversationView(LoginRequiredMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            pk=self.kwargs['pk'],
+        )
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        company_converation = self.get_object()
+
+        conversation = UserMessage.objects.filter(
+            Q(user_from=request.user, company_to=company_converation) |
+            Q(user_to=request.user),
         ).distinct()
 
         return JsonResponse(
