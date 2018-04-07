@@ -1,17 +1,18 @@
 from django.conf.urls import url
 
-from .views.contact_venture_settings import AjaxMediaVentureFormView
 from .views.contact_venture_settings import AjaxContactVentureFormView
 from .views.contact_venture_settings import AjaxLocationVentureFormView
+from .views.contact_venture_settings import AjaxMediaVentureFormView
 from .views.contact_venture_settings import ContactVentureFormView
 from .views.general_venture_settings import GeneralVentureFormView
 from .views.general_venture_settings import UpdateVentureDescriptionForm
 from .views.general_venture_settings import UpdateVentureLogoForm
 from .views.general_venture_settings import VentureCategoryView
-from .views.manage_job_offers import JobOfferFormView
-from .views.manage_job_offers import JobOfferUpdateView
-from .views.manage_job_offers import JobOffersListView
 from .views.manage_job_offers import JobOfferCloseView
+from .views.manage_job_offers import JobOfferFormView
+from .views.manage_job_offers import JobOffersListView
+from .views.manage_job_offers import JobOfferUpdateView
+from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesVentureFormView
@@ -83,6 +84,12 @@ urlpatterns = [
         r'^settings/(?P<slug>[-\w]+)/roles/$',
         RolesVentureFormView.as_view(),
         name='roles_venture_form',
+    ),
+
+    url(
+        r'^settings/(?P<slug>[-\w]+)/messages/$',
+        MessagesView.as_view(),
+        name='messages_adim',
     ),
 
     url(

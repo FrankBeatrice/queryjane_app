@@ -50,6 +50,14 @@ class MessagesPermissions(object):
         if message.user_to == user:
             return True
 
+        if AdministratorMembership.objects.filter(
+            admin=user.professionalprofile,
+            venture=message.company_to,
+            status=ACTIVE_MEMBERSHIP,
+            role__in=(OWNER, QJANE_ADMIN),
+        ):
+            return True
+
         return False
 
 

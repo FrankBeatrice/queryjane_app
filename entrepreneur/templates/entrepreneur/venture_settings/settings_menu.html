@@ -31,6 +31,13 @@
             </a>
         </li>
 
+        <li class="list-group-item {% if messages_active %}active{% endif %}">
+            <a href="{% url 'entrepreneur:messages_adim' venture.slug %}" class="clearfix">
+                <span class="pull-left">{% trans 'Messages' %}</span>
+                <i class="fa fa-envelope pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+
         <li class="list-group-item {% if jobs_active %}active{% endif %}">
             <a href="{% url 'entrepreneur:job_offers_list' venture.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Job Offers' %}</span>
