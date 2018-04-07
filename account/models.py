@@ -16,6 +16,7 @@ from .data import NEW_ENTREPRENEUR_ADMIN
 from .data import NEW_JOB_OFFER
 from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
+from .data import NEW_MESSAGE_TO_COMPANY
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -328,6 +329,13 @@ class UserNotification(models.Model):
         null=True,
     )
 
+    venture_to = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('venture to'),
+        related_name='venture_to',
+        null=True,
+    )
+
     membership = models.ForeignKey(
         'entrepreneur.AdministratorMembership',
         verbose_name=_('membership invitation'),
@@ -363,6 +371,10 @@ class UserNotification(models.Model):
     @property
     def is_new_job_offer_applicants(self):
         return self.notification_type == NEW_APPLICANTS
+
+    @property
+    def is_new_message_to_company(self):
+        return self.notification_type == NEW_MESSAGE_TO_COMPANY
 
     class Meta:
         ordering = ('-created_at',)

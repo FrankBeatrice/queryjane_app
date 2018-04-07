@@ -3,20 +3,25 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import Http404
-from django.http import JsonResponse
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from django.views.generic import ListView
 from django.views.generic import FormView
+from django.views.generic import ListView
 from django.views.generic import View
 
+from account.data import NEW_MESSAGE_TO_COMPANY
+from account.forms import UserMessageForm
 from account.models import User
 from account.models import UserMessage
+from account.models import UserNotification
 from account.permissions import MessagesPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
-from account.forms import UserMessageForm
+from entrepreneur.data import ACTIVE_MEMBERSHIP
+from entrepreneur.data import OWNER
+from entrepreneur.data import QJANE_ADMIN
 from entrepreneur.models import Venture
 
 
@@ -79,7 +84,21 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                 message=user_message,
             )
 
+            description = '{0} has received a new message'.format(company_to)
+
             # Create new message notification for company administrators.
+            for membership in company_to.administratormembership_set.filter(
+                status=ACTIVE_MEMBERSHIP,
+                role__in=(OWNER, QJANE_ADMIN),
+            ):
+                UserNotification.objects.create(
+                    notification_type=NEW_MESSAGE_TO_COMPANY,
+                    noty_to=membership.admin.user,
+                    answered=True,
+                    description=description,
+                    venture_to=company_to,
+                    created_by=self.request.user.professionalprofile,
+                )
 
         return HttpResponse('success')
 
