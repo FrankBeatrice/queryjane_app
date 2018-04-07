@@ -100,6 +100,22 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                     created_by=self.request.user.professionalprofile,
                 )
 
+                subject = description
+
+                body = render_to_string(
+                    'account/emails/new_private_message.html', {
+                        'title': subject,
+                        'message': message,
+                        'base_url': settings.BASE_URL,
+                    },
+                )
+
+                send_email(
+                    subject=subject,
+                    body=body,
+                    mail_to=[membership.admin.user.email],
+                )
+
         return HttpResponse('success')
 
 

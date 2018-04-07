@@ -6,7 +6,11 @@
 {% block content %}
 <h1>{% trans 'New private message' %}</h1>
 
-<p>{% blocktrans %}Hi {{ message.user_to.first_name }}. You have received a new message from{% endblocktrans %} <a href="{{ base_url }}profile/{{ message.user_from.professionalprofile.slug }}">{{ message.user_from }}</a>:</p>
+<p>{% blocktrans %}Hi {{ message.user_to.first_name }},</p>
+
+<p>
+	{% if message.company_to %}{{ message.company_to }} has{% else %}You have{% endif %} received a new message from{% endblocktrans %} <a href="{{ base_url }}profile/{{ message.user_from.professionalprofile.slug }}">{{ message.user_from }}</a>:
+</p>
 
 <p>{{ message.message|truncatechars:100 }}</p>
 
