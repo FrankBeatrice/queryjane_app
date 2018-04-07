@@ -382,6 +382,14 @@ class UserMessage(models.Model):
         'account.User',
         verbose_name=_('to'),
         related_name='user_to',
+        null=True,
+    )
+
+    company_to = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('to'),
+        related_name='company_to',
+        null=True,
     )
 
     message = models.TextField(

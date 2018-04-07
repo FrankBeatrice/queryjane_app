@@ -80,9 +80,14 @@
                     </div>
                 {% endif %}
 
-                <button type="button" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
+                <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
 
-                <button type="button" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' venture.id %}" data-company-for-remove-name="{{ venture.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
+                <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' venture.id %}" data-company-for-remove-name="{{ venture.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
+
+                <br>
+                <br>
+
+                <a href="javascript:void(0)" id="id_send_message_to_company_link" class="btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-company-to-name="{{ venture }}">{% trans 'Send message' %}</a>
 
                 <br>
                 <br>

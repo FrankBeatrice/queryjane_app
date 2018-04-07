@@ -17,6 +17,7 @@ from account.permissions import MessagesPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
 from account.forms import UserMessageForm
+from entrepreneur.models import Venture
 
 
 class InboxView(LoginRequiredMixin, ListView):
@@ -39,33 +40,46 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         user_message = form.cleaned_data['user_message']
         user_to_id = form.cleaned_data['user_to_id']
+        company_to_id = form.cleaned_data['company_to_id']
 
-        user_to = User.objects.get(id=user_to_id)
+        if user_to_id:
+            user_to = User.objects.get(id=user_to_id)
 
-        message = UserMessage.objects.create(
-            user_from=self.request.user,
-            user_to=user_to,
-            message=user_message,
-        )
-
-        if user_to.professionalprofile.email_jobs_notifications:
-            subject = 'You have received a new message from {0}'.format(
-                self.request.user,
+            message = UserMessage.objects.create(
+                user_from=self.request.user,
+                user_to=user_to,
+                message=user_message,
             )
 
-            body = render_to_string(
-                'account/emails/new_private_message.html', {
-                    'title': subject,
-                    'message': message,
-                    'base_url': settings.BASE_URL,
-                },
+            if user_to.professionalprofile.email_messages_notifications:
+                subject = 'You have received a new message from {0}'.format(
+                    self.request.user,
+                )
+
+                body = render_to_string(
+                    'account/emails/new_private_message.html', {
+                        'title': subject,
+                        'message': message,
+                        'base_url': settings.BASE_URL,
+                    },
+                )
+
+                send_email(
+                    subject=subject,
+                    body=body,
+                    mail_to=[user_to.email],
+                )
+
+        if company_to_id:
+            company_to = Venture.objects.get(id=company_to_id)
+
+            message = UserMessage.objects.create(
+                user_from=self.request.user,
+                company_to=company_to,
+                message=user_message,
             )
 
-            send_email(
-                subject=subject,
-                body=body,
-                mail_to=[user_to.email],
-            )
+            # Create new message notification for company administrators.
 
         return HttpResponse('success')
 

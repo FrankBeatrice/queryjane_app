@@ -44,4 +44,16 @@ $(function () {
             }
         });
     });
+
+    // Load send message form.
+    $('#id_send_message_to_company_link').on('click', function () {
+        var company_to_id = $(this).data('company-to-id');
+        $('#id_company_to_id').val(company_to_id);
+
+        $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('company-to-name'));
+
+        // $.post($(this).data('load-conversation-url')).done(function (response) {
+        //     $('#newMessageConversation').html(response.content);
+        // });
+    });
 })
