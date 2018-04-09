@@ -409,6 +409,13 @@ class UserMessage(models.Model):
         null=True,
     )
 
+    company_from = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('from'),
+        related_name='company_from',
+        null=True,
+    )
+
     message = models.TextField(
         verbose_name=_('message'),
     )

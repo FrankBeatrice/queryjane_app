@@ -23,7 +23,7 @@
                                     <span> - {% trans 'From:' %} {{ message.user_from }}</span>
                                     <p>{{ message.created_at }}</p>
 
-                                    <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
+                                    <a class="rrr qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage" data-load-conversation-url="{% url 'account:ajax_post_customer_conversation_load' venture.id %}" data-user-to-id="{{ message.user_from.id }}">
                                         <p>{{ message.message|truncatechars:70 }}</p>
                                     </a>
                                 </td>
@@ -36,4 +36,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/messages.js' %}"></script>
 {% endblock %}
