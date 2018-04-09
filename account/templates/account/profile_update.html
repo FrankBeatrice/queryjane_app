@@ -135,10 +135,17 @@
             </div>
 
             <div class="panel-body">
+                {% get_current_language as LANGUAGE_CODE %}
                 <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}">
                     {% for industry_category in industry_categories %}
                     <li>
-                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                        {% if LANGUAGE_CODE == 'es' %}
+                        {{ industry_category.name_es }}
+                        {% else %}
+                        {{ industry_category.name_en }}
+                        {% endif %}
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -215,7 +222,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mt-xs">
-                                    Save
+                                    {% trans 'Save' %}
                                 </button>
                             </div>
 
@@ -259,6 +266,28 @@
                             <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'Yes' %}</button>
 
                             <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'No' %}</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <h3>{% trans 'New applicants' %}</h3>
+                        <p>{% trans 'notify me when users apply for job offers published by companies I manage.' %}</p>
+
+                        <div data-notification="new_applicants_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'Yes' %}</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'No' %}</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <h3>{% trans 'Messages to my companies' %}</h3>
+                        <p>{% trans 'Notify me when companies I manage receive messages from users.' %}</p>
+
+                        <div data-notification="new_company_messages_notifications">
+                            <button type="button" data-value="notify" class="btn {% if professional_profile.new_company_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'Yes' %}</button>
+
+                            <button type="button" data-value="not_notify" class="btn {% if not professional_profile.new_company_messages_notifications %}btn-primary{% else %}btn-default{% endif %}">{% trans 'No' %}</button>
                         </div>
                     </div>
                 </div>

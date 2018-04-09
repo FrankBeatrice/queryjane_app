@@ -27,10 +27,18 @@
 
                 <p class="h4">{% trans 'Select sectors of the industry.' %}</p>
 
+                {% get_current_language as LANGUAGE_CODE %}
+
                 <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}" data-account-url="{% url 'account:profile_update' %}">
                     {% for industry_category in industry_categories %}
                     <li>
-                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">{{ industry_category.name_en }}</a>
+                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                        {% if LANGUAGE_CODE == 'es' %}
+                        {{ industry_category.name_es }}
+                        {% else %}
+                        {{ industry_category.name_en }}
+                        {% endif %}
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>

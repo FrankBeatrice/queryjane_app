@@ -1,8 +1,14 @@
 $(function () {
-    var quill = new Quill('#rich_editor_description_en', {
+    var quill_en = new Quill('#rich_editor_description_en', {
         theme: 'snow'
     }).on('text-change', function () {
         $('#id_description_en').val($('#rich_editor_description_en .ql-editor').html());
+    });
+
+    var quill_es = new Quill('#rich_editor_description_es', {
+        theme: 'snow'
+    }).on('text-change', function () {
+        $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
     });
 
     $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
@@ -11,7 +17,7 @@ $(function () {
 
     var initial_country_code = $('#id_country_code').val();
     if (initial_country_code) {
-      var flag_url = '/static/flags/' + initial_country_code.toLowerCase() + '.gif';
+      var flag_url = '/static/img/flags/' + initial_country_code.toLowerCase() + '.png';
 
       $('#id_QjaneVFcountryAutImg').attr('src', flag_url);
     }
@@ -67,8 +73,12 @@ $(function () {
                 required: true
             },
             description_en: {
-                minlength: 40,
-                required: true
+                required: false,
+                minlength: 40
+            },
+            description_es: {
+                required: false,
+                minlength: 40
             },
             industry_categories: {
                 required: true
@@ -103,8 +113,10 @@ $(function () {
                 error.insertAfter('.QjaneShareGPSfigure');
             } else if (element.attr('name') === 'industry_categories') {
                 error.insertAfter('.qjane-industry-categories-list');
-            }else if (element.attr('name') === 'description_en') {
+            } else if (element.attr('name') === 'description_en') {
                 error.insertAfter('#rich_editor_description_en');
+            } else if (element.attr('name') === 'description_es') {
+                error.insertAfter('#rich_editor_description_es');
             } else {
                 error.insertAfter(element);
             }

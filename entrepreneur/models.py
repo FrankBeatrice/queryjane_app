@@ -46,10 +46,14 @@ class Venture(models.Model):
     )
 
     description_es = models.TextField(
+        blank=True,
+        null=True,
         verbose_name=_('spanish description'),
     )
 
     description_en = models.TextField(
+        blank=True,
+        null=True,
         verbose_name=_('english description'),
     )
 
@@ -322,6 +326,11 @@ class JobOffer(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_('created at'),
+    )
+
+    applicants_record = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name=_('applicants register'),
     )
 
     def clean(self):

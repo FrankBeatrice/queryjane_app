@@ -141,6 +141,7 @@ urlpatterns += i18n_patterns(
         )
     ),
     url(r'^account/', include('account.urls', namespace='account')),
+
     url(
         r'^entrepreneur/',
         include(

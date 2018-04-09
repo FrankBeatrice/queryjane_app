@@ -182,6 +182,7 @@ class VentureForm(ModelForm):
             'address',
             'coordinates',
             'description_en',
+            'description_es',
             'industry_categories',
             'url',
             'facebook_url',
@@ -229,6 +230,14 @@ class VentureForm(ModelForm):
                     'city_search',
                     'select a city in {}'.format(country.name),
                 )
+
+        description_en = cleaned_data.get('description_en')
+        description_es = cleaned_data.get('description_es')
+
+        if not description_en and not description_es:
+            raise forms.ValidationError(
+                _('you must add the description of your company in at least one language.')
+            )
 
 
 class VentureLogoForm(Form):

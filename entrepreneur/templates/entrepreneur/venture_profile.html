@@ -5,7 +5,11 @@
 {% block title %}{{ venture }}{% endblock %}
 
 {% block meta_title %}{{ venture }}{% endblock %}
-{% block meta_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
+
+{% block meta_description %}
+{% get_company_description venture as company_description %}
+{{ company_description|safe|truncatechars_html:200 }}
+{% endblock %}
 
 {% block meta_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
@@ -15,7 +19,11 @@
 {% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
 
 {% block meta_twitter_title %}{{ venture }}{% endblock %}
-{% block meta_twitter_description %}{{ venture.description_en|safe|truncatechars_html:200 }}{% endblock %}
+
+{% block meta_twitter_description %}
+{% get_company_description venture as company_description %}
+{{ company_description|safe|truncatechars_html:200 }}
+{% endblock %}
 {% block meta_twitter_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
 {% endblock %}
@@ -72,6 +80,18 @@
                     </div>
                 {% endif %}
 
+                <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
+
+                <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' venture.id %}" data-company-for-remove-name="{{ venture.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
+
+                <br>
+                <br>
+
+                <a href="javascript:void(0)" id="id_send_message_to_company_link" class="btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-company-to-name="{{ venture }}" data-load-conversation-url="{% url 'account:ajax_post_company_conversation_load' venture.id %}">{% trans 'Send message' %}</a>
+
+                <br>
+                <br>
+
                 <div class="QJVentureDetCategories">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -80,9 +100,16 @@
                         </div>
 
                         <div class="panel-body">
+                            {% get_current_language as LANGUAGE_CODE %}
                             <ul class="QJVentureDetCats">
                             {% for industry_category in venture.industry_categories.all %}
-                                <li>{{ industry_category }}</li>
+                                <li>
+                                    {% if LANGUAGE_CODE == 'es' %}
+                                    {{ industry_category.name_es }}
+                                    {% else %}
+                                    {{ industry_category.name_en }}
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                             </ul>
                         </div>
@@ -233,14 +260,8 @@
 
             <div class="col-xs-12 col-sm-9">
                 <h1>{{ venture }}</h1>
-
-                <div class="QJVentureDetDescription">
-                {% if venture.description_en %}
-                    <div class="QJRedactorContent">
-                        {{ venture.description_en|safe }}
-                    </div>
-                {% endif %}
-                </div>
+                {% get_company_description venture as company_description %}
+                {{ company_description|safe }}
             </div>
         </div>
     </div>
@@ -249,4 +270,5 @@
 
 {% block js %}
 <script src="{% static 'js/corporative/staff_venture_actions.js' %}"></script>
+<script src="{% static 'js/entrepreneur/company_detail.js' %}"></script>
 {% endblock %}

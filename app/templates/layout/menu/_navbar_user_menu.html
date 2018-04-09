@@ -91,17 +91,24 @@
                     <i class="fa fa-briefcase pull-right" aria-hidden="true"></i>
                 </a>
             </li>
+
+            <li class="dropdown-item">
+                <a href="{% url 'account:address_book' %}" class="clearfix">
+                    <span class="pull-left">{% trans 'address book' %}</span>
+                    <i class="fa fa-address-book pull-right" aria-hidden="true"></i>
+                </a>
+            </li>
         {% get_user_venture_memberships user as user_venture_memberships %}
 
         {% if user_venture_memberships %}
         <li role="separator" class="divider"></li>
         {% for membership in user_venture_memberships %}
             <li class="dropdown-item"><a href="{{ membership.venture.get_absolute_url }}">{{ membership.venture }}</a></li>
+            <li role="separator" class="divider"></li>
         {% endfor %}
         {% endif %}
 
         {% if permission_app.manage_admin_views %}
-            <li role="separator" class="divider"></li>
             <li class="dropdown-item">
                 <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
                     <span class="pull-left">{% trans 'Qjane Admin' %}</span>
@@ -165,7 +172,10 @@
                             {{ message_form.user_message.errors }}
                         </div>
 
-                        <div style="display:none;">{% render_field message_form.user_to_id %}</div>
+                        <div>
+                            {% render_field message_form.user_to_id %}
+                            {% render_field message_form.company_to_id %}
+                        </div>
 
                         <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
                     </form>

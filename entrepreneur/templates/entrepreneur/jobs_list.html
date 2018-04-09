@@ -130,9 +130,16 @@
                                     {% endif %}
                                     </p>
 
+                                    {% get_current_language as LANGUAGE_CODE %}
                                     <ul class="QJVentureDetCats">
                                     {% for industry_category in job_offer.industry_categories.all %}
-                                        <li>{{ industry_category }}</li>
+                                        <li>
+                                        {% if LANGUAGE_CODE == 'es' %}
+                                        {{ industry_category.name_es }}
+                                        {% else %}
+                                        {{ industry_category.name_en }}
+                                        {% endif %}
+                                        </li>
                                     {% endfor %}
                                     </ul>
                               

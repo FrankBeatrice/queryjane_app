@@ -1,8 +1,10 @@
 {% load i18n %}
 <div class="modal-header">
     <h5 class="modal-title">
-    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer  %}
+    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants  %}
         {{ notification.venture_from }}
+    {% elif notification.is_new_message_to_company %}
+        {{ notification.venture_to }}
     {% endif %}
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,6 +21,14 @@
     <p>
         <strong>{{ notification.venture_from }}</strong> has published a job offer that may interest you.
     </p>
+{% elif notification.is_new_job_offer_applicants %}
+    <p>
+        There are new applicants for <strong>"{{ notification.job_offer }}"</strong>
+    </p>
+{% elif notification.is_new_message_to_company %}
+    <p>
+        <strong>{{ notification.venture_to }}</strong> has received a new message from {{ notification.created_by }}.
+    </p>
 {% endif %}
   </div>
 
@@ -27,9 +37,11 @@
     {% if notification.answered %}
     <span>{{ notification.membership.get_status_display }}</span>
     {% else %}
-    <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">Answer</a>
+    <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">{% trans 'Answer' %}</a>
     {% endif %}
-{% elif notification.is_interest_job_offer %}
-    <a href="{{ notification.job_offer.get_absolute_url }}" class="btn btn-primary">Check it out</a>
+{% elif notification.is_interest_job_offer or notification.is_new_job_offer_applicants %}
+    <a href="{{ notification.job_offer.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
+{% elif notification.is_new_message_to_company %}
+    <a href="{% url 'entrepreneur:messages_adim' notification.venture_to.slug %}" class="btn btn-primary">{% trans 'Go to recevied messages' %}</a>
 {% endif %}
 </div>

@@ -175,7 +175,8 @@ class UserMessageForm(Form):
         widget=forms.Textarea,
     )
 
-    user_to_id = forms.IntegerField()
+    user_to_id = forms.IntegerField(required=False)
+    company_to_id = forms.IntegerField(required=False)
 
 
 class AvatarForm(Form):
