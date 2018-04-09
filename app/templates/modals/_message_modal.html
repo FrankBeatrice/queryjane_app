@@ -29,6 +29,6 @@
 
 <div class="modal-footer">
     <a href="{% url 'professional_detail' message.user_from.professionalprofile.slug %}">
-      {% blocktrans %}Visit {{ message.user_from.first_name}}'s profile{% endblocktrans %}
-    </a>.
+      {{ message.user_from }} - {% trans 'Visit profile' %}
+    </a>
 </div>

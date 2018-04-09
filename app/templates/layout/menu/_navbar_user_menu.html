@@ -172,7 +172,10 @@
                             {{ message_form.user_message.errors }}
                         </div>
 
-                        <div style="display:none;">{% render_field message_form.user_to_id %}</div>
+                        <div>
+                            {% render_field message_form.user_to_id %}
+                            {% render_field message_form.company_to_id %}
+                        </div>
 
                         <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
                     </form>

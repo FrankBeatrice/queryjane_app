@@ -16,6 +16,7 @@ from .data import NEW_ENTREPRENEUR_ADMIN
 from .data import NEW_JOB_OFFER
 from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
+from .data import NEW_MESSAGE_TO_COMPANY
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -247,6 +248,11 @@ class ProfessionalProfile(models.Model):
         verbose_name=_('receive notifications of new applicants to job offers'),
     )
 
+    new_company_messages_notifications = models.BooleanField(
+        default=True,
+        verbose_name=_('receive notifications when companies I manage receive messages from users'),
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -328,6 +334,13 @@ class UserNotification(models.Model):
         null=True,
     )
 
+    venture_to = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('venture to'),
+        related_name='venture_to',
+        null=True,
+    )
+
     membership = models.ForeignKey(
         'entrepreneur.AdministratorMembership',
         verbose_name=_('membership invitation'),
@@ -364,6 +377,10 @@ class UserNotification(models.Model):
     def is_new_job_offer_applicants(self):
         return self.notification_type == NEW_APPLICANTS
 
+    @property
+    def is_new_message_to_company(self):
+        return self.notification_type == NEW_MESSAGE_TO_COMPANY
+
     class Meta:
         ordering = ('-created_at',)
 
@@ -382,6 +399,21 @@ class UserMessage(models.Model):
         'account.User',
         verbose_name=_('to'),
         related_name='user_to',
+        null=True,
+    )
+
+    company_to = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('to'),
+        related_name='company_to',
+        null=True,
+    )
+
+    company_from = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('from'),
+        related_name='company_from',
+        null=True,
     )
 
     message = models.TextField(

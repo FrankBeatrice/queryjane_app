@@ -1,0 +1,43 @@
+{% extends "layout/index.html" %}
+{% load static i18n %}
+
+{% block title %}{{ venture }} - {% trans 'Mesasges' %}{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans 'Messages' %}</h3>
+                    </div>
+
+                    <div class="panel-body QjaneInboxList">
+                        <table class="table">
+                            {% for message in messages_list %}
+                            <tr class="{% if message.unread %}active{% endif %}">
+                                <td>
+                                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                                    <span> - {% trans 'From:' %} {{ message.user_from }}</span>
+                                    <p>{{ message.created_at }}</p>
+
+                                    <a class="rrr qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage" data-load-conversation-url="{% url 'account:ajax_post_customer_conversation_load' venture.id %}" data-user-to-id="{{ message.user_from.id }}">
+                                        <p>{{ message.message|truncatechars:70 }}</p>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/entrepreneur/messages.js' %}"></script>
+{% endblock %}
