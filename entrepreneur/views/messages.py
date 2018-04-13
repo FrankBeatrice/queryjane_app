@@ -33,6 +33,7 @@ class MessagesView(CustomUserMixin, ListView):
 
         context = super().get_context_data(**kwargs)
         context['venture'] = company
+        context['messages_active'] = True
 
         return context
 
