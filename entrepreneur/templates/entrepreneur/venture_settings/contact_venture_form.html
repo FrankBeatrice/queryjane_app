@@ -66,14 +66,16 @@
                                 <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' venture.id %}">
                                     {% csrf_token %}
 
-                                    <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                    <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                         <label>
                                             {% trans 'Country' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div>
+                                        <div class="country-field__typeahead">
                                             {% render_field location_form.country_search class+="form-control" %}
-                                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+
+                                            <img class="country-field__typeahead__flag-icon" id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+
                                             <p>{{ location_form.country_search.errors }}</p>
                                         </div>
                                     </div>
@@ -83,15 +85,15 @@
                                         <p>{{ location_form.country_code.errors }}</p>
                                     </div>
 
-                                    <div id="id_QjaneVFcityAut" class="form-group" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                    <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                         <label>
                                             {% trans 'City' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div>
+                                        <div class="city-field__typeahead">
                                             {% render_field location_form.city_search class+="form-control" %}
-                                            <i class="fa fa-spinner fa-pulse fa-fw QjaneShareGPSloading" style="display: none;"></i>
-                                            <a class="fa fa-paper-plane QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                            <i class="fa fa-spinner fa-pulse fa-fw city-field__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
+                                            <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                             <p>{{ location_form.city_search.errors }}</p>
 
                                             <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>

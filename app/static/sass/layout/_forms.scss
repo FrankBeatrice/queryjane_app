@@ -1,0 +1,28 @@
+.country-field,
+.city-field {
+  &__typeahead {
+    position: relative;
+
+    .form-control {
+      padding-left: 36px;
+    }
+
+    &__send-icon,
+    &__flag-icon,
+    &__spinner-icon {
+      position: absolute;
+      left: 9px;
+      top: 10px;
+      z-index: 2;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
