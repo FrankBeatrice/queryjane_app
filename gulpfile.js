@@ -4,19 +4,25 @@ var autoprefixer = require('autoprefixer');
 var postcss      = require('gulp-postcss');
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
+var browserify   = require('browserify');
+var gutil        = require('gulp-util');
+var tap          = require('gulp-tap');
+var buffer       = require('gulp-buffer');
+var uglify       = require('gulp-uglify');
+var rename       = require('gulp-rename');
+var babelify     = require('babelify');
 
 var conf = {
   cssAssets: {
     src: [
-        './node_modules/bootstrap/dist/css/bootstrap.min.css',
-        './node_modules/bootstrap/dist/css/bootstrap.min.css.map',
-        './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
+      './node_modules/bootstrap/dist/css/bootstrap.min.css',
+      './node_modules/bootstrap/dist/css/bootstrap.min.css.map',
+      './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
     ],
     dest: './app/static/dist/assets/css/'
   },
   jsAssets: {
     src: [
-
       './node_modules/jquery/dist/jquery.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
       './node_modules/jquery-validation/dist/jquery.validate.js',
@@ -53,8 +59,27 @@ gulp.task('compile-sass', function() {
 
 // JS´s
 gulp.task('js', function () {
-  return gulp.src('./app/static/js/**/*.js')
-    .pipe(gulp.dest('app/static/dist/js/'));
+  return gulp.src(
+    './app/static/js/**/*.js',
+    {read: false}) // No need of reading file because browserify does.
+    // Transform file objects using gulp-tap plugin
+    .pipe(tap(function (file) {
+      gutil.log('bundling ' + file.path);
+      // Replace file contents with browserify's bundle stream
+      file.contents =
+        browserify(file.path, {debug: true})
+        .transform('babelify', {presets: ['env', 'es2015']})
+        .bundle();
+    }))
+    // Transform streaming contents into buffer contents (because gulp-sourcemaps does not support streaming contents)
+    .pipe(buffer())
+    // Load and init sourcemaps
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
+    // Write sourcemaps
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./app/static/dist/js/'));
 });
 
 // Images
