@@ -388,6 +388,21 @@ class UserNotification(models.Model):
         return self.description
 
 
+class Conversation(models.Model):
+    participating_users = models.ManyToManyField(
+        'account.User',
+    )
+
+    participating_company = models.ManyToManyField(
+        'entrepreneur.Venture',
+    )
+
+    updated_at = models.DateTimeField()
+
+    class Meta:
+        ordering = ('-updated_at',)
+
+
 class UserMessage(models.Model):
     user_from = models.ForeignKey(
         'account.User',
@@ -426,6 +441,10 @@ class UserMessage(models.Model):
 
     unread = models.BooleanField(
         default=True,
+    )
+
+    Conversation = models.ForeignKey(
+        'account.Conversation'
     )
 
     class Meta:
