@@ -241,7 +241,7 @@ function getLocation() {
           $('#id_company_to_id').val(company_to_id);
         }
 
-        $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('user-to-name'));
+        $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('to-name'));
 
 
         if (load_conversation_url){

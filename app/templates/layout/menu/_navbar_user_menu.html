@@ -46,7 +46,7 @@
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
         {% for conversation in recent_user_conversations %}
             <li class="dropdown-item">
-                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-user-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                     <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
                     From: {{ conversation.get_last_message.user_from }}
 

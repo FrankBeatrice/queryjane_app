@@ -104,6 +104,7 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                 )
 
         if company_to_id:
+            print("ENTRA")
             company_to = Venture.objects.get(id=company_to_id)
 
             if Conversation.objects.filter(
@@ -204,77 +205,6 @@ class LoadConversationView(CustomUserMixin, View):
                     user_to=request.user,
                     unread=True,
                 ).count()
-            }
-        )
-
-    def get(self, *args, **kwargs):
-        raise Http404('Method not available')
-
-
-class LoadCompanyConversationView(LoginRequiredMixin, View):
-    def get_object(self):
-        return get_object_or_404(
-            Venture,
-            pk=self.kwargs['pk'],
-        )
-
-    @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        company_converation = self.get_object()
-
-        conversation = UserMessage.objects.filter(
-            Q(user_from=request.user, company_to=company_converation) |
-            Q(user_to=request.user, company_from=company_converation),
-        ).distinct()
-
-        return JsonResponse(
-            {
-                'content': render_to_string(
-                    'modals/conversation_table.html',
-                    context={
-                        'conversation': conversation,
-                    },
-                    request=self.request,
-                ),
-            }
-        )
-
-    def get(self, *args, **kwargs):
-        raise Http404('Method not available')
-
-
-class LoadCustomerConversationView(CustomUserMixin, View):
-    def get_object(self):
-        return get_object_or_404(
-            Venture,
-            pk=self.kwargs['pk'],
-        )
-
-    def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
-            user=self.request.user,
-            venture=self.get_object()
-        )
-
-    @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        company = self.get_object()
-        user = User.objects.get(id=request.POST.get('user_to_id'))
-
-        conversation = UserMessage.objects.filter(
-            Q(user_from=user, company_to=company) |
-            Q(user_to=user, company_from=company),
-        ).distinct()
-
-        return JsonResponse(
-            {
-                'content': render_to_string(
-                    'modals/conversation_table.html',
-                    context={
-                        'conversation': conversation,
-                    },
-                    request=self.request,
-                ),
             }
         )
 

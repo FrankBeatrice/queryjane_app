@@ -34,7 +34,7 @@
                                 <span> - {% trans 'From:' %} {{ conversation.get_last_message.user_from }}</span>
                                 <p>{{ conversation.updated_at }}</p>
 
-                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-user-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                                     {{ conversation.get_last_message.message|truncatechars:70 }}
                                 </a>
                             </td>

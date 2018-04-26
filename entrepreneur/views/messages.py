@@ -4,15 +4,15 @@ from django.shortcuts import get_object_or_404
 from account.models import UserNotification
 from account.data import NEW_MESSAGE_TO_COMPANY
 from entrepreneur.models import Venture
-from account.models import UserMessage
+from account.models import Conversation
 from entrepreneur.permissions import EntrepreneurPermissions
 from app.mixins import CustomUserMixin
 
 
 class MessagesView(CustomUserMixin, ListView):
-    model = UserMessage
-    template_name = 'entrepreneur/venture_settings/messages.html'
-    context_object_name = 'messages_list'
+    model = Conversation
+    template_name = 'entrepreneur/venture_settings/conversations.html'
+    context_object_name = 'conversations_list'
 
     def test_func(self):
         return EntrepreneurPermissions.can_manage_venture(
@@ -38,6 +38,6 @@ class MessagesView(CustomUserMixin, ListView):
         return context
 
     def get_queryset(self):
-        return UserMessage.objects.filter(
-            company_to=self.get_object(),
+        return Conversation.objects.filter(
+            participating_company=self.get_object(),
         )

@@ -89,7 +89,7 @@
 
                 {% if not can_manage and user.is_authenticated %}
                 {% get_company_conversation user venture as company_conversation %}
-                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-company-to-name="{{ venture }}" data-load-conversation-url="{% url 'account:ajax_post_company_conversation_load' company_conversation.id %}">{% trans 'Send message' %}</a>
+                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-to-name="{{ venture }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
                 {% endif %}
 
                 <br>
