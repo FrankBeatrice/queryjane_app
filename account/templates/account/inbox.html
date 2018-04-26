@@ -22,11 +22,19 @@
                         {% for conversation in conversations_list %}
                         <tr class="{% if message.unread %}active{% endif %}">
                             <td>
-                                <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                                <p>
+                                {% trans 'Conversation with' %}
+                                {% for participant in  conversation.participating_users.all %}
+                                {% if participant != user %}{{ participant }}{% endif %}
+                                {% endfor %}
+                                </p>
+
+                                <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if conversation.unread %}New message{% else %}Viewed message{% endif %}"></i>
+
                                 <span> - {% trans 'From:' %} {{ conversation.get_last_message.user_from }}</span>
                                 <p>{{ conversation.updated_at }}</p>
 
-                                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_conversation_load' conversation.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
+                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-user-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                                     {{ conversation.get_last_message.message|truncatechars:70 }}
                                 </a>
                             </td>

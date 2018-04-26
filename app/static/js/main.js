@@ -227,6 +227,18 @@ function getLocation() {
         });
     });
 
+    // Load send message form.
+    $('.JSComposeMessage').on('click', function () {
+        var user_to_id = $(this).data('user-to-id');
+        $('#id_user_to_id').val(user_to_id);
+
+        $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('user-to-name'));
+
+        $.post($(this).data('load-conversation-url')).done(function (response) {
+            $('#JSconversationDetail').html(response.content);
+        });
+    });
+
     // Populate general message modal with received message detail.
     $('.header-messages-list, .QjaneInboxList').on('click', '.qjane-messages-link', function () {
         var message_url = $(this).data('message-url');

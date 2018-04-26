@@ -402,7 +402,14 @@ class Conversation(models.Model):
 
     @property
     def get_last_message(self):
-        return self.usermessage_set.last()
+        return self.usermessage_set.latest('created_at')
+
+    @property
+    def unread(self):
+        return self.usermessage_set.filter(
+            user_to__in=self.participating_users.all(),
+            unread=True,
+        ).exists()
 
     class Meta:
         ordering = ('-updated_at',)

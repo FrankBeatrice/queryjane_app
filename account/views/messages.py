@@ -176,7 +176,7 @@ class LoadConversationModal(CustomUserMixin, View):
         return JsonResponse(
             {
                 'content': render_to_string(
-                    'modals/conversation_modal.html',
+                    'modals/conversation_table.html',
                     context={
                         'conversation': conversation,
                     },
