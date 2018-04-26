@@ -20,7 +20,7 @@
 
                 {% if can_send_message %}
                 {% get_user_conversation user profile.user as user_conversation  %}
-                <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' user_conversation.pk %}">{% trans 'Send message' %}</button>
+                <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-user-to-name="{{ profile }}" data-load-conversation-url="{% if user_conversation %}{% url 'account:ajax_post_conversation_load' user_conversation.pk %}{% endif %}">{% trans 'Send message' %}</button>
                 {% endif %}
 
                 <br>

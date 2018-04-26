@@ -7,6 +7,24 @@ register = template.Library()
 
 @register.assignment_tag
 def get_user_conversation(user_from, user_to):
-    return Conversation.objects.filter(
+    conversation = Conversation.objects.filter(
         participating_users__in=(user_from, user_to)
-    )[0]
+    )
+
+    if conversation:
+        return conversation[0]
+    else:
+        return False
+
+
+@register.assignment_tag
+def get_company_conversation(user, company):
+    conversation = Conversation.objects.filter(
+        participating_users__in=[user],
+        participating_company=company,
+    )
+
+    if conversation:
+        return conversation[0]
+    else:
+        return False

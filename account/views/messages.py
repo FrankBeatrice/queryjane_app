@@ -106,10 +106,28 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         if company_to_id:
             company_to = Venture.objects.get(id=company_to_id)
 
+            if Conversation.objects.filter(
+                participating_users__in=[self.request.user],
+                participating_company=company_to,
+            ):
+                conversation = Conversation.objects.filter(
+                    participating_users__in=[self.request.user],
+                    participating_company=company_to,
+                )[0]
+            else:
+                conversation = Conversation.objects.create(
+                    participating_company=company_to,
+                )
+                conversation.participating_users = [self.request.user.id]
+
+            conversation.updated_at = timezone.now()
+            conversation.save()
+
             message = UserMessage.objects.create(
                 user_from=self.request.user,
                 company_to=company_to,
                 message=user_message,
+                conversation=conversation,
             )
 
             description = '{0} has received a new message'.format(company_to)
@@ -150,7 +168,7 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         return HttpResponse('success')
 
 
-class LoadConversationModal(CustomUserMixin, View):
+class LoadConversationView(CustomUserMixin, View):
     def test_func(self):
         return ConversationsPermissions.can_view(
             user=self.request.user,

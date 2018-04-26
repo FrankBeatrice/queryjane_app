@@ -230,13 +230,28 @@ function getLocation() {
     // Load send message form.
     $('.JSComposeMessage').on('click', function () {
         var user_to_id = $(this).data('user-to-id');
-        $('#id_user_to_id').val(user_to_id);
+        var company_to_id = $(this).data('company-to-id');
+        var load_conversation_url = $(this).data('load-conversation-url');
+
+        if (user_to_id != undefined) {
+          $('#id_user_to_id').val(user_to_id);
+        }
+
+        if (company_to_id != undefined) {
+          $('#id_company_to_id').val(company_to_id);
+        }
 
         $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('user-to-name'));
 
-        $.post($(this).data('load-conversation-url')).done(function (response) {
-            $('#JSconversationDetail').html(response.content);
-        });
+
+        if (load_conversation_url){
+          $.post($(this).data('load-conversation-url')).done(function (response) {
+              $('#JSconversationDetail').html(response.content);
+
+                $('#generalModalMessage .modal-content').html(response.content);
+                $('.NewMessagesCounter').text(response.new_messages_counter);
+          });
+        }
     });
 
     // Populate general message modal with received message detail.
@@ -248,7 +263,6 @@ function getLocation() {
         $(this).parent().find('.JSMessagestatus').removeClass('fa-envelope').addClass('fa-envelope-open');
 
         $.post(message_url).done(function (response) {
-            console.log(response);
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewMessagesCounter').text(response.new_messages_counter);
