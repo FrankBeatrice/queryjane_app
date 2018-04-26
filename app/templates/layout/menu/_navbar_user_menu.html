@@ -42,15 +42,15 @@
             {% if new_user_messages_count %}(<span class="NewMessagesCounter">{{ new_user_messages_count }}</span>){% endif %}
         </a>
 
-        {% get_recent_user_messages user as recent_user_messages %}
+        {% get_recent_user_conversations user as recent_user_conversations %}
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
-        {% for message in recent_user_messages %}
+        {% for conversation in recent_user_conversations %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
-                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_conversation_load' message.pk  %}">
+                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_conversation_load' conversation.pk  %}">
                     <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New message' %}{% else %}{% trans 'Viewed message' %}{% endif %}"></i>
-                    From: {{ message.user_from }}
+                    From: {{ conversation.get_last_message.user_from }}
 
-                    <p>{{ message.created_at }}</p>
+                    <p>{{ conversation.get_last_message.created_at }}</p>
                 </a>
             </li>
         {% endfor %}
@@ -147,11 +147,6 @@
             </div>
 
             <div class="modal-body">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#newMessage">{% trans 'New message' %}</a></li>
-                  <li><a data-toggle="tab" href="#newMessageConversation">{% trans 'Full conversation' %}</a></li>
-                </ul>
-
                 <div class="tab-content">
                   <div id="newMessage" class="tab-pane fade in active">
                     <div class="alert alert-success" role="alert" style="display:none;">
@@ -164,7 +159,7 @@
 
                         <div class="form-group">
                             <label>
-                                {{ message_form.user_message.label }}
+                                {% trans 'New message' %}
                                 <span class="QJRequiredField">*</span>
                             </label>
 
@@ -179,21 +174,6 @@
 
                         <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
                     </form>
-                  </div>
-
-                  <div id="newMessageConversation" class="tab-pane fade">
-                    <table class="table table-striped">
-                    {% for previous_message in conversation %}
-                        <tr>
-                            <td>
-                                <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ previous_message.user_from.get_avatar }}" alt="{{ previous_message.user_from }}">
-                                <p>{{ previous_message.created_at }}</p>
-                                <p><strong>From: </strong>{{ previous_message.user_from }}</p>
-                                <p>{{ previous_message.message }}</p>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </table>
                   </div>
                 </div>
             </div>

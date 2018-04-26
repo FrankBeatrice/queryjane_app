@@ -22,7 +22,7 @@ def get_new_user_messages_count(user):
 
 
 @register.assignment_tag
-def get_recent_user_messages(user):
+def get_recent_user_conversations(user):
     return Conversation.objects.filter(
         participating_users__in=[user],
     )[:10]
