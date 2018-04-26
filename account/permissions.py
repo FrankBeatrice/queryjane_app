@@ -44,15 +44,15 @@ class NotificationPermissions(object):
         return False
 
 
-class MessagesPermissions(object):
+class ConversationsPermissions(object):
     @classmethod
-    def can_view(self, user, message):
-        if message.user_to == user:
+    def can_view(self, user, conversation):
+        if user in conversation.participating_users.all():
             return True
 
         if AdministratorMembership.objects.filter(
             admin=user.professionalprofile,
-            venture=message.company_to,
+            venture=conversation.participating_company,
             status=ACTIVE_MEMBERSHIP,
             role__in=(OWNER, QJANE_ADMIN),
         ):

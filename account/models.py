@@ -393,11 +393,15 @@ class Conversation(models.Model):
         'account.User',
     )
 
-    participating_company = models.ManyToManyField(
+    participating_company = models.ForeignKey(
         'entrepreneur.Venture',
     )
 
-    updated_at = models.DateTimeField()
+    updated_at = models.DateTimeField(null=True)
+
+    @property
+    def get_last_message(self):
+        return self.usermessage_set.last()
 
     class Meta:
         ordering = ('-updated_at',)

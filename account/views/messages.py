@@ -2,6 +2,7 @@ from django.conf import settings
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.utils import timezone
 from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
@@ -15,9 +16,10 @@ from django.views.generic import View
 from account.data import NEW_MESSAGE_TO_COMPANY
 from account.forms import UserMessageForm
 from account.models import User
+from account.models import Conversation
 from account.models import UserMessage
 from account.models import UserNotification
-from account.permissions import MessagesPermissions
+from account.permissions import ConversationsPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
 from entrepreneur.data import ACTIVE_MEMBERSHIP
@@ -30,11 +32,11 @@ from entrepreneur.permissions import EntrepreneurPermissions
 class InboxView(LoginRequiredMixin, ListView):
     model = UserMessage
     template_name = 'account/inbox.html'
-    context_object_name = 'messages_list'
+    context_object_name = 'conversations_list'
 
     def get_queryset(self):
-        return UserMessage.objects.filter(
-            user_to=self.request.user,
+        return Conversation.objects.filter(
+            participating_users__in=[self.request.user],
         )
 
 
@@ -44,6 +46,7 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
     def get_object(self):
         return self.request.user.professionalprofile
 
+    @transaction.atomic
     def form_valid(self, form):
         user_message = form.cleaned_data['user_message']
         user_to_id = form.cleaned_data['user_to_id']
@@ -52,10 +55,33 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         if user_to_id:
             user_to = User.objects.get(id=user_to_id)
 
+            if Conversation.objects.filter(
+                participating_users__in=[
+                    user_to,
+                    self.request.user,
+                ]
+            ):
+                conversation = Conversation.objects.filter(
+                    participating_users__in=[
+                        user_to,
+                        self.request.user,
+                    ]
+                )[0]
+            else:
+                conversation = Conversation.objects.create()
+                conversation.participating_users = [
+                    user_to.id,
+                    self.request.user.id,
+                ]
+
+            conversation.updated_at = timezone.now()
+            conversation.save()
+
             message = UserMessage.objects.create(
                 user_from=self.request.user,
                 user_to=user_to,
                 message=user_message,
+                Conversation=conversation,
             )
 
             if user_to.professionalprofile.email_messages_notifications:
@@ -124,16 +150,16 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         return HttpResponse('success')
 
 
-class LoadMessageModal(CustomUserMixin, View):
+class LoadConversationModal(CustomUserMixin, View):
     def test_func(self):
-        return MessagesPermissions.can_view(
+        return ConversationsPermissions.can_view(
             user=self.request.user,
-            message=self.get_object(),
+            conversation=self.get_object(),
         )
 
     def get_object(self):
         return get_object_or_404(
-            UserMessage,
+            Conversation,
             pk=self.kwargs['pk'],
         )
 
