@@ -395,6 +395,7 @@ class Conversation(models.Model):
 
     participating_company = models.ForeignKey(
         'entrepreneur.Venture',
+        null=True,
     )
 
     updated_at = models.DateTimeField(null=True)
@@ -447,7 +448,7 @@ class UserMessage(models.Model):
         default=True,
     )
 
-    Conversation = models.ForeignKey(
+    conversation = models.ForeignKey(
         'account.Conversation'
     )
 

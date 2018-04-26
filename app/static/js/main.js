@@ -236,6 +236,7 @@ function getLocation() {
         $(this).parent().find('.JSMessagestatus').removeClass('fa-envelope').addClass('fa-envelope-open');
 
         $.post(message_url).done(function (response) {
+            console.log(response);
             if (response != 'fail') {
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewMessagesCounter').text(response.new_messages_counter);

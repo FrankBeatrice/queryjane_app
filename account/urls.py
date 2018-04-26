@@ -7,7 +7,6 @@ from account.views.address_book import RemoveUserFromAddressBookView
 from account.views.address_book import RemoveCompanyToAddressBookView
 from account.views.messages import InboxView
 from account.views.messages import LoadConversationModal
-from account.views.messages import LoadConversationView
 from account.views.messages import LoadCompanyConversationView
 from account.views.messages import LoadCustomerConversationView
 from account.views.messages import UserMessageFormView
@@ -100,14 +99,8 @@ urlpatterns = [
     ),
 
     url(
-        r'^ax-post-conversation-load-load/(?P<pk>\d+)/$',
-        LoadConversationModal.as_view(),
-        name='ajax_post_conversation_load',
-    ),
-
-    url(
         r'^ax-post-conversation-load/(?P<pk>\d+)/$',
-        LoadConversationView.as_view(),
+        LoadConversationModal.as_view(),
         name='ajax_post_conversation_load',
     ),
 
