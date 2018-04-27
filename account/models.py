@@ -388,6 +388,33 @@ class UserNotification(models.Model):
         return self.description
 
 
+class Conversation(models.Model):
+    participating_users = models.ManyToManyField(
+        'account.User',
+    )
+
+    participating_company = models.ForeignKey(
+        'entrepreneur.Venture',
+        null=True,
+    )
+
+    updated_at = models.DateTimeField(null=True)
+
+    @property
+    def get_last_message(self):
+        return self.usermessage_set.latest('created_at')
+
+    @property
+    def unread(self):
+        return self.usermessage_set.filter(
+            user_to__in=self.participating_users.all(),
+            unread=True,
+        ).exists()
+
+    class Meta:
+        ordering = ('-updated_at',)
+
+
 class UserMessage(models.Model):
     user_from = models.ForeignKey(
         'account.User',
@@ -426,6 +453,10 @@ class UserMessage(models.Model):
 
     unread = models.BooleanField(
         default=True,
+    )
+
+    conversation = models.ForeignKey(
+        'account.Conversation'
     )
 
     class Meta:

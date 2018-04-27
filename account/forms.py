@@ -177,6 +177,7 @@ class UserMessageForm(Form):
 
     user_to_id = forms.IntegerField(required=False)
     company_to_id = forms.IntegerField(required=False)
+    company_from_id = forms.IntegerField(required=False)
 
 
 class AvatarForm(Form):

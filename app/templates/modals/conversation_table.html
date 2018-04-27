@@ -1,12 +1,12 @@
 {% load i18n %}
 <table class="table table-striped">
-{% for previous_message in conversation %}
+{% for message in conversation.usermessage_set.all %}
     <tr>
         <td>
-            <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ previous_message.user_from.get_avatar }}" alt="{{ previous_message.user_from }}">
-            <p>{{ previous_message.created_at }}</p>
-            <p><strong>{% trans 'From' %}: </strong>{{ previous_message.user_from }}</p>
-            <p>{{ previous_message.message }}</p>
+            <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ message.user_from.get_avatar }}" alt="{{ message.user_from }}">
+            <p>{{ message.created_at }}</p>
+            <p><strong>{% trans 'From' %}: </strong>{% if message.company_from %}{{ message.company_from }}{% else %}{{ message.user_from }}{% endif %}</p>
+            <p>{{ message.message }}</p>
         </td>
     </tr>
 {% endfor %}

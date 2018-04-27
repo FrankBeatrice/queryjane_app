@@ -227,24 +227,37 @@ function getLocation() {
         });
     });
 
-    // Populate general message modal with received message detail.
-    $('.header-messages-list, .QjaneInboxList').on('click', '.qjane-messages-link', function () {
-        var message_url = $(this).data('message-url');
+    // Load send message form.
+    $('.JSComposeMessage').on('click', function () {
+        var user_to_id = $(this).data('user-to-id');
+        var company_to_id = $(this).data('company-to-id');
+        var company_from_id = $(this).data('company-from-id');
+        var load_conversation_url = $(this).data('load-conversation-url');
 
-        // Remove active class
-        $(this).closest('tr').removeClass("active");
-        $(this).parent().find('.JSMessagestatus').removeClass('fa-envelope').addClass('fa-envelope-open');
+        if (user_to_id != undefined) {
+          $('#id_user_to_id').val(user_to_id);
+        }
 
-        $.post(message_url).done(function (response) {
-            if (response != 'fail') {
+        if (company_to_id != undefined) {
+          $('#id_company_to_id').val(company_to_id);
+        }
+
+        if (company_from_id != undefined) {
+          $('#id_company_from_id').val(company_from_id);
+        }
+
+        $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('to-name'));
+
+
+        if (load_conversation_url){
+          $.post($(this).data('load-conversation-url')).done(function (response) {
+              $('#JSconversationDetail').html(response.content);
+
                 $('#generalModalMessage .modal-content').html(response.content);
                 $('.NewMessagesCounter').text(response.new_messages_counter);
-            } else {
-              alert('something is wrong. Please reload and try again.');
-            }
-        });
+          });
+        }
     });
-
 
     $('#composeMessageModal').on('hidden.bs.modal', function() {
       $('#composeMessageModal .modal-body .alert-success').hide();

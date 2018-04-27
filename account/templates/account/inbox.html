@@ -19,15 +19,34 @@
 
                 <div class="panel-body QjaneInboxList">
                     <table class="table">
-                        {% for message in messages_list %}
+                        {% for conversation in conversations_list %}
                         <tr class="{% if message.unread %}active{% endif %}">
                             <td>
-                                <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
-                                <span> - {% trans 'From:' %} {{ message.user_from }}</span>
-                                <p>{{ message.created_at }}</p>
+                                <p>
+                                {% trans 'Conversation with' %}
+                                {% if conversation.participating_company %}
+                                {{ conversation.participating_company }}
+                                {% else %}
+                                {% for participant in conversation.participating_users.all %}
+                                {% if participant != user %}{{ participant }}{% endif %}
+                                {% endfor %}
+                                {% endif %}
+                                </p>
 
-                                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
-                                    <p>{{ message.message|truncatechars:70 }}</p>
+                                <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if conversation.unread %}New message{% else %}Viewed message{% endif %}"></i>
+
+                                <span> - {% trans 'From:' %}
+                                    {% if conversation.get_last_message.company_from %}
+                                    {{ conversation.get_last_message.company_from }}
+                                    {% else %}
+                                    {{ conversation.get_last_message.user_from }}
+                                    {% endif %}
+                                    
+                                </span>
+                                <p>{{ conversation.updated_at }}</p>
+
+                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                                    {{ conversation.get_last_message.message|truncatechars:70 }}
                                 </a>
                             </td>
                         </tr>

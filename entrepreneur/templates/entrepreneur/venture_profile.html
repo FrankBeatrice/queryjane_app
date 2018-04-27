@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static entrepreneur_tags i18n %}
+{% load static entrepreneur_tags i18n user_conversations %}
 
 {% block title %}{{ venture }}{% endblock %}
 
@@ -88,7 +88,8 @@
                 <br>
 
                 {% if not can_manage and user.is_authenticated %}
-                <a href="javascript:void(0)" id="id_send_message_to_company_link" class="btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-company-to-name="{{ venture }}" data-load-conversation-url="{% url 'account:ajax_post_company_conversation_load' venture.id %}">{% trans 'Send message' %}</a>
+                {% get_company_conversation user venture as company_conversation %}
+                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-to-name="{{ venture }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
                 {% endif %}
 
                 <br>
