@@ -1,9 +1,9 @@
-from django.conf import settings
+import functools
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.utils import timezone
-from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -26,7 +26,6 @@ from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import OWNER
 from entrepreneur.data import QJANE_ADMIN
 from entrepreneur.models import Venture
-from entrepreneur.permissions import EntrepreneurPermissions
 
 
 class InboxView(LoginRequiredMixin, ListView):
@@ -51,38 +50,55 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
         user_message = form.cleaned_data['user_message']
         user_to_id = form.cleaned_data['user_to_id']
         company_to_id = form.cleaned_data['company_to_id']
+        company_from_id = form.cleaned_data['company_from_id']
 
         if user_to_id:
             user_to = User.objects.get(id=user_to_id)
 
-            if Conversation.objects.filter(
-                participating_users__in=[
-                    user_to,
-                    self.request.user,
-                ]
-            ):
-                conversation = Conversation.objects.filter(
-                    participating_users__in=[
-                        user_to,
-                        self.request.user,
-                    ]
-                )[0]
-            else:
-                conversation = Conversation.objects.create()
-                conversation.participating_users = [
-                    user_to.id,
-                    self.request.user.id,
-                ]
+            if company_from_id:
+                conversation_list = functools.reduce(
+                    lambda qs, pk: qs.filter(participating_users=pk),
+                    [user_to.id],
+                    Conversation.objects.filter(
+                        participating_company_id=company_from_id,
+                    ),
+                )
 
-            conversation.updated_at = timezone.now()
-            conversation.save()
+                if conversation_list:
+                    conversation = conversation_list[0]
+
+                else:
+                    conversation = Conversation.objects.create(
+                        participating_company_id=company_from_id,
+                    )
+                    conversation.participating_users.add(user_to.id)
+
+            else:
+                conversation_list = functools.reduce(
+                    lambda qs, pk: qs.filter(participating_users=pk),
+                    [user_to.id, self.request.user.id],
+                    Conversation.objects.all()
+                )
+                if conversation_list:
+                    conversation = conversation_list[0]
+
+                else:
+                    conversation = Conversation.objects.create()
+                    conversation.participating_users = [
+                        user_to.id,
+                        self.request.user.id,
+                    ]
 
             message = UserMessage.objects.create(
+                company_from_id=company_from_id,
                 user_from=self.request.user,
                 user_to=user_to,
                 message=user_message,
                 conversation=conversation,
             )
+
+            conversation.updated_at = timezone.now()
+            conversation.save()
 
             if user_to.professionalprofile.email_messages_notifications:
                 subject = 'You have received a new message from {0}'.format(
@@ -104,7 +120,6 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                 )
 
         if company_to_id:
-            print("ENTRA")
             company_to = Venture.objects.get(id=company_to_id)
 
             if Conversation.objects.filter(

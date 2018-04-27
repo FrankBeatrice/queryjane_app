@@ -231,6 +231,7 @@ function getLocation() {
     $('.JSComposeMessage').on('click', function () {
         var user_to_id = $(this).data('user-to-id');
         var company_to_id = $(this).data('company-to-id');
+        var company_from_id = $(this).data('company-from-id');
         var load_conversation_url = $(this).data('load-conversation-url');
 
         if (user_to_id != undefined) {
@@ -239,6 +240,10 @@ function getLocation() {
 
         if (company_to_id != undefined) {
           $('#id_company_to_id').val(company_to_id);
+        }
+
+        if (company_from_id != undefined) {
+          $('#id_company_from_id').val(company_from_id);
         }
 
         $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('to-name'));

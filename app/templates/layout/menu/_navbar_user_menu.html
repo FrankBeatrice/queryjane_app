@@ -46,9 +46,14 @@
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
         {% for conversation in recent_user_conversations %}
             <li class="dropdown-item">
-                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                     <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
-                    From: {{ conversation.get_last_message.user_from }}
+                    From:
+                    {% if conversation.get_last_message.company_from %}
+                    {{ conversation.get_last_message.company_from }}
+                    {% else %}
+                    {{ conversation.get_last_message.user_from }}
+                    {% endif %}
 
                     <p>{{ conversation.get_last_message.created_at }}</p>
                 </a>
@@ -167,9 +172,10 @@
                             {{ message_form.user_message.errors }}
                         </div>
 
-                        <div style="display:none">
+                        <div style="display:none;">
                             {% render_field message_form.user_to_id %}
                             {% render_field message_form.company_to_id %}
+                            {% render_field message_form.company_from_id %}
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>

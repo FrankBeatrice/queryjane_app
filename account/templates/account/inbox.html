@@ -24,17 +24,28 @@
                             <td>
                                 <p>
                                 {% trans 'Conversation with' %}
-                                {% for participant in  conversation.participating_users.all %}
+                                {% if conversation.participating_company %}
+                                {{ conversation.participating_company }}
+                                {% else %}
+                                {% for participant in conversation.participating_users.all %}
                                 {% if participant != user %}{{ participant }}{% endif %}
                                 {% endfor %}
+                                {% endif %}
                                 </p>
 
                                 <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if conversation.unread %}New message{% else %}Viewed message{% endif %}"></i>
 
-                                <span> - {% trans 'From:' %} {{ conversation.get_last_message.user_from }}</span>
+                                <span> - {% trans 'From:' %}
+                                    {% if conversation.get_last_message.company_from %}
+                                    {{ conversation.get_last_message.company_from }}
+                                    {% else %}
+                                    {{ conversation.get_last_message.user_from }}
+                                    {% endif %}
+                                    
+                                </span>
                                 <p>{{ conversation.updated_at }}</p>
 
-                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                                     {{ conversation.get_last_message.message|truncatechars:70 }}
                                 </a>
                             </td>
