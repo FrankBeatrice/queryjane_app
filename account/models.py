@@ -257,6 +257,11 @@ class ProfessionalProfile(models.Model):
         auto_now_add=True,
     )
 
+    has_new_messages = models.BooleanField(
+        default=False,
+        verbose_name=_('has new messages'),
+    )
+
     slug = models.SlugField()
 
     def __str__(self):
