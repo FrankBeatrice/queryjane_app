@@ -1,27 +1,25 @@
 import functools
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.utils import timezone
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import View
 
 from account.data import NEW_MESSAGE_TO_COMPANY
 from account.forms import UserMessageForm
-from account.models import User
 from account.models import Conversation
+from account.models import User
 from account.models import UserMessage
 from account.models import UserNotification
 from account.permissions import ConversationsPermissions
 from app.mixins import CustomUserMixin
-from app.tasks import send_email
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import OWNER
 from entrepreneur.data import QJANE_ADMIN
@@ -89,7 +87,7 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                         self.request.user.id,
                     ]
 
-            message = UserMessage.objects.create(
+            UserMessage.objects.create(
                 company_from_id=company_from_id,
                 user_from=self.request.user,
                 user_to=user_to,
@@ -100,24 +98,9 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
             conversation.updated_at = timezone.now()
             conversation.save()
 
-            if user_to.professionalprofile.email_messages_notifications:
-                subject = 'You have received a new message from {0}'.format(
-                    self.request.user,
-                )
-
-                body = render_to_string(
-                    'account/emails/new_private_message.html', {
-                        'title': subject,
-                        'message': message,
-                        'base_url': settings.BASE_URL,
-                    },
-                )
-
-                send_email(
-                    subject=subject,
-                    body=body,
-                    mail_to=[user_to.email],
-                )
+            professionalprofile = user_to.professionalprofile
+            professionalprofile.has_new_messages = True
+            professionalprofile.save()
 
         if company_to_id:
             company_to = Venture.objects.get(id=company_to_id)
@@ -139,47 +122,31 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
             conversation.updated_at = timezone.now()
             conversation.save()
 
-            message = UserMessage.objects.create(
+            UserMessage.objects.create(
                 user_from=self.request.user,
                 company_to=company_to,
                 message=user_message,
                 conversation=conversation,
             )
 
-            description = '{0} has received a new message'.format(company_to)
+            company_to.has_new_messages = True
+            company_to.save()
 
-            # Create new message notification for company administrators.
             for membership in company_to.administratormembership_set.filter(
                 status=ACTIVE_MEMBERSHIP,
                 role__in=(OWNER, QJANE_ADMIN),
             ):
-                user = membership.admin.user
+                description = '{0} has received new messages'.format(
+                    company_to,
+                )
 
                 UserNotification.objects.create(
                     notification_type=NEW_MESSAGE_TO_COMPANY,
-                    noty_to=user,
+                    noty_to=membership.admin.user,
                     answered=True,
                     description=description,
                     venture_to=company_to,
-                    created_by=self.request.user.professionalprofile,
                 )
-
-                if user.professionalprofile.new_company_messages_notifications:
-                    subject = description
-
-                    body = render_to_string(
-                        'account/emails/new_private_message.html', {
-                            'title': subject,
-                            'message': message,
-                            'base_url': settings.BASE_URL,
-                        },
-                    )
-
-                    send_email(
-                        subject=subject,
-                        body=body,
-                        mail_to=[user.email],
-                    )
 
         return HttpResponse('success')
 

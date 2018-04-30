@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-07 01:58+0000\n"
+"POT-Creation-Date: 2018-04-30 05:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: account/data.py:8
+#: account/data.py:9
 msgid "Invitation to administer company."
 msgstr "Invitación para administrar empresa"
 
-#: account/data.py:9
+#: account/data.py:10
 msgid "New job offer that may interest you."
 msgstr "Nueva oferta de trabajo que podría interesarte."
 
-#: account/data.py:10
+#: account/data.py:11
 #, fuzzy
 #| msgid "new applicants to your job offer:"
 msgid "New applicants to my job offer."
 msgstr "nuevos aplicantes para tu oferta de trabajo"
+
+#: account/data.py:12
+#, fuzzy
+#| msgid "New message from user."
+msgid "New message to company."
+msgstr "Nuevo mensaje de usuario."
 
 #: account/forms.py:14
 msgid "First name"
@@ -53,7 +59,7 @@ msgstr "Correo electrónico"
 msgid "Password"
 msgstr "Contraseña"
 
-#: account/forms.py:51 account/forms.py:72 account/models.py:126
+#: account/forms.py:51 account/forms.py:72 account/models.py:127
 #: corporative/forms.py:20
 msgid "email"
 msgstr "Correo electrónico"
@@ -72,8 +78,8 @@ msgstr "Escribe el nombre de país y seleccionalo de la lista."
 msgid "country code"
 msgstr "código del país"
 
-#: account/forms.py:93 account/models.py:156 entrepreneur/forms.py:157
-#: entrepreneur/models.py:79 entrepreneur/models.py:303 place/models.py:30
+#: account/forms.py:93 account/models.py:157 entrepreneur/forms.py:157
+#: entrepreneur/models.py:79 entrepreneur/models.py:308 place/models.py:30
 msgid "city"
 msgstr "ciudad"
 
@@ -87,8 +93,8 @@ msgstr "Escribe el nombre de la ciudad."
 msgid "city id"
 msgstr "código de la ciudad"
 
-#: account/forms.py:137 account/forms.py:144 account/models.py:309
-#: entrepreneur/models.py:314
+#: account/forms.py:137 account/forms.py:144 account/models.py:320
+#: entrepreneur/models.py:319
 msgid "description"
 msgstr "descripción"
 
@@ -96,128 +102,147 @@ msgstr "descripción"
 msgid "Search by name, email or username"
 msgstr "Busca por nombre, correo electrónico o nombre de usuario"
 
-#: account/forms.py:174 account/models.py:396 corporative/forms.py:24
+#: account/forms.py:174 account/models.py:452 corporative/forms.py:24
 msgid "message"
 msgstr "mensaje"
 
-#: account/models.py:34
+#: account/models.py:35
 msgid "Users must have an email address"
 msgstr "Los usuarios deben tener una dirección de correo electrónico"
 
-#: account/models.py:91
+#: account/models.py:92
 msgid "profile image"
 msgstr "imagen de perfil"
 
-#: account/models.py:98 corporative/forms.py:16 entrepreneur/forms.py:133
+#: account/models.py:99 corporative/forms.py:16 entrepreneur/forms.py:133
 #: entrepreneur/models.py:38 place/models.py:11 place/models.py:37
 #: place/models.py:61
 msgid "name"
 msgstr "nombre"
 
-#: account/models.py:112
+#: account/models.py:113
 msgid "last name"
 msgstr "apellido"
 
-#: account/models.py:144 entrepreneur/forms.py:143 entrepreneur/models.py:67
-#: entrepreneur/models.py:291 place/models.py:22 place/models.py:42
+#: account/models.py:145 entrepreneur/forms.py:143 entrepreneur/models.py:67
+#: entrepreneur/models.py:296 place/models.py:22 place/models.py:42
 #: place/models.py:73
 msgid "country"
 msgstr "país"
 
-#: account/models.py:150 entrepreneur/models.py:73 entrepreneur/models.py:297
+#: account/models.py:151 entrepreneur/models.py:73 entrepreneur/models.py:302
 #: place/models.py:17 place/models.py:50
 msgid "state"
 msgstr "estado"
 
-#: account/models.py:160 entrepreneur/models.py:85
+#: account/models.py:161 entrepreneur/models.py:85
 msgid "address"
 msgstr "dirección"
 
-#: account/models.py:167 entrepreneur/models.py:328 entrepreneur/models.py:398
+#: account/models.py:168 entrepreneur/models.py:333 entrepreneur/models.py:403
 msgid "created at"
 msgstr "fecha de creación"
 
-#: account/models.py:203 account/models.py:211
+#: account/models.py:204 account/models.py:212
 msgid "user"
 msgstr "usuario"
 
-#: account/models.py:204 app/templates/home.html:27
+#: account/models.py:205 app/templates/home.html:27
 msgid "users"
 msgstr "usuarios"
 
-#: account/models.py:216 account/models.py:293 entrepreneur/forms.py:251
+#: account/models.py:217 account/models.py:304 entrepreneur/forms.py:251
 #: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:80
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:135
 msgid "English description"
 msgstr "Descripción en inglés"
 
-#: account/models.py:221 account/models.py:282 entrepreneur/forms.py:258
+#: account/models.py:222 account/models.py:293 entrepreneur/forms.py:258
 #: entrepreneur/templates/entrepreneur/venture_settings/general_venture_form.html:119
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:145
 msgid "Spanish description"
 msgstr "Descripción en español"
 
-#: account/models.py:227
+#: account/models.py:228
 msgid "Phone number"
 msgstr "número telefónico"
 
-#: account/models.py:237
+#: account/models.py:238
 msgid "receive notifications of job offers"
 msgstr "recibir notificaciones de ofertas de trabajo"
 
-#: account/models.py:242
+#: account/models.py:243
 msgid "receive notifications of new messages"
 msgstr "recibir notificaciones de nuevos mensajes"
 
-#: account/models.py:247
+#: account/models.py:248
 #, fuzzy
 #| msgid "receive notifications of job offers"
 msgid "receive notifications of new applicants to job offers"
 msgstr "recibir notificaciones de ofertas de trabajo"
 
-#: account/models.py:276
+#: account/models.py:253
+#, fuzzy
+#| msgid "receive notifications of new messages"
+msgid ""
+"receive notifications when companies I manage receive messages from users"
+msgstr "recibir notificaciones de nuevos mensajes"
+
+#: account/models.py:262 entrepreneur/models.py:155
+#, fuzzy
+#| msgid "new messages."
+msgid "has new messages"
+msgstr "nuevos mensajes"
+
+#: account/models.py:287
 msgid "Spanish name"
 msgstr "Nombre en español"
 
-#: account/models.py:287
+#: account/models.py:298
 msgid "English name"
 msgstr "Nombre en inglés"
 
-#: account/models.py:322
+#: account/models.py:333
 msgid "Notify to"
 msgstr "Notificar a"
 
-#: account/models.py:327
+#: account/models.py:338
 msgid "from venture"
 msgstr "de empresa"
 
-#: account/models.py:333
+#: account/models.py:344
+#, fuzzy
+#| msgid "from venture"
+msgid "venture to"
+msgstr "de empresa"
+
+#: account/models.py:351
 msgid "membership invitation"
 msgstr "Invitación a membresía"
 
-#: account/models.py:339
+#: account/models.py:357
 msgid "related job offer"
 msgstr "oferta de trabajo relacionada"
 
-#: account/models.py:345 entrepreneur/models.py:139
+#: account/models.py:363 entrepreneur/models.py:139
 msgid "created by"
 msgstr "creado por"
 
-#: account/models.py:377
+#: account/models.py:426 account/models.py:446
 msgid "from"
 msgstr "de"
 
-#: account/models.py:383 account/models.py:390
+#: account/models.py:432 account/models.py:439
 msgid "to"
 msgstr "para"
 
-#: account/models.py:419 account/models.py:440
+#: account/models.py:479 account/models.py:500
 #, fuzzy
 #| msgid "Owner"
 msgid "owner"
 msgstr "Administrador principal"
 
-#: account/models.py:425
+#: account/models.py:485
 #, fuzzy
 #| msgid "Contact"
 msgid "contact"
@@ -238,7 +263,7 @@ msgstr "Contacto"
 
 #: account/templates/account/address_book/address_book.html:11
 #: account/templates/account/address_book/address_book.html:61
-#: app/templates/layout/index.html:108
+#: app/templates/layout/index.html:120
 #: corporative/templates/corporative/admin_dashboard.html:10
 #: entrepreneur/templates/entrepreneur/venture_list.html:4
 #: entrepreneur/templates/entrepreneur/venture_list.html:66
@@ -246,7 +271,6 @@ msgid "Companies"
 msgstr "Empresas"
 
 #: account/templates/account/address_book/address_book.html:39
-#: app/templates/modals/_message_modal.html:32
 #, fuzzy
 msgid "Visit profile"
 msgstr "Visitar perfil"
@@ -356,12 +380,13 @@ msgid "Your companies."
 msgstr "Tus empresas."
 
 #: account/templates/account/dashboard.html:84
+#: account/templates/account/emails/new_messages.html:7
 msgid "New messages"
 msgstr "Nuevos mensajes"
 
 #: account/templates/account/dashboard.html:96
-#: account/templates/account/inbox.html:26
-#: entrepreneur/templates/entrepreneur/venture_settings/messages.html:23
+#: account/templates/account/inbox.html:38
+#: entrepreneur/templates/entrepreneur/venture_settings/conversations.html:30
 msgid "From:"
 msgstr "De:"
 
@@ -372,7 +397,7 @@ msgstr "De:"
 #: account/templates/account/dashboard.html:204
 #: account/templates/account/dashboard.html:229
 #: app/templates/layout/menu/_navbar_user_menu.html:30
-#: app/templates/layout/menu/_navbar_user_menu.html:61
+#: app/templates/layout/menu/_navbar_user_menu.html:66
 msgid "View all"
 msgstr "Ver todos"
 
@@ -405,14 +430,14 @@ msgstr "No hay empresas registradas en tu país aún."
 #: account/templates/account/dashboard_company_line.html:32
 #: account/templates/account/dashboard_job_offer_line.html:45
 #: entrepreneur/templates/entrepreneur/job_detail.html:108
-#: entrepreneur/templates/entrepreneur/venture_profile.html:243
+#: entrepreneur/templates/entrepreneur/venture_profile.html:246
 msgid "Share"
 msgstr "Compartir"
 
 #: account/templates/account/dashboard_company_line.html:36
 #: account/templates/account/dashboard_job_offer_line.html:49
 #: entrepreneur/templates/entrepreneur/job_detail.html:113
-#: entrepreneur/templates/entrepreneur/venture_profile.html:248
+#: entrepreneur/templates/entrepreneur/venture_profile.html:251
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -439,35 +464,43 @@ msgstr "Tipo de trabajo:"
 
 #: account/templates/account/dashboard_job_offer_line.html:53
 #: entrepreneur/templates/entrepreneur/job_detail.html:117
-#: entrepreneur/templates/entrepreneur/venture_profile.html:252
+#: entrepreneur/templates/entrepreneur/venture_profile.html:255
 msgid "Activate"
 msgstr "Activar"
 
-#: account/templates/account/emails/new_private_message.html:7
-msgid "New private message"
-msgstr "Nuevo mensaje privado"
-
-#: account/templates/account/emails/new_private_message.html:9
-#, python-format
-msgid "Hi %(message.user_to.first_name)s. You have received a new message from"
-msgstr "Hola %(message.user_to.first_name)s. Has recibido un nuevo mesaje de"
-
-#: account/templates/account/emails/new_private_message.html:13
-msgid "Go to your"
-msgstr "Ve a tu "
-
-#: account/templates/account/emails/new_private_message.html:13
-msgid "inbox"
-msgstr "bandeja de entrada"
-
-#: account/templates/account/emails/potenitial_job_offer.html:7
-msgid "This may interest you."
-msgstr "Esto podría interesarte."
-
+#: account/templates/account/emails/new_messages.html:9
 #: account/templates/account/emails/potenitial_job_offer.html:9
 #: app/templatetags/greetings.py:28
 msgid "Hi"
 msgstr "Hola"
+
+#: account/templates/account/emails/new_messages.html:13
+msgid "You have new messages in your inbox."
+msgstr "Tienes nuevos mensajes en tu bandeja de entrada."
+
+#: account/templates/account/emails/new_messages.html:15
+#, fuzzy
+#| msgid "new messages."
+msgid "has received new messages."
+msgstr "nuevos mensajes"
+
+#: account/templates/account/emails/new_messages.html:41
+msgid "Go to your"
+msgstr "Ve a tu "
+
+#: account/templates/account/emails/new_messages.html:41
+#: account/templates/account/emails/new_messages.html:43
+msgid "inbox"
+msgstr "bandeja de entrada"
+
+#: account/templates/account/emails/new_messages.html:43
+#: account/templates/account/emails/potenitial_job_offer.html:25
+msgid "Go to"
+msgstr "Ir a"
+
+#: account/templates/account/emails/potenitial_job_offer.html:7
+msgid "This may interest you."
+msgstr "Esto podría interesarte."
 
 #: account/templates/account/emails/potenitial_job_offer.html:9
 msgid "has published a new Job Offer that may interest you:"
@@ -482,10 +515,6 @@ msgid "City:"
 msgstr "Ciudad:"
 
 #: account/templates/account/emails/potenitial_job_offer.html:25
-msgid "Go to"
-msgstr "Ir a"
-
-#: account/templates/account/emails/potenitial_job_offer.html:25
 msgid "apply"
 msgstr "Aplicar"
 
@@ -498,6 +527,13 @@ msgstr "Bandeja de entrada"
 msgid "new messages."
 msgstr "nuevos mensajes"
 
+#: account/templates/account/inbox.html:26
+#: entrepreneur/templates/entrepreneur/venture_settings/conversations.html:23
+#, fuzzy
+#| msgid "Full conversation"
+msgid "Conversation with"
+msgstr "Conversación completa"
+
 #: account/templates/account/notifications.html:4
 msgid "Notification"
 msgstr "Notificación"
@@ -506,42 +542,42 @@ msgstr "Notificación"
 msgid "new notifications."
 msgstr "nuevas notificaciones."
 
-#: account/templates/account/professional_profile.html:22
-#: entrepreneur/templates/entrepreneur/venture_profile.html:90
+#: account/templates/account/professional_profile.html:23
+#: entrepreneur/templates/entrepreneur/venture_profile.html:92
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: account/templates/account/professional_profile.html:28
+#: account/templates/account/professional_profile.html:29
 #: entrepreneur/templates/entrepreneur/venture_profile.html:83
 msgid "Add to my address book"
 msgstr "Agregar al directorio"
 
-#: account/templates/account/professional_profile.html:30
+#: account/templates/account/professional_profile.html:31
 #: entrepreneur/templates/entrepreneur/venture_profile.html:85
 msgid "Remove from my address book"
 msgstr "Eliminar del directorio"
 
-#: account/templates/account/professional_profile.html:39
-#: entrepreneur/templates/entrepreneur/venture_profile.html:99
+#: account/templates/account/professional_profile.html:40
+#: entrepreneur/templates/entrepreneur/venture_profile.html:102
 msgid "Sectors"
 msgstr "Sectores"
 
-#: account/templates/account/professional_profile.html:39
-#: entrepreneur/templates/entrepreneur/venture_profile.html:99
+#: account/templates/account/professional_profile.html:40
+#: entrepreneur/templates/entrepreneur/venture_profile.html:102
 msgid "Sector"
 msgstr "Sector"
 
-#: account/templates/account/professional_profile.html:55
+#: account/templates/account/professional_profile.html:56
 msgid "has not added industry sectors."
 msgstr "no ha agregado sectores de la industria."
 
-#: account/templates/account/professional_profile.html:67
-#: entrepreneur/templates/entrepreneur/venture_profile.html:123
+#: account/templates/account/professional_profile.html:68
+#: entrepreneur/templates/entrepreneur/venture_profile.html:126
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:57
 msgid "Location"
 msgstr "Ubicación"
 
-#: account/templates/account/professional_profile.html:95
+#: account/templates/account/professional_profile.html:96
 msgid "There is not information about this profile."
 msgstr "No hay información sobre este perfil."
 
@@ -594,7 +630,7 @@ msgid ""
 "If when writing the name of the city, it does not appear available in the "
 "list,"
 msgstr ""
-"Si al escribir el nombre de la ciudad, esta no está disponible en la list,"
+"Si al escribir el nombre de la ciudad, esta no está disponible en la lista,"
 
 #: account/templates/account/profile_update.html:113
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:97
@@ -657,12 +693,14 @@ msgstr "Notificarme sobre nuevas ofertas de trabajo que se ajusten a mi perfil"
 #: account/templates/account/profile_update.html:255
 #: account/templates/account/profile_update.html:266
 #: account/templates/account/profile_update.html:277
+#: account/templates/account/profile_update.html:288
 msgid "Yes"
 msgstr "Si"
 
 #: account/templates/account/profile_update.html:257
 #: account/templates/account/profile_update.html:268
 #: account/templates/account/profile_update.html:279
+#: account/templates/account/profile_update.html:290
 msgid "No"
 msgstr "No"
 
@@ -686,6 +724,16 @@ msgid ""
 msgstr ""
 "Notificarme cuando usuarios apliquen a ofertas de trabajo publicadas por las "
 "empresas que administro."
+
+#: account/templates/account/profile_update.html:284
+msgid "Messages to my companies"
+msgstr "Mensajes para mis empresas"
+
+#: account/templates/account/profile_update.html:285
+msgid "Notify me when companies I manage receive messages from users."
+msgstr ""
+"Notificarme cuando las empresas que administro reciban nuevos mensajes de "
+"los usuarios."
 
 #: account/templates/account/signup_landing.html:4
 msgid "Register your company or your profile."
@@ -799,19 +847,19 @@ msgstr ""
 "QueryJane, la red de la industria del cannabis. Conecta con empresas y "
 "expertos en diferentes sectores de la industria del cannabis."
 
-#: app/templates/layout/index.html:104
+#: app/templates/layout/index.html:116
 msgid "User agreement"
 msgstr "Términos de uso"
 
-#: app/templates/layout/index.html:106
+#: app/templates/layout/index.html:118
 msgid "Privacy policy"
 msgstr "Política de privacidad"
 
-#: app/templates/layout/index.html:110
+#: app/templates/layout/index.html:122
 msgid "Jobs"
 msgstr "Trabajos"
 
-#: app/templates/layout/index.html:112
+#: app/templates/layout/index.html:124
 msgid "Contact us"
 msgstr "Contáctanos"
 
@@ -834,7 +882,8 @@ msgid "There are not new notifications"
 msgstr "No hay nuevas notificaciones"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:38
-#: entrepreneur/templates/entrepreneur/venture_settings/messages.html:14
+#: entrepreneur/templates/entrepreneur/venture_settings/conversations.html:4
+#: entrepreneur/templates/entrepreneur/venture_settings/conversations.html:14
 #: entrepreneur/templates/entrepreneur/venture_settings/settings_menu.html:36
 msgid "Messages"
 msgstr "Mensajes"
@@ -844,66 +893,74 @@ msgid "There are not new messages"
 msgstr "No hay nuevos mensajes"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:50
-#: app/templates/layout/menu/_navbar_user_menu.html:151
-msgid "New message"
-msgstr "Nuevos mensajes"
+#, fuzzy
+#| msgid "Full conversation"
+msgid "New conversation"
+msgstr "Conversación completa"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:50
-msgid "Viewed message"
-msgstr "Mensajes vistos"
+#, fuzzy
+#| msgid "Full conversation"
+msgid "Viewed conversation"
+msgstr "Conversación completa"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:76
+#: app/templates/layout/menu/_navbar_user_menu.html:81
 msgid "Profile"
 msgstr "Pefil"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:83
+#: app/templates/layout/menu/_navbar_user_menu.html:88
 msgid "Account"
 msgstr "Cuenta"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:90
+#: app/templates/layout/menu/_navbar_user_menu.html:95
 msgid "New company"
 msgstr "Nueva empresa"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:97
+#: app/templates/layout/menu/_navbar_user_menu.html:102
 #, fuzzy
 #| msgid "address"
 msgid "address book"
 msgstr "dirección"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:114
+#: app/templates/layout/menu/_navbar_user_menu.html:119
 #: entrepreneur/templates/entrepreneur/job_detail.html:101
-#: entrepreneur/templates/entrepreneur/venture_profile.html:236
+#: entrepreneur/templates/entrepreneur/venture_profile.html:239
 msgid "Qjane Admin"
 msgstr "Qjane Admin"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:123
+#: app/templates/layout/menu/_navbar_user_menu.html:128
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:142
+#: app/templates/layout/menu/_navbar_user_menu.html:147
 msgid "Compose Message"
 msgstr "Crear mensaje"
-
-#: app/templates/layout/menu/_navbar_user_menu.html:152
-#: app/templates/modals/_message_modal.html:16
-msgid "Full conversation"
-msgstr "Conversación completa"
 
 #: app/templates/layout/menu/_navbar_user_menu.html:158
 msgid "Your message has been sent."
 msgstr "Tu mensaje ha sido enviado"
 
-#: app/templates/layout/menu/_navbar_user_menu.html:180
+#: app/templates/layout/menu/_navbar_user_menu.html:167
+msgid "New message"
+msgstr "Nuevos mensajes"
+
+#: app/templates/layout/menu/_navbar_user_menu.html:181
 msgid "Send"
 msgstr "Enviar"
 
-#: app/templates/modals/_message_modal.html:4
-msgid "Message from"
-msgstr "Mensaje de"
+#: app/templates/modals/_notification_modal.html:40
+msgid "Answer"
+msgstr "Responder"
 
-#: app/templates/modals/_message_modal.html:14
-msgid "Message detail"
-msgstr "Detalle del mensaje"
+#: app/templates/modals/_notification_modal.html:43
+msgid "Check it out"
+msgstr "Ver"
+
+#: app/templates/modals/_notification_modal.html:45
+#, fuzzy
+#| msgid "Private messages"
+msgid "Go to recevied messages"
+msgstr "Mensajes privados"
 
 #: app/templates/modals/conversation_table.html:8
 msgid "From"
@@ -1066,8 +1123,8 @@ msgstr "Mensaje:"
 msgid "Owner"
 msgstr "Administrador principal"
 
-#: entrepreneur/data.py:10 entrepreneur/models.py:221
-#: entrepreneur/models.py:242
+#: entrepreneur/data.py:10 entrepreneur/models.py:226
+#: entrepreneur/models.py:247
 msgid "Administrator"
 msgstr "Administrador"
 
@@ -1189,7 +1246,7 @@ msgstr "Escribe el nombre de la ciudad."
 msgid "City id"
 msgstr "id de la ciudad"
 
-#: entrepreneur/models.py:31 entrepreneur/models.py:272
+#: entrepreneur/models.py:31 entrepreneur/models.py:277
 msgid "status"
 msgstr "estado"
 
@@ -1237,41 +1294,41 @@ msgstr "url de Linkedin"
 msgid "Google plus url"
 msgstr "url de Google plus"
 
-#: entrepreneur/models.py:144 entrepreneur/models.py:323
+#: entrepreneur/models.py:144 entrepreneur/models.py:328
 msgid "shared on twitter"
 msgstr "compartido en Twitter"
 
-#: entrepreneur/models.py:226 entrepreneur/models.py:279
+#: entrepreneur/models.py:231 entrepreneur/models.py:284
 msgid "company"
 msgstr "empresa"
 
-#: entrepreneur/models.py:285
+#: entrepreneur/models.py:290
 msgid "job type"
 msgstr "tipo de trabajo"
 
-#: entrepreneur/models.py:308
+#: entrepreneur/models.py:313
 msgid "title (position)"
 msgstr "título (posición)"
 
-#: entrepreneur/models.py:333
+#: entrepreneur/models.py:338
 #, fuzzy
 #| msgid "Applicants list"
 msgid "applicants register"
 msgstr "Lista de aplicantes"
 
-#: entrepreneur/models.py:380 entrepreneur/models.py:388
+#: entrepreneur/models.py:385 entrepreneur/models.py:393
 msgid "job offer"
 msgstr "oferta de trabajo"
 
-#: entrepreneur/models.py:381
+#: entrepreneur/models.py:386
 msgid "job offers"
 msgstr "oferta de trabajo"
 
-#: entrepreneur/models.py:393 entrepreneur/models.py:402
+#: entrepreneur/models.py:398 entrepreneur/models.py:407
 msgid "applicant"
 msgstr "aplicante"
 
-#: entrepreneur/models.py:403
+#: entrepreneur/models.py:408
 msgid "applicants"
 msgstr "aplicante"
 
@@ -1385,17 +1442,17 @@ msgstr "Rechazar"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:151
+#: entrepreneur/templates/entrepreneur/venture_profile.html:154
 msgid "Web page"
 msgstr "Página web"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:166
+#: entrepreneur/templates/entrepreneur/venture_profile.html:169
 #: entrepreneur/templates/entrepreneur/venture_settings/contact_venture_form.html:131
 #: entrepreneur/templates/entrepreneur/venture_settings/venture_form.html:163
 msgid "Social media"
 msgstr "Social media"
 
-#: entrepreneur/templates/entrepreneur/venture_profile.html:209
+#: entrepreneur/templates/entrepreneur/venture_profile.html:212
 #: entrepreneur/templates/entrepreneur/venture_settings/settings_menu.html:22
 msgid "Contact"
 msgstr "Contacto"
@@ -1526,10 +1583,6 @@ msgstr "Fecha de creación"
 msgid "There are not published job offers yet."
 msgstr "No hay ofertas de trabajo publicadas aún."
 
-#: entrepreneur/templates/entrepreneur/venture_settings/messages.html:4
-msgid "Mesasges"
-msgstr ""
-
 #: entrepreneur/templates/entrepreneur/venture_settings/privacy_venture_form.html:4
 msgid "Privacy settings"
 msgstr "Configuración de privacidad"
@@ -1610,6 +1663,23 @@ msgstr "estados"
 #: place/models.py:74
 msgid "countries"
 msgstr "países"
+
+#~ msgid "New private message"
+#~ msgstr "Nuevo mensaje privado"
+
+#~ msgid ""
+#~ "Hi %(message.user_to.first_name)s. You have received a new message from"
+#~ msgstr ""
+#~ "Hola %(message.user_to.first_name)s. Has recibido un nuevo mesaje de"
+
+#~ msgid "Viewed message"
+#~ msgstr "Mensajes vistos"
+
+#~ msgid "Message from"
+#~ msgstr "Mensaje de"
+
+#~ msgid "Message detail"
+#~ msgstr "Detalle del mensaje"
 
 #, fuzzy
 #~| msgid "Visit your profile."
