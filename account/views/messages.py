@@ -100,24 +100,9 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
             conversation.updated_at = timezone.now()
             conversation.save()
 
-            if user_to.professionalprofile.email_messages_notifications:
-                subject = 'You have received a new message from {0}'.format(
-                    self.request.user,
-                )
-
-                body = render_to_string(
-                    'account/emails/new_private_message.html', {
-                        'title': subject,
-                        'message': message,
-                        'base_url': settings.BASE_URL,
-                    },
-                )
-
-                send_email(
-                    subject=subject,
-                    body=body,
-                    mail_to=[user_to.email],
-                )
+            professionalprofile = user_to.professionalprofile
+            professionalprofile.has_new_messages = True
+            professionalprofile.save()
 
         if company_to_id:
             company_to = Venture.objects.get(id=company_to_id)
