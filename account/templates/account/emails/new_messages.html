@@ -4,15 +4,35 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>{% trans 'New private message' %}</h1>
+<h1>{% trans 'New messages' %}</h1>
 
-<p>{% trans 'Hi' %} {{ message.user_to.first_name }},</p>
+<p>{% trans 'Hi' %} {{ receiver.get_full_name }},</p>
 
 <p>
-	{% if message.company_to %}{{ message.company_to }} {% trans 'has' %}{% else %}{% trans 'You have' %}{% endif %} {% trans 'received a new message from' %} <a href="{{ base_url }}profile/{{ message.user_from.professionalprofile.slug }}">{{ message.user_from }}</a>:
+    {% if to_user %}{% trans 'You have new messages in your inbox.' %}{% endif %}
+
+    <!-- {% if message.company_to %}{{ message.company_to }} {% trans 'has' %}{% else %}{% trans 'You have' %}{% endif %} {% trans 'received a new message from' %} <a href="{{ base_url }}profile/{{ message.user_from.professionalprofile.slug }}">{{ message.user_from }}</a>: -->
 </p>
 
-<p>{{ message.message|truncatechars:100 }}</p>
+<table>
+{% for id, conversation in messages_dict.items %}
+    <tr>
+        <td>
+        New messages from {{ conversation.name }}.
+            <table>
+                {% for message in conversation.messages %}
+                <tr>
+                    <td>
+                        <p>{{ message.message|truncatechars:100 }}</p>
+                        <p>{{ message.created_at }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+{% endfor %}
+</table>
 
 <p>{% trans 'Go to your' %} <a href="{{ base_url }}/account/inbox/">{% trans 'inbox' %}</a>.</p>
 {% endblock %}

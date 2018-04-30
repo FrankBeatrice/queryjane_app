@@ -42,32 +42,34 @@ def new_received_messages():
                         'messages': [new_message],
                     }
 
-                    messages_dict[key] = [contact_dict]
+                    messages_dict[key] = contact_dict
             else:
                 # Creating key to group messages from users
                 # to display them in the email detail. The used
                 # format is u_user_id.
-                key = 'u_{}'.format(new_message.company_from.id)
+                key = 'u_{}'.format(new_message.user_from.id)
 
                 if key in messages_dict:
                     messages_dict[key]['messages'].append(new_message)
                 else:
                     contact_dict = {
-                        'name': new_message.user_from.get_full_name(),
+                        'name': new_message.user_from.get_full_name,
                         'messages': [new_message],
                     }
 
-                    messages_dict[key] = [new_message]
+                    messages_dict[key] = contact_dict
 
         subject = 'You have {0} new messages in your inbox'.format(
-            new_messages,
+            new_messages.count(),
         )
 
         body = render_to_string(
             'account/emails/new_messages.html', {
                 'title': subject,
-                'message': messages_dict,
+                'to_user': True,
+                'receiver': professionalprofile.user,
                 'base_url': settings.BASE_URL,
+                'messages_dict': messages_dict,
             },
         )
 
