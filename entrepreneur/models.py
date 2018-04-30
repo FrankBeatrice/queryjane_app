@@ -150,6 +150,11 @@ class Venture(models.Model):
 
     slug = models.SlugField()
 
+    has_new_messages = models.BooleanField(
+        default=False,
+        verbose_name=_('has new messages'),
+    )
+
     def clean(self):
         if not self.status_tracker.has_changed('status') or not self.id:
             return
