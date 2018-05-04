@@ -2,6 +2,7 @@ from account.models import UserNotification
 from account.models import UserContact
 from account.models import CompanyContact
 from entrepreneur.models import AdministratorMembership
+from entrepreneur.models import CompanyScore
 from entrepreneur.models import Applicant
 from account.data import NEW_ENTREPRENEUR_ADMIN
 from entrepreneur.data import SENT_INVITATION
@@ -154,3 +155,25 @@ class JobOfferPermissions(object):
             return False
 
         return True
+
+
+class CompanyScorePermissions(object):
+    @classmethod
+    def can_add_score(self, user, company):
+        if not user.is_authenticated:
+            return False
+
+        if AdministratorMembership.objects.filter(
+            admin=user.professionalprofile,
+            venture=company,
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            return False
+
+        if not CompanyScore.objects.filter(
+            user=user,
+            company=company,
+        ):
+            return True
+
+        return False

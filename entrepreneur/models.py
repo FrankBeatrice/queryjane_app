@@ -226,7 +226,7 @@ class CompanyScore(models.Model):
         verbose_name=_('usuario'),
     )
 
-    venture = models.ForeignKey(
+    company = models.ForeignKey(
         'entrepreneur.Venture',
         verbose_name=_('company'),
     )

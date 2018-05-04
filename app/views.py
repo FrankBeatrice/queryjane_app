@@ -20,6 +20,7 @@ from account.models import ProfessionalProfile
 from account.models import Conversation
 from account.models import UserNotification
 from account.permissions import AddressBookPermissions
+from account.permissions import CompanyScorePermissions
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -227,6 +228,11 @@ class VentureDetail(DetailView):
 
         context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
             self.request.user.professionalprofile,
+            venture,
+        )
+
+        context['can_add_score'] = CompanyScorePermissions.can_add_score(
+            self.request.user,
             venture,
         )
 
