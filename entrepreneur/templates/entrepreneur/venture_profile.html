@@ -56,11 +56,17 @@
                     </div>
                 </div>
 
-                {% if can_add_score %}
                 <div>
+                    <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
+
+                    <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} have scored {{ venture }}.{% endif %}</p>
+
+                    {% if can_add_score %}
                     Rate this company
+                    {% endif %}
                 </div>
-                {% endif %}
+
+                <br>
 
             {% if can_manage %}
                 <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>

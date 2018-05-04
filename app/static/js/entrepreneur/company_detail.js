@@ -1,6 +1,12 @@
 $(function () {
     'use strict';
 
+    // Load company rating.
+    $("#idCompanyScore").rateYo({
+        rating: $('#idCompanyScore').data('score'),
+        readOnly: true
+    });
+
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {
         var company_for_add_name = $(this).data('company-for-add-name');

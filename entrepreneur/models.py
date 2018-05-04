@@ -198,6 +198,23 @@ class Venture(models.Model):
         return logo
 
     @property
+    def get_score(self):
+        user_scores = CompanyScore.objects.filter(company=self)
+        total_score = 0
+
+        if user_scores:
+            for user_score in user_scores.all():
+                total_score += user_score.score
+
+            return total_score / user_scores.count()
+
+        return total_score
+
+    @property
+    def get_votes_quantity(self):
+        return CompanyScore.objects.filter(company=self).count()
+
+    @property
     def get_active_administrator_ids(self):
         active_memberships = self.administratormembership_set.filter(
             status=ACTIVE_MEMBERSHIP,
@@ -231,7 +248,7 @@ class CompanyScore(models.Model):
         verbose_name=_('company'),
     )
 
-    score = models.PositiveSmallIntegerField()
+    score = models.FloatField()
 
     def __str__(self):
         return '{0} - {1} - {2}'.format(
