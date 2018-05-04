@@ -220,6 +220,27 @@ class Venture(models.Model):
         return '{0}'.format(self.name)
 
 
+class CompanyScore(models.Model):
+    user = models.ForeignKey(
+        'account.User',
+        verbose_name=_('usuario'),
+    )
+
+    venture = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('company'),
+    )
+
+    score = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return '{0} - {1} - {2}'.format(
+            self.user.get_full_name,
+            self.venture.name,
+            self.score,
+        )
+
+
 class AdministratorMembership(models.Model):
     admin = models.ForeignKey(
         'account.ProfessionalProfile',
