@@ -16,6 +16,7 @@ from django.views.generic import TemplateView
 from django.views.generic import View
 
 from account.forms import SignUpForm
+from account.forms import CompanyScoreForm
 from account.models import ProfessionalProfile
 from account.models import Conversation
 from account.models import UserNotification
@@ -215,6 +216,7 @@ class VentureDetail(DetailView):
         context = super().get_context_data(**kwargs)
         venture = self.get_object()
 
+        context['score_form'] = CompanyScoreForm()
         context['venture'] = venture
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,

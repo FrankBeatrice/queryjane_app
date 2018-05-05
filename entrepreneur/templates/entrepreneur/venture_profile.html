@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static entrepreneur_tags i18n user_conversations %}
+{% load static entrepreneur_tags i18n user_conversations widget_tweaks %}
 
 {% block title %}{{ venture }}{% endblock %}
 
@@ -59,10 +59,10 @@
                 <div>
                     <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
 
-                    <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} have scored {{ venture }}.{% endif %}</p>
+                    <p id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
 
                     {% if can_add_score %}
-                    Rate this company
+                    <a id="idScoreformLink" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
                     {% endif %}
                 </div>
 
@@ -281,6 +281,37 @@
         </div>
     </div>
 </section>
+
+{% if can_add_score %}
+<div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Rate ' %} <strong>{{ venture }}</strong></h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="jsScoreFormContainer">
+                    <div id="idCompanyScoreInput"></div>
+
+                    <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
+                        {% csrf_token %}
+
+                        <div style="display: none;">
+                            {% render_field score_form.score %}
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block js %}

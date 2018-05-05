@@ -180,5 +180,9 @@ class UserMessageForm(Form):
     company_from_id = forms.IntegerField(required=False)
 
 
+class CompanyScoreForm(Form):
+    score = forms.FloatField()
+
+
 class AvatarForm(Form):
     avatar = forms.ImageField()
