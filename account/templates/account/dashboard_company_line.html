@@ -32,13 +32,15 @@
                 <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
             </a>
 
+            {% if permission_app.manage_admin_views %}
             <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_venture' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
                 <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
             </a>
-
+            
             <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_venture' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
                 <i class="fa fa-fire"></i> Activate
             </a>
+            {% endif %}
 
             <a href="{{ company.get_absolute_url }}" class="btn btn-primary">{% trans 'View' %}</a>
         </div>

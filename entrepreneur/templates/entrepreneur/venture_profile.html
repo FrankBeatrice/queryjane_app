@@ -280,7 +280,6 @@
             </div>
         </div>
     </div>
-</section>
 
 {% if can_add_score %}
 <div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
@@ -297,7 +296,11 @@
             <div class="modal-body">
 
                 <div class="jsScoreFormContainer">
+                    <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
+
                     <div id="idCompanyScoreInput"></div>
+
+                    <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
 
                     <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
                         {% csrf_token %}
@@ -311,7 +314,7 @@
     </div>
 </div>
 {% endif %}
-
+</section>
 {% endblock %}
 
 {% block js %}
