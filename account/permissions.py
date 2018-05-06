@@ -90,15 +90,18 @@ class AddressBookPermissions(object):
 
     @classmethod
     def can_add_company(self, owner, company):
+        if not owner.is_authenticated:
+            return False
+
         if AdministratorMembership.objects.filter(
-            admin=owner,
+            admin=owner.professionalprofile,
             venture=company,
             status=ACTIVE_MEMBERSHIP,
         ):
             return False
 
         if not CompanyContact.objects.filter(
-            owner=owner,
+            owner=owner.professionalprofile,
             company=company,
         ):
             return True
@@ -107,8 +110,11 @@ class AddressBookPermissions(object):
 
     @classmethod
     def can_remove_company(self, owner, company):
+        if not owner.is_authenticated:
+            return False
+
         if CompanyContact.objects.filter(
-            owner=owner,
+            owner=owner.professionalprofile,
             company=company,
         ):
             return True

@@ -224,12 +224,12 @@ class VentureDetail(DetailView):
         )
 
         context['can_add_to_address_book'] = AddressBookPermissions.can_add_company(
-            self.request.user.professionalprofile,
+            self.request.user,
             venture,
         )
 
         context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
-            self.request.user.professionalprofile,
+            self.request.user,
             venture,
         )
 
