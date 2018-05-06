@@ -16,10 +16,12 @@ from django.views.generic import TemplateView
 from django.views.generic import View
 
 from account.forms import SignUpForm
+from account.forms import CompanyScoreForm
 from account.models import ProfessionalProfile
 from account.models import Conversation
 from account.models import UserNotification
 from account.permissions import AddressBookPermissions
+from account.permissions import CompanyScorePermissions
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -214,6 +216,7 @@ class VentureDetail(DetailView):
         context = super().get_context_data(**kwargs)
         venture = self.get_object()
 
+        context['score_form'] = CompanyScoreForm()
         context['venture'] = venture
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
@@ -221,12 +224,17 @@ class VentureDetail(DetailView):
         )
 
         context['can_add_to_address_book'] = AddressBookPermissions.can_add_company(
-            self.request.user.professionalprofile,
+            self.request.user,
             venture,
         )
 
         context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
-            self.request.user.professionalprofile,
+            self.request.user,
+            venture,
+        )
+
+        context['can_add_score'] = CompanyScorePermissions.can_add_score(
+            self.request.user,
             venture,
         )
 

@@ -1,6 +1,27 @@
 $(function () {
     'use strict';
 
+    // Load company score.
+    $("#idCompanyScore").rateYo({
+        rating: $('#idCompanyScore').data('score'),
+        readOnly: true
+    });
+
+    // Load company score form.
+    $("#idCompanyScoreInput").rateYo()
+      .on("rateyo.set", function (e, data) {
+          $('#id_score').val(data.rating);
+
+          $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
+            $('.jsScoreFormContainer').text('Thank you. ' + response.message);
+            $('#idScoreformLink').remove()
+
+            $('#idScoreMessage').text(response.message);
+            $("#idCompanyScore").rateYo("option", "rating", response.new_score);
+          });
+      });
+    ;
+
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {
         var company_for_add_name = $(this).data('company-for-add-name');
