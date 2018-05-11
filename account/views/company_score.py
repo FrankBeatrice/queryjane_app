@@ -3,6 +3,7 @@ from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
+from django.template.loader import render_to_string
 
 from account.forms import CompanyScoreForm
 from account.permissions import CompanyScorePermissions
@@ -30,7 +31,7 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
     def form_valid(self, form):
         company = self.get_object()
 
-        CompanyScore.objects.create(
+        company_score = CompanyScore.objects.create(
             user=self.request.user,
             company=company,
             score=form.cleaned_data['score'],
@@ -49,6 +50,11 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
             {
                 'new_score': company.get_score,
                 'message': message,
+                'score_line': render_to_string(
+                    'entrepreneur/company_score_line.html', {
+                        'company_score': company_score,
+                    },
+                )
             }
         )
 

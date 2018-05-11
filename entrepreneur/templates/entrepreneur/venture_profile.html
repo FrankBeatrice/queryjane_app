@@ -64,6 +64,7 @@
                     {% if can_add_score %}
                     <a id="idScoreformLink" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
                     {% endif %}
+                    
                 </div>
 
                 <br>
@@ -281,7 +282,6 @@
         </div>
     </div>
 
-{% if can_add_score %}
 <div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -294,7 +294,7 @@
             </div>
 
             <div class="modal-body">
-
+                {% if can_add_score %}
                 <div class="jsScoreFormContainer">
                     <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
 
@@ -313,18 +313,26 @@
                             {% render_field score_form.comment class+="form-control" %}
                         </div>
 
-                        <div>
+                        <div style="display:none;">
                             {% render_field score_form.score %}
                         </div>
 
                         <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
                     </form>
                 </div>
+                {% endif %}
+
+                <div class="jsCompanyScoreList">
+                    <table class="table table-striped">
+                        {% for company_score in venture.companyscore_set.all %}
+                        {% include 'entrepreneur/company_score_line.html' %}
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-{% endif %}
 </section>
 {% endblock %}
 

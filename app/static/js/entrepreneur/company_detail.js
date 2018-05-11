@@ -12,6 +12,8 @@ $(function () {
         $('.jsScoreFormContainer').text('Thank you. ' + response.message);
         $('#idScoreformLink').remove()
 
+        $('.jsCompanyScoreList table').prepend(response.score_line);
+
         $('#idScoreMessage').text(response.message);
         $("#idCompanyScore").rateYo("option", "rating", response.new_score);
       });
@@ -26,12 +28,12 @@ $(function () {
 
       });
 
-
     $('#idCompanyScoreForm').validate({
         ignore: [],
         rules: {
             score: {
-                required: true
+                required: true,
+                maxlength: 200
             }
         },
         errorPlacement: function(error, element) {

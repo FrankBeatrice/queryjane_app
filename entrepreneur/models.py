@@ -256,10 +256,14 @@ class CompanyScore(models.Model):
         null=True,
     )
 
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
     def __str__(self):
         return '{0} - {1} - {2}'.format(
             self.user.get_full_name,
-            self.venture.name,
+            self.company.name,
             self.score,
         )
 
