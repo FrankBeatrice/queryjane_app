@@ -6,21 +6,40 @@ $(function () {
         rating: $('#idCompanyScore').data('score'),
         readOnly: true
     });
+    
+    $('#idCompanyScoreForm').on('submit', function () {
+      $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
+        $('.jsScoreFormContainer').text('Thank you. ' + response.message);
+        $('#idScoreformLink').remove()
+
+        $('#idScoreMessage').text(response.message);
+        $("#idCompanyScore").rateYo("option", "rating", response.new_score);
+      });
+
+      return false;
+    });
 
     // Load company score form.
     $("#idCompanyScoreInput").rateYo()
       .on("rateyo.set", function (e, data) {
           $('#id_score').val(data.rating);
 
-          $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
-            $('.jsScoreFormContainer').text('Thank you. ' + response.message);
-            $('#idScoreformLink').remove()
-
-            $('#idScoreMessage').text(response.message);
-            $("#idCompanyScore").rateYo("option", "rating", response.new_score);
-          });
       });
-    ;
+
+
+    $('#idCompanyScoreForm').validate({
+        ignore: [],
+        rules: {
+            score: {
+                required: true
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'score') {
+                error.insertAfter('#idCompanyScoreInput');
+            }
+        }
+    });
 
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {

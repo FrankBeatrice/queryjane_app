@@ -34,6 +34,7 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
             user=self.request.user,
             company=company,
             score=form.cleaned_data['score'],
+            comment=form.cleaned_data['comment'],
         )
 
         if company.get_votes_quantity == 1:

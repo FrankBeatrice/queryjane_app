@@ -183,6 +183,12 @@ class UserMessageForm(Form):
 class CompanyScoreForm(Form):
     score = forms.FloatField()
 
+    comment = forms.CharField(
+        required=False,
+        label=_('country'),
+        widget=forms.Textarea,
+    )
+
 
 class AvatarForm(Form):
     avatar = forms.ImageField()

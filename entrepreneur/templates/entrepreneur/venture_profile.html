@@ -298,17 +298,28 @@
                 <div class="jsScoreFormContainer">
                     <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
 
-                    <div id="idCompanyScoreInput"></div>
-
                     <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+
+                    <div id="idCompanyScoreInput"></div>
 
                     <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
                         {% csrf_token %}
 
-                        <div style="display: none;">
+                        <div>
+                            <label>
+                                {% trans 'Add a comment about this company.' %}
+                            </label>
+
+                            {% render_field score_form.comment class+="form-control" %}
+                        </div>
+
+                        <div>
                             {% render_field score_form.score %}
                         </div>
+
+                        <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
                     </form>
+                </div>
             </div>
         </div>
     </div>
