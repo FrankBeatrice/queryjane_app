@@ -59,10 +59,10 @@
                 <div>
                     <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
 
-                    <p id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
 
                     {% if can_add_score %}
-                    <a id="idScoreformLink" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
+                    <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
                     {% endif %}
                     
                 </div>
@@ -326,6 +326,10 @@
                     <table class="table table-striped">
                         {% for company_score in venture.companyscore_set.all %}
                         {% include 'entrepreneur/company_score_line.html' %}
+                        {% empty %}
+                        <tr class="jsCompanyScoreEmpty">
+                            <td>There are not scores yet.</td>
+                        </tr>
                         {% endfor %}
                     </table>
                 </div>
