@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import transaction
 from django.http import Http404
 from django.http import JsonResponse
@@ -5,14 +6,15 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from django.template.loader import render_to_string
 
-from account.models import UserNotification
-from entrepreneur.data import ACTIVE_MEMBERSHIP
 from account.data import NEW_COMPANY_SCORE
 from account.forms import CompanyScoreForm
+from account.models import UserNotification
 from account.permissions import CompanyScorePermissions
 from app.mixins import CustomUserMixin
-from entrepreneur.models import Venture
+from app.tasks import send_email
+from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import CompanyScore
+from entrepreneur.models import Venture
 
 
 class CompanyScoreFormView(CustomUserMixin, FormView):
@@ -44,14 +46,31 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
         for membership in company.administratormembership_set.filter(
             status=ACTIVE_MEMBERSHIP,
         ):
+            subject = '{} has been scored by an user.'.format(company)
             # Create platform notification.
             UserNotification.objects.create(
                 notification_type=NEW_COMPANY_SCORE,
                 noty_to=membership.admin.user,
                 answered=True,
                 venture_to=company,
-                description='{} has been scored by an user.'.format(company),
+                description=subject,
             )
+
+            if membership.admin.new_company_scores_notifications:
+                body = render_to_string(
+                    'account/emails/new_company_score.html', {
+                        'title': subject,
+                        'user_to': membership.admin.user,
+                        'company_score': company_score,
+                        'base_url': settings.BASE_URL,
+                    },
+                )
+
+                send_email(
+                    subject=subject,
+                    body=body,
+                    mail_to=[membership.admin.user.email],
+                )
 
         if company.get_votes_quantity == 1:
             message = '1 user has scored {}.'.format(company.name)

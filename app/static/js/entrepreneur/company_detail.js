@@ -53,6 +53,8 @@ $(function () {
         errorPlacement: function(error, element) {
             if (element.attr('name') === 'score') {
                 error.insertAfter('#idCompanyScoreInput');
+            } else {
+                error.insertAfter(element);
             }
         }
     });
