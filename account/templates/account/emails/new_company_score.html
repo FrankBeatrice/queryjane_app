@@ -1,0 +1,17 @@
+{% extends 'layout/base_email.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{% trans 'News in your company.' %}</h1>
+
+<p>{% trans 'Hi' %} {{ userto.first_name }}. <a href="{{ base_url }}/{{ company_score.company.slug }}">{{ company_score.company }}</a> {% trans 'has been scored by an user. Take a look at what users are saying:' %}</p>
+
+<p>New score from {{ company_score.user }}</p>
+<p>Score: {{ company_score.score }}</p>
+
+{% if company_score.comment %}
+<p>{{ company_score.comment|linebreaks }}</p>
+{% endif %}
+{% endblock %}

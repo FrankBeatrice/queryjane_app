@@ -1,10 +1,38 @@
+function score_list_update_rateyo() {
+    $(".jsCompanyScoreList .jsLineScore").each(function(idx, element) {
+        $(element).rateYo({
+            rating: $(element).data('score'),
+            readOnly: true
+        });
+    });
+}
+
 $(function () {
     'use strict';
+
+    score_list_update_rateyo();
 
     // Load company score.
     $("#idCompanyScore").rateYo({
         rating: $('#idCompanyScore').data('score'),
         readOnly: true
+    });
+    
+    $('#idCompanyScoreForm').on('submit', function () {
+      $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
+        $('.jsScoreFormContainer').text('Thank you. ' + response.message);
+        $('#idScoreformLink').remove();
+        $('.jsCompanyScoreEmpty').remove();
+
+        $('.jsCompanyScoreList table').prepend(response.score_line);
+        score_list_update_rateyo();
+
+
+        $('#idScoreMessage').text(response.message);
+        $("#idCompanyScore").rateYo("option", "rating", response.new_score);
+      });
+
+      return false;
     });
 
     // Load company score form.
@@ -12,15 +40,24 @@ $(function () {
       .on("rateyo.set", function (e, data) {
           $('#id_score').val(data.rating);
 
-          $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
-            $('.jsScoreFormContainer').text('Thank you. ' + response.message);
-            $('#idScoreformLink').remove()
-
-            $('#idScoreMessage').text(response.message);
-            $("#idCompanyScore").rateYo("option", "rating", response.new_score);
-          });
       });
-    ;
+
+    $('#idCompanyScoreForm').validate({
+        ignore: [],
+        rules: {
+            score: {
+                required: true,
+                maxlength: 200
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr('name') === 'score') {
+                error.insertAfter('#idCompanyScoreInput');
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {

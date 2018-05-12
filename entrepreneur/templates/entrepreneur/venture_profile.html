@@ -59,11 +59,12 @@
                 <div>
                     <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
 
-                    <p id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
 
                     {% if can_add_score %}
-                    <a id="idScoreformLink" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
+                    <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
                     {% endif %}
+                    
                 </div>
 
                 <br>
@@ -281,7 +282,6 @@
         </div>
     </div>
 
-{% if can_add_score %}
 <div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -294,26 +294,49 @@
             </div>
 
             <div class="modal-body">
-
+                {% if can_add_score %}
                 <div class="jsScoreFormContainer">
                     <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
 
-                    <div id="idCompanyScoreInput"></div>
-
                     <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+
+                    <div id="idCompanyScoreInput"></div>
 
                     <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
                         {% csrf_token %}
 
-                        <div style="display: none;">
+                        <div>
+                            <label>
+                                {% trans 'Add a comment about this company.' %}
+                            </label>
+
+                            {% render_field score_form.comment class+="form-control" %}
+                        </div>
+
+                        <div style="display:none;">
                             {% render_field score_form.score %}
                         </div>
+
+                        <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
                     </form>
+                </div>
+                {% endif %}
+
+                <div class="jsCompanyScoreList">
+                    <table class="table table-striped">
+                        {% for company_score in venture.companyscore_set.all %}
+                        {% include 'entrepreneur/company_score_line.html' %}
+                        {% empty %}
+                        <tr class="jsCompanyScoreEmpty">
+                            <td>There are not scores yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-{% endif %}
 </section>
 {% endblock %}
 

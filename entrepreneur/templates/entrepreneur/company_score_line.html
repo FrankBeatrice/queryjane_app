@@ -1,0 +1,14 @@
+<tr>
+    <td>
+        <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ company_score.user.get_avatar }}" alt="{{ company_score.user }}">
+        <p>{{ company_score.user }}</p>
+
+        <div class="jsLineScore" data-score="{{ company_score.score }}"></div>
+
+        {% if company_score.comment %}
+        <p>{{ company_score.comment|linebreaks }}</p>
+        {% endif %}
+
+        <p>{{ company_score.created_at }}</p>
+    </td>
+</tr>
