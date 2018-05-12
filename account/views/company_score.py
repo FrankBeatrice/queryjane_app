@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from django.template.loader import render_to_string
 
+from account.models import UserNotification
+from entrepreneur.data import ACTIVE_MEMBERSHIP
+from account.data import NEW_COMPANY_SCORE
 from account.forms import CompanyScoreForm
 from account.permissions import CompanyScorePermissions
 from app.mixins import CustomUserMixin
@@ -37,6 +40,18 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
             score=form.cleaned_data['score'],
             comment=form.cleaned_data['comment'],
         )
+
+        for membership in company.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=NEW_COMPANY_SCORE,
+                noty_to=membership.admin.user,
+                answered=True,
+                venture_to=company,
+                description='{} has been scored by an user.'.format(company),
+            )
 
         if company.get_votes_quantity == 1:
             message = '1 user has scored {}.'.format(company.name)
