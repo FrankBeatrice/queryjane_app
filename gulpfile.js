@@ -67,4 +67,4 @@ gulp.task('watch', function() {
   gulp.watch('{app,userprofile}/templates/**/*.html', browserSync.reload);
 });
 
-gulp.task('default', ['css-assets', 'js-assets', 'compile-sass', 'js', 'images']);
+gulp.task('default', ['compile-sass', 'js', 'images']);
