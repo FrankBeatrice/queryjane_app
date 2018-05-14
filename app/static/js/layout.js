@@ -9,7 +9,9 @@ require('jquery-validation');
 require('jquery-validation/dist/additional-methods.js');
 require('jquery-confirm');
 var Quill = require('quill');
+window.Quill = Quill;
 var bootstrapSwitch = require('bootstrap-switch');
+window.bootstrapSwitch = bootstrapSwitch;
 
 // Utilities
 require('./utilities/mediaQueryDetector');
