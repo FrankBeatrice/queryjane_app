@@ -12,30 +12,14 @@ var uglify       = require('gulp-uglify');
 var rename       = require('gulp-rename');
 var babelify     = require('babelify');
 
-var conf = {
-  cssAssets: {
-    src: [
-      './node_modules/bootstrap/dist/css/bootstrap.min.css',
-      './node_modules/bootstrap/dist/css/bootstrap.min.css.map',
-      './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
-    ],
-    dest: './app/static/dist/assets/css/'
-  }
-}
-
-// CSS assets
-gulp.task('css-assets', function() {
-  return gulp.src(conf.cssAssets.src)
-    .pipe(gulp.dest(conf.cssAssets.dest));
-});
-
 // SASS
 gulp.task('compile-sass', function() {
   return gulp.src('./app/static/sass/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(postcss([ autoprefixer() ]))
-    .pipe(sourcemaps.write())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./app/static/dist/css/'))
     .pipe(browserSync.stream());
 });
