@@ -20,17 +20,6 @@ var conf = {
       './node_modules/jquery-confirm/dist/jquery-confirm.min.css'
     ],
     dest: './app/static/dist/assets/css/'
-  },
-  jsAssets: {
-    src: [
-      './node_modules/jquery/dist/jquery.min.js',
-      './node_modules/bootstrap/dist/js/bootstrap.min.js',
-      './node_modules/jquery-validation/dist/jquery.validate.js',
-      './node_modules/jquery-validation/dist/additional-methods.js',
-      './node_modules/jquery-confirm/dist/jquery-confirm.min.js',
-      './node_modules/typeahead.js/dist/typeahead.bundle.min.js'
-    ],
-    dest: './app/static/dist/assets/js/'
   }
 }
 
@@ -38,12 +27,6 @@ var conf = {
 gulp.task('css-assets', function() {
   return gulp.src(conf.cssAssets.src)
     .pipe(gulp.dest(conf.cssAssets.dest));
-});
-
-// Js assets
-gulp.task('js-assets', function() {
-  return gulp.src(conf.jsAssets.src)
-    .pipe(gulp.dest(conf.jsAssets.dest));
 });
 
 // SASS
