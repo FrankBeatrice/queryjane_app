@@ -25,6 +25,7 @@
     "gulp-rename": "^1.2.2"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-switch": "^3.3.4",
     "jquery": "^3.2.1",
