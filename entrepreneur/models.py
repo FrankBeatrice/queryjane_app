@@ -267,6 +267,11 @@ class CompanyScore(models.Model):
             self.score,
         )
 
+    class Meta:
+        verbose_name = _('company score')
+        verbose_name_plural = _('company scores')
+        ordering = ('-created_at',)
+
 
 class AdministratorMembership(models.Model):
     admin = models.ForeignKey(
