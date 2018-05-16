@@ -1,41 +1,30 @@
 // Inspired on the following technique http://stackoverflow.com/a/28373319
-!function(global) {
-  'use strict';
+function MediaQueryDetector(options) {
+  var options = options || {};
+  var $target;
 
-  var previousMediaQueryDetector = global.MediaQueryDetector;
+  function init() {
+    $target = options.$target;
+  }
 
-  function MediaQueryDetector(options) {
-    var options = options || {};
-    var $target;
+  // Evaluate one or multiple breakpoints (params: xs, sm, md, lg)
+  function isDevice() {
+    var visibleElement;
 
-    function init() {
-      $target = options.$target;
-    }
+    visibleElement = $target.find(':visible').attr('class');
 
-    // Evaluate one or multiple breakpoints (params: xs, sm, md, lg)
-    function isDevice() {
-      var visibleElement;
-
-      visibleElement = $target.find(':visible').attr('class');
-
-      for (var i in arguments) {
-        if(('visible-' + arguments[i]) == visibleElement) {
-          return true;
-        }
+    for (var i in arguments) {
+      if(('visible-' + arguments[i]) == visibleElement) {
+        return true;
       }
-    }
-
-    init();
-
-    return {
-      isDevice: isDevice
     }
   }
 
-  MediaQueryDetector.noConflict = function noConflict() {
-    global.MediaQueryDetector = previousMediaQueryDetector;
-    return MediaQueryDetector;
-  };
+  init();
 
-  global.MediaQueryDetector = MediaQueryDetector;
-}(this);
+  return {
+    isDevice: isDevice
+  }
+}
+
+window.MediaQueryDetector = MediaQueryDetector;

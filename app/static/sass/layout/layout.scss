@@ -1,6 +1,15 @@
+@import "./../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "./libs/jquery-confirm";
+@import "./libs/quill.snow";
+@import "./libs/boostrap-switch";
+@import "./libs/bootstrap-social";
+@import "./libs/typeahead";
+@import "./libs/jquery.rateyo";
+
 @import 'variables';
 @import 'theme';
 @import 'buttons';
+@import 'forms';
 @import '../utilities/spacing';
 @import 'header';
 @import 'footer';

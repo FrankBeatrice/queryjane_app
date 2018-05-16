@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Register company' %}{% endblock %}
 
 {% block css %}
-<link href="{% static 'dist/css/entrepreneur/venture_form.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/venture_form.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -49,15 +49,15 @@
                                         </div>
 
 
-                                        <div id="id_QjaneVFcountryAut" class="form-group profile-form__country" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                             <label>
                                                 {% trans 'Country' %}
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div class="profile-form__country__typeahead">
+                                            <div class="country-field__typeahead">
                                                 {% render_field form.country_search  class+="form-control" %}
 
-                                                <img id="id_QjaneVFcountryAutImg" class="profile-form__country__typeahead__flag-icon" src="{{ country_instance.flag }}">
+                                                <img id="id_QjaneVFcountryAutImg" class="country-field__typeahead__flag-icon" src="{{ country_instance.flag }}">
 
                                                 <p>{{ form.country_search.errors }}</p>
                                             </div>
@@ -68,15 +68,15 @@
                                             <p>{{ form.country_code.errors }}</p>
                                         </div>
 
-                                        <div id="id_QjaneVFcityAut" class="form-group profile-form__city" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
                                             <label>
                                                 {% trans 'City' %}
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div class="profile-form__city__typeahead">
+                                            <div class="city-field__typeahead">
                                                 {% render_field form.city_search  class+="form-control" %}
-                                                <i class="fa fa-spinner fa-pulse fa-fw profile-form__city__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
-                                                <a class="fa fa-paper-plane profile-form__city__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
+                                                <i class="fa fa-spinner fa-pulse fa-fw city-field__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
+                                                <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                                 <p>{{ form.city_search.errors }}</p>
 
                                                 <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'Please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>
@@ -237,8 +237,8 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/place/show_position.js' %}"></script>
-<script src="{% static 'js/entrepreneur/venture_form.js' %}"></script>
-<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
+<script src="{% static 'dist/js/entrepreneur/venture_form.min.js' %}"></script>
+<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
 {% endblock %}
 
