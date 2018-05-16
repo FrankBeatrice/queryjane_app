@@ -12,6 +12,7 @@ var Quill = require('quill');
 window.Quill = Quill;
 var bootstrapSwitch = require('bootstrap-switch');
 window.bootstrapSwitch = bootstrapSwitch;
+require('rateyo/min/jquery.rateyo.min.js');
 
 // Utilities
 require('./utilities/mediaQueryDetector');
