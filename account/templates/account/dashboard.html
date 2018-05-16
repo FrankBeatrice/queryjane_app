@@ -81,20 +81,20 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
-                        <span>{% trans 'New messages' %} (<span class="NewMessagesCounter">{{ new_messages.count }}</span>)</span>
+                        <span>{% trans 'New messages' %} (<span class="NewMessagesCounter">{{ new_conversations.count }}</span>)</span>
                     </div>
 
                     <div class="panel-body QjaneInboxList">
-                        {% if new_messages %}
+                        {% if new_conversations %}
                         <table class="table">
-                        {% for message in new_messages|slice:":4" %}
-                            <tr class="{% if message.unread %}active{% endif %}">
+                        {% for conversation in new_conversations|slice:":4" %}
+                            <tr class="{% if conversation.unread %}active{% endif %}">
                                 <td>
-                                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                                    <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true"></i>
 
-                                    <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}" data-toggle="modal" data-target="#generalModalMessage">
-                                        <span> - {% trans 'From:' %} {{ message.user_from }}</span>
-                                        <p>{{ message.created_at }}</p>
+                                    <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ conversation.get_last_message.user_from.id }}" data-to-name="{{ conversation.get_last_message.user_from }}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                                        <span> - {% trans 'From:' %} {{ conversation.get_last_message.user_from }}</span>
+                                        <p>{{ conversation.get_last_message.created_at }}</p>
                                     </a>
                                 </td>
                             </tr>

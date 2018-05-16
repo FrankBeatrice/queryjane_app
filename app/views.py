@@ -16,10 +16,12 @@ from django.views.generic import TemplateView
 from django.views.generic import View
 
 from account.forms import SignUpForm
+from account.forms import CompanyScoreForm
 from account.models import ProfessionalProfile
-from account.models import UserMessage
+from account.models import Conversation
 from account.models import UserNotification
 from account.permissions import AddressBookPermissions
+from account.permissions import CompanyScorePermissions
 from account.permissions import JobOfferPermissions
 from app.mixins import CustomUserMixin
 from app.tasks import send_email
@@ -113,10 +115,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         ).exclude(id__in=companies_to_exclude).order_by('?')[:5])
 
         # New messages
-        new_messages = UserMessage.objects.filter(
-            user_to=user,
-            unread=True,
-        )
+        new_conversations = Conversation.objects.filter(
+            usermessage__user_to=user,
+            usermessage__unread=True,
+        ).distinct()
 
         # New messages
         new_notifications = UserNotification.objects.filter(
@@ -128,7 +130,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context['last_jobs'] = last_jobs
         context['local_companies'] = local_companies
         context['random_companies'] = random_companies
-        context['new_messages'] = new_messages
+        context['new_conversations'] = new_conversations
         context['new_notifications'] = new_notifications
 
         return context
@@ -214,6 +216,7 @@ class VentureDetail(DetailView):
         context = super().get_context_data(**kwargs)
         venture = self.get_object()
 
+        context['score_form'] = CompanyScoreForm()
         context['venture'] = venture
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
@@ -221,12 +224,17 @@ class VentureDetail(DetailView):
         )
 
         context['can_add_to_address_book'] = AddressBookPermissions.can_add_company(
-            self.request.user.professionalprofile,
+            self.request.user,
             venture,
         )
 
         context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
-            self.request.user.professionalprofile,
+            self.request.user,
+            venture,
+        )
+
+        context['can_add_score'] = CompanyScorePermissions.can_add_score(
+            self.request.user,
             venture,
         )
 

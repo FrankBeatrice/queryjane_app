@@ -42,15 +42,20 @@
             {% if new_user_messages_count %}(<span class="NewMessagesCounter">{{ new_user_messages_count }}</span>){% endif %}
         </a>
 
-        {% get_recent_user_messages user as recent_user_messages %}
+        {% get_recent_user_conversations user as recent_user_conversations %}
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
-        {% for message in recent_user_messages %}
-            <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
-                <a class="qjane-messages-link" href="javascript:void(0)" data-message-url="{% url 'account:ajax_post_message_load' message.pk  %}">
-                    <i class="JSMessagestatus fa {% if message.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New message' %}{% else %}{% trans 'Viewed message' %}{% endif %}"></i>
-                    From: {{ message.user_from }}
+        {% for conversation in recent_user_conversations %}
+            <li class="dropdown-item">
+                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                    <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                    From:
+                    {% if conversation.get_last_message.company_from %}
+                    {{ conversation.get_last_message.company_from }}
+                    {% else %}
+                    {{ conversation.get_last_message.user_from }}
+                    {% endif %}
 
-                    <p>{{ message.created_at }}</p>
+                    <p>{{ conversation.get_last_message.created_at }}</p>
                 </a>
             </li>
         {% endfor %}
@@ -128,7 +133,7 @@
     </li>
 </ul>
 
-<!-- Modal -->
+<!-- Modals -->
 <div class="modal fade" id="generalModalMessage" tabindex="-1" role="dialog" aria-labelledby="generalModalMessage" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content"></div>
@@ -147,11 +152,6 @@
             </div>
 
             <div class="modal-body">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#newMessage">{% trans 'New message' %}</a></li>
-                  <li><a data-toggle="tab" href="#newMessageConversation">{% trans 'Full conversation' %}</a></li>
-                </ul>
-
                 <div class="tab-content">
                   <div id="newMessage" class="tab-pane fade in active">
                     <div class="alert alert-success" role="alert" style="display:none;">
@@ -164,7 +164,7 @@
 
                         <div class="form-group">
                             <label>
-                                {{ message_form.user_message.label }}
+                                {% trans 'New message' %}
                                 <span class="QJRequiredField">*</span>
                             </label>
 
@@ -172,28 +172,16 @@
                             {{ message_form.user_message.errors }}
                         </div>
 
-                        <div>
+                        <div style="display:none;">
                             {% render_field message_form.user_to_id %}
                             {% render_field message_form.company_to_id %}
+                            {% render_field message_form.company_from_id %}
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
                     </form>
-                  </div>
 
-                  <div id="newMessageConversation" class="tab-pane fade">
-                    <table class="table table-striped">
-                    {% for previous_message in conversation %}
-                        <tr>
-                            <td>
-                                <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ previous_message.user_from.get_avatar }}" alt="{{ previous_message.user_from }}">
-                                <p>{{ previous_message.created_at }}</p>
-                                <p><strong>From: </strong>{{ previous_message.user_from }}</p>
-                                <p>{{ previous_message.message }}</p>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </table>
+                    <div id="JSconversationDetail"></div>
                   </div>
                 </div>
             </div>

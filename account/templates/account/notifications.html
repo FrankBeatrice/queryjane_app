@@ -22,7 +22,7 @@
                         {% for notification in notifications_list %}
                         <tr class="{% if not notification.was_seen %}active{% endif %}">
                             <td>
-                                <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if message.unread %}New notification{% else %}Viewed notification{% endif %}"></i>
+                                <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}New notification{% else %}Viewed notification{% endif %}"></i>
 
                                 <span> - {{ notification.created_at }}</span>
 

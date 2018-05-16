@@ -1,0 +1,48 @@
+{% extends "layout/index.html" %}
+{% load static i18n %}
+
+{% block title %}{{ venture }} - {% trans 'Messages' %}{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans 'Messages' %}</h3>
+                    </div>
+
+                    <div class="panel-body QjaneInboxList">
+                        <table class="table">
+                            {% for conversation in conversations_list %}
+                            <tr class="{% if conversation.unread %}active{% endif %}">
+                                <td>
+                                    <p>
+                                    {% trans 'Conversation with' %}
+                                    {% for participant in  conversation.participating_users.all %}
+                                    {% if participant != user %}{{ participant }}{% endif %}
+                                    {% endfor %}
+                                    </p>
+
+                                    <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if conversation.unread %}New message{% else %}Viewed message{% endif %}"></i>
+                                    <span> - {% trans 'From:' %} {{ conversation.get_last_message.user_from }}</span>
+                                    <p>{{ conversation.get_last_message.created_at }}</p>
+
+                                    <a class="JSComposeMessage" href="javascript:void(0)"
+                                    data-toggle="modal" data-target="#composeMessageModal" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.id %}" data-company-from-id="{{ venture.id }}" data-user-to-id="{{ conversation.participating_users.all.0.id }}" data-to-name="{{ conversation.participating_users.all.0 }}">
+
+                                    <p>{{ conversation.get_last_message.message|truncatechars:70 }}</p>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

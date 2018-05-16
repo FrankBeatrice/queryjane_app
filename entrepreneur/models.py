@@ -150,6 +150,11 @@ class Venture(models.Model):
 
     slug = models.SlugField()
 
+    has_new_messages = models.BooleanField(
+        default=False,
+        verbose_name=_('has new messages'),
+    )
+
     def clean(self):
         if not self.status_tracker.has_changed('status') or not self.id:
             return
@@ -193,6 +198,23 @@ class Venture(models.Model):
         return logo
 
     @property
+    def get_score(self):
+        user_scores = CompanyScore.objects.filter(company=self)
+        total_score = 0
+
+        if user_scores:
+            for user_score in user_scores.all():
+                total_score += user_score.score
+
+            return total_score / user_scores.count()
+
+        return total_score
+
+    @property
+    def get_votes_quantity(self):
+        return CompanyScore.objects.filter(company=self).count()
+
+    @property
     def get_active_administrator_ids(self):
         active_memberships = self.administratormembership_set.filter(
             status=ACTIVE_MEMBERSHIP,
@@ -213,6 +235,42 @@ class Venture(models.Model):
 
     def __str__(self):
         return '{0}'.format(self.name)
+
+
+class CompanyScore(models.Model):
+    user = models.ForeignKey(
+        'account.User',
+        verbose_name=_('usuario'),
+    )
+
+    company = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('company'),
+    )
+
+    score = models.FloatField()
+
+    comment = models.TextField(
+        verbose_name=_('comment'),
+        blank=True,
+        null=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return '{0} - {1} - {2}'.format(
+            self.user.get_full_name,
+            self.company.name,
+            self.score,
+        )
+
+    class Meta:
+        verbose_name = _('company score')
+        verbose_name_plural = _('company scores')
+        ordering = ('-created_at',)
 
 
 class AdministratorMembership(models.Model):

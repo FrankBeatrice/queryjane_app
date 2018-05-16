@@ -1,0 +1,46 @@
+{% extends 'layout/base_email.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{% trans 'New messages' %}</h1>
+
+<p>{% trans 'Hi' %} {{ receiver.get_full_name }},</p>
+
+<p>
+    {% if to_user %}
+    {% trans 'You have new messages in your inbox.' %}
+    {% else %}
+    {{ company_to }} {% trans 'has received new messages.' %}
+    {% endif %}
+</p>
+
+<table>
+{% for id, conversation in messages_dict.items %}
+    <tr>
+        <td>
+            <strong>New messages from {{ conversation.name }}.</strong>
+            <table>
+                {% for message in conversation.messages %}
+                <tr>
+                    <td>
+                        <p>{{ message.created_at }}</p>
+                        <p>{{ message.message|truncatechars:100 }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+<p>
+{% if to_user %}
+{% trans 'Go to your' %} <a href="{{ base_url }}/account/inbox/">{% trans 'inbox' %}</a>.
+{% else %}
+{% trans 'Go to' %} {{ company_to }} <a href="{{ base_url }}/entrepreneur/settings/{{ company_to.slug }}/messages">{% trans 'inbox' %}</a>.
+{% endif %}
+</p>
+{% endblock %}

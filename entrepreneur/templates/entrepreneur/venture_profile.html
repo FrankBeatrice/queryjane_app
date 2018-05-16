@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static entrepreneur_tags i18n %}
+{% load static entrepreneur_tags i18n user_conversations widget_tweaks %}
 
 {% block title %}{{ venture }}{% endblock %}
 
@@ -56,18 +56,31 @@
                     </div>
                 </div>
 
-                {% if can_manage %}
-                    <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
-                    <br>
-                    <br>
+                <div>
+                    <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
 
-                    <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    {% trans 'Create job offer' %}
-                </a>
-                    <br>
-                    <br>
-                {% endif %}
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+
+                    {% if can_add_score %}
+                    <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
+                    {% endif %}
+                    
+                </div>
+
+                <br>
+
+            {% if can_manage %}
+                <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
+                <br>
+                <br>
+
+                <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                {% trans 'Create job offer' %}
+            </a>
+                <br>
+                <br>
+            {% endif %}
 
                 {% get_user_venture_admin_notification user venture as user_venture_admin_notification %}
 
@@ -87,7 +100,10 @@
                 <br>
                 <br>
 
-                <a href="javascript:void(0)" id="id_send_message_to_company_link" class="btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-company-to-name="{{ venture }}" data-load-conversation-url="{% url 'account:ajax_post_company_conversation_load' venture.id %}">{% trans 'Send message' %}</a>
+                {% if not can_manage and user.is_authenticated %}
+                {% get_company_conversation user venture as company_conversation %}
+                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-to-name="{{ venture }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
+                {% endif %}
 
                 <br>
                 <br>
@@ -265,6 +281,62 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><strong>{{ venture }}</strong> {% trans 'Rating' %}</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                {% if can_add_score %}
+                <div class="jsScoreFormContainer">
+                    <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
+
+                    <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+
+                    <div id="idCompanyScoreInput"></div>
+
+                    <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
+                        {% csrf_token %}
+
+                        <div>
+                            <label>
+                                {% trans 'Add a comment about this company.' %}
+                            </label>
+
+                            {% render_field score_form.comment class+="form-control" %}
+                        </div>
+
+                        <div style="display:none;">
+                            {% render_field score_form.score %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
+                    </form>
+                </div>
+                {% endif %}
+
+                <div class="jsCompanyScoreList">
+                    <table class="table table-striped">
+                        {% for company_score in venture.companyscore_set.all %}
+                        {% include 'entrepreneur/company_score_line.html' %}
+                        {% empty %}
+                        <tr class="jsCompanyScoreEmpty">
+                            <td>There are not scores yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
 {% endblock %}
 

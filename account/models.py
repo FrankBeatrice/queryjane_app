@@ -17,6 +17,7 @@ from .data import NEW_JOB_OFFER
 from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_MESSAGE_TO_COMPANY
+from .data import NEW_COMPANY_SCORE
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -253,8 +254,18 @@ class ProfessionalProfile(models.Model):
         verbose_name=_('receive notifications when companies I manage receive messages from users'),
     )
 
+    new_company_scores_notifications = models.BooleanField(
+        default=True,
+        verbose_name=_('receive notifications when companies I manage receive scores from users'),
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
+    )
+
+    has_new_messages = models.BooleanField(
+        default=False,
+        verbose_name=_('has new messages'),
     )
 
     slug = models.SlugField()
@@ -381,11 +392,42 @@ class UserNotification(models.Model):
     def is_new_message_to_company(self):
         return self.notification_type == NEW_MESSAGE_TO_COMPANY
 
+    @property
+    def is_new_score_to_company(self):
+        return self.notification_type == NEW_COMPANY_SCORE
+
     class Meta:
         ordering = ('-created_at',)
 
     def __str__(self):
         return self.description
+
+
+class Conversation(models.Model):
+    participating_users = models.ManyToManyField(
+        'account.User',
+    )
+
+    participating_company = models.ForeignKey(
+        'entrepreneur.Venture',
+        null=True,
+    )
+
+    updated_at = models.DateTimeField(null=True)
+
+    @property
+    def get_last_message(self):
+        return self.usermessage_set.latest('created_at')
+
+    @property
+    def unread(self):
+        return self.usermessage_set.filter(
+            user_to__in=self.participating_users.all(),
+            unread=True,
+        ).exists()
+
+    class Meta:
+        ordering = ('-updated_at',)
 
 
 class UserMessage(models.Model):
@@ -409,6 +451,13 @@ class UserMessage(models.Model):
         null=True,
     )
 
+    company_from = models.ForeignKey(
+        'entrepreneur.Venture',
+        verbose_name=_('from'),
+        related_name='company_from',
+        null=True,
+    )
+
     message = models.TextField(
         verbose_name=_('message'),
     )
@@ -419,6 +468,10 @@ class UserMessage(models.Model):
 
     unread = models.BooleanField(
         default=True,
+    )
+
+    conversation = models.ForeignKey(
+        'account.Conversation'
     )
 
     class Meta:
