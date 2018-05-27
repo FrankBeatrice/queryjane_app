@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -7,6 +8,7 @@ from django.views.generic import DetailView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
+from django.utils.translation import ugettext as _
 
 from .permissions import AdminPermissions
 from .models import LegalItem
@@ -80,6 +82,11 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         user = form.save()
         user.is_active = True
         user.save()
+
+        messages.success(
+            self.request,
+            _('legal item has been successfully updated.')
+        )
 
         return super().form_valid(form)
 

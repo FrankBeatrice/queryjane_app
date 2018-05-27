@@ -94,6 +94,12 @@
         </nav>
         {% endblock %}
 
+          {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info text-center" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
         {% block content %}{% endblock content %}
 
         {% block footer %}
