@@ -1,10 +1,8 @@
-from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
@@ -37,21 +35,33 @@ class LegalItemView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        is_admin = AdminPermissions.can_manage_admin_views(
+            user=self.request.user,
+        )
+        context['can_edit'] = is_admin
+
+        if is_admin:
+            context['legal_item_form'] = LegalItemForm(
+                instance=self.get_object(),
+            )
+
         return context
 
 
 class LegalItemFormView(CustomUserMixin, UpdateView):
-    """
-    Signup form. User must verify his email.
-    """
     form_class = LegalItemForm
     template_name = 'corporative/legal_item.html'
-    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse(
+            'corporative:legal_item',
+            kwargs={'slug': self.kwargs.get('slug')}
+        )
 
     def get_object(self):
         return get_object_or_404(
             LegalItem,
-            id=self.kwargs.get('slug'),
+            slug=self.kwargs.get('slug'),
         )
 
     def test_func(self):
@@ -70,11 +80,6 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         user = form.save()
         user.is_active = True
         user.save()
-
-        messages.success(
-            self.request,
-            _('Legal item has been successfully updated.')
-        )
 
         return super().form_valid(form)
 

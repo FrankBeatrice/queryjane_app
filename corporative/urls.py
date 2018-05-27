@@ -6,6 +6,7 @@ from .views import AdminDashboardView
 from .views import HideJobOfferView
 from .views import HideVentureView
 from .views import LegalItemView
+from .views import LegalItemFormView
 from .views import TwitterShareJobView
 from .views import TwitterShareVentureView
 
@@ -58,6 +59,11 @@ urlpatterns = [
         name='ax_twitter_share_venture',
     ),
 
+    url(
+        r'^(?P<slug>[-\w]+)/update/$',
+        LegalItemFormView.as_view(),
+        name='legal_item_form',
+    ),
     url(
         r'^(?P<slug>[-\w]+)/',
         LegalItemView.as_view(),

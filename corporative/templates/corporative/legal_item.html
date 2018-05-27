@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static %}
+{% load static i18n widget_tweaks %}
 
 {% block title %}
 {{ object.en_title }}
@@ -15,7 +15,47 @@
     <div class="container">
         <h1>{{ object.en_title }}</h1>
 
-        {{ object.en_description|safe }}
+        {% if can_edit %}
+        <button type="submit" class="pull-right btn btn-primary EditLegalItemToggle">{% trans 'Edit' %}</button>
+
+        <br>
+
+        <form id="idEditLegalItemForm" method="post" action="{% url 'corporative:legal_item_form' object.slug %}" style="display: none;">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>
+                    {% trans 'English description' %}
+                    <span class="QJRequiredField">*</span>
+                </label>
+
+                <div id="rich_editor_en_description">{{ object.en_description|safe }}</div>
+                <p>{{ form.description_en.errors }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {% trans 'Spanish description' %}
+                    <span class="QJRequiredField">*</span>
+                </label>
+                <div id="rich_editor_sp_description">{{ object.sp_description|safe }}</div>
+                <p>{{ form.description_es.errors }}</p>
+            </div>
+
+            <div class="form-group" style="display: none;">
+                {% render_field legal_item_form.sp_description %}
+                {% render_field legal_item_form.en_description %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </form>
+        {% endif %}
+
+        <div>{{ object.en_description|safe }}</div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/corporative/legal_item.min.js' %}"></script>
 {% endblock %}
