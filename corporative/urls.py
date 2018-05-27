@@ -1,27 +1,15 @@
 from django.conf.urls import url
-from django.views.generic import TemplateView
 
-from .views import AdminDashboardView
-from .views import TwitterShareVentureView
-from .views import TwitterShareJobView
-from .views import HideVentureView
-from .views import ActivateVentureView
-from .views import HideJobOfferView
 from .views import ActivateJobOfferView
+from .views import ActivateVentureView
+from .views import AdminDashboardView
+from .views import HideJobOfferView
+from .views import HideVentureView
+from .views import LegalItemView
+from .views import TwitterShareJobView
+from .views import TwitterShareVentureView
 
 urlpatterns = [
-    url(
-        r'^user-agreement/$',
-        TemplateView.as_view(template_name='corporative/user_agreement.html'),
-        name='user_agreement',
-    ),
-
-    url(
-        r'^privacy-policy/$',
-        TemplateView.as_view(template_name='corporative/privacy_policy.html'),
-        name='privacy_policy',
-    ),
-
     url(
         r'^admin_dashboard/$',
         AdminDashboardView.as_view(),
@@ -62,5 +50,17 @@ urlpatterns = [
         r'^ax-activate/(?P<slug>[-\w]+)/job_offer/$',
         ActivateJobOfferView.as_view(),
         name='ax_activate_job_offer',
+    ),
+
+    url(
+        r'^ax-twitter-share/(?P<slug>[-\w]+)/venture/$',
+        TwitterShareVentureView.as_view(),
+        name='ax_twitter_share_venture',
+    ),
+
+    url(
+        r'^(?P<slug>[-\w]+)/',
+        LegalItemView.as_view(),
+        name='legal_item',
     ),
 ]

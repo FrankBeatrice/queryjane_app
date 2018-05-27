@@ -1,0 +1,21 @@
+{% extends "layout/index.html" %}
+
+{% load static %}
+
+{% block title %}
+{{ object.en_title }}
+{% endblock %}
+
+{% block navbar %}
+{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>{{ object.en_title }}</h1>
+
+        {{ object.en_description|safe }}
+    </div>
+</section>
+{% endblock %}

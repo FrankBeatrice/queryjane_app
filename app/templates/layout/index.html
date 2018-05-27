@@ -103,9 +103,11 @@
                 <div class="row footer__content">
                     <div class="col-xs-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
-                            <a href="{% url 'corporative:user_agreement' %}">{% trans "User agreement" %}</a>
+                            <a href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
                             ·
-                            <a href="{% url 'corporative:privacy_policy' %}">{% trans "Privacy policy" %}</a>
+                            <a href="{% url 'corporative:legal_item' 'privacy-policy' %}">{% trans "Privacy policy" %}</a>
+                            ·
+                            <a href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
                             ·
                             <a href="{% url 'venture_list' %}">{% trans "Companies" %}</a>
                             ·

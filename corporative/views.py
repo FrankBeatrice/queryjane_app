@@ -1,11 +1,19 @@
+from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext as _
+from django.views.generic import DetailView
 from django.views.generic import TemplateView
+from django.views.generic import UpdateView
 from django.views.generic import View
 
 from .permissions import AdminPermissions
+from .models import LegalItem
 from app.mixins import CustomUserMixin
+from corporative.forms import LegalItemForm
 from corporative.tasks import share_company_on_twitter
 from corporative.tasks import share_job_on_twitter
 from entrepreneur.data import JOB_STATUS_ACTIVE
@@ -14,6 +22,61 @@ from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_HIDDEN
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
+
+
+class LegalItemView(DetailView):
+    model = Venture
+    template_name = 'corporative/legal_item.html'
+
+    def get_object(self):
+        return get_object_or_404(
+            LegalItem,
+            slug=self.kwargs.get('slug'),
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
+
+
+class LegalItemFormView(CustomUserMixin, UpdateView):
+    """
+    Signup form. User must verify his email.
+    """
+    form_class = LegalItemForm
+    template_name = 'corporative/legal_item.html'
+    success_url = reverse_lazy('home')
+
+    def get_object(self):
+        return get_object_or_404(
+            LegalItem,
+            id=self.kwargs.get('slug'),
+        )
+
+    def test_func(self):
+        return AdminPermissions.can_manage_admin_views(
+            user=self.request.user,
+        )
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+
+        return super().get(request, *args, **kwargs)
+
+    @transaction.atomic
+    def form_valid(self, form):
+        user = form.save()
+        user.is_active = True
+        user.save()
+
+        messages.success(
+            self.request,
+            _('Legal item has been successfully updated.')
+        )
+
+        return super().form_valid(form)
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):
