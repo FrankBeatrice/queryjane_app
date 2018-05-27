@@ -48,6 +48,7 @@ class UserManager(BaseUserManager):
         user.first_name = first_name
         user.last_name = last_name
         user.set_password(password)
+        user.accepted_terms_date = timezone.now()
         user.save(using=self._db)
 
         slug = slugify(
@@ -168,6 +169,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(
         verbose_name=_('created at'),
         default=timezone.now,
+    )
+
+    accepted_terms = models.BooleanField(
+        verbose_name=_('accepted terms and conditions'),
+        default=True,
+    )
+
+    accepted_terms_date = models.DateField(
+        verbose_name=_('accepted terms and conditions date'),
+        null=True,
+        blank=True,
     )
 
     objects = UserManager()
