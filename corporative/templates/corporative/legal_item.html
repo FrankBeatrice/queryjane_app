@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static i18n widget_tweaks %}
+{% load static i18n widget_tweaks legal_item_tags %}
 
 {% block title %}
 {{ object.en_title }}
@@ -51,7 +51,8 @@
         </form>
         {% endif %}
 
-        <div>{{ object.en_description|safe }}</div>
+        {% get_legal_item_description object as item_description %}
+        <div>{{ item_description|safe }}</div>
     </div>
 </section>
 {% endblock %}
