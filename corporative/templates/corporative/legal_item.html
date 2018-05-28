@@ -42,6 +42,7 @@
                 <p>{{ form.description_es.errors }}</p>
             </div>
 
+            {% if object.slug != 'cookies-policy' %}
             <div class="form-group">
                 <label>
                     {{ legal_item_form.notify_users.label_tag }}
@@ -49,6 +50,7 @@
                 {% render_field legal_item_form.notify_users %}
                 <p>{{ legal_item_form.notify_users.help_text }}<p>
             </div>
+            {% endif %}
 
             <div class="form-group" style="display: none;">
                 {% render_field legal_item_form.sp_description %}
