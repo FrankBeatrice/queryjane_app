@@ -18,6 +18,8 @@ from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_MESSAGE_TO_COMPANY
 from .data import NEW_COMPANY_SCORE
+from .data import UPDATED_TERMS
+from .data import UPDATED_PRIVACY_POLICY
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -48,6 +50,7 @@ class UserManager(BaseUserManager):
         user.first_name = first_name
         user.last_name = last_name
         user.set_password(password)
+        user.accepted_terms_date = timezone.now()
         user.save(using=self._db)
 
         slug = slugify(
@@ -168,6 +171,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(
         verbose_name=_('created at'),
         default=timezone.now,
+    )
+
+    accepted_terms = models.BooleanField(
+        verbose_name=_('accepted user agreement'),
+        default=True,
+    )
+
+    accepted_terms_date = models.DateField(
+        verbose_name=_('accepted user agreement date'),
+        null=True,
+        blank=True,
+    )
+
+    accepted_privacy_policy = models.BooleanField(
+        verbose_name=_('accepted privacy policy'),
+        default=True,
+    )
+
+    accepted_privacy_policy_date = models.DateField(
+        verbose_name=_('accepted privacy policy date'),
+        null=True,
+        blank=True,
     )
 
     objects = UserManager()
@@ -395,6 +420,14 @@ class UserNotification(models.Model):
     @property
     def is_new_score_to_company(self):
         return self.notification_type == NEW_COMPANY_SCORE
+
+    @property
+    def is_updated_user_agreement(self):
+        return self.notification_type == UPDATED_TERMS
+
+    @property
+    def is_updated_privacy_policy(self):
+        return self.notification_type == UPDATED_PRIVACY_POLICY
 
     class Meta:
         ordering = ('-created_at',)

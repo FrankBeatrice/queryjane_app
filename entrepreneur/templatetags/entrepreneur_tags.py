@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# Author: QJane
 from django import template
 
 from entrepreneur.models import AdministratorMembership

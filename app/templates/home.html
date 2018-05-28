@@ -72,7 +72,7 @@
                     </form>
 
                     <br>
-                    <p><i>{% trans 'By registering, you are accepting the' %} <a href="https://queryjane.net/corporative/user-agreement/" target="_blank">{% trans 'user agreement' %}</a> {% trans 'and the' %} <a href="https://queryjane.net/corporative/privacy-policy/" target="_blank">{% trans 'privacy policy' %}</a>.</i></p>
+                    <p><i>{% trans 'By registering, you are accepting the' %} <a href="{% url 'corporative:legal_item' 'user-agreement' %}" target="_blank">{% trans 'user agreement' %}</a> {% trans 'and the' %} <a href="{% url 'corporative:legal_item' 'privacy-policy' %}" target="_blank">{% trans 'privacy policy' %}</a>.</i></p>
                 </div>
             </div>
         </div>

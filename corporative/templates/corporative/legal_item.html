@@ -1,0 +1,87 @@
+{% extends "layout/index.html" %}
+
+{% load static i18n widget_tweaks legal_item_tags notifications %}
+
+{% block title %}
+{{ object.en_title }}
+{% endblock %}
+
+{% block navbar %}
+{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>{{ object.en_title }}</h1>
+
+        {% if can_edit %}
+        <button type="submit" class="pull-right btn btn-primary EditLegalItemToggle">{% trans 'Edit' %}</button>
+
+        <br>
+
+        <form id="idEditLegalItemForm" method="post" action="{% url 'corporative:legal_item_form' object.slug %}" style="display: none;">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>
+                    {{ legal_item_form.en_description.label_tag }}
+                    <span class="QJRequiredField">*</span>
+                </label>
+
+                <div id="rich_editor_en_description">{{ object.en_description|safe }}</div>
+                <p>{{ form.description_en.errors }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {{ legal_item_form.sp_description.label_tag }}
+                    <span class="QJRequiredField">*</span>
+                </label>
+                <div id="rich_editor_sp_description">{{ object.sp_description|safe }}</div>
+                <p>{{ form.description_es.errors }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {{ legal_item_form.notify_users.label_tag }}
+                </label>
+                {% render_field legal_item_form.notify_users %}
+                <p>{{ legal_item_form.notify_users.help_text }}<p>
+            </div>
+
+            <div class="form-group" style="display: none;">
+                {% render_field legal_item_form.sp_description %}
+                {% render_field legal_item_form.en_description %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </form>
+        {% endif %}
+
+        {% get_legal_item_description object.slug as item_description %}
+        <div>{{ item_description|safe }}</div>
+
+        <div class="pull-right">
+        {% trans 'last update:' %} {{ object.updated_at }}
+        </div>
+
+
+    {% if user.is_authenticated and not user.accepted_terms and object.slug == 'user-agreement' %}
+        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+            {% trans 'I am agree' %}
+        </a>
+    {% endif %}
+
+    {% if user.is_authenticated and not user.accepted_privacy_policy and object.slug == 'privacy-policy' %}
+        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+            {% trans 'I am agree' %}
+        </a>
+    {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/corporative/legal_item.min.js' %}"></script>
+{% endblock %}

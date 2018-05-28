@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static i18n %}
+{% load static i18n notifications %}
 
 <html class="qj-html" lang="en">
     <head>
@@ -94,6 +94,24 @@
         </nav>
         {% endblock %}
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info text-center" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+        {% if user.is_authenticated and not user.accepted_terms %}
+            <div class="alert alert-warning text-center" role="alert">
+                Our user agreement has been updated. Please, <a href="{% url 'corporative:legal_item' 'user-agreement' %}">check it out.</a>
+            </div>
+        {% endif %}
+
+        {% if user.is_authenticated and not user.accepted_privacy_policy %}
+            <div class="alert alert-warning text-center" role="alert">
+                Our privacy policy has been updated. Please, <a href="{% url 'corporative:legal_item' 'privacy-policy' %}">check it out.</a>
+            </div>
+        {% endif %}
+
         {% block content %}{% endblock content %}
 
         {% block footer %}
@@ -103,9 +121,11 @@
                 <div class="row footer__content">
                     <div class="col-xs-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
-                            <a href="{% url 'corporative:user_agreement' %}">{% trans "User agreement" %}</a>
+                            <a href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
                             ·
-                            <a href="{% url 'corporative:privacy_policy' %}">{% trans "Privacy policy" %}</a>
+                            <a href="{% url 'corporative:legal_item' 'privacy-policy' %}">{% trans "Privacy policy" %}</a>
+                            ·
+                            <a href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
                             ·
                             <a href="{% url 'venture_list' %}">{% trans "Companies" %}</a>
                             ·
