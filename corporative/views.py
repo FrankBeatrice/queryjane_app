@@ -86,20 +86,23 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
     @transaction.atomic
     def form_valid(self, form):
         legal_item = form.save()
-
         notify_users = form.cleaned_data['notify_users']
 
         if notify_users:
+            legal_item.updated_at = timezone.now()
+
             for user in User.objects.all():
-                user.accepted_terms = False
-                user.save()
-
-                notification_type = UPDATED_TERMS
-                description = 'Our user agreement has been updated.'
-
                 if legal_item.slug == 'privacy-policy':
+                    user.accepted_privacy_policy = False
                     notification_type = UPDATED_PRIVACY_POLICY
                     description = 'Our privacy policy has been updated.'
+
+                elif legal_item.slug == 'user-agreement':
+                    user.accepted_terms = False
+                    notification_type = UPDATED_TERMS
+                    description = 'Our user agreement has been updated.'
+
+                user.save()
 
                 UserNotification.objects.create(
                     notification_type=notification_type,
@@ -125,11 +128,19 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
         user.accepted_terms_date = timezone.now()
         user.save()
 
+        UserNotification.objects.filter(
+            noty_to=user,
+            notification_type__in=(
+                UPDATED_TERMS,
+                UPDATED_PRIVACY_POLICY,
+            ),
+        ).update(was_seen=True)
+
         messages.success(
             self.request,
             _(
                 'Thank you. We will notify you whenever there is a '
-                'change in our privacy policy or our user agreement.'
+                'change in our privacy policy or in our user agreement.'
             )
         )
 

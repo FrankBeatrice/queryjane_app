@@ -1,4 +1,4 @@
-{% load i18n legal_item_tags %}
+{% load i18n legal_item_tags notifications %}
 <div class="modal-header">
     <h5 class="modal-title">
     {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants  %}
@@ -57,8 +57,20 @@
     <a href="{% url 'entrepreneur:messages_adim' notification.venture_to.slug %}" class="btn btn-primary">{% trans 'Go to recevied messages' %}</a>
 {% elif notification.is_new_score_to_company %}
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
-{% elif notification.is_updated_user_agreement or notification.is_updated_privacy_policy %}
+{% elif notification.is_updated_user_agreement %}
+    {% get_answered_legal_item 'user-agreement' as answered_legal_item %}
+    {% if not answered_legal_item and not user.accepted_terms %}
     <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
+    {% else %}
+    User agreement has been accepted.
+    {% endif %}
+{% elif notification.is_updated_privacy_policy %}
+    {% get_answered_legal_item 'privacy-policy' as answered_legal_item %}
+    {% if not answered_legal_item and not user.accepted_terms %}
+    <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
+    {% else %}
+    Privacy policy has been accepted.
+    {% endif %}
 {% else %}
     <p>You have accepted.</p>
 {% endif %}

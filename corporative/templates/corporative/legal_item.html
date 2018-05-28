@@ -62,10 +62,14 @@
         {% get_legal_item_description object.slug as item_description %}
         <div>{{ item_description|safe }}</div>
 
+        <div class="pull-right">
+        {% trans 'last update:' %} {{ object.updated_at }}
+        </div>
+
 
     {% if user.is_authenticated and not user.accepted_terms %}
         {% get_answered_legal_item object.slug as answered_legal_item %}
-        {% if not answered_legal_item%}
+        {% if not answered_legal_item %}
         <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}
         </a>
         {% endif %}

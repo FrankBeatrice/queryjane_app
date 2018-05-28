@@ -174,12 +174,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     accepted_terms = models.BooleanField(
-        verbose_name=_('accepted terms and conditions'),
+        verbose_name=_('accepted user agreement'),
         default=True,
     )
 
     accepted_terms_date = models.DateField(
-        verbose_name=_('accepted terms and conditions date'),
+        verbose_name=_('accepted user agreement date'),
+        null=True,
+        blank=True,
+    )
+
+    accepted_privacy_policy = models.BooleanField(
+        verbose_name=_('accepted privacy policy'),
+        default=True,
+    )
+
+    accepted_privacy_policy_date = models.DateField(
+        verbose_name=_('accepted privacy policy date'),
         null=True,
         blank=True,
     )
