@@ -59,7 +59,7 @@
         </form>
         {% endif %}
 
-        {% get_legal_item_description object as item_description %}
+        {% get_legal_item_description object.slug as item_description %}
         <div>{{ item_description|safe }}</div>
     </div>
 </section>

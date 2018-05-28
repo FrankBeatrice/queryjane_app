@@ -1,10 +1,12 @@
-{% load i18n %}
+{% load i18n legal_item_tags %}
 <div class="modal-header">
     <h5 class="modal-title">
     {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants  %}
         {{ notification.venture_from }}
     {% elif notification.is_new_message_to_company or notification.is_new_score_to_company %}
         {{ notification.venture_to }}
+    {% elif notification.is_updated_user_agreement or notification.is_updated_privacy_policy %}
+        {{ notification.description }}
     {% endif %}
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -33,6 +35,12 @@
     <p>
         <strong>{{ notification.venture_to }}</strong> has been scored by an user.
     </p>
+{% elif notification.is_updated_user_agreement %}
+    {% get_legal_item_description 'user-agreement' as item_description %}
+    {{ item_description|safe }}
+{% elif notification.is_updated_privacy_policy %}
+    {% get_legal_item_description 'privacy-policy' as item_description %}
+    {{ item_description|safe }}
 {% endif %}
   </div>
 
@@ -49,5 +57,7 @@
     <a href="{% url 'entrepreneur:messages_adim' notification.venture_to.slug %}" class="btn btn-primary">{% trans 'Go to recevied messages' %}</a>
 {% elif notification.is_new_score_to_company %}
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
+{% elif notification.is_updated_user_agreement or notification.is_updated_privacy_policy %}
+    <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
 {% endif %}
 </div>

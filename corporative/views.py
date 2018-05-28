@@ -1,19 +1,24 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
-from django.utils.translation import ugettext as _
 
-from .permissions import AdminPermissions
 from .models import LegalItem
-from app.mixins import CustomUserMixin
+from .permissions import AdminPermissions
+from account.data import UPDATED_PRIVACY_POLICY
+from account.data import UPDATED_TERMS
 from account.models import User
+from account.models import UserNotification
+from app.mixins import CustomUserMixin
 from corporative.forms import LegalItemForm
 from corporative.tasks import share_company_on_twitter
 from corporative.tasks import share_job_on_twitter
@@ -89,6 +94,19 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
                 user.accepted_terms = False
                 user.save()
 
+                notification_type = UPDATED_TERMS
+                description = 'Our user agreement has been updated.'
+
+                if legal_item.slug == 'privacy-policy':
+                    notification_type = UPDATED_PRIVACY_POLICY
+                    description = 'Our privacy policy has been updated.'
+
+                UserNotification.objects.create(
+                    notification_type=notification_type,
+                    noty_to=user,
+                    description=description,
+                )
+
         legal_item.save()
 
         messages.success(
@@ -97,6 +115,24 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         )
 
         return super().form_valid(form)
+
+
+class LegalItemsAgreeView(LoginRequiredMixin, View):
+    @transaction.atomic
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        user.accepted_terms = True
+        user.accepted_terms_date = timezone.now()
+
+        messages.success(
+            self.request,
+            _(
+                'Thank you. We will notify you whenever there is a '
+                'change in our privacy policy or our user agreement.'
+            )
+        )
+
+        return redirect('home')
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):

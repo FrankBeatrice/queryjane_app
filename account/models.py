@@ -18,6 +18,8 @@ from .data import NEW_APPLICANTS
 from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_MESSAGE_TO_COMPANY
 from .data import NEW_COMPANY_SCORE
+from .data import UPDATED_TERMS
+from .data import UPDATED_PRIVACY_POLICY
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -407,6 +409,14 @@ class UserNotification(models.Model):
     @property
     def is_new_score_to_company(self):
         return self.notification_type == NEW_COMPANY_SCORE
+
+    @property
+    def is_updated_user_agreement(self):
+        return self.notification_type == UPDATED_TERMS
+
+    @property
+    def is_updated_privacy_policy(self):
+        return self.notification_type == UPDATED_PRIVACY_POLICY
 
     class Meta:
         ordering = ('-created_at',)
