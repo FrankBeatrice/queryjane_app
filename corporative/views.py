@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from .permissions import AdminPermissions
 from .models import LegalItem
 from app.mixins import CustomUserMixin
+from account.models import User
 from corporative.forms import LegalItemForm
 from corporative.tasks import share_company_on_twitter
 from corporative.tasks import share_job_on_twitter
@@ -79,9 +80,16 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        user = form.save()
-        user.is_active = True
-        user.save()
+        legal_item = form.save()
+
+        notify_users = form.cleaned_data['notify_users']
+
+        if notify_users:
+            for user in User.objects.all():
+                user.accepted_terms = False
+                user.save()
+
+        legal_item.save()
 
         messages.success(
             self.request,

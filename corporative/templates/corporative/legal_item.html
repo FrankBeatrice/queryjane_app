@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label>
-                    {% trans 'English description' %}
+                    {{ legal_item_form.en_description.label_tag }}
                     <span class="QJRequiredField">*</span>
                 </label>
 
@@ -35,11 +35,19 @@
 
             <div class="form-group">
                 <label>
-                    {% trans 'Spanish description' %}
+                    {{ legal_item_form.sp_description.label_tag }}
                     <span class="QJRequiredField">*</span>
                 </label>
                 <div id="rich_editor_sp_description">{{ object.sp_description|safe }}</div>
                 <p>{{ form.description_es.errors }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {{ legal_item_form.notify_users.label_tag }}
+                </label>
+                {% render_field legal_item_form.notify_users %}
+                <p>{{ legal_item_form.notify_users.help_text }}<p>
             </div>
 
             <div class="form-group" style="display: none;">
