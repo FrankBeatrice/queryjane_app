@@ -61,7 +61,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^legal_items_agree/$',
+        r'^legal_items_agree/(?P<slug>[-\w]+)/$',
         LegalItemsAgreeView.as_view(),
         name='legal_items_agree',
     ),

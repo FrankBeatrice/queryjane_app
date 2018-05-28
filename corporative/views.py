@@ -124,8 +124,16 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
     @transaction.atomic
     def get(self, request, *args, **kwargs):
         user = request.user
-        user.accepted_terms = True
-        user.accepted_terms_date = timezone.now()
+
+        item = self.kwargs.get('slug')
+
+        if item == 'user-agreement':
+            user.accepted_terms = True
+            user.accepted_terms_date = timezone.now()
+
+        if item == 'privacy-policy':
+            user.accepted_privacy_policy = True
+            user.accepted_privacy_policy_date = timezone.now()
         user.save()
 
         UserNotification.objects.filter(

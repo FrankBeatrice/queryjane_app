@@ -67,12 +67,16 @@
         </div>
 
 
-    {% if user.is_authenticated and not user.accepted_terms %}
-        {% get_answered_legal_item object.slug as answered_legal_item %}
-        {% if not answered_legal_item %}
-        <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}
+    {% if user.is_authenticated and not user.accepted_terms and object.slug == 'user-agreement' %}
+        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+            {% trans 'I am agree' %}
         </a>
-        {% endif %}
+    {% endif %}
+
+    {% if user.is_authenticated and not user.accepted_privacy_policy and object.slug == 'privacy-policy' %}
+        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+            {% trans 'I am agree' %}
+        </a>
     {% endif %}
     </div>
 </section>
