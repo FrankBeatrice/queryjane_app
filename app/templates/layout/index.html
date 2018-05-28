@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static i18n %}
+{% load static i18n notifications %}
 
 <html class="qj-html" lang="en">
     <head>
@@ -94,11 +94,28 @@
         </nav>
         {% endblock %}
 
-          {% if messages %}
+        {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-info text-center" role="alert">{{ message }}</div>
             {% endfor %}
           {% endif %}
+
+          {% if user.is_authenticated and not user.accepted_terms %}
+            {% get_unanswered_user_agreement_notification user as unanswered_user_agreement_notification %}
+            {% get_unanswered_privacy_policy_notification user as unanswered_privacy_policy_notification %}
+
+            {% if unanswered_user_agreement_notification %}
+            <div class="alert alert-warning text-center" role="alert">
+                Our user agreement has been updated. Please, <a href="{% url 'corporative:legal_item' 'user-agreement' %}">check it out.</a>
+            </div>
+            {% endif %}
+
+            {% if unanswered_privacy_policy_notification %}
+            <div class="alert alert-warning text-center" role="alert">
+                Our privacy policy has been updated. Please, <a href="{% url 'corporative:legal_item' 'privacy-policy' %}">check it out.</a>
+            </div>
+            {% endif %}
+        {% endif %}
 
         {% block content %}{% endblock content %}
 

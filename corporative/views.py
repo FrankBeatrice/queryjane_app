@@ -123,6 +123,7 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
         user = request.user
         user.accepted_terms = True
         user.accepted_terms_date = timezone.now()
+        user.save()
 
         messages.success(
             self.request,

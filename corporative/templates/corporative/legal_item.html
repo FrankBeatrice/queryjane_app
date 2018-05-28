@@ -1,6 +1,6 @@
 {% extends "layout/index.html" %}
 
-{% load static i18n widget_tweaks legal_item_tags %}
+{% load static i18n widget_tweaks legal_item_tags notifications %}
 
 {% block title %}
 {{ object.en_title }}
@@ -61,6 +61,15 @@
 
         {% get_legal_item_description object.slug as item_description %}
         <div>{{ item_description|safe }}</div>
+
+
+    {% if user.is_authenticated and not user.accepted_terms %}
+        {% get_answered_legal_item object.slug as answered_legal_item %}
+        {% if not answered_legal_item%}
+        <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}
+        </a>
+        {% endif %}
+    {% endif %}
     </div>
 </section>
 {% endblock %}

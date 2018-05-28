@@ -59,5 +59,7 @@
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
 {% elif notification.is_updated_user_agreement or notification.is_updated_privacy_policy %}
     <a href="{% url 'corporative:legal_items_agree' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
+{% else %}
+    <p>You have accepted.</p>
 {% endif %}
 </div>
