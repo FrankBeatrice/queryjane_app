@@ -131,18 +131,20 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
             user.accepted_terms = True
             user.accepted_terms_date = timezone.now()
 
+            UserNotification.objects.filter(
+                noty_to=user,
+                notification_type=UPDATED_TERMS,
+            ).update(was_seen=True)
+
         if item == 'privacy-policy':
             user.accepted_privacy_policy = True
             user.accepted_privacy_policy_date = timezone.now()
-        user.save()
 
-        UserNotification.objects.filter(
-            noty_to=user,
-            notification_type__in=(
-                UPDATED_TERMS,
-                UPDATED_PRIVACY_POLICY,
-            ),
-        ).update(was_seen=True)
+            UserNotification.objects.filter(
+                noty_to=user,
+                notification_type=UPDATED_PRIVACY_POLICY,
+            ).update(was_seen=True)
+        user.save()
 
         messages.success(
             self.request,
