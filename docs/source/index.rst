@@ -6,9 +6,9 @@
 Welcome to QueryJane's documentation!
 =====================================
 
-===
-The Cannabis Industry Network.
-===
+=============================
+The Cannabis Industry Network
+=============================
 
 Connect with companies and experts in different sectors of the cannabis industry.
 

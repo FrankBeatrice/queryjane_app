@@ -20,6 +20,37 @@ With docker `installed <https://docs.docker.com/install/>`_ and running, execute
 
 ``$ docker-compose build``
 
+With this command, the installation of the following packages is executed:
+
+Packages included in the `Dockerfile <https://github.com/augustakingfoundation/queryjane_app/blob/master/Dockerfile>`_ (System requirements).
+
+* Python:3.6.0
+* Postgis:9.6
+* Redis:4.0.8
+* LibSass:3.4.4
+* Gulp:3.9.1
+* Yarn:1.7.0
+
+Packages included in the `requirements.txt <https://github.com/augustakingfoundation/queryjane_app/blob/master/requirements.txt>`_ file (Python requirements).
+
+* Django==1.11.4
+* psycopg2==2.6.2
+* Pillow==3.3.1
+* huey==1.6.1
+* boto3==1.4.6
+* twython==3.6.0
+* pygeoip==0.3.2
+* Sphinx==1.7.5
+* social-auth-app-django==2.1.0
+* django-widget-tweaks==1.4.1
+* django-storages==1.6.5
+* django-extensions==1.7.4
+* django-countries==4.6.2
+* django-redis-cache==1.7.1
+* django-model-utils==3.1.1
+
+If there is a change in the *requirements.txt* file, the ``docker-compose build`` must be executed.
+
 
 ===========================
 Running the project locally
@@ -30,6 +61,26 @@ Execute the following command to start the Docker container and enable the proje
 ``$ docker-compose up``
 
 Now, you will be able to view the application homepage by visiting **localhost:8000** in a browser.
+
+every time we execute this command, the tasks described in the `docker_compose.yml <https://github.com/augustakingfoundation/queryjane_app/blob/master/docker-compose.yml>`_ file will be executed:
+
+1. Run the local server with the command:
+
+``$ ./manage.py runserver 0.0.0.0:8000``
+
+2. Enable Postgres and Redis services.
+
+3. Check for Javascript and CSS requirements running the command:
+
+``$ yarn install``
+
+4. Run Gulp, to compress statics files with the command:
+
+``$ gulp``
+
+5. Run database migrations with the command:
+
+``$ ./manage.py migrate --noinput``
 
 
 ========
