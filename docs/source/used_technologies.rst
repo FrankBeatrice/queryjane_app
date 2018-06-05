@@ -5,7 +5,7 @@ QueryJane is a web application developed with `Python <https://www.python.org/>`
 
 The project is configured with `Docker <https://docker.com/>`_, that allows to setup a local enviroment to run the project in a very easy way.
 
-The process to install the following packages is described in the next section, by using Docker.
+The process to install the following packages is described in the next section, with the help of Docker.
 The system prerequisites for properly configuring the project are:
 
 ============
@@ -63,26 +63,26 @@ Framework Web
 -------------
 Django==1.11.4
 
-Libraries
----------
+Python Libraries
+----------------
 
-psycopg2==2.6.2
-Pillow==3.3.1
-huey==1.6.1
-boto3==1.4.6
-twython==3.6.0
-pygeoip==0.3.2
-Sphinx==1.7.5
-social-auth-app-django==2.1.0
+* psycopg2==2.6.2
+* Pillow==3.3.1
+* huey==1.6.1
+* boto3==1.4.6
+* twython==3.6.0
+* pygeoip==0.3.2
+* Sphinx==1.7.5
+* social-auth-app-django==2.1.0
 
 Django libraries
 ----------------
 
-django-widget-tweaks==1.4.1
-django-storages==1.6.5
-django-extensions==1.7.4
-django-countries==4.6.2
-django-redis-cache==1.7.1
-django-model-utils==3.1.1
+* django-widget-tweaks==1.4.1
+* django-storages==1.6.5
+* django-extensions==1.7.4
+* django-countries==4.6.2
+* django-redis-cache==1.7.1
+* django-model-utils==3.1.1
 
 All these packages are easily installed and configured by using docker, and this is explained in the next section.
