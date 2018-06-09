@@ -1,0 +1,21 @@
+{% extends 'layout/base_email.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ description }}</h1>
+
+<p>{% trans 'Hi' %} {{ user.get_full_name }},</p>
+
+{% if notification_type == 60 %}
+<p>{% trans 'Our user agreement has been updated. Please, follow this link to check and accept new changes:' %}</p>
+
+<p><a href="{{ base_url }}/corporative/user-agreement/">{% trans 'User Agreement' %}.</a></p>
+
+{% else %}
+{% trans 'Our user privacy policy has been updated. Please, follow this link to check and accept new changes:' %}
+
+<p><a href="{{ base_url }}/corporative/privacy-policy/">{% trans 'Privacy Policy' %}.</a></p>
+{% endif %}
+{% endblock %}

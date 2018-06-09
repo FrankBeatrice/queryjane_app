@@ -50,7 +50,7 @@ Gulp:3.9.1
 Yarn:1.7.0
 ==========
 
-`yarn <https://yarnpkg.com/lang/en/>`_ is used to install in a very easy way all the Javscript and CSS package.
+`yarn <https://yarnpkg.com/lang/en/>`_ is used to install in a very easy way all the Javscript and CSS packages.
 
 
 ===============
