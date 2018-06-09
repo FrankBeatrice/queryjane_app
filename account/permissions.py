@@ -18,7 +18,6 @@ class NotificationPermissions(object):
             notification_type=NEW_ENTREPRENEUR_ADMIN,
             noty_to=user,
             venture_from=venture,
-            answered=False,
             membership__status=SENT_INVITATION,
         ):
             return True

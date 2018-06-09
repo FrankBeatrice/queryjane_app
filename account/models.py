@@ -398,10 +398,6 @@ class UserNotification(models.Model):
         blank=True,
     )
 
-    answered = models.BooleanField(
-        default=False,
-    )
-
     @property
     def is_new_entrepreneur_admin(self):
         return self.notification_type == NEW_ENTREPRENEUR_ADMIN

@@ -1,4 +1,4 @@
-{% load i18n legal_item_tags notifications %}
+{% load i18n legal_item_tags notifications entrepreneur_tags %}
 <div class="modal-header">
     <h5 class="modal-title">
     {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed  %}
@@ -50,7 +50,8 @@
 
 <div class="modal-footer">
 {% if notification.is_new_entrepreneur_admin %}
-    {% if notification.answered %}
+    {% get_is_company_administrator notification.venture_from as is_company_administrator %}
+    {% if is_company_administrator %}
     <span>{{ notification.membership.get_status_display }}</span>
     {% else %}
     <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">{% trans 'Answer' %}</a>

@@ -64,7 +64,6 @@ def new_applicants_notifications():
                 UserNotification.objects.create(
                     notification_type=NEW_APPLICANTS,
                     noty_to=admin_m.admin.user,
-                    answered=True,
                     job_offer=job_offer,
                     venture_from=job_offer.venture,
                     description=description,
@@ -101,7 +100,6 @@ def close_old_job_offers():
             UserNotification.objects.create(
                 notification_type=OLD_JOB_OFFER_CLOSED,
                 noty_to=membership.admin.user,
-                answered=True,
                 job_offer=job_offer,
                 venture_from=job_offer.venture,
                 description="Job offer has been closed",

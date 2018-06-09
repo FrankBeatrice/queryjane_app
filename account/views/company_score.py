@@ -51,7 +51,6 @@ class CompanyScoreFormView(CustomUserMixin, FormView):
             UserNotification.objects.create(
                 notification_type=NEW_COMPANY_SCORE,
                 noty_to=membership.admin.user,
-                answered=True,
                 venture_to=company,
                 description=subject,
             )

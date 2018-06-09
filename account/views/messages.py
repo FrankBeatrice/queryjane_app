@@ -143,7 +143,6 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
                 UserNotification.objects.create(
                     notification_type=NEW_MESSAGE_TO_COMPANY,
                     noty_to=membership.admin.user,
-                    answered=True,
                     description=description,
                     venture_to=company_to,
                 )
