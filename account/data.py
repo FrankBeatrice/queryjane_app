@@ -7,6 +7,7 @@ NEW_MESSAGE_TO_COMPANY = 40
 NEW_COMPANY_SCORE = 50
 UPDATED_TERMS = 60
 UPDATED_PRIVACY_POLICY = 70
+OLD_JOB_OFFER_CLOSED = 80
 
 NOTIFICATION_TYPE_CHOICES = (
     (NEW_ENTREPRENEUR_ADMIN, _('Invitation to administer company.')),
@@ -16,4 +17,5 @@ NOTIFICATION_TYPE_CHOICES = (
     (NEW_COMPANY_SCORE, _('New company score.')),
     (UPDATED_TERMS, _('New user agreement.')),
     (UPDATED_PRIVACY_POLICY, _('New company score.')),
+    (OLD_JOB_OFFER_CLOSED, _('Old job offer has been closed.')),
 )

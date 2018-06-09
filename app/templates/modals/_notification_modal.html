@@ -1,7 +1,7 @@
 {% load i18n legal_item_tags notifications %}
 <div class="modal-header">
     <h5 class="modal-title">
-    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants  %}
+    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed  %}
         {{ notification.venture_from }}
     {% elif notification.is_new_message_to_company or notification.is_new_score_to_company %}
         {{ notification.venture_to }}
@@ -41,6 +41,10 @@
 {% elif notification.is_updated_privacy_policy %}
     {% get_legal_item_description 'privacy-policy' as item_description %}
     {{ item_description|safe }}
+{% elif notification.is_old_job_offer_closed %}
+    <p>
+        The job offer <strong>{{ notification.job_offer }}</strong> was created more than 60 days ago. For this reason, it will be automatically closed.
+    </p>
 {% endif %}
   </div>
 
@@ -51,7 +55,7 @@
     {% else %}
     <a href="{{ notification.venture_from.get_absolute_url }}" class="btn btn-primary">{% trans 'Answer' %}</a>
     {% endif %}
-{% elif notification.is_interest_job_offer or notification.is_new_job_offer_applicants %}
+{% elif notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed %}
     <a href="{{ notification.job_offer.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
 {% elif notification.is_new_message_to_company %}
     <a href="{% url 'entrepreneur:messages_adim' notification.venture_to.slug %}" class="btn btn-primary">{% trans 'Go to recevied messages' %}</a>

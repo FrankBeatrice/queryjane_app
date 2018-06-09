@@ -8,7 +8,7 @@
 
 {% block meta_description %}
 {% get_company_description venture as company_description %}
-{{ company_description|safe|truncatechars_html:200 }}
+{{ company_description|truncatechars_html:200 }}
 {% endblock %}
 
 {% block meta_image %}
@@ -22,7 +22,7 @@
 
 {% block meta_twitter_description %}
 {% get_company_description venture as company_description %}
-{{ company_description|safe|truncatechars_html:200 }}
+{{ company_description|truncatechars_html:200 }}
 {% endblock %}
 {% block meta_twitter_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}

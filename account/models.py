@@ -12,14 +12,15 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
 
+from .data import NEW_APPLICANTS
+from .data import NEW_COMPANY_SCORE
 from .data import NEW_ENTREPRENEUR_ADMIN
 from .data import NEW_JOB_OFFER
-from .data import NEW_APPLICANTS
-from .data import NOTIFICATION_TYPE_CHOICES
 from .data import NEW_MESSAGE_TO_COMPANY
-from .data import NEW_COMPANY_SCORE
-from .data import UPDATED_TERMS
+from .data import NOTIFICATION_TYPE_CHOICES
+from .data import OLD_JOB_OFFER_CLOSED
 from .data import UPDATED_PRIVACY_POLICY
+from .data import UPDATED_TERMS
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -428,6 +429,10 @@ class UserNotification(models.Model):
     @property
     def is_updated_privacy_policy(self):
         return self.notification_type == UPDATED_PRIVACY_POLICY
+
+    @property
+    def is_old_job_offer_closed(self):
+        return self.notification_type == OLD_JOB_OFFER_CLOSED
 
     class Meta:
         ordering = ('-created_at',)
