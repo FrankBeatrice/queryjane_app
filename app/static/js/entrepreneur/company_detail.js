@@ -59,6 +59,31 @@ $(function () {
         }
     });
 
+    // Remove company score.
+    $('.jsCompanyScoreList').on('click', '.jsScoreRemove', function() {
+        var score_remove_url = $(this).data('company-score-remove-url');
+        var score_container = $(this).closest('tr');
+
+        $.confirm({
+            title: 'Company Score',
+            content: 'Do you want to remove your feedback from this company?',
+            buttons: {
+                remove: {
+                    btnClass: 'btn-danger',
+                    action: function(){
+                        $.post(score_remove_url, function (response) {
+                            score_container.remove();
+
+                            $('#idScoreMessage').text(response.message);
+                            $("#idCompanyScore").rateYo("option", "rating", response.new_score);
+                        });
+                    }
+                },
+                cancel: function () {}
+            }
+        });
+    });
+
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {
         var company_for_add_name = $(this).data('company-for-add-name');

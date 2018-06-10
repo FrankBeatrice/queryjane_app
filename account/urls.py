@@ -9,6 +9,7 @@ from account.views.messages import InboxView
 from account.views.messages import LoadConversationView
 from account.views.messages import UserMessageFormView
 from account.views.company_score import CompanyScoreFormView
+from account.views.company_score import CompanyScoreRemoveView
 from account.views.notifications import AdminNotificationAcceptView
 from account.views.notifications import AdminNotificationRejectView
 from account.views.notifications import AdminNotificationResendView
@@ -101,6 +102,12 @@ urlpatterns = [
         r'^ax_company_score_form/(?P<pk>\d+)/$',
         CompanyScoreFormView.as_view(),
         name='company_score_form',
+    ),
+
+    url(
+        r'^ax_company_score_remove/(?P<pk>\d+)/$',
+        CompanyScoreRemoveView.as_view(),
+        name='company_score_remove',
     ),
 
     url(

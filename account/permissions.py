@@ -182,3 +182,22 @@ class CompanyScorePermissions(object):
             return True
 
         return False
+
+    @classmethod
+    def can_edit_score(self, user, company_score):
+        """
+        Edit or remove company score permission.
+        """
+        if not user.is_authenticated:
+            return False
+
+        if user != company_score.user:
+            return False
+
+        if CompanyScore.objects.filter(
+            user=user,
+            company=company_score.company,
+        ):
+            return True
+
+        return False
