@@ -78,7 +78,10 @@
 
                                   <div class="media-body">
                                     <h4 class="media-heading">{{ company_contact.company }}</h4>
-                                    <a href="{{ company_contact.company.get_absolute_url }}">Visit company</a>
+
+                                    <a href="{{ company_contact.company.get_absolute_url }}" class="btn btn-info">Visit company</a>
+
+                                    <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company_contact.company.id %}" data-company-for-remove-name="{{ company_contact.company.name }}">{% trans 'Remove from my address book' %}</a>
                                   </div>
                                 </td>
                             </tr>
