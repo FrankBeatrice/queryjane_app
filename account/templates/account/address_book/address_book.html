@@ -84,6 +84,9 @@
 
                                     <a href="{{ company_contact.company.get_absolute_url }}" class="btn btn-info">Visit company</a>
 
+                                    {% get_company_conversation user company_contact.company as company_conversation %}
+                                    <a href="javascript:void(0)" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ company_contact.company.id }}" data-to-name="{{ company_contact.company }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
+
                                     <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company_contact.company.id %}" data-company-for-remove-name="{{ company_contact.company.name }}">{% trans 'Remove from my address book' %}</a>
                                   </div>
                                 </td>
