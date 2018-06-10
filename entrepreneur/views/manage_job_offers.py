@@ -150,7 +150,6 @@ class JobOfferFormView(CustomUserMixin, CreateView):
             UserNotification.objects.create(
                 notification_type=NEW_JOB_OFFER,
                 noty_to=profile.user,
-                answered=True,
                 venture_from=venture,
                 job_offer=job_offer,
                 description=description,

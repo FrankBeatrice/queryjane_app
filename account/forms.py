@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.forms import PasswordResetForm
 
 from account.models import User
+from entrepreneur.models import CompanyScore
 
 
 class SignUpForm(Form):
@@ -180,7 +181,10 @@ class UserMessageForm(Form):
     company_from_id = forms.IntegerField(required=False)
 
 
-class CompanyScoreForm(Form):
+class CompanyScoreForm(ModelForm):
+    """
+    Form to create and update a company score item.
+    """
     score = forms.FloatField()
 
     comment = forms.CharField(
@@ -188,6 +192,13 @@ class CompanyScoreForm(Form):
         label=_('country'),
         widget=forms.Textarea,
     )
+
+    class Meta:
+        model = CompanyScore
+        fields = [
+            'score',
+            'comment',
+        ]
 
 
 class AvatarForm(Form):

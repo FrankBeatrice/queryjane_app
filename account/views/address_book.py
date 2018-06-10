@@ -83,7 +83,7 @@ class AddCompanyToAddressBookView(CustomUserMixin, View):
 
     def test_func(self):
         return AddressBookPermissions.can_add_company(
-            owner=self.request.user.professionalprofile,
+            owner=self.request.user,
             company=self.get_object(),
         )
 
@@ -106,7 +106,7 @@ class RemoveCompanyToAddressBookView(CustomUserMixin, View):
 
     def test_func(self):
         return AddressBookPermissions.can_remove_company(
-            owner=self.request.user.professionalprofile,
+            owner=self.request.user,
             company=self.get_object(),
         )
 

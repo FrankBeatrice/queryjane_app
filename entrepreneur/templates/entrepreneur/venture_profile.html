@@ -8,7 +8,7 @@
 
 {% block meta_description %}
 {% get_company_description venture as company_description %}
-{{ company_description|safe|truncatechars_html:200 }}
+{{ company_description|truncatechars_html:200 }}
 {% endblock %}
 
 {% block meta_image %}
@@ -22,7 +22,7 @@
 
 {% block meta_twitter_description %}
 {% get_company_description venture as company_description %}
-{{ company_description|safe|truncatechars_html:200 }}
+{{ company_description|truncatechars_html:200 }}
 {% endblock %}
 {% block meta_twitter_image %}
 {% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
@@ -294,8 +294,7 @@
             </div>
 
             <div class="modal-body">
-                {% if can_add_score %}
-                <div class="jsScoreFormContainer">
+                <div class="jsScoreFormContainer" style="{% if not can_add_score %}display:none{% endif %}">
                     <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
 
                     <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
@@ -320,7 +319,6 @@
                         <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
                     </form>
                 </div>
-                {% endif %}
 
                 <div class="jsCompanyScoreList">
                     <table class="table table-striped">

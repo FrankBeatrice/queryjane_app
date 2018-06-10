@@ -126,7 +126,7 @@
                         {% for notification in new_notifications|slice:":4" %}
                             <tr data-toggle="modal" data-target="#generalModalMessage">
                                 <td>
-                                    <a class="qjane-notification-link {% if notification.answered %}qjane-answered-notification{% else %}qjane-pending-notification{% endif %}" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
+                                    <a class="qjane-notification-link" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
                                         <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
                                         {{ notification }}
                                     </a>

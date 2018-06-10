@@ -2,12 +2,31 @@ from django import template
 
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.data import ACTIVE_MEMBERSHIP
+from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
 from account.models import UserNotification
 from account.data import NEW_ENTREPRENEUR_ADMIN
 
 
 register = template.Library()
+
+
+@register.assignment_tag(takes_context=True)
+def get_is_company_administrator(context, company):
+    """
+    Check if authenticated user is administrator of a
+    given company.
+    """
+    user = context['request'].user
+
+    return AdministratorMembership.objects.filter(
+        admin=user.professionalprofile,
+        venture=company,
+        status__in=(
+            ACTIVE_MEMBERSHIP,
+            REJECTED_MEMBERSHIP,
+        )
+    )
 
 
 @register.assignment_tag

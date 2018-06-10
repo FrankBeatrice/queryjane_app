@@ -4,7 +4,8 @@
 {% block title %}{{ job_offer }} | {{ job_offer.venture }}{% endblock %}
 
 {% block meta_title %}{{ job_offer }} | {{ job_offer.venture }}{% endblock %}
-{% block meta_description %}{{ job_offer.description|safe|truncatechars_html:200 }}{% endblock %}
+
+{% block meta_description %}{{ job_offer.description|truncatechars_html:200 }}{% endblock %}
 
 {% block meta_image %}
 {% if not job_offer.venture.logo %}https://queryjane.net{% endif %}{{ job_offer.venture.get_logo }}
@@ -18,7 +19,7 @@
 {% endblock %}
 
 {% block meta_twitter_description %}
-{{ job_offer.description|safe|truncatechars_html:200 }}
+{{ job_offer.description|truncatechars_html:200 }}
 {% endblock %}
 
 {% block meta_twitter_image %}
@@ -185,7 +186,7 @@
                     </tbody>
                 </table>
 
-                <a href="{% url 'entrepreneur:job_offers_list' job_offer.venture.slug %}" class="btn btn-ghost-purple">{% trans 'Go to job offers list administrator' %} - {{ job_offer.venture }}</a>
+                <a href="{% url 'entrepreneur:job_offers_list' job_offer.venture.slug %}" class="btn btn-ghost-purple">{% trans 'Go to job offers administration panel' %} - {{ job_offer.venture }}</a>
             {% endif %}
 
                 {% if can_apply %}

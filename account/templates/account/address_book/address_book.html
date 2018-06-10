@@ -1,5 +1,5 @@
 {% extends "layout/index.html" %}
-{% load static messages i18n %}
+{% load static messages i18n user_conversations %}
 
 {% block title %}{% trans 'Address book' %}{% endblock %}
 
@@ -36,7 +36,13 @@
 
                                   <div class="media-body">
                                       <h4 class="media-heading">{{ contact.user_contact.get_print }}</h4>
-                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">{% trans 'Visit profile' %}</a>
+
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}" class="btn btn-info">{% trans 'Visit profile' %}</a>
+
+                                      {% get_user_conversation user contact.user_contact.user as user_conversation  %}
+                                      <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ contact.user_contact.user.id }}" data-to-name="{{ contact.user_contact }}" data-load-conversation-url="{% if user_conversation %}{% url 'account:ajax_post_conversation_load' user_conversation.pk %}{% endif %}">{% trans 'Send message' %}</button>
+
+                                      <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' contact.user_contact.id %}" data-user-for-remove-name="{{ profile.user.first_name }}">{% trans 'Remove from my address book' %}</button>
                                   </div>
                                 </td>
                             </tr>
@@ -75,7 +81,13 @@
 
                                   <div class="media-body">
                                     <h4 class="media-heading">{{ company_contact.company }}</h4>
-                                    <a href="{{ company_contact.company.get_absolute_url }}">Visit company</a>
+
+                                    <a href="{{ company_contact.company.get_absolute_url }}" class="btn btn-info">Visit company</a>
+
+                                    {% get_company_conversation user company_contact.company as company_conversation %}
+                                    <a href="javascript:void(0)" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ company_contact.company.id }}" data-to-name="{{ company_contact.company }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
+
+                                    <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company_contact.company.id %}" data-company-for-remove-name="{{ company_contact.company.name }}">{% trans 'Remove from my address book' %}</a>
                                   </div>
                                 </td>
                             </tr>
@@ -91,4 +103,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/account/address_book.min.js' %}"></script>
 {% endblock %}

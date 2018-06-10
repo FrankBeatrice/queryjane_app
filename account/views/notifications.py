@@ -82,9 +82,6 @@ class AdminNotificationAcceptView(CustomUserMixin, View):
     def get(self, *args, **kwargs):
         notification = self.get_object()
 
-        notification.answered = True
-        notification.save()
-
         membership = notification.membership
         membership.status = ACTIVE_MEMBERSHIP
         membership.save()
@@ -110,10 +107,6 @@ class AdminNotificationRejectView(CustomUserMixin, View):
 
     def get(self, *args, **kwargs):
         notification = self.get_object()
-
-        notification.answered = True
-        notification.save()
-
         membership = notification.membership
         membership.status = REJECTED_MEMBERSHIP
         membership.save()
@@ -140,7 +133,6 @@ class AdminNotificationResendView(CustomUserMixin, View):
     def post(self, request, *args, **kwargs):
         notification = self.get_object()
         notification.was_seen = False
-        notification.answered = False
         notification.created_at = timezone.now()
         notification.created_by = request.user.professionalprofile
         notification.save()

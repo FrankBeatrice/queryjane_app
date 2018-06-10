@@ -1,18 +1,3 @@
-function getLocation() {
-    if (navigator.geolocation) {
-        $('.QjaneShareGPSloading').show();
-        $('.QjaneShareGPSfigure').hide();
-        navigator.geolocation.getCurrentPosition(function(position) {
-            showPosition(position);
-        }, function() {
-            $('.QjaneShareGPSloading').hide();
-            $('.QjaneShareGPSfigure').show();
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-
 (function () {
     $.validator.addMethod("valid_password", function(value, element) {
         return this.optional(element) || /^(?=.*\d)(?!.*\s)(?=.*[a-zA-Z]).{8,}$/.test(value);

@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
@@ -11,6 +13,7 @@ from django.views.generic import DetailView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
+from django.template.loader import render_to_string
 
 from .models import LegalItem
 from .permissions import AdminPermissions
@@ -18,6 +21,7 @@ from account.data import UPDATED_PRIVACY_POLICY
 from account.data import UPDATED_TERMS
 from account.models import User
 from account.models import UserNotification
+from app.tasks import send_email
 from app.mixins import CustomUserMixin
 from corporative.forms import LegalItemForm
 from corporative.tasks import share_company_on_twitter
@@ -108,6 +112,21 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
                     notification_type=notification_type,
                     noty_to=user,
                     description=description,
+                )
+
+                body = render_to_string(
+                    'corporative/emails/legal_item_update.html', {
+                        'title': description,
+                        'user_to': user,
+                        'notification_type': notification_type,
+                        'base_url': settings.BASE_URL,
+                    },
+                )
+
+                send_email(
+                    subject=description,
+                    body=body,
+                    mail_to=[user.email],
                 )
 
         legal_item.save()

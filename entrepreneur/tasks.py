@@ -2,14 +2,18 @@ import logging
 
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils import timezone
+from datetime import timedelta
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
 from account.data import NEW_APPLICANTS
+from account.data import OLD_JOB_OFFER_CLOSED
 from account.models import UserNotification
 from app.tasks import send_email
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import JOB_STATUS_ACTIVE
+from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.models import JobOffer
 
 
@@ -60,7 +64,6 @@ def new_applicants_notifications():
                 UserNotification.objects.create(
                     notification_type=NEW_APPLICANTS,
                     noty_to=admin_m.admin.user,
-                    answered=True,
                     job_offer=job_offer,
                     venture_from=job_offer.venture,
                     description=description,
@@ -73,3 +76,33 @@ def new_applicants_notifications():
 
         job_offer.applicants_record = current_applicants
         job_offer.save()
+
+
+@db_periodic_task(crontab(hour='1', minute='0'))
+def close_old_job_offers():
+    """
+    Periodic task to close old job offers.
+    This task run everydays, and it checks job offer with more
+    than 60 days of creation.
+    """
+    for job_offer in JobOffer.objects.filter(
+        status=JOB_STATUS_ACTIVE,
+        created_at__lt=timezone.now() - timedelta(days=60)
+    ):
+        job_offer.status = JOB_STATUS_CLOSED
+        job_offer.save()
+
+        # Notify company administrators about new job offer status.
+        for membership in job_offer.venture.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=OLD_JOB_OFFER_CLOSED,
+                noty_to=membership.admin.user,
+                job_offer=job_offer,
+                venture_from=job_offer.venture,
+                description="Job offer has been closed",
+            )
+
+        logger.info('Job offer successfully closed')
