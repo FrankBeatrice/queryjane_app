@@ -7,14 +7,16 @@
         <div class="jsLineScore" data-score="{{ company_score.score }}"></div>
 
         {% if company_score.comment %}
-        <p>{{ company_score.comment|linebreaks }}</p>
+        <p class="jsScoreComment" data-comment="{{ company_score.comment }}">{{ company_score.comment|linebreaks }}</p>
         {% endif %}
 
         <p>{{ company_score.created_at }}</p>
 
         {% get_can_edit_company_score user company_score.user company_score.company as can_edit_company_score %}
         {% if can_edit_company_score %}
-        <a href="javascript:void(0);" class="btn btn-danger jsScoreRemove" data-company-score-remove-url="{% url 'account:company_score_remove' company_score.id %}">{% trans 'Remove my score' %}</a>
+        <a href="javascript:void(0);" class="btn btn-danger jsScoreRemove" data-company-score-remove-url="{% url 'account:company_score_remove' company_score.id %}">{% trans 'Remove' %}</a>
+
+        <a href="javascript:void(0);" class="btn btn-info jsScoreEdit" data-company-score-edit-url="{% url 'account:company_score_edit' company_score.id %}">{% trans 'Edit' %}</a>
         {% endif %}
     </td>
 </tr>

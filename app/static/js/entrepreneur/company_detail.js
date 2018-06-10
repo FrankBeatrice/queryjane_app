@@ -84,6 +84,39 @@ $(function () {
         });
     });
 
+    // Edit company score.
+    $('.jsCompanyScoreList').on('click', '.jsScoreEdit', function() {
+        // Get container, score edit url and score given by current user.
+        var score_container = $(this).closest('tr');
+        var score_edit_url = $(this).data('company-score-edit-url');
+        var score = $(this).closest('td').find('.jsLineScore').data('score');
+
+        // Set user comment as initial value in update score form.
+        $('#idCompanyScoreForm #id_comment').val($(this).closest('td').find('.jsScoreComment').data('comment'));
+        // Set user score as initial value in update score form.
+        $('#idCompanyScoreInput').rateYo("option", "rating", score);
+        // Change submit button text.
+        $('#idCompanyScoreForm button').text('Edit');
+        $('.jsScoreFormContainer').show();
+
+        // Edit company score form submit.
+        $('#idCompanyScoreForm').on('submit', function () {
+          $.post(score_edit_url, $('#idCompanyScoreForm').serialize(), function (response) {
+            // Remove all feedback.
+            score_container.remove();
+            // Add new feedback.
+            $('.jsCompanyScoreList table').prepend(response.score_line);
+            // Remove form.
+            $('.jsScoreFormContainer').text('Thank you. Your feedback has been updated');
+            score_list_update_rateyo();
+            $("#idCompanyScore").rateYo("option", "rating", response.new_score);
+          });
+
+          return false;
+        });
+
+    });
+
     // Add contact to address book.
     $('#id_add_company_to_address_book').on('click', function () {
         var company_for_add_name = $(this).data('company-for-add-name');

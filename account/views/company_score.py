@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from django.views.generic import View
+from django.views.generic import UpdateView
 from django.template.loader import render_to_string
 
 from account.data import NEW_COMPANY_SCORE
@@ -133,5 +134,42 @@ class CompanyScoreRemoveView(CustomUserMixin, View):
             {
                 'new_score': company.get_score,
                 'message': message,
+            }
+        )
+
+
+class CompanyScoreEditView(CustomUserMixin, UpdateView):
+    """
+    Class to edit company scores. Users can edit
+    their scores to a company.
+    """
+    model = CompanyScore
+    form_class = CompanyScoreForm
+
+    def get_object(self):
+        return get_object_or_404(
+            CompanyScore,
+            pk=self.kwargs['pk'],
+        )
+
+    def test_func(self):
+        return CompanyScorePermissions.can_edit_score(
+            user=self.request.user,
+            company_score=self.get_object(),
+        )
+
+    @transaction.atomic
+    def form_valid(self, form):
+        company_score = form.save()
+        company = company_score.company
+
+        return JsonResponse(
+            {
+                'new_score': company.get_score,
+                'score_line': render_to_string(
+                    'entrepreneur/company_score_line.html', {
+                        'company_score': company_score,
+                    },
+                )
             }
         )
