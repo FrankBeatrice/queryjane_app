@@ -36,7 +36,10 @@
 
                                   <div class="media-body">
                                       <h4 class="media-heading">{{ contact.user_contact.get_print }}</h4>
-                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}">{% trans 'Visit profile' %}</a>
+
+                                      <a href="{% url 'professional_detail' contact.user_contact.slug %}" class="btn btn-info">{% trans 'Visit profile' %}</a>
+
+                                      <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' contact.user_contact.id %}" data-user-for-remove-name="{{ profile.user.first_name }}">{% trans 'Remove from my address book' %}</button>
                                   </div>
                                 </td>
                             </tr>
@@ -91,4 +94,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/account/address_book.min.js' %}"></script>
 {% endblock %}
