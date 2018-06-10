@@ -170,11 +170,12 @@
           <span class="visible-lg"></span>
         </span>
 
+        <script src="{% static 'js/place/get_location.js' %}"></script>
+        <script src="{% static 'js/place/show_position.js' %}"></script>
+
         <!-- Js´s compilation -->
         <script src="{% static 'dist/js/layout.min.js' %}"></script>
 
-        <script src="{% static 'js/place/show_position.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
         {% block js %}{% endblock %}
 
         <script>

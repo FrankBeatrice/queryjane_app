@@ -182,6 +182,9 @@ class UserMessageForm(Form):
 
 
 class CompanyScoreForm(ModelForm):
+    """
+    Form to create and update a company score item.
+    """
     score = forms.FloatField()
 
     comment = forms.CharField(

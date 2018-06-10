@@ -13,6 +13,10 @@ register = template.Library()
 
 @register.assignment_tag(takes_context=True)
 def get_is_company_administrator(context, company):
+    """
+    Check if authenticated user is administrator of a
+    given company.
+    """
     user = context['request'].user
 
     return AdministratorMembership.objects.filter(
