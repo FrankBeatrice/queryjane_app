@@ -5,6 +5,6 @@ This application is used to define database tables and functionalities related t
 
 .. toctree::
    :maxdepth: 2
-   :caption: Apps:
+   :caption: Contents:
 
    account/models
