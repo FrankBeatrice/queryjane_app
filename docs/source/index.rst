@@ -24,6 +24,7 @@ QueryJane is **open source**. Find the project source files in `Github <https://
 
    used_technologies
    local_setup
+   code_documentation
 
 
 Indices and tables
