@@ -19,7 +19,7 @@ QueryJane is aimed at specifically boosting the growth of cannabis industry, but
 QueryJane is **open source**. Find the project source files in `Github <https://github.com/augustakingfoundation/queryjane_app/>`_.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    used_technologies
