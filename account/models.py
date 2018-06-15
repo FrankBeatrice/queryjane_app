@@ -27,6 +27,14 @@ from entrepreneur.models import Venture
 
 
 class UserManager(BaseUserManager):
+    """
+    Class used to define the users creation. It inherits the
+    validations defined in Django to create new users in a correct
+    way. The user model defined in this application has an attribute
+    called 'professionalprofile'. This attribute is a foreign key to
+    a model that has an attribute called 'slug'. This attribute must
+    be unique for registered users and companies and is done in this class.
+    """
     def create_user(
         self,
         first_name,
@@ -54,6 +62,7 @@ class UserManager(BaseUserManager):
         user.accepted_terms_date = timezone.now()
         user.save(using=self._db)
 
+        # Generate new user slug.
         slug = slugify(
             '{0}{1}'.format(
                 first_name,
@@ -61,6 +70,8 @@ class UserManager(BaseUserManager):
             )
         )
 
+        # If there is an user or a company with the same
+        # slug, a new slug is generated with a random string.
         if (
             Venture.objects.filter(slug=slug) or
             ProfessionalProfile.objects.filter(slug=slug)
@@ -71,6 +82,8 @@ class UserManager(BaseUserManager):
                 random_string.lower(),
             )
 
+        # Create professional profile object. All registered
+        # user must have a professional profile.
         ProfessionalProfile.objects.create(
             user=user,
             slug=slug,
@@ -91,6 +104,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    User model. It inherits the basic structure of the Django
+    user model. The username field is overwiritten with the
+    email value. This model manage basic user iformation and
+    legal items status.
+    """
     USERNAME_FIELD = 'email'
 
     avatar = models.ImageField(
@@ -220,10 +239,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         full_name = '{0} {1}'.format(self.first_name, self.last_name)
         return full_name.strip()
 
-    @property
-    def get_short_name(self):
-        return self.first_name if self.first_name else self.email.split('@')[0]
-
     def __str__(self):
         return self.get_full_name
 
@@ -234,6 +249,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class ProfessionalProfile(models.Model):
+    """
+    This model represents the professional profile of a
+    registered user. This model manage the sectors in
+    the indsutry that are interesting for the user, the
+    basic profile and contact information and the notifications
+    configuration.
+    """
     user = models.OneToOneField(
         'account.User',
         verbose_name=_('user'),
@@ -314,6 +336,12 @@ class ProfessionalProfile(models.Model):
 
 
 class IndustryCategory(models.Model):
+    """
+    This model represents the sectors in the cannabis industry.
+    Users can select them and add to their professional profile.
+    In this way, their professional profiles can be easely filtered
+    by industry sector.
+    """
     name_es = models.CharField(
         max_length=50,
         verbose_name=_('Spanish name'),
@@ -344,6 +372,14 @@ class IndustryCategory(models.Model):
 
 
 class UserNotification(models.Model):
+    """
+    This model represents a notification to a user. All
+    different type of notifications, to users and companies
+    are managed by using this model. The "notification_type"
+    attribute is used to classify the notifications. It
+    depends of the attributes value to know how notifications
+    must be displayed in the application front end.
+    """
     notification_type = models.PositiveSmallIntegerField(
         choices=NOTIFICATION_TYPE_CHOICES,
     )
@@ -438,6 +474,11 @@ class UserNotification(models.Model):
 
 
 class Conversation(models.Model):
+    """
+    This model represents a conversation. Conversations
+    between two users, and between an user and a company
+    are managed by using this model.
+    """
     participating_users = models.ManyToManyField(
         'account.User',
     )
@@ -465,6 +506,12 @@ class Conversation(models.Model):
 
 
 class UserMessage(models.Model):
+    """
+    This model represents a private message. Users and
+    companies can send private messages to other users.
+    All messages must have a value in the 'conversation'
+    value.
+    """
     user_from = models.ForeignKey(
         'account.User',
         verbose_name=_('from'),
@@ -518,6 +565,10 @@ class UserMessage(models.Model):
 
 
 class UserContact(models.Model):
+    """
+    This model represents an user added to the address
+    book.
+    """
     owner = models.ForeignKey(
         'account.ProfessionalProfile',
         verbose_name=_('owner'),
@@ -539,6 +590,10 @@ class UserContact(models.Model):
 
 
 class CompanyContact(models.Model):
+    """
+    This model represents a company added to the
+    address book.
+    """
     owner = models.ForeignKey(
         'account.ProfessionalProfile',
         verbose_name=_('owner'),
