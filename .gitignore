@@ -121,3 +121,4 @@ node_modules/
 /app/local_settings.py
 /static
 uploads/
+queryjane_env/
