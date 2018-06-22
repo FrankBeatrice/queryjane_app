@@ -9,7 +9,8 @@ from entrepreneur.models import CompanyScore
 
 
 class SignUpForm(Form):
-    """Formulario de creación de usuarios
+    """Sign up form. Basic information to create
+    an user session is required here.
     """
     first_name = forms.CharField(
         label=_('First name'),
@@ -48,6 +49,8 @@ class SignUpForm(Form):
 
 
 class LoginForm(Form):
+    """Log in form. User email and password are required here.
+    """
     email = forms.EmailField(
         label=_('email'),
         required=True,
@@ -75,6 +78,12 @@ class LoginForm(Form):
 
 
 class ProfileForm(ModelForm):
+    """Edit profile form. This form is used to edit
+    basic information about users. The 'country_search' field
+    and the 'city_search' field are used to search registered
+    countries and cities in the application and to autocomplete
+    their names.
+    """
     country_search = forms.CharField(
         required=True,
         label='country',
@@ -132,6 +141,11 @@ class ProfileForm(ModelForm):
 
 
 class ProfileDescriptionForm(Form):
+    """This form is used to edit information about
+    users professional profile. The profile description
+    fields are available in English and Spanish. This
+    form is managed by using AJAX requests.
+    """
     description_en = forms.CharField(
         required=False,
         min_length=40,
@@ -148,9 +162,19 @@ class ProfileDescriptionForm(Form):
 
 
 class UserPasswordResetForm(PasswordResetForm):
+    """Form used to activate the password recovery function.
+    It inherits from the basic django form 'PasswordResetForm'.
+    This form has only the email field. Registered users must
+    enter their email and an mail will be sent with instructions
+    to reset their password.
+    """
     required_css_class = 'required'
 
     def get_users(self, email):
+        """
+        Find accounts with the entered email and send a mail
+        with instructions to reset their password.
+        """
         active_users = User.objects.filter(
             email__iexact=email,
             is_active=True
@@ -159,6 +183,9 @@ class UserPasswordResetForm(PasswordResetForm):
 
 
 class ProfileAutocompleteForm(Form):
+    """
+    Form used to autocomplete users name by name, username or email.
+    """
     userprofile = forms.CharField(
         required=True,
         widget=forms.TextInput(
@@ -171,6 +198,11 @@ class ProfileAutocompleteForm(Form):
 
 
 class UserMessageForm(Form):
+    """
+    Form to create a private message. Private messages
+    can be from users to companies, from users to users or
+    from companies to users.
+    """
     user_message = forms.CharField(
         label=_('message'),
         widget=forms.Textarea,
@@ -202,4 +234,8 @@ class CompanyScoreForm(ModelForm):
 
 
 class AvatarForm(Form):
+    """
+    Form to update profile image. THis form is managed by
+    using AJAX requests.
+    """
     avatar = forms.ImageField()

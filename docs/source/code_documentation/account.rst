@@ -8,3 +8,4 @@ This application is used to define database tables and functionalities related t
    :caption: Contents:
 
    account/models
+   account/forms
