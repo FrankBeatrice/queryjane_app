@@ -28,6 +28,12 @@ from place.utils import get_user_country
 
 
 def profile_as_JSON(profile):
+    """
+    Function used to return a JSON object with information
+    about an user. Returned information is made with the
+    user id and the user name. This function is used in the
+    user profile autocomplete requests.
+    """
     name = '{0} ({1})'.format(
         profile.user.get_full_name,
         profile.slug,
@@ -40,6 +46,11 @@ def profile_as_JSON(profile):
 
 
 class ProfileSearch(LoginRequiredMixin, View):
+    """
+    View to receive a get request with a query to
+    search users ba email, name or username. It
+    uses the profile_as_JSON to made the response.
+    """
     def get(self, request, *args, **kwargs):
         profile_list = []
         if 'q' in request.GET and request.GET.get('q'):
@@ -57,6 +68,12 @@ class ProfileSearch(LoginRequiredMixin, View):
 
 
 class SignUpFormView(FormView):
+    """
+    Form view to manage post request of the sign up form.
+    An instance of the 'User' model is created and an instance
+    of the 'ProfessionalProfile' model is created and linked
+    the the new 'User' instance.
+    """
     form_class = SignUpForm
 
     @transaction.atomic
@@ -73,6 +90,7 @@ class SignUpFormView(FormView):
             password,
         )
 
+        # TODO: Why is it here?
         user.first_name = first_name
         user.last_name = last_name
 
@@ -83,6 +101,7 @@ class SignUpFormView(FormView):
 
         user.save()
 
+        # New users are authenticated in the application.
         authenticated_user = auth.authenticate(
             username=user.email,
             password=password,
@@ -99,6 +118,10 @@ class SignUpFormView(FormView):
 
 
 class NewUserLandingView(LoginRequiredMixin, TemplateView):
+    """
+    Landing page to new registered users. A form to select
+    interesting indsutry categories is displayed here.
+    """
     template_name = 'account/signup_landing.html'
 
     def get(self, request, *args, **kwargs):
@@ -117,6 +140,10 @@ class NewUserLandingView(LoginRequiredMixin, TemplateView):
 
 
 class ProfessionalProfileCategoryView(LoginRequiredMixin, View):
+    """
+    Ajax view to update industry categories linked to a professional
+    profile.
+    """
     def get_object(self):
         return self.request.user.professionalprofile
 
@@ -143,6 +170,9 @@ class ProfessionalProfileCategoryView(LoginRequiredMixin, View):
 
 
 class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
+    """
+    Form view to update professional profile information.
+    """
     model = User
     form_class = ProfileForm
     template_name = 'account/profile_update.html'
@@ -190,6 +220,11 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
 
 
 class UpdateProfileDescriptionForm(LoginRequiredMixin, FormView):
+    """
+    Ajax form view to update professional profile description fields.
+    Available description fields are "Spanish description" and
+    "English description."
+    """
     form_class = ProfileDescriptionForm
 
     def get_object(self):
@@ -225,6 +260,9 @@ class UpdateProfileDescriptionForm(LoginRequiredMixin, FormView):
 
 
 class UpdateProfileAvatarForm(LoginRequiredMixin, FormView):
+    """
+    Ajax view to update profile image.
+    """
     form_class = AvatarForm
 
     def form_valid(self, form):
@@ -236,6 +274,11 @@ class UpdateProfileAvatarForm(LoginRequiredMixin, FormView):
 
 
 class EmailNotificationsUpdateView(LoginRequiredMixin, View):
+    """
+    Ajax view used to update the email notification settings.
+    All type of email notifications must be managed by using this
+    view.
+    """
     def get_object(self):
         return self.request.user.professionalprofile
 
