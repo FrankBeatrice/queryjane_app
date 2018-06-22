@@ -1,22 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
-from account.models import ProfessionalProfile
 from account.models import IndustryCategory
 
 
-class ProfessionalProfileAdmin(admin.ModelAdmin):
-
-    list_display = [
-        'user',
-    ]
-
-
-admin.site.register(ProfessionalProfile, ProfessionalProfileAdmin)
-
-
 class IndustryCategoryAdmin(admin.ModelAdmin):
-
+    """Activate Django default administration for
+    industry categories. Users with platform administration
+    permission can manage intrustry categories.
+    """
     list_display = [
         'name_es',
         'name_en',
