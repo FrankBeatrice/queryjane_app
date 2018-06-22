@@ -1,5 +1,7 @@
-Forms
-=====
+Profile views
+=============
+
+Views related to the user profile functionalities.
 
 Forms definition.
 
