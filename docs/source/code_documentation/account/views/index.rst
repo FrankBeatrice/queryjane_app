@@ -11,3 +11,4 @@ Views definition has been separated by modules for greater ease.
    messages
    notifications
    company_score
+   address_book
