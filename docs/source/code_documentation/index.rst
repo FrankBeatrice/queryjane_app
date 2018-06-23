@@ -10,4 +10,5 @@ This application is used to define database tables and functionalities related t
    account/admin
    account/models
    account/forms
+   account/tasks
    account/views/index

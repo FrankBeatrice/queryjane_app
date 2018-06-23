@@ -14,6 +14,11 @@ from entrepreneur.models import Venture
 
 
 class AddressBookView(LoginRequiredMixin, TemplateView):
+    """
+    Template view to render the address book page. The list
+    of added users and the list of added companies will be
+    displayed in this section.
+    """
     template_name = 'account/address_book/address_book.html'
 
     def get_context_data(self, **kwargs):
@@ -29,6 +34,9 @@ class AddressBookView(LoginRequiredMixin, TemplateView):
 
 
 class AddUserToAddressBookView(CustomUserMixin, View):
+    """
+    Ajax view used to add an user to the address book.
+    """
     def get_object(self):
         return get_object_or_404(
             ProfessionalProfile,
@@ -52,6 +60,9 @@ class AddUserToAddressBookView(CustomUserMixin, View):
 
 
 class RemoveUserFromAddressBookView(CustomUserMixin, View):
+    """
+    Ajax view used to remove an user from the address book.
+    """
     def get_object(self):
         return get_object_or_404(
             ProfessionalProfile,
@@ -75,6 +86,9 @@ class RemoveUserFromAddressBookView(CustomUserMixin, View):
 
 
 class AddCompanyToAddressBookView(CustomUserMixin, View):
+    """
+    Ajax view used to add a company to the address book.
+    """
     def get_object(self):
         return get_object_or_404(
             Venture,
@@ -98,6 +112,9 @@ class AddCompanyToAddressBookView(CustomUserMixin, View):
 
 
 class RemoveCompanyToAddressBookView(CustomUserMixin, View):
+    """
+    Ajax view used to remove a company from the address book.
+    """
     def get_object(self):
         return get_object_or_404(
             Venture,

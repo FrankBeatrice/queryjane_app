@@ -20,6 +20,11 @@ from entrepreneur.models import Venture
 
 
 class CompanyScoreFormView(CustomUserMixin, FormView):
+    """
+    Ajax form view to add a company score. Users can
+    rate companies with a stars form and can add a
+    comment.
+    """
     form_class = CompanyScoreForm
 
     def get_object(self):
