@@ -27,6 +27,9 @@ from entrepreneur.models import Venture
 
 
 class InboxView(LoginRequiredMixin, ListView):
+    """
+    List view to show the entire list of messages.
+    """
     model = UserMessage
     template_name = 'account/inbox.html'
     context_object_name = 'conversations_list'
@@ -38,6 +41,11 @@ class InboxView(LoginRequiredMixin, ListView):
 
 
 class UserMessageFormView(LoginRequiredMixin, FormView):
+    """
+    Ajax view to create a new private messages. Messages
+    can be from an user to another user, from an usere to
+    a company and from a company to an user.
+    """
     form_class = UserMessageForm
 
     def get_object(self):
@@ -151,6 +159,9 @@ class UserMessageFormView(LoginRequiredMixin, FormView):
 
 
 class LoadConversationView(CustomUserMixin, View):
+    """
+    Ajax view to load a conversation.
+    """
     def test_func(self):
         return ConversationsPermissions.can_view(
             user=self.request.user,

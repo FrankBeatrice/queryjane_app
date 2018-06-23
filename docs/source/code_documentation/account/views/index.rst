@@ -8,3 +8,6 @@ Views definition has been separated by modules for greater ease.
    :caption: Contents:
 
    profile
+   messages
+   notifications
+   company_score

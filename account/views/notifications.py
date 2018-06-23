@@ -18,6 +18,9 @@ from entrepreneur.data import SENT_INVITATION
 
 
 class NotificationsView(LoginRequiredMixin, ListView):
+    """
+    list view to shows the entire list of user notifications.
+    """
     model = UserNotification
     template_name = 'account/notifications.html'
     context_object_name = 'notifications_list'
@@ -29,6 +32,14 @@ class NotificationsView(LoginRequiredMixin, ListView):
 
 
 class LoadNotificationModal(CustomUserMixin, View):
+    """
+    Ajax view to load notifications detail. To display
+    all notifications to users, the same html markup is used.
+    In this way, when users click a notification to see the
+    detail, an Ajax request is created to this view and the
+    notification detail is returned in Json format. The response
+    is a string with the html code ready to be rendered.
+    """
     def test_func(self):
         return NotificationPermissions.can_view(
             user=self.request.user,
@@ -43,6 +54,7 @@ class LoadNotificationModal(CustomUserMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         notification = self.get_object()
+        # Mark notifications as seen.
         notification.was_seen = True
         notification.save()
 
@@ -67,6 +79,12 @@ class LoadNotificationModal(CustomUserMixin, View):
 
 
 class AdminNotificationAcceptView(CustomUserMixin, View):
+    """
+    NEW_ENTREPRENEUR_ADMIN is a type of notification that is
+    sent to users when a company administrator invites them to
+    manage his company. This is an Ajax view used to accept
+    this invitation.
+    """
     def get_object(self):
         return get_object_or_404(
             UserNotification,
@@ -81,8 +99,8 @@ class AdminNotificationAcceptView(CustomUserMixin, View):
 
     def get(self, *args, **kwargs):
         notification = self.get_object()
-
         membership = notification.membership
+        # Activate membership.
         membership.status = ACTIVE_MEMBERSHIP
         membership.save()
 
@@ -93,6 +111,12 @@ class AdminNotificationAcceptView(CustomUserMixin, View):
 
 
 class AdminNotificationRejectView(CustomUserMixin, View):
+    """
+    NEW_ENTREPRENEUR_ADMIN is a type of notification that is
+    sent to users when a company administrator invites them to
+    manage his company. This is an Ajax view used to reject
+    this invitation.
+    """
     def get_object(self):
         return get_object_or_404(
             UserNotification,
@@ -108,6 +132,7 @@ class AdminNotificationRejectView(CustomUserMixin, View):
     def get(self, *args, **kwargs):
         notification = self.get_object()
         membership = notification.membership
+        # Reject invitation.
         membership.status = REJECTED_MEMBERSHIP
         membership.save()
 
@@ -118,6 +143,9 @@ class AdminNotificationRejectView(CustomUserMixin, View):
 
 
 class AdminNotificationResendView(CustomUserMixin, View):
+    """
+    Ajax view used to resend an invitation to manage a company.
+    """
     def get_object(self):
         return get_object_or_404(
             UserNotification, id=self.kwargs.get('pk'),

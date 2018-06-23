@@ -19,6 +19,11 @@ logger = logging.getLogger('huey.consumer')
 
 @db_periodic_task(crontab(day_of_week='1,3,5', hour='7', minute='0'))
 def new_received_messages():
+    """
+    Peridoic task that runs all Mondays, Wednesdays and Fridays at 7:00 am.
+    This tasks checks if users have new private messages and creates a
+    notification to inform them about new messages.
+    """
     for professionalprofile in ProfessionalProfile.objects.filter(
         has_new_messages=True,
         email_messages_notifications=True,
