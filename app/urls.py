@@ -37,6 +37,11 @@ urlpatterns += i18n_patterns(
     ),
 
     url(
+        r'^landing_page/$',
+        TemplateView.as_view(template_name='landing_page.html'),
+    ),
+
+    url(
         r'^dashbaord/$',
         DashboardView.as_view(),
         name='dashboard',
