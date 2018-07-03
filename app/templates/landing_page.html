@@ -1,82 +1,91 @@
-<!DOCTYPE html>
-{% load static %}
+{% extends "layout/index.html" %}
+{% load widget_tweaks static i18n %}
 
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digital Agency</title>
-    <meta name="description" content="A Digital Agency Website landing page template built by TemplateFlip.com"/>
+{% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
+
+{% block css %}
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
     <link href="{% static 'landing_page/css/aos.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap4/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'landing_page/css/main.css' %}" rel="stylesheet">
-  </head>
+{% endblock %}
 
-  <body id="top">
-    <header>
-      <div class="container pt-4">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent px-0">
-          <a class="navbar-brand" href="/">
-            <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
-          </a>
+{% block navbar %}
+<header>
+  <div class="container pt-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
+        <span>(BETA)</span>
+      </a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#da-navbarNav" aria-controls="da-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#da-navbarNav" aria-controls="da-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-          <div class="collapse navbar-collapse text-uppercase" id="da-navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'venture_list' %}">Companies</a>
-              </li>
+      <div class="collapse navbar-collapse text-uppercase" id="da-navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'venture_list' %}">Companies</a>
+          </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'jobs_list' %}">Jobs</a>
-              </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'jobs_list' %}">Jobs</a>
+          </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
-              </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
+          </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="#">| Sing up |</a>
-              </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">| Sing up |</a>
+          </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="#services">Log in</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+          <li class="nav-item">
+            <a class="nav-link" href="#services">Log in</a>
+          </li>
+
+          <li class="nav-item">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as languages %}
+
+          {% for lang_code, lang_name in languages %}
+              {% if LANGUAGE_CODE != lang_code %}
+              {% language lang_code %}
+              <a class="nav-link" href="{% url 'home' %}">
+                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
+              {% endlanguage %}
+              {% endif %}
+          {% endfor %}
+          </li>
+        </ul>
       </div>
+    </nav>
+  </div>
 
-      <div class="da-home-page-text">
-        <div class="container" data-aos="fade-right" data-aos-duration="1000">
-          <div class="row">
-            <div class="col-md-7 col-sm-12 px-0 mx-0">
-              <h2 class="display-4">The Cannabis Industry Network!!!</h2>
-              <h3 class="h5 mt-3">Connect with companies and experts in different sectors of the cannabis industry.</h3>
+  <div class="da-home-page-text">
+    <div class="container" data-aos="fade-right" data-aos-duration="1000">
+      <div class="row">
+        <div class="col-md-7 col-sm-12 px-0 mx-0">
+          <h2 class="display-4">The Cannabis Industry Network!!!</h2>
+          <h3 class="h5 mt-3">Connect with companies and experts in different sectors of the cannabis industry.</h3>
 
-              <br>
+          <br>
 
-              <p><i>"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</i></p>
-            </div>
+          <p><i>"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</i></p>
+        </div>
 
-            <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
-              <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Sign up</a>
-              <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Log in</a>
-            </div>
-          </div>
+        <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
+          <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Sign up</a>
+          <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Log in</a>
         </div>
       </div>
-    </header>
+    </div>
+  </div>
+</header>
+{% endblock navbar %}
 
-    <div class="page-content">
-    <div>
-
+{% block content %}
 <div class="da-section da-work bg-secondary" id="learn">
   <div class="container">
     <div class="h3 pb-3 text-center text-white" data-aos="fade-up">Be part of the cannabis industry!!!</div>
@@ -227,44 +236,39 @@
     </div>
   </div>
 </div>
+{% endblock content %}
 
-
-</div>
-</div>
-
-    <footer class="bg-secondary da-section">
-      <div class="container text-white">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="h2">Hello!</div>
-            <p class="mb-0">info@digitalagency.com</p>
-            <p>+1 502-257-1157</p>
-          </div>
-          <div class="col-md-4">
-            <div class="h6 pb-2">Follow Us</div>
-            <ul>
-              <li><a class="da-social-link" href="#">Twitter</a></li>
-              <li><a class="da-social-link" href="#">Facebook</a></li>
-              <li><a class="da-social-link" href="#">Instagram</a></li>
-              <li><a class="da-social-link" href="#">Google</a></li>
-              <li><a class="da-social-link" href="#">Behance</a></li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <div class="h6 pb-2">Copyright</div>
-            <p>&copy; 2018 Digital Agency. All rights reserved.</p>
-            <p>Design - <a class="credit" href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
-          </div>
-        </div>
+{% block footer %}
+<footer class="bg-secondary da-section">
+  <div class="container text-white">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="h2">Hello!</div>
+        <p class="mb-0">info@digitalagency.com</p>
+        <p>+1 502-257-1157</p>
       </div>
-    </footer>
-    <div id="scrolltop">
-      <button class="btn btn-primary"><span class="icon"><i class="fas fa-angle-up fa-2x"></i></span></button>
+      <div class="col-md-4">
+        <div class="h6 pb-2">Follow Us</div>
+        <ul>
+          <li><a class="da-social-link" href="#">Twitter</a></li>
+          <li><a class="da-social-link" href="#">Facebook</a></li>
+          <li><a class="da-social-link" href="#">Instagram</a></li>
+          <li><a class="da-social-link" href="#">Google</a></li>
+          <li><a class="da-social-link" href="#">Behance</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <div class="h6 pb-2">Copyright</div>
+        <p>&copy; 2018 Digital Agency. All rights reserved.</p>
+        <p>Design - <a class="credit" href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script src="{% static 'landing_page/js/aos.js' %}"></script>
-    <script src="{% static 'landing_page/js/main.js' %}"></script>
-  </body>
-</html>
+  </div>
+</footer>
+{% endblock footer %}
+
+{% block js %}
+<script src="{% static 'bootstrap4/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'landing_page/js/aos.js' %}"></script>
+<script src="{% static 'landing_page/js/main.js' %}"></script>
+{% endblock js %}

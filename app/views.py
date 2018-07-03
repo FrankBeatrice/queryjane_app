@@ -40,7 +40,7 @@ from place.utils import get_user_country
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'landing_page.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -61,7 +61,8 @@ class HomeView(TemplateView):
 
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_authenticated():
-            context['signup_form'] = SignUpForm()
+            # TODO: Used to remove the layout css
+            context['landing_styles'] = True
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
