@@ -22,7 +22,7 @@ header {
   color: #fff;
 }
 
-.da-home-page-text {
+.homeHeaderText {
   padding-top: 6rem;
   color: #fff;
 }
@@ -32,33 +32,27 @@ header {
 }
 
 @media (max-width: 575.98px) {
-  .da-home-page-text {
+  .homeHeaderText {
     padding-top: 8rem;
   }
-  .da-home-page-text .display-3 {
+  .homeHeaderText .display-3 {
     font-size: 3rem;
   }
 }
 
 /*Projects Style*/
-.da-projects .da-project-1 {
+.qj-section_2 .qj-section_2-1 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
 }
 
-.da-projects .da-project-2 {
+.qj-section_2 .qj-section_2-1 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
-}
-
-@media (max-width: 992px) {
-  .da-projects .da-project-icon {
-    margin-right: 15px;
-  }
 }
 
 /* Expertise Skills Style */
@@ -156,8 +150,9 @@ header {
 }
 
 /*Footer*/
-footer .da-social-link {
+footer .qj-social-link {
   color: #fff;
+  margin-right: 20px;
   text-decoration: none;
 }
 
@@ -199,6 +194,6 @@ a.credit {
 }
 
 /*Common Style*/
-.da-section {
+.qj-section {
   padding: 100px 0;
 }

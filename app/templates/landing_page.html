@@ -12,8 +12,8 @@
 
 {% block navbar %}
 <header>
-  <div class="container pt-4">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
       <a class="navbar-brand" href="/">
         <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
         <span>(BETA)</span>
@@ -42,7 +42,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#services">Log in</a>
+            <a class="nav-link" href="{% url 'auth_login' %}">Log in</a>
           </li>
 
           <li class="nav-item">
@@ -63,21 +63,21 @@
     </nav>
   </div>
 
-  <div class="da-home-page-text">
+  <div class="homeHeaderText">
     <div class="container" data-aos="fade-right" data-aos-duration="1000">
       <div class="row">
         <div class="col-md-7 col-sm-12 px-0 mx-0">
           <h2 class="display-4">The Cannabis Industry Network!!!</h2>
-          <h3 class="h5 mt-3">Connect with companies and experts in different sectors of the cannabis industry.</h3>
+          <h3 class="h5">Connect with companies and experts in different sectors of the cannabis industry.</h3>
 
           <br>
 
-          <p><i>"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</i></p>
+          <p class="font-italic text-justify p-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
         </div>
 
         <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
           <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Sign up</a>
-          <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Log in</a>
+          <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'auth_login' %}">Log in</a>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="da-section da-work bg-secondary" id="learn">
+<div class="qj-section bg-secondary">
   <div class="container">
     <div class="h3 pb-3 text-center text-white" data-aos="fade-up">Be part of the cannabis industry!!!</div>
     <p class="px-5 pb-5 text-center text-white" data-aos="fade-up">QueryJane is an open source software application created in order to provide technological solutions to emerging economies around cannabis.</p>
@@ -94,8 +94,8 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card mb-3" data-aos="zoom-in-up">
-          <div class="card-body mt-4 mb-1 text-center">
-            <i class="pb-3 text-primary far fa-building fa-3x"></i>
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success far fa-building fa-3x"></i>
             <div class="h4 pb-3">Contact companies in the sector</div>
           </div>
         </div>
@@ -103,8 +103,8 @@
 
       <div class="col-md-4">
         <div class="card mb-3" data-aos="flip-right">
-          <div class="card-body mt-4 mb-1 text-center">
-            <i class="pb-3 text-primary fas fa-briefcase fa-3x"></i>
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success fas fa-briefcase fa-3x"></i>
             <div class="h4 pb-3">find jobs in the cannabis industry</div>
           </div>
         </div>
@@ -112,8 +112,8 @@
 
       <div class="col-md-4">
         <div class="card mb-3" data-aos="flip-left">
-          <div class="card-body mt-4 mb-1 text-center">
-            <i class="pb-3 text-primary far fa-address-book fa-3x"></i>
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success far fa-address-book fa-3x"></i>
             <div class="h4 pb-3">Manage your cannabis contacts</div>
           </div>
         </div>
@@ -122,9 +122,9 @@
   </div>
 </div>
 
-<div class="da-projects">
+<div class="qj-section_2">
   <div class="row mx-0">
-    <div class="col-md-6 px-0 da-project-1" style="background-image: url('{% static 'landing_page/img/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'landing_page/img/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
     <div class="col-md-6 pl-5 pt-5 pb-3">
       <div class="row">
         <div class="col-10 text-center">
@@ -143,12 +143,14 @@
   </div>
 
   <div class="row  mx-0">
-    <div class="col-md-12 text-center">
-      <hr>
-      <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
-      <span class="h5">QueryJane is open source.. QueryJane is free, and always will be!!!</span>
-      <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
-      <hr>
+    <div class="container">
+      <div class="col-md-12 text-center">
+        <hr>
+        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+        <span class="h5">QueryJane is free, and always will be!!!</span>
+        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+        <hr>
+      </div>
     </div>
   </div>
 
@@ -169,42 +171,41 @@
       </div>
     </div>
 
-    <div class="col-md-6 px-0 da-project-2" style="background-image: url('{% static 'landing_page/img/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'landing_page/img/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
   </div>
 </div>
 
-<div class="da-section bg-secondary text-white">
+<div class="qj-section bg-secondary text-white">
   <div class="container">
+    <div class="h3 pb-3 text-center text-white" data-aos="fade-up">Benefits for your company</div>
+
+    <p class="px-5 pb-5 text-center text-white" data-aos="fade-up">We are building the global network of the cannabis industry. By registering your company, you will have access to the following benefits.</p>
+
     <div class="row px-4">
-      <div class="col-md-3 col-sm-6">
-        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-clipboard-check  fa-3x fa-fw"></i>
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up">
+
+          <i class="mr-3 fas fa-globe-americas fa-3x fa-fw"></i>
+
           <div class="media-body">
-            <div class="h5">1575</div>
-            <div class="h6">Projects Done</div>
+            <div class="h5">visibility</div>
+            <div class="h6">Make your brand known globally.</div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-smile  fa-3x fa-fw"></i>
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-user-tie fa-3x fa-fw"></i>
           <div class="media-body">
-            <div class="h5">1245</div>
-            <div class="h6">Happy Clients</div>
+            <div class="h5">Experts</div>
+            <div class="h6">Find professionals in different sectors of the industry.</div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-file-alt fa-3x fa-fw"></i>
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up"><i class="mr-3 far fa-handshake fa-3x fa-fw"></i>
           <div class="media-body">
-            <div class="h5">865</div>
-            <div class="h6">Appreciations</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-clock  fa-3x fa-fw"></i>
-          <div class="media-body">
-            <div class="h5">8565</div>
-            <div class="h6">Working Hours</div>
+            <div class="h5">Strategic allies</div>
+            <div class="h6">Find other companies that can become your strategic allies.</div>
           </div>
         </div>
       </div>
@@ -212,7 +213,7 @@
   </div>
 </div>
 
-<div class="da-section">
+<div class="qj-section">
   <div class="container">
     <div class="row">
       <div class="col-md-4 text-center" data-aos="fade-up">
@@ -224,14 +225,19 @@
       <div class="col-md-8 text-center" data-aos="fade-up">
         <hr>
         <p class="h4">QueryJane is open source and free...</p>
-        <hr>
-
-        <p>QueryJane is an open source application created to boost the growth of emerging economies around cannabis indsutry developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a>.</p>
 
         <hr>
-        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+        <img src="{% static 'landing_page/img/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
         <hr>
 
+        <p>QueryJane is an open source application developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a> created to boost the growth of emerging economies around cannabis indsutry.</p>
+      </div>
+
+      <div class="col-md-12 text-center" data-aos="fade-up">
+        <hr>
+        <p>Do you want to contribute to the platform development? Do you have suggestions or ideas to improve the application? Our goal is to boost economic growth in the cannabis industry, we will be happy to build Queryjane with your help.</p>
+
+        <a class="btn btn-outline-success mt-4 btn-lg" href="{% url 'contact_form' %}">Contact Us!!!</a>
       </div>
     </div>
   </div>
@@ -239,28 +245,67 @@
 {% endblock content %}
 
 {% block footer %}
-<footer class="bg-secondary da-section">
+<footer class="bg-secondary qj-section">
   <div class="container text-white">
     <div class="row">
-      <div class="col-md-4">
-        <div class="h2">Hello!</div>
-        <p class="mb-0">info@digitalagency.com</p>
-        <p>+1 502-257-1157</p>
+      <div class="col-md-3">
+        <div class="h4">Follow us</div>
+
+        <div class="pb-4">
+          <a class="qj-social-link" href="https://twitter.com/queryjane" target="_blank" title="Twitter">
+            <i class="fab fa-twitter fa-2x"></i>
+          </a>
+
+          <a class="qj-social-link" href="https://www.facebook.com/queryjane/" target="_blank" title="Facebook">
+            <i class="fab fa-facebook-f fa-2x"></i>
+          </a>
+
+          <a class="qj-social-link" href="https://github.com/augustakingfoundation/queryjane_app" target="_blank" title="Github">
+            <i class="fab fa-github fa-2x"></i>
+          </a>
+        </div>
+
+
+        <div class="h4">Contact us</div>
+
+        <a class="qj-social-link" href="https://discordapp.com/channels/402510099957940224/402510099957940226" target="_blank" title="Discord">
+          <i class="fab fa-discord fa-2x"></i>
+        </a>
+
+        <a class="qj-social-link" href="{% url 'contact_form' %}" title="Contact form">
+          <i class="fas fa-envelope fa-2x"></i>
+        </a>
       </div>
+
       <div class="col-md-4">
-        <div class="h6 pb-2">Follow Us</div>
+        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane" style="width: 130px;" class="pb-3">
+
         <ul>
-          <li><a class="da-social-link" href="#">Twitter</a></li>
-          <li><a class="da-social-link" href="#">Facebook</a></li>
-          <li><a class="da-social-link" href="#">Instagram</a></li>
-          <li><a class="da-social-link" href="#">Google</a></li>
-          <li><a class="da-social-link" href="#">Behance</a></li>
+          <li><a class="qj-social-link" href="{% url 'venture_list' %}">Companies</a></li>
+          <li><a class="qj-social-link" href="{% url 'jobs_list' %}">Jobs</a></li>
+          <li><a class="qj-social-link" href="">Sign up</a></li>
+          <li><a class="qj-social-link" href="{% url 'auth_login' %}">Log in</a></li>
         </ul>
+
       </div>
       <div class="col-md-4">
-        <div class="h6 pb-2">Copyright</div>
-        <p>&copy; 2018 Digital Agency. All rights reserved.</p>
-        <p>Design - <a class="credit" href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
+        <div class="h6 pb-2">QueryJane 2018 &copy;</div>
+
+        <ul>
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
+          </li>
+
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'privacy-policy' %}">{% trans "Privacy policy" %}</a>
+          </li>
+
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
+          </li>
+        </ul>
+
+        <img src="{% static 'landing_page/img/augusta-king-transparent.png' %}" alt="Augusta King Foundation" style="width: 150px;">
       </div>
     </div>
   </div>
