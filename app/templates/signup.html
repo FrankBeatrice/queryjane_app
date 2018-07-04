@@ -11,7 +11,7 @@
 {% block landing_header_content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-8 offset-md-2">
       <div class="card">
         <div class="card-header">
           <div class="clearfix">
@@ -46,23 +46,22 @@
                 </div>
             </div>
 
-            <form method="POST">
-                {% csrf_token %}
+            <form method="POST" id="id_qjSignUpForm">
+              {% csrf_token %}
+              <div class="row">
+                  {% for field in form.visible_fields %}
+                      <div class="col-xs-12 col-md-6">
+                          <div class="form-group">
+                              {{ field.label_tag }}
+                              {% render_field field class+='form-control' %}
+                              {{ field.errors }}
+                              <div>{{ field.help_text|safe }}</div>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
 
-                <div class="row">
-                    {% for field in form.visible_fields %}
-                        <div class="col-xs-12 col-md-6">
-                            <div class="form-group">
-                                {{ field.label_tag }}
-                                {% render_field field class+='form-control' %}
-                                {{ field.errors }}
-                                <div>{{ field.help_text|safe }}</div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <button type="submit" class="btn btn-block">{% trans 'Sign up' %}</button>
+              <button type="submit" class="btn btn-block">{% trans 'Sign up' %}</button>
             </form>
 
             <p><i>{% trans 'By registering, you are accepting our' %} <a href="{% url 'corporative:legal_item' 'user-agreement' %}" target="_blank">{% trans 'user agreement' %}</a> , <a href="{% url 'corporative:legal_item' 'privacy-policy' %}" target="_blank">{% trans 'privacy policy' %}</a> {% trans 'and' %} <a href="{% url 'corporative:legal_item' 'cookies-policy' %}" target="_blank">cookies policy</a>.</i></p>
@@ -73,3 +72,7 @@
   </div>
 </div>
 {% endblock landing_header_content %}
+
+{% block js %}
+<script src="{% static 'js/signup.js' %}"></script>
+{% endblock js %}
