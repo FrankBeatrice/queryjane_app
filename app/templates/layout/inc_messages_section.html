@@ -1,0 +1,18 @@
+<!-- Included to display messages to users or pending legal items -->
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-info text-center" role="alert">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+{% if user.is_authenticated and not user.accepted_terms %}
+<div class="alert alert-warning text-center" role="alert">
+    Our user agreement has been updated. Please, <a href="{% url 'corporative:legal_item' 'user-agreement' %}">check it out.</a>
+</div>
+{% endif %}
+
+{% if user.is_authenticated and not user.accepted_privacy_policy %}
+<div class="alert alert-warning text-center" role="alert">
+    Our privacy policy has been updated. Please, <a href="{% url 'corporative:legal_item' 'privacy-policy' %}">check it out.</a>
+</div>
+{% endif %}

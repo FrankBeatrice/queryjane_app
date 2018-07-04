@@ -1,89 +1,12 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load widget_tweaks static i18n %}
 
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
 {% block css %}
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-    <link href="{% static 'landing_page/css/aos.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'landing_page/css/main.css' %}" rel="stylesheet">
+<link href="{% static 'landing_page/css/aos.css' %}" rel="stylesheet">
+<link href="{% static 'landing_page/css/main.css' %}" rel="stylesheet">
 {% endblock %}
-
-{% block navbar %}
-<header>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="/">
-        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
-        <span>(BETA)</span>
-      </a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#da-navbarNav" aria-controls="da-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse text-uppercase" id="da-navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'venture_list' %}">Companies</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'jobs_list' %}">Jobs</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'signup' %}">| Sing up |</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'auth_login' %}">Log in</a>
-          </li>
-
-          <li class="nav-item">
-          {% get_current_language as LANGUAGE_CODE %}
-          {% get_available_languages as languages %}
-
-          {% for lang_code, lang_name in languages %}
-              {% if LANGUAGE_CODE != lang_code %}
-              {% language lang_code %}
-              <a class="nav-link" href="{% url 'home' %}">
-                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
-              {% endlanguage %}
-              {% endif %}
-          {% endfor %}
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-  <div class="homeHeaderText">
-    <div class="container" data-aos="fade-right" data-aos-duration="1000">
-      <div class="row">
-        <div class="col-md-7 col-sm-12 px-0 mx-0">
-          <h2 class="display-4">The Cannabis Industry Network!!!</h2>
-          <h3 class="h5">Connect with companies and experts in different sectors of the cannabis industry.</h3>
-
-          <br>
-
-          <p class="font-italic text-justify p-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
-        </div>
-
-        <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
-          <a class="btn btn-outline-light mt-4 btn-lg" href="#learn">Sign up</a>
-          <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'auth_login' %}">Log in</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-{% endblock navbar %}
 
 {% block content %}
 <div class="qj-section bg-secondary">
@@ -243,76 +166,6 @@
   </div>
 </div>
 {% endblock content %}
-
-{% block footer %}
-<footer class="bg-secondary qj-section">
-  <div class="container text-white">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="h4">Follow us</div>
-
-        <div class="pb-4">
-          <a class="qj-social-link" href="https://twitter.com/queryjane" target="_blank" title="Twitter">
-            <i class="fab fa-twitter fa-2x"></i>
-          </a>
-
-          <a class="qj-social-link" href="https://www.facebook.com/queryjane/" target="_blank" title="Facebook">
-            <i class="fab fa-facebook-f fa-2x"></i>
-          </a>
-
-          <a class="qj-social-link" href="https://github.com/augustakingfoundation/queryjane_app" target="_blank" title="Github">
-            <i class="fab fa-github fa-2x"></i>
-          </a>
-        </div>
-
-
-        <div class="h4">Contact us</div>
-
-        <a class="qj-social-link" href="https://discordapp.com/channels/402510099957940224/402510099957940226" target="_blank" title="Discord">
-          <i class="fab fa-discord fa-2x"></i>
-        </a>
-
-        <a class="qj-social-link" href="{% url 'contact_form' %}" title="Contact form">
-          <i class="fas fa-envelope fa-2x"></i>
-        </a>
-      </div>
-
-      <div class="col-md-4">
-        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane" style="width: 130px;" class="pb-3">
-
-        <ul>
-          <li><a class="qj-social-link" href="{% url 'venture_list' %}">Companies</a></li>
-          <li><a class="qj-social-link" href="{% url 'jobs_list' %}">Jobs</a></li>
-          <li><a class="qj-social-link" href="">Sign up</a></li>
-          <li><a class="qj-social-link" href="{% url 'auth_login' %}">Log in</a></li>
-        </ul>
-
-      </div>
-      <div class="col-md-4">
-        <a href="https://augustaking.org/" target="_blank" title="Fundación Augusta King">
-          <img src="{% static 'landing_page/img/augusta-king-transparent.png' %}" alt="Augusta King Foundation" style="width: 130px;" class="pb-3">
-        </a>
-
-        <div class="h6 pb-2">QueryJane 2018 &copy;</div>
-
-        <ul>
-          <li>
-            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
-          </li>
-
-          <li>
-            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'privacy-policy' %}">{% trans "Privacy policy" %}</a>
-          </li>
-
-          <li>
-            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</footer>
-{% endblock footer %}
 
 {% block js %}
 <script src="{% static 'bootstrap4/js/bootstrap.min.js' %}"></script>

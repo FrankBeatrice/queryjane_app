@@ -1,0 +1,87 @@
+{% load static i18n %}
+<footer class="bg-secondary qj-section">
+  <div class="container text-white">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="h4">Follow us</div>
+
+        <div class="pb-4">
+          <a class="qj-social-link" href="https://twitter.com/queryjane" target="_blank" title="Twitter">
+            <i class="fab fa-twitter fa-2x"></i>
+          </a>
+
+          <a class="qj-social-link" href="https://www.facebook.com/queryjane/" target="_blank" title="Facebook">
+            <i class="fab fa-facebook-f fa-2x"></i>
+          </a>
+
+          <a class="qj-social-link" href="https://github.com/augustakingfoundation/queryjane_app" target="_blank" title="Github">
+            <i class="fab fa-github fa-2x"></i>
+          </a>
+        </div>
+
+
+        <div class="h4">Contact us</div>
+
+        <a class="qj-social-link" href="https://discordapp.com/channels/402510099957940224/402510099957940226" target="_blank" title="Discord">
+          <i class="fab fa-discord fa-2x"></i>
+        </a>
+
+        <a class="qj-social-link" href="{% url 'contact_form' %}" title="Contact form">
+          <i class="fas fa-envelope fa-2x"></i>
+        </a>
+
+        <br>
+        <br>
+
+        <div class="h6">QueryJane 2018 &copy;</div>
+      </div>
+
+      <div class="col-md-4">
+        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane" style="width: 130px;" class="pb-3">
+
+        <ul>
+          <li><a class="qj-social-link" href="{% url 'venture_list' %}">Companies</a></li>
+          <li><a class="qj-social-link" href="{% url 'jobs_list' %}">Jobs</a></li>
+          <li><a class="qj-social-link" href="">Sign up</a></li>
+          <li><a class="qj-social-link" href="{% url 'auth_login' %}">Log in</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <a href="https://augustaking.org/" target="_blank" title="Fundación Augusta King">
+          <img src="{% static 'landing_page/img/augusta-king-transparent.png' %}" alt="Augusta King Foundation" style="width: 130px;" class="pb-3">
+        </a>
+
+        <ul>
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
+          </li>
+
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'privacy-policy' %}">{% trans "Privacy policy" %}</a>
+          </li>
+
+          <li>
+            <a class="qj-social-link" href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
+          </li>
+
+          <li>
+            <hr>
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as languages %}
+
+          {% for lang_code, lang_name in languages %}
+              {% if LANGUAGE_CODE != lang_code %}
+              {% language lang_code %}
+              <a class="qj-social-link" href="{% url 'home' %}">
+                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %} |
+                </a>
+              {% endlanguage %}
+              {% endif %}
+          {% endfor %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

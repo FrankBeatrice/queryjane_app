@@ -62,8 +62,6 @@ class HomeView(TemplateView):
 
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_authenticated():
-            # TODO: Used to remove the layout css
-            context['landing_styles'] = True
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
