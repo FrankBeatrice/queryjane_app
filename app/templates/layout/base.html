@@ -37,9 +37,9 @@
     <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
 
     <link href="{% static 'libs/bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link href="{% static 'libs/bootstrap-social/bootstrap-social.css' %}" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -62,7 +62,6 @@
   </head>
 
   <body>
-
     <header>
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -115,8 +114,8 @@
         </nav>
       </div>
 
-      <div class="homeHeaderText">
         {% block landing_header_content %}
+      <div class="homeHeaderText">
         <div class="container" data-aos="fade-right" data-aos-duration="1000">
           <div class="row">
             <div class="col-md-7 col-sm-12 px-0 mx-0">
@@ -134,8 +133,8 @@
             </div>
           </div>
         </div>
-        {% endblock landing_header_content %}
       </div>
+        {% endblock landing_header_content %}
     </header>
 
     <!-- Django messages -->
