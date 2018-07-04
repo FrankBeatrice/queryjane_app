@@ -1,0 +1,173 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks static i18n %}
+
+{% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
+
+{% block css %}
+<link href="{% static 'libs/aos/css/aos.css' %}" rel="stylesheet">
+<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="qj-section bg-secondary">
+  <div class="container">
+    <div class="h3 pb-3 text-center text-white" data-aos="fade-up">Be part of the cannabis industry!!!</div>
+    <p class="px-5 pb-5 text-center text-white" data-aos="fade-up">QueryJane is an open source software application created in order to provide technological solutions to emerging economies around cannabis.</p>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-3" data-aos="zoom-in-up">
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success far fa-building fa-3x"></i>
+            <div class="h4 pb-3">Contact companies in the sector</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card mb-3" data-aos="flip-right">
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success fas fa-briefcase fa-3x"></i>
+            <div class="h4 pb-3">find jobs in the cannabis industry</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card mb-3" data-aos="flip-left">
+          <div class="card-body mt-4 text-center">
+            <i class="pb-3 text-success far fa-address-book fa-3x"></i>
+            <div class="h4 pb-3">Manage your cannabis contacts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="qj-section_2">
+  <div class="row mx-0">
+    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'img/landing_page/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 pl-5 pt-5 pb-3">
+      <div class="row">
+        <div class="col-10 text-center">
+          <div class="h4">Register your company</div>
+          <hr>
+          <p>Register your company on the platform and let other people know about it. Find suppliers, potential allies, experts in different sectors of the industry and give visibility to your brand.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-10">
+          <a class="btn btn-outline-success mt-4 btn-block" href="{% url 'signup' %}">Register your company</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row  mx-0">
+    <div class="container">
+      <div class="col-md-12 text-center">
+        <hr>
+        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+        <span class="h5">QueryJane is free, and always will be!!!</span>
+        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-0">
+    <div class="col-md-6 pl-5 pt-5 pb-3">
+      <div class="row">
+        <div class="col-10 text-center">
+          <div class="h4">Register your professional profile</div>
+          <hr>
+          <p>Do you have knowledge or experience in any sector of the cannabis industry? Register your professional profile and apply for cannabis jobs.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-10">
+          <a class="btn btn-outline-success mt-4 btn-block" href="{% url 'signup' %}">Register your profile</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'img/landing_page/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
+  </div>
+</div>
+
+<div class="qj-section bg-secondary text-white">
+  <div class="container">
+    <div class="h3 pb-3 text-center text-white" data-aos="fade-up">Benefits for your company</div>
+
+    <p class="px-5 pb-5 text-center text-white" data-aos="fade-up">We are building the global network of the cannabis industry. By registering your company, you will have access to the following benefits.</p>
+
+    <div class="row px-4">
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up">
+
+          <i class="mr-3 fas fa-globe-americas fa-3x fa-fw"></i>
+
+          <div class="media-body">
+            <div class="h5">visibility</div>
+            <div class="h6">Make your brand known globally.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up"><i class="mr-3 fas fa-user-tie fa-3x fa-fw"></i>
+          <div class="media-body">
+            <div class="h5">Experts</div>
+            <div class="h6">Find professionals in different sectors of the industry.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="media py-2" data-aos="flip-up"><i class="mr-3 far fa-handshake fa-3x fa-fw"></i>
+          <div class="media-body">
+            <div class="h5">Strategic allies</div>
+            <div class="h6">Find other companies that can become your strategic allies.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="qj-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 text-center" data-aos="fade-up">
+        <a href="https://augustaking.org/" target="_blank">
+          <img class="img-fluid" src="{% static 'img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
+        </a>
+      </div>
+
+      <div class="col-md-8 text-center" data-aos="fade-up">
+        <hr>
+        <p class="h4">QueryJane is open source and free...</p>
+
+        <hr>
+        <img src="{% static 'img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
+        <hr>
+
+        <p>QueryJane is an open source application developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a> created to boost the growth of emerging economies around cannabis indsutry.</p>
+      </div>
+
+      <div class="col-md-12 text-center" data-aos="fade-up">
+        <hr>
+        <p>Do you want to contribute to the platform development? Do you have suggestions or ideas to improve the application? Our goal is to boost economic growth in the cannabis industry, we will be happy to build Queryjane with your help.</p>
+
+        <a class="btn btn-outline-success mt-4 btn-lg" href="{% url 'contact_form' %}">Contact Us!!!</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'libs/aos/js/aos.js' %}"></script>
+<script src="{% static 'js/landing_page.js' %}"></script>
+{% endblock js %}

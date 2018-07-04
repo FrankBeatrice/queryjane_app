@@ -17,6 +17,7 @@ from .views import ProfessionalDetail
 from .views import user_logout
 from .views import VentureDetail
 from .views import VentureList
+from .views import SignupView
 from account.forms import UserPasswordResetForm
 
 admin.site.site_title = 'QueryJane'
@@ -34,6 +35,12 @@ urlpatterns += i18n_patterns(
         r'^$',
         HomeView.as_view(),
         name='home',
+    ),
+
+    url(
+        r'^signup/$',
+        SignupView.as_view(),
+        name='signup',
     ),
 
     url(

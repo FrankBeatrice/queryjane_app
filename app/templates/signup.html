@@ -1,0 +1,76 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks static i18n %}
+
+{% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
+
+{% block css %}
+<!-- <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}"> -->
+<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block landing_header_content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="clearfix">
+              <span class="float-left">
+                  <img src="{{ country.flag }}">
+                  <span>{{ country.name }}</span>
+              </span>
+
+              <span class="float-right">
+                  <span class="fa fa-user"></span>
+                  <span>{{ country_users_count }} {% trans 'users' %}</span>
+
+                  <span>|</span>
+
+                  <span class="fa fa-briefcase"></span>
+                  <span>{{ country_ventures_count }} {% trans 'companies' %}</span>
+              </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h2>{% trans 'The Cannabis Industry Network' %}</h2>
+          <p>{% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}</p>
+
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                <span class="fab fa-facebook"></span>
+                {% trans 'Facebook login' %}
+              </a>
+            </div>
+          </div>
+
+          <form method="POST" id="id_qjSignUpForm">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form.visible_fields %}
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {% render_field field class+='form-control' %}
+                            {{ field.errors }}
+                            <div>{{ field.help_text|safe }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-block">{% trans 'Sign up' %}</button>
+          </form>
+
+          <p><i>{% trans 'By registering, you are accepting our' %} <a href="{% url 'corporative:legal_item' 'user-agreement' %}" target="_blank">{% trans 'user agreement' %}</a> , <a href="{% url 'corporative:legal_item' 'privacy-policy' %}" target="_blank">{% trans 'privacy policy' %}</a> {% trans 'and' %} <a href="{% url 'corporative:legal_item' 'cookies-policy' %}" target="_blank">cookies policy</a>.</i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock landing_header_content %}
+
+{% block js %}
+<script src="{% static 'js/signup.js' %}"></script>
+{% endblock js %}

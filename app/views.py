@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.views.generic import DetailView
@@ -40,7 +41,7 @@ from place.utils import get_user_country
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'landing_page.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -61,12 +62,81 @@ class HomeView(TemplateView):
 
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_authenticated():
-            context['signup_form'] = SignUpForm()
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
             context['country_ventures_count'] = country_ventures_count
 
         return context
+
+
+class SignupView(FormView):
+    """
+    Form view to manage post request of the sign up form.
+    An instance of the 'User' model is created and an instance
+    of the 'ProfessionalProfile' model is created and linked
+    the the new 'User' instance.
+    """
+    form_class = SignUpForm
+    template_name = 'signup.html'
+    success_url = reverse_lazy('account:signup_landing')
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        country_instance = get_user_country(self.request.META)
+        country_users_count = User.objects.filter(
+            country=country_instance,
+        ).count()
+
+        country_ventures_count = Venture.objects.filter(
+            country=country_instance,
+        ).count()
+
+        context = super().get_context_data(**kwargs)
+        if not self.request.user.is_authenticated():
+            context['country'] = country_instance
+            context['country_users_count'] = country_users_count
+            context['country_ventures_count'] = country_ventures_count
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+
+        user = User.objects.create_user(
+            first_name,
+            last_name,
+            email,
+            password,
+        )
+
+        country_instance = get_user_country(self.request.META)
+
+        if country_instance:
+            user.country = country_instance
+
+        user.save()
+
+        # New users are authenticated in the application.
+        authenticated_user = auth.authenticate(
+            username=user.email,
+            password=password,
+        )
+
+        auth.login(
+            self.request,
+            authenticated_user,
+        )
+
+        return super().form_valid(form)
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

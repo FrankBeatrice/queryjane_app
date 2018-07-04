@@ -1,69 +1,63 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load widget_tweaks static i18n %}
 
 {% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}"> -->
+<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
-<div class="qj-home-background"></div>
-
+{% block landing_header_content %}
 <div class="container">
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+        <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+            <h3>{% trans 'Login' %}</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-6 offset-md-3">
+              <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                <span class="fab fa-facebook"></span>
+                {% trans 'Facebook login' %}
+              </a>
+            </div>
+
+            <form method="post" id="id_qjLogInForm">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-group">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {% render_field field class+="form-control" %}
+                    {{ field.errors }}
+                    <div class="helpText">{{ field.help_text|safe }}</div>
+                </div>
+            {% endfor %}
+                <p>
+                    <a href="{% url 'password_reset' %}">{% trans 'Forgot my password' %}</a>
+                </p>
+                <button type="submit" class="btn btn-ghost-white btn-lg">{% trans 'Login' %}</button>
+
+                <a class="btn btn-outline-success btn-lg" href="{% url 'signup' %}">Sign up</a>
+            </form>
+        </div>
+      </div>
 
             <div class="panel panel-default LoginForm qj-home-register">
-                <div class="panel-heading">
-                    <h3>{% trans 'Login' %}</h3>
-                </div>
-
-                <div class="panel-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {% if form.non_field_errors %}
-                            <div class="form-group">
-                                {{ form.non_field_errors }}
-                            </div>
-                        {% endif %}
-
-                    {% for field in form.visible_fields %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {% render_field field class+="form-control" %}
-                            {{ field.errors }}
-                            <div class="helpText">{{ field.help_text|safe }}</div>
-                        </div>
-                    {% endfor %}
-                        <p>
-                            <a href="{% url 'password_reset' %}">{% trans 'Forgot my password' %}</a>
-                        </p>
-                        <button type="submit" class="btn btn-ghost-white btn-lg">{% trans 'Login' %}</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock landing_header_content %}
 
 {% block js %}
-<script>
-$(function() {
-    'use strict';
-
-    $('.LoginForm form').validate({
-        rules: {
-            username: {
-                email: true,
-                required: true
-            },
-            password: {
-                required: true
-            }
-        }
-    });
-});
-</script>
+<script src="{% static 'js/account/login.js' %}"></script>
 {% endblock %}
