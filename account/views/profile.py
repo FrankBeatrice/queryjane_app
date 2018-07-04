@@ -1,12 +1,9 @@
 import json
 
-from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse
-from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
@@ -18,13 +15,11 @@ from django.views.generic import View
 from account.forms import AvatarForm
 from account.forms import ProfileDescriptionForm
 from account.forms import ProfileForm
-from account.forms import SignUpForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import User
 from place.models import City
 from place.models import Country
-from place.utils import get_user_country
 
 
 def profile_as_JSON(profile):
@@ -65,56 +60,6 @@ class ProfileSearch(LoginRequiredMixin, View):
                 profile_list.append(profile_as_JSON(profile))
 
         return JsonResponse(profile_list, safe=False)
-
-
-class SignUpFormView(FormView):
-    """
-    Form view to manage post request of the sign up form.
-    An instance of the 'User' model is created and an instance
-    of the 'ProfessionalProfile' model is created and linked
-    the the new 'User' instance.
-    """
-    form_class = SignUpForm
-
-    @transaction.atomic
-    def form_valid(self, form):
-        first_name = form.cleaned_data['first_name']
-        last_name = form.cleaned_data['last_name']
-        email = form.cleaned_data['email']
-        password = form.cleaned_data['password']
-
-        user = User.objects.create_user(
-            first_name,
-            last_name,
-            email,
-            password,
-        )
-
-        # TODO: Why is it here?
-        user.first_name = first_name
-        user.last_name = last_name
-
-        country_instance = get_user_country(self.request.META)
-
-        if country_instance:
-            user.country = country_instance
-
-        user.save()
-
-        # New users are authenticated in the application.
-        authenticated_user = auth.authenticate(
-            username=user.email,
-            password=password,
-        )
-
-        auth.login(
-            self.request,
-            authenticated_user,
-        )
-
-        return HttpResponseRedirect(
-            reverse('account:signup_landing')
-        )
 
 
 class NewUserLandingView(LoginRequiredMixin, TemplateView):

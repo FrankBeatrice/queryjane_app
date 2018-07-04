@@ -38,7 +38,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">| Sing up |</a>
+            <a class="nav-link" href="{% url 'signup' %}">| Sing up |</a>
           </li>
 
           <li class="nav-item">
@@ -289,6 +289,10 @@
 
       </div>
       <div class="col-md-4">
+        <a href="https://augustaking.org/" target="_blank" title="Fundación Augusta King">
+          <img src="{% static 'landing_page/img/augusta-king-transparent.png' %}" alt="Augusta King Foundation" style="width: 130px;" class="pb-3">
+        </a>
+
         <div class="h6 pb-2">QueryJane 2018 &copy;</div>
 
         <ul>
@@ -304,8 +308,6 @@
             <a class="qj-social-link" href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
           </li>
         </ul>
-
-        <img src="{% static 'landing_page/img/augusta-king-transparent.png' %}" alt="Augusta King Foundation" style="width: 150px;">
       </div>
     </div>
   </div>

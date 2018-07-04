@@ -19,19 +19,12 @@ from account.views.notifications import NotificationsView
 from account.views.profile import NewUserLandingView
 from account.views.profile import ProfessionalProfileCategoryView
 from account.views.profile import ProfileSearch
-from account.views.profile import SignUpFormView
 from account.views.profile import UpdateProfileAvatarForm
 from account.views.profile import UpdateProfileDescriptionForm
 from account.views.profile import UpdateProfileFormView
 from account.views.profile import EmailNotificationsUpdateView
 
 urlpatterns = [
-    url(
-        r'^$',
-        SignUpFormView.as_view(),
-        name='signup_form_submit',
-    ),
-
     # API Userprofile
     url(
         r'^profile-search/$',
