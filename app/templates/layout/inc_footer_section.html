@@ -44,6 +44,7 @@
           <li><a class="qj-social-link" href="{% url 'jobs_list' %}">Jobs</a></li>
           <li><a class="qj-social-link" href="">Sign up</a></li>
           <li><a class="qj-social-link" href="{% url 'auth_login' %}">Log in</a></li>
+          <li><a class="qj-social-link" href="http://docs.queryjane.net/" target="_blank">Documentation</a></li>
         </ul>
       </div>
 
@@ -74,7 +75,7 @@
               {% if LANGUAGE_CODE != lang_code %}
               {% language lang_code %}
               <a class="qj-social-link" href="{% url 'home' %}">
-                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %} |
+                  | {% if  lang_name == 'Spanish' %}Español{% else %}English{% endif %} |
                 </a>
               {% endlanguage %}
               {% endif %}
