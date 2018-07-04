@@ -4,8 +4,7 @@
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
 {% block css %}
-<link href="{% static 'landing_page/css/aos.css' %}" rel="stylesheet">
-<link href="{% static 'landing_page/css/main.css' %}" rel="stylesheet">
+<link href="{% static 'libs/aos/css/aos.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -47,7 +46,7 @@
 
 <div class="qj-section_2">
   <div class="row mx-0">
-    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'landing_page/img/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'img/landing_page/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
     <div class="col-md-6 pl-5 pt-5 pb-3">
       <div class="row">
         <div class="col-10 text-center">
@@ -94,7 +93,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'landing_page/img/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'img/landing_page/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
   </div>
 </div>
 
@@ -141,7 +140,7 @@
     <div class="row">
       <div class="col-md-4 text-center" data-aos="fade-up">
         <a href="https://augustaking.org/" target="_blank">
-          <img class="img-fluid" src="{% static 'landing_page/img/augusta_king.png' %}" alt="Augusta King Foundation"/>
+          <img class="img-fluid" src="{% static 'img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
         </a>
       </div>
 
@@ -150,7 +149,7 @@
         <p class="h4">QueryJane is open source and free...</p>
 
         <hr>
-        <img src="{% static 'landing_page/img/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
+        <img src="{% static 'img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
         <hr>
 
         <p>QueryJane is an open source application developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a> created to boost the growth of emerging economies around cannabis indsutry.</p>
@@ -168,7 +167,6 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'bootstrap4/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'landing_page/js/aos.js' %}"></script>
-<script src="{% static 'landing_page/js/main.js' %}"></script>
+<script src="{% static 'libs/aos/js/aos.js' %}"></script>
+<script src="{% static 'js/landing_page.js' %}"></script>
 {% endblock js %}
