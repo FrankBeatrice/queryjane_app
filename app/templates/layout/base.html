@@ -104,7 +104,7 @@
                   {% if LANGUAGE_CODE != lang_code %}
                   {% language lang_code %}
                   <a class="nav-link" href="{% url 'home' %}">
-                      | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
+                      | {% if  lang_name == 'Spanish' %}Español |{% else %}English{% endif %}</a>
                   {% endlanguage %}
                   {% endif %}
               {% endfor %}
