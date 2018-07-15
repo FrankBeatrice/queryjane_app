@@ -77,7 +77,7 @@
           <div class="collapse navbar-collapse text-uppercase" id="da-navbarNav">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'venture_list' %}">Companies</a>
+                <a class="nav-link" href="{% url 'companies_list' %}">Companies</a>
               </li>
 
               <li class="nav-item">
@@ -103,7 +103,7 @@
               {% for lang_code, lang_name in languages %}
                   {% if LANGUAGE_CODE != lang_code %}
                   {% language lang_code %}
-                  <a class="nav-link" href="{% url 'home' %}">
+                  <a class="nav-link" href="{% url 'landing_page' %}">
                       | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
                   {% endlanguage %}
                   {% endif %}

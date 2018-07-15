@@ -62,10 +62,10 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">{% trans 'Companies to share' %}</div>
                         <div class="panel-body">
-                            {% if unshared_ventures_list %}
+                            {% if unshared_companies_list %}
                             <table class="table table-striped jobs-table">
                               <tbody>
-                            {% for company in unshared_ventures_list %}
+                            {% for company in unshared_companies_list %}
                                 {% include 'account/dashboard_company_line.html' %}
                             {% endfor %}
                               </tbody>

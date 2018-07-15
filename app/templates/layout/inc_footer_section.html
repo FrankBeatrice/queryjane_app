@@ -40,7 +40,7 @@
         <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane" style="width: 130px;" class="pb-3">
 
         <ul>
-          <li><a class="qj-social-link" href="{% url 'venture_list' %}">Companies</a></li>
+          <li><a class="qj-social-link" href="{% url 'companies_list' %}">Companies</a></li>
           <li><a class="qj-social-link" href="{% url 'jobs_list' %}">Jobs</a></li>
           <li><a class="qj-social-link" href="">Sign up</a></li>
           <li><a class="qj-social-link" href="{% url 'auth_login' %}">Log in</a></li>
@@ -74,7 +74,7 @@
           {% for lang_code, lang_name in languages %}
               {% if LANGUAGE_CODE != lang_code %}
               {% language lang_code %}
-              <a class="qj-social-link" href="{% url 'home' %}">
+              <a class="qj-social-link" href="{% url 'landing_page' %}">
                   | {% if  lang_name == 'Spanish' %}Español{% else %}English{% endif %} |
                 </a>
               {% endlanguage %}

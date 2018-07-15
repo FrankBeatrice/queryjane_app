@@ -127,7 +127,7 @@
                             ·
                             <a href="{% url 'corporative:legal_item' 'cookies-policy' %}">{% trans "Cookies policy" %}</a>
                             ·
-                            <a href="{% url 'venture_list' %}">{% trans "Companies" %}</a>
+                            <a href="{% url 'companies_list' %}">{% trans "Companies" %}</a>
                             ·
                             <a href="{% url 'jobs_list' %}">{% trans "Jobs" %}</a>
                             ·
@@ -147,7 +147,7 @@
                         {% for lang_code, lang_name in languages %}
                             {% if LANGUAGE_CODE != lang_code %}
                             {% language lang_code %}
-                            <a href="{% url 'home' %}">
+                            <a href="{% url 'landing_page' %}">
                                 {% if  lang_name == 'Spanish' %}
                                     Español
                                 {% else %}

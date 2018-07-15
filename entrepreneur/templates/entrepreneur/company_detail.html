@@ -2,30 +2,30 @@
 
 {% load static entrepreneur_tags i18n user_conversations widget_tweaks %}
 
-{% block title %}{{ venture }}{% endblock %}
+{% block title %}{{ company }}{% endblock %}
 
-{% block meta_title %}{{ venture }}{% endblock %}
+{% block meta_title %}{{ company }}{% endblock %}
 
 {% block meta_description %}
-{% get_company_description venture as company_description %}
+{% get_company_description company as company_description %}
 {{ company_description|truncatechars_html:200 }}
 {% endblock %}
 
 {% block meta_image %}
-{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
+{% if not company.logo %}https://queryjane.net{% endif %}{{ company.get_logo }}
 {% endblock %}
 
-{% get_company_logo_extension venture.get_logo as company_logo_extension %}
+{% get_company_logo_extension company.get_logo as company_logo_extension %}
 {% block meta_image_type %}{{ company_logo_extension }}{% endblock %}
 
-{% block meta_twitter_title %}{{ venture }}{% endblock %}
+{% block meta_twitter_title %}{{ company }}{% endblock %}
 
 {% block meta_twitter_description %}
-{% get_company_description venture as company_description %}
+{% get_company_description company as company_description %}
 {{ company_description|truncatechars_html:200 }}
 {% endblock %}
 {% block meta_twitter_image %}
-{% if not venture.logo %}https://queryjane.net{% endif %}{{ venture.get_logo }}
+{% if not company.logo %}https://queryjane.net{% endif %}{{ company.get_logo }}
 {% endblock %}
 
 <meta property="og:image:type" content="image/{{ company_logo_extension }}">
@@ -37,13 +37,13 @@
 {% block content %}
 <section class="qjane-venture-profile">
     <div class="container">
-        {% if venture.is_inactive %}
+        {% if company.is_inactive %}
         <div class="alert alert-danger" role="alert">
-          {{ venture }} is inactive.
+          {{ company }} is inactive.
         </div>
-        {% elif venture.is_hidden %}
+        {% elif company.is_hidden %}
         <div class="alert alert-warning" role="alert">
-          {{ venture }} {% trans 'has been hidden by a QueryJane administrator.' %}
+          {{ company }} {% trans 'has been hidden by a QueryJane administrator.' %}
         </div>
         {% endif %}
         <div class="row">
@@ -51,15 +51,15 @@
                 <div class="media-object">
                     <div class="row">
                         <div class="col-xs-8 col-sm-11 col-md-9">
-                            <img class="img-responsive thumbnail" src="{{ venture.get_logo }}" alt="{{ venture }}">
+                            <img class="img-responsive thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <div id="idCompanyScore" data-score="{{ venture.get_score }}"></div>
+                    <div id="idCompanyScore" data-score="{{ company.get_score }}"></div>
 
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</p>
 
                     {% if can_add_score %}
                     <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
@@ -70,11 +70,11 @@
                 <br>
 
             {% if can_manage %}
-                <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
+                <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
                 <br>
                 <br>
 
-                <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
+                <a href="{% url 'entrepreneur:job_offer_form' company.slug %}" class="btn btn-primary">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 {% trans 'Create job offer' %}
             </a>
@@ -82,7 +82,7 @@
                 <br>
             {% endif %}
 
-                {% get_user_venture_admin_notification user venture as user_venture_admin_notification %}
+                {% get_user_venture_admin_notification user company as user_venture_admin_notification %}
 
                 {% if user_venture_admin_notification %}
                     <div class="QJAdminnotification">
@@ -93,16 +93,16 @@
                     </div>
                 {% endif %}
 
-                <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' venture.id %}" data-company-for-add-name="{{ venture.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
+                <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' company.id %}" data-company-for-add-name="{{ company.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
 
-                <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' venture.id %}" data-company-for-remove-name="{{ venture.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
+                <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company.id %}" data-company-for-remove-name="{{ company.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
 
                 <br>
                 <br>
 
                 {% if not can_manage and user.is_authenticated %}
-                {% get_company_conversation user venture as company_conversation %}
-                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ venture.id }}" data-to-name="{{ venture }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
+                {% get_company_conversation user company as company_conversation %}
+                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ company.id }}" data-to-name="{{ company }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
                 {% endif %}
 
                 <br>
@@ -112,13 +112,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if venture.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
+                            <span>{% if company.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
                         </div>
 
                         <div class="panel-body">
                             {% get_current_language as LANGUAGE_CODE %}
                             <ul class="QJVentureDetCats">
-                            {% for industry_category in venture.industry_categories.all %}
+                            {% for industry_category in company.industry_categories.all %}
                                 <li>
                                     {% if LANGUAGE_CODE == 'es' %}
                                     {{ industry_category.name_es }}
@@ -141,25 +141,25 @@
 
                         <div class="panel-body">
                             <div>
-                                <img src="{{ venture.country.flag }}">
-                                <span>{{ venture.country }}</span>
+                                <img src="{{ company.country.flag }}">
+                                <span>{{ company.country }}</span>
                             </div>
 
                             <div>
-                                <span>{{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+                                <span>{{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
                             </div>
 
                             <div>
-                            {% if venture.address %}
+                            {% if company.address %}
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span>{{ venture.address }}</span>
+                                <span>{{ company.address }}</span>
                             {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {% if venture.url %}
+                {% if company.url %}
                 <div class="QJVenturWebPage">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -168,13 +168,13 @@
                         </div>
 
                         <div class="panel-body">
-                            <a href="{{ venture.url }}" target="_blank">{{ venture.url }}</a>
+                            <a href="{{ company.url }}" target="_blank">{{ company.url }}</a>
                         </div>
                     </div>
                 </div>
                 {% endif %}
 
-                {% if venture.facebook_url or venture.twitter_url or venture.instagram_url or venture.linkedin_url or venture.googleplus_url %}
+                {% if company.facebook_url or company.twitter_url or company.instagram_url or company.linkedin_url or company.googleplus_url %}
                 <div class="QJVentureDetSocialMedia">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -183,32 +183,32 @@
                         </div>
 
                         <div class="panel-body text-center">
-                            {% if venture.facebook_url %}
-                            <a href="{{ venture.facebook_url }}" target="_blank">
+                            {% if company.facebook_url %}
+                            <a href="{{ company.facebook_url }}" target="_blank">
                                 <i class="fa fa-facebook-f" aria-hidden="true"></i>
                             </a>
                             {% endif %}
 
-                            {% if venture.twitter_url %}
-                            <a href="{{ venture.twitter_url }}" target="_blank">
+                            {% if company.twitter_url %}
+                            <a href="{{ company.twitter_url }}" target="_blank">
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
                             </a>
                             {% endif %}
 
-                            {% if venture.instagram_url %}
-                            <a href="{{ venture.instagram_url }}" target="_blank">
+                            {% if company.instagram_url %}
+                            <a href="{{ company.instagram_url }}" target="_blank">
                                 <i class="fa fa-instagram" aria-hidden="true"></i>
                             </a>
                             {% endif %}
 
-                            {% if venture.linkedin_url %}
-                            <a href="{{ venture.linkedin_url }}" target="_blank">
+                            {% if company.linkedin_url %}
+                            <a href="{{ company.linkedin_url }}" target="_blank">
                                 <i class="fa fa-linkedin" aria-hidden="true"></i>
                             </a>
                             {% endif %}
 
-                            {% if venture.googleplus_url %}
-                            <a href="{{ venture.googleplus_url }}" target="_blank">
+                            {% if company.googleplus_url %}
+                            <a href="{{ company.googleplus_url }}" target="_blank">
                                 <i class="fa fa-google-plus" aria-hidden="true"></i>
                             </a>
                             {% endif %}
@@ -217,7 +217,7 @@
                 </div>
                 {% endif %}
 
-                {% if venture.phone_number or venture.email %}
+                {% if company.phone_number or company.email %}
                 <div class="QJVentureDetContact">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -226,17 +226,17 @@
                         </div>
 
                         <div class="panel-body">
-                            {% if venture.phone_number %}
+                            {% if company.phone_number %}
                             <div>
                                 <i class="fa fa-phone" aria-hidden="true"></i>
-                                <span>{{ venture.phone_number }}</span>
+                                <span>{{ company.phone_number }}</span>
                             </div>
                             {% endif %}
 
-                            {% if venture.email %}
+                            {% if company.email %}
                             <div>
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                                <span>{{ venture.email }}</span>
+                                <span>{{ company.email }}</span>
                             </div>
                             {% endif %}
                         </div>
@@ -254,17 +254,17 @@
 
                         <div class="panel-body">
                             <div class="JSCompanyActions">
-                                {% if not venture.shared_on_twitter and venture.is_active %}
-                                <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_venture' venture.slug %}">
+                                {% if not company.shared_on_twitter and company.is_active %}
+                                <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_company' company.slug %}">
                                     <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
                                 </a>
                                 {% endif %}
 
-                                <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_venture' venture.slug %}" style="{% if venture.is_hidden %}display:none;{% endif %}">
+                                <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
                                     <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
                                 </a>
 
-                                <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_venture' venture.slug %}" style="{% if not venture.is_hidden %}display:none;{% endif %}">
+                                <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
                                     <i class="fa fa-fire"></i> {% trans 'Activate' %}
                                 </a>
                             </div>
@@ -275,8 +275,8 @@
             </div>
 
             <div class="col-xs-12 col-sm-9">
-                <h1>{{ venture }}</h1>
-                {% get_company_description venture as company_description %}
+                <h1>{{ company }}</h1>
+                {% get_company_description company as company_description %}
                 {{ company_description|safe }}
             </div>
         </div>
@@ -286,7 +286,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><strong>{{ venture }}</strong> {% trans 'Rating' %}</h5>
+                <h5 class="modal-title"><strong>{{ company }}</strong> {% trans 'Rating' %}</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -295,13 +295,13 @@
 
             <div class="modal-body">
                 <div class="jsScoreFormContainer" style="{% if not can_add_score %}display:none{% endif %}">
-                    <p>Add your feedback about <strong>{{ venture }}</strong>.</p>
+                    <p>Add your feedback about <strong>{{ company }}</strong>.</p>
 
-                    <p>{% if not venture.get_votes_quantity %}There are not scores yet.{% elif venture.get_votes_quantity == 1 %}1 user has scored {{ venture }}.{% else %}{{ venture.get_votes_quantity }} users have scored {{ venture }}.{% endif %}</p>
+                    <p>{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</p>
 
                     <div id="idCompanyScoreInput"></div>
 
-                    <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' venture.id %}">
+                    <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' company.id %}">
                         {% csrf_token %}
 
                         <div>
@@ -322,7 +322,7 @@
 
                 <div class="jsCompanyScoreList">
                     <table class="table table-striped">
-                        {% for company_score in venture.companyscore_set.all %}
+                        {% for company_score in company.companyscore_set.all %}
                         {% include 'entrepreneur/company_score_line.html' %}
                         {% empty %}
                         <tr class="jsCompanyScoreEmpty">

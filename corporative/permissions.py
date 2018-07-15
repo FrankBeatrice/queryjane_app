@@ -7,8 +7,8 @@ class AdminPermissions(object):
         return False
 
     @classmethod
-    def can_share_venture_twitter(self, user, venture):
-        if not venture.is_active or venture.shared_on_twitter:
+    def can_share_company_twitter(self, user, company):
+        if not company.is_active or company.shared_on_twitter:
             return False
 
         if user.is_staff:
@@ -27,8 +27,8 @@ class AdminPermissions(object):
         return False
 
     @classmethod
-    def can_hide_venture(self, user, venture):
-        if venture.is_inactive or venture.is_hidden:
+    def can_hide_company(self, user, company):
+        if company.is_inactive or company.is_hidden:
             return False
 
         if user.is_staff:
@@ -37,8 +37,8 @@ class AdminPermissions(object):
         return False
 
     @classmethod
-    def can_activate_venture(self, user, venture):
-        if not venture.is_hidden:
+    def can_activate_company(self, user, company):
+        if not company.is_hidden:
             return False
 
         if user.is_staff:
