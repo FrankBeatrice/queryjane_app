@@ -13,3 +13,4 @@ Here we can find the code documentation ordered by the project apps structure. E
 
    code_documentation/app/index
    code_documentation/account/index
+   code_documentation/corporative/index
