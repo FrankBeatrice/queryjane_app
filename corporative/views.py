@@ -83,7 +83,7 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('landing_page')
 
         return super().get(request, *args, **kwargs)
 
@@ -173,7 +173,7 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
             )
         )
 
-        return redirect('home')
+        return redirect('landing_page')
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):

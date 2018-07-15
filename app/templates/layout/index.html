@@ -147,7 +147,7 @@
                         {% for lang_code, lang_name in languages %}
                             {% if LANGUAGE_CODE != lang_code %}
                             {% language lang_code %}
-                            <a href="{% url 'home' %}">
+                            <a href="{% url 'landing_page' %}">
                                 {% if  lang_name == 'Spanish' %}
                                     Español
                                 {% else %}

@@ -40,7 +40,7 @@ from entrepreneur.permissions import EntrepreneurPermissions
 from place.utils import get_user_country
 
 
-class HomeView(TemplateView):
+class LandingPageView(TemplateView):
     template_name = 'landing_page.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -48,7 +48,7 @@ class HomeView(TemplateView):
             return redirect('dashboard')
 
         else:
-            return super(HomeView, self).dispatch(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         country_instance = get_user_country(self.request.META)
@@ -82,7 +82,7 @@ class SignupView(FormView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('landing_page')
 
         return super().get(request, *args, **kwargs)
 
@@ -405,6 +405,7 @@ class ProfessionalDetail(LoginRequiredMixin, DetailView):
         return context
 
 
+# TODO: This view must be removed.
 def ajax_login_form(request):
     if not request.is_ajax():
         raise Http404
@@ -437,7 +438,7 @@ def ajax_login_form(request):
 def user_logout(request):
     auth.logout(request)
 
-    return redirect('home')
+    return redirect('landing_page')
 
 
 class JobOfferDetail(DetailView):

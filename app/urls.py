@@ -8,7 +8,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 from .views import ajax_login_form
 from .views import ContactFormView
-from .views import HomeView
+from .views import LandingPageView
 from .views import DashboardView
 from .views import JobOfferApplyView
 from .views import JobOfferDetail
@@ -33,8 +33,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     url(
         r'^$',
-        HomeView.as_view(),
-        name='home',
+        LandingPageView.as_view(),
+        name='landing_page',
     ),
 
     url(
