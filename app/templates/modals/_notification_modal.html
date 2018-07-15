@@ -64,13 +64,13 @@
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
 {% elif notification.is_updated_user_agreement %}
     {% if not user.accepted_terms %}
-    <a href="{% url 'corporative:legal_items_agree' 'user-agreement' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
+    <a href="{% url 'corporative:legal_item_agree' 'user-agreement' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
     {% else %}
     User agreement has been accepted.
     {% endif %}
 {% elif notification.is_updated_privacy_policy %}
     {% if not user.accepted_privacy_policy %}
-    <a href="{% url 'corporative:legal_items_agree' 'privacy' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
+    <a href="{% url 'corporative:legal_item_agree' 'privacy' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
     {% else %}
     Privacy policy has been accepted.
     {% endif %}

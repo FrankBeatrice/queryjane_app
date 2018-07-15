@@ -1,4 +1,7 @@
 class AdminPermissions(object):
+    """
+    Administrator users permissions.
+    """
     @classmethod
     def can_manage_admin_views(self, user):
         if user.is_staff:

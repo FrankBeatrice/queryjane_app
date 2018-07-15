@@ -59,7 +59,7 @@ class LegalItemView(DetailView):
         is_admin = AdminPermissions.can_manage_admin_views(
             user=self.request.user,
         )
-        # If can edir, the edit legal item form will be available.
+        # If can edit, the edit legal item form will be available.
         context['can_edit'] = is_admin
 
         # Instance current legal item in the edit form.
@@ -166,7 +166,7 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         return super().form_valid(form)
 
 
-class LegalItemsAgreeView(LoginRequiredMixin, View):
+class LegalItemAgreeView(LoginRequiredMixin, View):
     """
     View to accept new legal items. Users are notified
     when a legal item is updated and teh must accept the

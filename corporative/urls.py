@@ -9,7 +9,7 @@ from .views import LegalItemView
 from .views import LegalItemFormView
 from .views import TwitterShareJobView
 from .views import TwitterShareCompanyView
-from .views import LegalItemsAgreeView
+from .views import LegalItemAgreeView
 
 urlpatterns = [
     url(
@@ -55,9 +55,9 @@ urlpatterns = [
     ),
 
     url(
-        r'^legal_items_agree/(?P<slug>[-\w]+)/$',
-        LegalItemsAgreeView.as_view(),
-        name='legal_items_agree',
+        r'^legal_item_agree/(?P<slug>[-\w]+)/$',
+        LegalItemAgreeView.as_view(),
+        name='legal_item_agree',
     ),
 
     url(
