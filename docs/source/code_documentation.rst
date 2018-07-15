@@ -11,4 +11,5 @@ Here we can find the code documentation ordered by the project apps structure. E
    :maxdepth: 3
    :caption: Apps:
 
+   code_documentation/app/index
    code_documentation/account/index
