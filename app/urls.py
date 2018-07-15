@@ -15,8 +15,8 @@ from .views import JobOfferDetail
 from .views import JobsList
 from .views import ProfessionalDetail
 from .views import user_logout
-from .views import VentureDetail
-from .views import VentureList
+from .views import CompanyDetail
+from .views import CompanyList
 from .views import SignupView
 from account.forms import UserPasswordResetForm
 
@@ -51,8 +51,8 @@ urlpatterns += i18n_patterns(
 
     url(
         r'^companies/$',
-        VentureList.as_view(),
-        name='venture_list',
+        CompanyList.as_view(),
+        name='companies_list',
     ),
 
     url(
@@ -160,7 +160,7 @@ urlpatterns += i18n_patterns(
 
     url(
         r'^(?P<slug>[-\w]+)/$',
-        VentureDetail.as_view(),
+        CompanyDetail.as_view(),
         name='venture_detail',
     ),
     url(
