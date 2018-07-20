@@ -1,3 +1,3 @@
-$(document).ready(function() {
-  AOS.init();
-});
+var AOS = require('aos');
+
+AOS.init();
