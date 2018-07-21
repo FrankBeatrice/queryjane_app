@@ -62,6 +62,7 @@
   </head>
 
   <body>
+    {% block header %}
     <header>
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -136,6 +137,7 @@
       </div>
         {% endblock landing_header_content %}
     </header>
+    {% endblock header %}
 
     <!-- Django messages -->
     {% include 'layout/inc_messages_section.html' %}
@@ -166,7 +168,7 @@
     <script src="{% static 'libs/bootstrap4/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'libs/jquery-validation/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/utilities/custom_validators.js' %}"></script>
-
+    <script src="{% static 'js/navbar.js' %}"></script>
     {% block js %}{% endblock %}
   </body>
 </html>
