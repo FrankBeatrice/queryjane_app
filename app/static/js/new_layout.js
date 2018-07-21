@@ -24,3 +24,6 @@ require('./globalVariables');
 
 // Main
 require('./new_main');
+
+// Navbar
+require('./navbar');

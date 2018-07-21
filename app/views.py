@@ -40,33 +40,22 @@ from entrepreneur.permissions import EntrepreneurPermissions
 from place.utils import get_user_country
 
 
-class HomeView(TemplateView):
+class LandingPageView(TemplateView):
+    """
+    Application landing page, main information can be
+    viewed in this page. The application domain 'queryjane.net'
+    renders this view. Authenticated users are redirected to
+    the dashboard page.
+    """
     template_name = 'landing_page.html'
 
     def dispatch(self, request, *args, **kwargs):
+        # Redirect autenticated users to the dashboard.
         if request.user.is_authenticated:
             return redirect('dashboard')
 
         else:
-            return super(HomeView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        country_instance = get_user_country(self.request.META)
-        country_users_count = User.objects.filter(
-            country=country_instance,
-        ).count()
-
-        country_ventures_count = Venture.objects.filter(
-            country=country_instance,
-        ).count()
-
-        context = super().get_context_data(**kwargs)
-        if not self.request.user.is_authenticated():
-            context['country'] = country_instance
-            context['country_users_count'] = country_users_count
-            context['country_ventures_count'] = country_ventures_count
-
-        return context
+            return super().dispatch(request, *args, **kwargs)
 
 
 class SignupView(FormView):
@@ -81,18 +70,21 @@ class SignupView(FormView):
     success_url = reverse_lazy('account:signup_landing')
 
     def get(self, request, *args, **kwargs):
+        # Redirect authenticated users to the landing page.
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('landing_page')
 
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        # Get user country.
         country_instance = get_user_country(self.request.META)
+        # Get registered users in the authenticated user country.
         country_users_count = User.objects.filter(
             country=country_instance,
         ).count()
-
-        country_ventures_count = Venture.objects.filter(
+        # Get registered compnies in the authenticated user country.
+        country_companies_count = Venture.objects.filter(
             country=country_instance,
         ).count()
 
@@ -100,17 +92,19 @@ class SignupView(FormView):
         if not self.request.user.is_authenticated():
             context['country'] = country_instance
             context['country_users_count'] = country_users_count
-            context['country_ventures_count'] = country_ventures_count
+            context['country_companies_count'] = country_companies_count
 
         return context
 
     @transaction.atomic
     def form_valid(self, form):
+        # Signup form post.
         first_name = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
 
+        # Create new user instance.
         user = User.objects.create_user(
             first_name,
             last_name,
@@ -118,6 +112,7 @@ class SignupView(FormView):
             password,
         )
 
+        # Assing country to the user instance.
         country_instance = get_user_country(self.request.META)
 
         if country_instance:
@@ -140,6 +135,11 @@ class SignupView(FormView):
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
+    """
+    Dashboard view. Authenticated users are redirected to
+    this page. Basic important information for the users
+    is displayed in this view.
+    """
     template_name = 'account/dashboard.html'
 
     def get_context_data(self, **kwargs):
@@ -206,12 +206,18 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class VentureList(ListView):
+class CompanyList(ListView):
+    """
+    Registered companies list. A filter form
+    is avaiable in this view to search companies
+    by different criteria.
+    """
     model = Venture
-    template_name = 'entrepreneur/venture_list.html'
-    context_object_name = 'venture_list'
+    template_name = 'entrepreneur/company_list.html'
+    context_object_name = 'company_list'
 
     def get_list_filter(self):
+        # Get filter form with the request content as instance.
         list_filter = VentureFilter(
             self.request.GET,
         )
@@ -219,29 +225,35 @@ class VentureList(ListView):
         return list_filter
 
     def get_queryset(self):
-        queryset = Venture.objects.filter(status=VENTURE_STATUS_ACTIVE)
+        # Return only active companies.
+        queryset = Venture.objects.filter(
+            status=VENTURE_STATUS_ACTIVE,
+        )
 
+        # If the filter form fields have a value, the
+        # queryset is filter by this criteria.
         form = self.get_list_filter()
 
         if form.is_valid():
+            # Filter companies by country.
             country_code = form.cleaned_data['country_code']
             if country_code:
                 queryset = queryset.filter(country__country=country_code)
 
+            # Filter companies by city.
             city_id = form.cleaned_data['city_id']
-
             if city_id:
                 queryset = queryset.filter(city__id=city_id)
 
+            # Filter companies by caetgory.
             category = form.cleaned_data['category']
-
             if category:
                 queryset = queryset.filter(
                     industry_categories__in=[category],
                 ).distinct()
 
+            # Filter companies by company name.
             venture_id = form.cleaned_data['venture_id']
-
             if venture_id:
                 queryset = queryset.filter(id=venture_id)
 
@@ -253,29 +265,40 @@ class VentureList(ListView):
         return context
 
 
-class VentureDetail(DetailView):
+class CompanyDetail(DetailView):
+    """
+    Company detail view. This page renders the main
+    information of a registered company. If user is
+    authenticate and has administration permission,
+    the administrator menu will be available.
+    Score form is available for authenticated users.
+    """
     model = Venture
-    template_name = 'entrepreneur/venture_profile.html'
+    template_name = 'entrepreneur/company_detail.html'
 
     def get_object(self, queryset=None):
-        venture = get_object_or_404(
+        # Get company object.
+        company = get_object_or_404(
             Venture,
             slug=self.kwargs['slug'],
         )
 
-        return venture
+        return company
 
     def get(self, request, *args, **kwargs):
-        venture = self.get_object()
+        company = self.get_object()
         user = request.user
 
-        if venture.is_inactive or venture.is_hidden:
+        # Only platform administrators and company
+        # administrators can view an inactive or
+        # hidden company.
+        if company.is_inactive or company.is_hidden:
             if user:
                 if (
                     not user.is_staff and
                     not EntrepreneurPermissions.can_manage_venture(
                         self.request.user,
-                        venture,
+                        company,
                     )
                 ):
                     raise Http404
@@ -284,39 +307,58 @@ class VentureDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        venture = self.get_object()
+        company = self.get_object()
 
+        # Score form. It is displayed in the company detail.
         context['score_form'] = CompanyScoreForm()
-        context['venture'] = venture
+
+        context['company'] = company
+
+        # True if authenticated user has a membership as
+        # company administrator.
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
-            venture,
+            company,
         )
 
+        # True if authenticated user does not have a membership
+        # as company administrator and if the company has not been
+        # added to the address book.
         context['can_add_to_address_book'] = AddressBookPermissions.can_add_company(
             self.request.user,
-            venture,
+            company,
         )
 
+        # True if the company is in the address book of the
+        # authenticated user.
         context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_company(
             self.request.user,
-            venture,
+            company,
         )
 
+        # True if the authenticated user does not have a membership
+        # as company administrator and if there is not a previous
+        # score from the user.
         context['can_add_score'] = CompanyScorePermissions.can_add_score(
             self.request.user,
-            venture,
+            company,
         )
 
         return context
 
 
 class JobsList(ListView):
+    """
+    Jobs list view. All jobs are showed in this page.
+    A filter is available to search jobs by different
+    criteria.
+    """
     model = JobOffer
     template_name = 'entrepreneur/jobs_list.html'
     context_object_name = 'jobs_list'
 
     def get_list_filter(self):
+        # Get filter form with the request content as instance.
         list_filter = JobOffersFilter(
             self.request.GET,
             job_type_choices=JOB_TYPE_CHOICES,
@@ -325,6 +367,7 @@ class JobsList(ListView):
         return list_filter
 
     def get_queryset(self):
+        # Jobs queryset to return.
         queryset = JobOffer.objects.filter(
             status__in=(
                 JOB_STATUS_ACTIVE,
@@ -332,32 +375,35 @@ class JobsList(ListView):
             ),
         )
 
+        # If the filter form fields have a value, the
+        # queryset is filter by this criteria.
         form = self.get_list_filter()
 
         if form.is_valid():
+            # Filter jobs by country.
             country_code = form.cleaned_data['country_code']
             if country_code:
                 queryset = queryset.filter(country__country=country_code)
 
+            # Filter jobs by city.
             city_id = form.cleaned_data['city_id']
-
             if city_id:
                 queryset = queryset.filter(city__id=city_id)
 
+            # Filter jobs by category.
             category = form.cleaned_data['category']
-
             if category:
                 queryset = queryset.filter(
                     industry_categories__in=[category],
                 ).distinct()
 
-            venture_id = form.cleaned_data['venture_id']
+            # Filter jobs by company.
+            company_id = form.cleaned_data['venture_id']
+            if company_id:
+                queryset = queryset.filter(id=company_id)
 
-            if venture_id:
-                queryset = queryset.filter(id=venture_id)
-
+            # Filter jobs by type.
             job_type = form.cleaned_data['job_type']
-
             if job_type:
                 queryset = queryset.filter(job_type=job_type)
 
@@ -369,78 +415,10 @@ class JobsList(ListView):
         return context
 
 
-class ProfessionalDetail(LoginRequiredMixin, DetailView):
-    model = ProfessionalProfile
-    template_name = 'account/professional_profile.html'
-
-    def get_object(self, queryset=None):
-        professional_profile = get_object_or_404(
-            ProfessionalProfile,
-            slug=self.kwargs['slug'],
-        )
-
-        return professional_profile
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        profile = self.get_object()
-        context['profile'] = profile
-
-        can_send_message = True
-
-        if profile == self.request.user.professionalprofile:
-            can_send_message = False
-
-        context['can_send_message'] = can_send_message
-        context['can_add_to_address_book'] = AddressBookPermissions.can_add_user(
-            owner=self.request.user.professionalprofile,
-            user_for_add=self.get_object(),
-        )
-
-        context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_user(
-            owner=self.request.user.professionalprofile,
-            user_for_remove=self.get_object(),
-        )
-
-        return context
-
-
-def ajax_login_form(request):
-    if not request.is_ajax():
-        raise Http404
-
-    try:
-        email = (request.POST['login_form-email'] or u'').lower()
-        password = request.POST['login_form-password']
-
-        user_ex = User.objects.get(email=email)
-
-    except User.DoesNotExist:
-        return HttpResponse('fail')
-
-    user = auth.authenticate(
-        username=user_ex.email,
-        password=password,
-    )
-
-    if user is not None:
-        if user.is_active:
-            auth.login(request, user)
-            return HttpResponse('successful_login')
-        else:
-            return HttpResponse('inactive_account')
-
-    else:
-        return HttpResponse('data_error')
-
-
-def user_logout(request):
-    auth.logout(request)
-
-    return redirect('home')
-
-
 class JobOfferDetail(DetailView):
+    """
+    Job offer detail view.
+    """
     model = JobOffer
     template_name = 'entrepreneur/job_detail.html'
 
@@ -454,6 +432,8 @@ class JobOfferDetail(DetailView):
         job_offer = self.get_object()
         user = request.user
 
+        # Closed or hidden job offers are visible only
+        # for platform administrators or company administrators.
         if job_offer.is_closed or job_offer.is_hidden:
             if user:
                 if (
@@ -471,8 +451,10 @@ class JobOfferDetail(DetailView):
         context = super().get_context_data(**kwargs)
         job_offer = self.get_object()
 
+        # Users can apply to job offers from the detail page.
+        # If users have applied previosuly, this functionality
+        # will be disbled.
         has_applied = False
-
         if self.request.user.is_authenticated:
             if Applicant.objects.filter(
                 job_offer=job_offer,
@@ -481,16 +463,20 @@ class JobOfferDetail(DetailView):
                 has_applied = True
 
         context['job_offer'] = job_offer
+
+        # Company administrators can manage job offers.
         context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
             self.request.user,
             job_offer.venture,
         )
 
+        # Company administrators can edit job offers.
         context['can_edit'] = JobOfferPermissions.can_edit(
             self.request.user,
             job_offer,
         )
 
+        # Job offer apply permission.
         context['can_apply'] = JobOfferPermissions.can_apply(
             self.request.user,
             job_offer,
@@ -501,6 +487,9 @@ class JobOfferDetail(DetailView):
 
 
 class JobOfferApplyView(CustomUserMixin, View):
+    """
+    Ajax view to apply for a job offer.
+    """
     def get_object(self):
         return get_object_or_404(JobOffer, slug=self.kwargs.get('slug'))
 
@@ -513,6 +502,7 @@ class JobOfferApplyView(CustomUserMixin, View):
     def get(self, *args, **kwargs):
         job_offer = self.get_object()
 
+        # Create applicant instance.
         Applicant.objects.create(
             job_offer=job_offer,
             applicant=self.request.user.professionalprofile
@@ -524,7 +514,56 @@ class JobOfferApplyView(CustomUserMixin, View):
         )
 
 
+class ProfessionalDetail(LoginRequiredMixin, DetailView):
+    """
+    Professional profile view. Only authenticated users
+    can have access to the users profile page.
+    """
+    model = ProfessionalProfile
+    template_name = 'account/professional_profile.html'
+
+    def get_object(self, queryset=None):
+        professional_profile = get_object_or_404(
+            ProfessionalProfile,
+            slug=self.kwargs['slug'],
+        )
+
+        return professional_profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.get_object()
+        context['profile'] = profile
+
+        # Users can have private converstions.
+        can_send_message = True
+        # False if users are visiting their own profile.
+        if profile == self.request.user.professionalprofile:
+            can_send_message = False
+        context['can_send_message'] = can_send_message
+
+        # Users can add another users to the address book from
+        # their profissional profile page.
+        context['can_add_to_address_book'] = AddressBookPermissions.can_add_user(
+            owner=self.request.user.professionalprofile,
+            user_for_add=self.get_object(),
+        )
+
+        # Users can remove users from their address book.
+        context['can_remove_from_address_book'] = AddressBookPermissions.can_remove_user(
+            owner=self.request.user.professionalprofile,
+            user_for_remove=self.get_object(),
+        )
+
+        return context
+
+
 class ContactFormView(FormView):
+    """
+    Contact form view. Users can send a message to the
+    platform administrators. An email is sent to the
+    administrators.
+    """
     form_class = ContactForm
     template_name = 'corporative/contact_form.html'
 
@@ -561,6 +600,8 @@ class ContactFormView(FormView):
         email = form.cleaned_data['email']
         message = form.cleaned_data['message']
 
+        # Create email body with the information provided
+        # by the users.
         body = render_to_string(
             'corporative/emails/user_message.html', {
                 'title': subject,
@@ -572,6 +613,8 @@ class ContactFormView(FormView):
             },
         )
 
+        # Send email to the registered email Address
+        # of the platform administrators.
         send_email(
             subject=subject,
             body=body,
@@ -579,3 +622,42 @@ class ContactFormView(FormView):
         )
 
         return redirect('contact_form_success')
+
+
+# TODO: This view must be removed.
+def ajax_login_form(request):
+    if not request.is_ajax():
+        raise Http404
+
+    try:
+        email = (request.POST['login_form-email'] or u'').lower()
+        password = request.POST['login_form-password']
+
+        user_ex = User.objects.get(email=email)
+
+    except User.DoesNotExist:
+        return HttpResponse('fail')
+
+    user = auth.authenticate(
+        username=user_ex.email,
+        password=password,
+    )
+
+    if user is not None:
+        if user.is_active:
+            auth.login(request, user)
+            return HttpResponse('successful_login')
+        else:
+            return HttpResponse('inactive_account')
+
+    else:
+        return HttpResponse('data_error')
+
+
+def user_logout(request):
+    """
+    Logout function. Users are redirected to the landing page.
+    """
+    auth.logout(request)
+
+    return redirect('landing_page')

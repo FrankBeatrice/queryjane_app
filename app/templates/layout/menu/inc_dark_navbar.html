@@ -1,0 +1,234 @@
+{% load static entrepreneur_tags notifications messages general_forms widget_tweaks i18n %}
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+        <span>(BETA)</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#da-navbarNav" aria-controls="da-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="da-navbarNav">
+        <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+
+      {% get_user_notifications_count user as user_notifications_count %}
+      {% get_new_user_notifications_count user as new_user_notifications_count %}
+        <li class="dropdown show">
+          <a class="nav-link" {% if user_notifications_count %}href="#" data-toggle="dropdown"{% endif %} title="{% trans 'Notifications' %}">
+
+              <i class="fa {% if user_notifications_count %}fa-bell{% else %}fa-bell-slash{% endif %}"></i>
+
+              {% if new_user_notifications_count %}(<span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span>){% endif %}
+          </a>
+
+            {% get_recent_user_notifications user as recent_user_notifications %}
+            <ul class="dropdown-menu header-notification-list">
+          {% for notification in recent_user_notifications %}
+              <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
+                  <a class="qjane-notification-link" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
+                      <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
+                      {{ notification }}
+                  </a>
+              </li>
+          {% endfor %}
+
+            {% if user_notifications_count > 10 %}
+                <li class="dropdown-item text-center"><a href="{% url 'account:notifications_view' %}">{% trans 'View all' %}</a></li>
+            {% endif %}
+            </ul>
+        </li>
+
+        {% get_user_messages_count user as user_messages_count %}
+        {% get_new_user_messages_count user as new_user_messages_count %}
+        <li class="dropdown show">
+            <a class="nav-link" {% if user_messages_count %}href="#" data-toggle="dropdown"{% endif %} title="{% trans 'Messages' %}">
+
+                <i class="fa {% if new_user_messages_count %}fa-envelope{% else %}fa-inbox{% endif %}"></i>
+
+                {% if new_user_messages_count %}(<span class="NewMessagesCounter">{{ new_user_messages_count }}</span>){% endif %}
+            </a>
+
+            {% get_recent_user_conversations user as recent_user_conversations %}
+            <ul class="dropdown-menu header-messages-list">
+            {% for conversation in recent_user_conversations %}
+                <li class="dropdown-item">
+                    <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                        <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                        {% if conversation.get_last_message.company_from %}
+                        From: {{ conversation.get_last_message.company_from }}
+                        {% else %}
+                        From: {{ conversation.get_last_message.user_from }}
+                        {% endif %}
+
+                        <p>{{ conversation.get_last_message.created_at }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+
+
+            {% if user_messages_count > 10 %}
+                <li class="dropdown-item text-center">
+                    <a href="{% url 'account:inbox_view' %}">{% trans 'View all' %}</a>
+                </li>
+            {% endif %}
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">{{ user.first_name }}</a>
+
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">
+                  <a href="{% url 'professional_detail' user.professionalprofile.slug %}" class="clearfix">
+                      <span class="float-left">{% trans 'Profile' %}</span>
+                      <i class="fa fa-user float-right"></i>
+                  </a>
+              </li>
+
+                <li class="dropdown-item">
+                    <a href="{% url 'account:profile_update' %}" class="clearfix">
+                        <span class="float-left">{% trans 'Account' %}</span>
+                        <i class="fa fa-cog float-right"></i>
+                     </a>
+                 </li>
+
+                <li class="dropdown-item">
+                    <a href="{% url 'account:address_book' %}" class="clearfix">
+                        <span class="float-left">{% trans 'address book' %}</span>
+                        <i class="fa fa-address-book float-right"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown-item">
+                    <a href="{% url 'entrepreneur:venture_form' %}" class="clearfix">
+                        <span class="float-left">{% trans 'New company' %}</span>
+                        <i class="fa fa-briefcase float-right"></i>
+                    </a>
+                </li>
+            {% get_user_venture_memberships user as user_venture_memberships %}
+
+            {% if user_venture_memberships %}
+            <li class="dropdown-divider"></li>
+            {% for membership in user_venture_memberships %}
+                <li class="dropdown-item"><a href="{{ membership.venture.get_absolute_url }}">{{ membership.venture }}</a></li>
+                <li class="dropdown-divider"></li>
+            {% endfor %}
+            {% endif %}
+
+            {% if permission_app.manage_admin_views %}
+                <li class="dropdown-item">
+                    <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
+                        <span class="float-left">{% trans 'Qjane Admin' %}</span>
+                        <i class="fa fa-star float-right"></i>
+                    </a>
+                </li>
+                <li class="dropdown-divider"></li>
+            {% endif %}
+
+                <li class="dropdown-item">
+                    <a href="{% url 'user_logout' %}" class="clearfix">
+                        <span class="float-left">{% trans 'Log out' %}</span>
+                        <i class="fa fa-power-off float-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'companies_list' %}">Companies</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'jobs_list' %}">Jobs</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">| Sing up |</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'auth_login' %}">Log in</a>
+          </li>
+
+          <li class="nav-item">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as languages %}
+
+          {% for lang_code, lang_name in languages %}
+              {% if LANGUAGE_CODE != lang_code %}
+              {% language lang_code %}
+              <a class="nav-link" href="{% url 'landing_page' %}">
+                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
+              {% endlanguage %}
+              {% endif %}
+          {% endfor %}
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+{% if user.is_authenticated %}
+<!-- Modals -->
+<div class="modal fade" id="generalModalMessage" tabindex="-1" role="dialog" aria-labelledby="generalModalMessage" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="composeMessageModal" tabindex="-1" role="dialog" aria-labelledby="composeMessageModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Compose Message' %}</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert" style="display:none;">
+                  {% trans 'Your message has been sent.' %}
+                </div>
+
+                {% get_message_form as message_form %}
+                <form id="id_send_message_form" method="post" data-send-message-url="{% url 'account:send_user_mesasge' %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label>
+                            {% trans 'New message' %}
+                            <span class="QJRequiredField">*</span>
+                        </label>
+
+                        {% render_field message_form.user_message class+="form-control" %}
+                        {{ message_form.user_message.errors }}
+                    </div>
+
+                    <div style="display:none;">
+                        {% render_field message_form.user_to_id %}
+                        {% render_field message_form.company_to_id %}
+                        {% render_field message_form.company_from_id %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">{% trans 'Send' %}</button>
+                </form>
+
+                <div id="JSconversationDetail"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
