@@ -3,6 +3,10 @@ from django.utils.translation import ugettext as _
 
 
 class LegalItem(models.Model):
+    """
+    Legal item model. Privacy policy, user agreement and
+    cookies policy are predefined objects of this model.
+    """
     sp_title = models.CharField(
         max_length=50,
         verbose_name=_('Spanish title'),

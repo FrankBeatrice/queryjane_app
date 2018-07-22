@@ -5,7 +5,11 @@ from huey.contrib.djhuey import task
 
 
 @task(retries=0, retry_delay=60 * 10)
-def share_company_on_twitter(venture):
+def share_company_on_twitter(company):
+    """
+    Asynchronous task to share a company in the
+    offical Qjane Twitter page.
+    """
     twitter = Twython(
         settings.TWITTER_APP_KEY,
         settings.TWITTER_APP_SECRET,
@@ -16,18 +20,22 @@ def share_company_on_twitter(venture):
     hashtags = '#cannabiscompany #cannabisindustry #cannabiscommunity'
 
     text = 'Cannabis companies | take a look at {0} #cannabis {1} {2}'.format(
-        venture,
+        company,
         hashtags,
-        settings.BASE_URL + venture.get_absolute_url(),
+        settings.BASE_URL + company.get_absolute_url(),
     )
 
     twitter.update_status(status=text)
-    venture.shared_on_twitter = True
-    venture.save()
+    company.shared_on_twitter = True
+    company.save()
 
 
 @task(retries=0, retry_delay=60 * 10)
 def share_job_on_twitter(job):
+    """
+    Asynchronous task to share a job offer in the
+    offical Qjane Twitter page.
+    """
     twitter = Twython(
         settings.TWITTER_APP_KEY,
         settings.TWITTER_APP_SECRET,

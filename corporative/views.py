@@ -35,10 +35,18 @@ from entrepreneur.models import Venture
 
 
 class LegalItemView(DetailView):
+    """
+    User agreement, privacy policy and cookies policy
+    are consireded legal items. This view showa the
+    legal items detail. If the authenticated user is
+    platform administrator, the edit legal item form
+    will be available.
+    """
     model = Venture
     template_name = 'corporative/legal_item.html'
 
     def get_object(self):
+        # Get current legal item by slug in the url.
         return get_object_or_404(
             LegalItem,
             slug=self.kwargs.get('slug'),
@@ -47,11 +55,14 @@ class LegalItemView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # Check if user is authenticated and if user is admin.
         is_admin = AdminPermissions.can_manage_admin_views(
             user=self.request.user,
         )
+        # If can edit, the edit legal item form will be available.
         context['can_edit'] = is_admin
 
+        # Instance current legal item in the edit form.
         if is_admin:
             context['legal_item_form'] = LegalItemForm(
                 instance=self.get_object(),
@@ -61,6 +72,11 @@ class LegalItemView(DetailView):
 
 
 class LegalItemFormView(CustomUserMixin, UpdateView):
+    """
+    Form view to update legal items. Only platform administrators
+    can submit this form. Users can select if the change is very important
+    and if it requires to notify all registered users about it.
+    """
     form_class = LegalItemForm
     template_name = 'corporative/legal_item.html'
 
@@ -71,6 +87,7 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         )
 
     def get_object(self):
+        # Get legal item by slug.
         return get_object_or_404(
             LegalItem,
             slug=self.kwargs.get('slug'),
@@ -83,18 +100,24 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('landing_page')
 
         return super().get(request, *args, **kwargs)
 
     @transaction.atomic
     def form_valid(self, form):
+        # Save legal item.
         legal_item = form.save()
+
+        # Notify users field. If the value is True, all
+        # platform users will be notified about the change.
         notify_users = form.cleaned_data['notify_users']
 
         if notify_users:
+            # Update the date in which the legal item was updated.
             legal_item.updated_at = timezone.now()
 
+            # Notify all users about the new legal item update.
             for user in User.objects.all():
                 if legal_item.slug == 'privacy-policy':
                     user.accepted_privacy_policy = False
@@ -108,12 +131,15 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
 
                 user.save()
 
+                # Create notification about legal item update for all
+                # registered users.
                 UserNotification.objects.create(
                     notification_type=notification_type,
                     noty_to=user,
                     description=description,
                 )
 
+                # Create email to notify all users about legal item update.
                 body = render_to_string(
                     'corporative/emails/legal_item_update.html', {
                         'title': description,
@@ -123,6 +149,7 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
                     },
                 )
 
+                # Send email.
                 send_email(
                     subject=description,
                     body=body,
@@ -139,17 +166,23 @@ class LegalItemFormView(CustomUserMixin, UpdateView):
         return super().form_valid(form)
 
 
-class LegalItemsAgreeView(LoginRequiredMixin, View):
+class LegalItemAgreeView(LoginRequiredMixin, View):
+    """
+    View to accept new legal items. Users are notified
+    when a legal item is updated and teh must accept the
+    new terms.
+    """
     @transaction.atomic
     def get(self, request, *args, **kwargs):
         user = request.user
-
         item = self.kwargs.get('slug')
 
+        # Set to True if users accept legal item updates.
         if item == 'user-agreement':
             user.accepted_terms = True
             user.accepted_terms_date = timezone.now()
 
+            # Set notification as seen.
             UserNotification.objects.filter(
                 noty_to=user,
                 notification_type=UPDATED_TERMS,
@@ -159,6 +192,7 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
             user.accepted_privacy_policy = True
             user.accepted_privacy_policy_date = timezone.now()
 
+            # Set notification as seen.
             UserNotification.objects.filter(
                 noty_to=user,
                 notification_type=UPDATED_PRIVACY_POLICY,
@@ -173,10 +207,16 @@ class LegalItemsAgreeView(LoginRequiredMixin, View):
             )
         )
 
-        return redirect('home')
+        return redirect('landing_page')
 
 
 class AdminDashboardView(CustomUserMixin, TemplateView):
+    """
+    Platform administrators dashboard. Exclusive actions for
+    administrators are found here as hide jobs or ventures
+    or share companies and ventures in the official Qjane
+    social networks.
+    """
     template_name = 'corporative/admin_dashboard.html'
 
     def test_func(self):
@@ -187,37 +227,43 @@ class AdminDashboardView(CustomUserMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        unshared_ventures_list = Venture.objects.filter(
+        # List of companies that have not been shared in the
+        # Qjane official social networks.
+        context['unshared_companies_list'] = Venture.objects.filter(
             status=VENTURE_STATUS_ACTIVE,
             shared_on_twitter=False
         )
 
-        unshared_jobs_list = JobOffer.objects.filter(
+        # List of jobs that have not been shared in the Qjane
+        # official social networks.
+        context['unshared_jobs_list'] = JobOffer.objects.filter(
             status=JOB_STATUS_ACTIVE,
             shared_on_twitter=False
         )
 
-        hidden_companies = Venture.objects.filter(
+        # List of hidden companies.
+        context['hidden_companies'] = Venture.objects.filter(
             status=VENTURE_STATUS_HIDDEN,
         )
 
-        hidden_job_offer = JobOffer.objects.filter(
+        # List of hidden job offers.
+        context['hidden_job_offer'] = JobOffer.objects.filter(
             status=JOB_STATUS_HIDDEN,
         )
-
-        context['unshared_ventures_list'] = unshared_ventures_list
-        context['unshared_jobs_list'] = unshared_jobs_list
-        context['hidden_companies'] = hidden_companies
-        context['hidden_job_offer'] = hidden_job_offer
 
         return context
 
 
-class TwitterShareVentureView(CustomUserMixin, View):
+class TwitterShareCompanyView(CustomUserMixin, View):
+    """
+    Ajax View to share a company detail page in the offical
+    Qjane Twitter account. Only administrators can share
+    companies in social networks.
+    """
     def test_func(self):
-        return AdminPermissions.can_share_venture_twitter(
+        return AdminPermissions.can_share_company_twitter(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -231,6 +277,11 @@ class TwitterShareVentureView(CustomUserMixin, View):
 
 
 class TwitterShareJobView(CustomUserMixin, View):
+    """
+    Ajax View to share a job offer detail page in the offical
+    Qjane Twitter account. Only administrators can share
+    job offers in social networks.
+    """
     def test_func(self):
         return AdminPermissions.can_share_job_twitter(
             user=self.request.user,
@@ -247,11 +298,16 @@ class TwitterShareJobView(CustomUserMixin, View):
         return HttpResponse('success')
 
 
-class HideVentureView(CustomUserMixin, View):
+class HideCompanyView(CustomUserMixin, View):
+    """
+    Ajax View to hide a company in the platform. Companies
+    can be hidden if they do not fit with the platform
+    standards. Only administrators can hide companies.
+    """
     def test_func(self):
-        return AdminPermissions.can_hide_venture(
+        return AdminPermissions.can_hide_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -259,18 +315,22 @@ class HideVentureView(CustomUserMixin, View):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        venture = self.get_object()
-        venture.status = VENTURE_STATUS_HIDDEN
-        venture.save()
+        company = self.get_object()
+        company.status = VENTURE_STATUS_HIDDEN
+        company.save()
 
         return HttpResponse('Hidden')
 
 
-class ActivateVentureView(CustomUserMixin, View):
+class ActivateCompanyView(CustomUserMixin, View):
+    """
+    Ajax view to activate a company. Only platform
+    administrators can activate hidden coampanies.
+    """
     def test_func(self):
-        return AdminPermissions.can_activate_venture(
+        return AdminPermissions.can_activate_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -286,6 +346,12 @@ class ActivateVentureView(CustomUserMixin, View):
 
 
 class HideJobOfferView(CustomUserMixin, View):
+    """
+    Ajax View to hide a job offer in the platform.
+    Job offers can be hidden if they do not fit with
+    the platform standards. Only administrators can
+    hide job offers.
+    """
     def test_func(self):
         return AdminPermissions.can_hide_job_offer(
             user=self.request.user,
@@ -305,6 +371,10 @@ class HideJobOfferView(CustomUserMixin, View):
 
 
 class ActivateJobOfferView(CustomUserMixin, View):
+    """
+    Ajax view to activate a job offer. Only platform
+    administrators can activate hidden job offers.
+    """
     def test_func(self):
         return AdminPermissions.can_activate_job_offer(
             user=self.request.user,

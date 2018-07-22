@@ -1,15 +1,18 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{% trans 'Companies' %}{% endblock %}
 
-{% block navbar %}
-{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
-{% endblock %}
+<!-- TODO: FIX AUTOCOMPLETE -->
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/venture_list.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block header %}
+{% include 'layout/menu/inc_dark_navbar.html' %}
+{% endblock header %}
 
 {% block content %}
 <section class="account">
@@ -69,34 +72,34 @@
             <div class="panel-body QJVentList">
                 <table class="table table-striped venture-table">
                     <tbody>
-                        {% for venture in venture_list %}
+                        {% for company in company_list %}
                         <tr>
                             <td>
                                 <div class="QJVentListItem venture-item">
                                     <div class="row">
                                         <div class="hidden-xs col-sm-3 col-lg-2">
-                                            <img class="thumbnail img-responsive venture-item__company-img" src="{{ venture.get_logo }}" alt="{{ venture }}">
+                                            <img class="thumbnail img-responsive venture-item__company-img" src="{{ company.get_logo }}" alt="{{ company }}">
                                         </div>
 
                                         <div class="col-xs-12 col-sm-9 col-lg-10">
                                             <div class="QJVentureListData">
                                                 <h3 class="venture-item__company-title">
-                                                    {{ venture }}
+                                                    {{ company }}
                                                 </h3>
 
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-6">
                                                         <div class="AjVentureListLocation">
                                                             <p>
-                                                                <img src="{{ venture.country.flag }}">
-                                                                <span>{{ venture.country }}</span>
-                                                                <span> - {{ venture.city }} {% if venture.state %}, {{ venture.state }}.{% endif %}</span>
+                                                                <img src="{{ company.country.flag }}">
+                                                                <span>{{ company.country }}</span>
+                                                                <span> - {{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
                                                             </p>
 
                                                             <p>
-                                                            {% if venture.address %}
+                                                            {% if company.address %}
                                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                <span>{{ venture.address }}</span>
+                                                                <span>{{ company.address }}</span>
                                                             {% endif %}
                                                             </p>
                                                         </div>
@@ -105,7 +108,7 @@
                                                     <div class="col-xs-12 col-sm-6">
                                                         {% get_current_language as LANGUAGE_CODE %}
                                                         <ul class="QJventureListCategories">
-                                                        {% for category in venture.industry_categories.all %}
+                                                        {% for category in company.industry_categories.all %}
                                                             <li>
                                                             {% if LANGUAGE_CODE == 'es' %}
                                                             {{ category.name_es }}
@@ -120,7 +123,7 @@
 
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-3 col-md-2">
-                                                        <a href="{{ venture.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
+                                                        <a href="{{ company.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
                                                     </div>
                                                 </div>
                                             </div>

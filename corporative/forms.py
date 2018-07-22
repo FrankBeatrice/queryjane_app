@@ -5,6 +5,11 @@ from .models import LegalItem
 
 
 class LegalItemForm(forms.ModelForm):
+    """
+    Legal item update form. Only platform administrator
+    users can submit this form. The 'notify_users' field
+    must be checked only if the change is about terms.
+    """
     notify_users = forms.BooleanField(
         required=False,
         label=_('notify users'),
@@ -20,6 +25,11 @@ class LegalItemForm(forms.ModelForm):
 
 
 class ContactForm(forms.Form):
+    """
+    Contact form. If user is authenticated, the
+    name and email fields are filled previously
+    and can not be edited.
+    """
     subject = forms.CharField(
         label=_('subject'),
     )

@@ -70,13 +70,13 @@
 
 
     {% if user.is_authenticated and not user.accepted_terms and object.slug == 'user-agreement' %}
-        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+        <a href="{% url 'corporative:legal_item_agree' object.slug %}" class="btn btn-primary">
             {% trans 'I am agree' %}
         </a>
     {% endif %}
 
     {% if user.is_authenticated and not user.accepted_privacy_policy and object.slug == 'privacy-policy' %}
-        <a href="{% url 'corporative:legal_items_agree' object.slug %}" class="btn btn-primary">
+        <a href="{% url 'corporative:legal_item_agree' object.slug %}" class="btn btn-primary">
             {% trans 'I am agree' %}
         </a>
     {% endif %}

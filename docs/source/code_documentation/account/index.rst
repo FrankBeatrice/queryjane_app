@@ -7,8 +7,8 @@ This application is used to define database tables and functionalities related t
    :maxdepth: 2
    :caption: Contents:
 
-   account/admin
-   account/models
-   account/forms
-   account/tasks
-   account/views/index
+   admin
+   models
+   forms
+   tasks
+   views/index
