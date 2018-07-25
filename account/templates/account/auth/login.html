@@ -7,7 +7,11 @@
 <!-- <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}"> -->
 {% endblock %}
 
-{% block header_content %}
+{% block header %}
+{% include 'layout/menu/inc_dark_navbar.html' %}
+{% endblock header %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -55,7 +59,7 @@
         </div>
     </div>
 </div>
-{% endblock header_content %}
+{% endblock content %}
 
 {% block js %}
 <script src="{% static 'js/account/login.js' %}"></script>

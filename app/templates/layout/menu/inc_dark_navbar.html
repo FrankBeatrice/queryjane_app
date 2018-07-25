@@ -166,8 +166,8 @@
           {% for lang_code, lang_name in languages %}
               {% if LANGUAGE_CODE != lang_code %}
               {% language lang_code %}
-              <a class="nav-link" href="{% url 'landing_page' %}">
-                  | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
+               <a class="nav-link" href="{% url 'landing_page' %}">
+                  | {% if  lang_name == 'Spanish' %}Español{% else %}English{% endif %} |</a>
               {% endlanguage %}
               {% endif %}
           {% endfor %}
