@@ -3,72 +3,89 @@
 
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
-{% block css %}
-<!-- <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}"> -->
-{% endblock %}
-
 {% block header %}
 {% include 'layout/menu/inc_dark_navbar.html' %}
 {% endblock header %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-          <div class="clearfix">
-              <span class="float-left">
-                  <img src="{{ country.flag }}">
-                  <span>{{ country.name }}</span>
-              </span>
+    <div class="col-12 col-md-6 bg-light">
+        <div class="row">
+            <div class="col-12 offset-0 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 py-5 mt-4 mb-5">
+                <h3 class="mb-4">
+                    {% trans 'Sign up' %}
+                </h3>
 
-              <span class="float-right">
-                  <span class="fa fa-user"></span>
-                  <span>{{ country_users_count }} {% trans 'users' %}</span>
+                <a
+                    class="btn btn-block btn-social btn-facebook btn-lg mb-5"
+                    href="{% url 'social:begin' 'facebook' %}">
+                    <span class="fab fa-facebook"></span>
+                    {% trans 'Facebook login' %}
+                </a>
 
-                  <span>|</span>
+                <form
+                    id="id_qjSignUpForm"
+                    class="mb-4"
+                    method="POST">
+                    {% csrf_token %}
 
-                  <span class="fa fa-briefcase"></span>
-                  <span>{{ country_companies_count }} {% trans 'companies' %}</span>
-              </span>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <h2>{% trans 'The Cannabis Industry Network' %}</h2>
-          <p>{% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}</p>
-
-          <div class="row">
-            <div class="col-md-6 offset-md-3">
-              <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
-                <span class="fab fa-facebook"></span>
-                {% trans 'Facebook login' %}
-              </a>
-            </div>
-          </div>
-
-          <form method="POST" id="id_qjSignUpForm">
-            {% csrf_token %}
-            <div class="row">
-                {% for field in form.visible_fields %}
-                    <div class="col-xs-12 col-md-6">
+                    {% for field in form.visible_fields %}
                         <div class="form-group">
                             {{ field.label_tag }}
-                            {% render_field field class+='form-control' %}
+                            {% render_field field class+='form-control form-control-lg' %}
                             {{ field.errors }}
                             <div>{{ field.help_text|safe }}</div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+
+                    <button
+                        class="btn btn-primary btn-lg btn-block mt-5"
+                        type="submit">
+                        {% trans 'Sign up' %}
+                    </button>
+                </form>
+
+                <p>
+                    <i>{% trans 'By registering, you are accepting our' %} <a href="{% url 'corporative:legal_item' 'user-agreement' %}" target="_blank">{% trans 'user agreement' %}</a>, <a href="{% url 'corporative:legal_item' 'privacy-policy' %}" target="_blank">{% trans 'privacy policy' %}</a> {% trans 'and' %} <a href="{% url 'corporative:legal_item' 'cookies-policy' %}" target="_blank">cookies policy</a>.</i>
+                </p>
             </div>
-
-            <button type="submit" class="btn btn-block">{% trans 'Sign up' %}</button>
-          </form>
-
-          <p><i>{% trans 'By registering, you are accepting our' %} <a href="{% url 'corporative:legal_item' 'user-agreement' %}" target="_blank">{% trans 'user agreement' %}</a> , <a href="{% url 'corporative:legal_item' 'privacy-policy' %}" target="_blank">{% trans 'privacy policy' %}</a> {% trans 'and' %} <a href="{% url 'corporative:legal_item' 'cookies-policy' %}" target="_blank">cookies policy</a>.</i></p>
         </div>
-      </div>
+    </div>
+
+    <div class="d-none d-md-block col-6">
+        <div class="row">
+            <div class="col-12 offset-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 py-5 mt-4 mb-5">
+                <h2 class="my-5 pt-5 text-justify font-weight-bold">
+                    {% trans 'The Cannabis Industry Network' %}
+                </h2>
+
+                <p class="mb-5 text-justify font-weight-bold h2">
+                    {% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}
+                </p>
+
+                <!-- <div class="mb-5">
+                    <img src="{{ country.flag }}">
+                    <span>{{ country.name }}</span>
+                </div> -->
+
+                <div class="row text-center">
+                    <div class="col-6">
+                        <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+                        <h5 class="mt-3 h3 font-weight-bold">
+                            {{ country_users_count }} {% trans 'users' %}
+                        </h5>
+                    </div>
+
+                    <div class="col-6">
+                        <i class="fa fa-briefcase fa-5x" aria-hidden="true"></i>
+                        <h5 class="mt-3 h3 font-weight-bold">
+                            {{ country_companies_count }} {% trans 'companies' %}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </div>
