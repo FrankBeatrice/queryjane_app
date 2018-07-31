@@ -3,60 +3,84 @@
 
 {% block title %}{% trans 'Login' %}{% endblock %}
 
-{% block css %}
-<!-- <link rel="stylesheet" href="{% static 'dist/css/home.min.css' %}"> -->
-<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
-{% endblock %}
+{% block header %}
+{% include 'layout/menu/inc_dark_navbar.html' %}
+{% endblock header %}
 
-{% block landing_header_content %}
-<div class="container">
+{% block content %}
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-            <h3>{% trans 'Login' %}</h3>
-        </div>
+        <div class="col-12 col-md-6 bg-light">
+            <div class="row">
+                <div class="col-12 offset-0 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 py-5 mt-4 mb-5">
+                    <h3 class="mb-4">
+                        {% trans 'Login' %}
+                    </h3>
 
-        <div class="card-body">
-            <div class="col-md-6 offset-md-3">
-              <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
-                <span class="fab fa-facebook"></span>
-                {% trans 'Facebook login' %}
-              </a>
-            </div>
+                    <a
+                        class="btn btn-block btn-social btn-lg btn-facebook mb-5"
+                        href="{% url 'social:begin' 'facebook' %}">
+                        <span class="fab fa-facebook"></span>
+                        {% trans 'Facebook login' %}
+                    </a>
 
-            <form method="post" id="id_qjLogInForm">
-                {% csrf_token %}
-                {% if form.non_field_errors %}
-                    <div class="form-group">
-                        {{ form.non_field_errors }}
+                    <form method="post" id="id_qjLogInForm">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="form-group">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {% render_field field class+="form-control form-control-lg" %}
+                            {{ field.errors }}
+                            <div class="helpText">{{ field.help_text|safe }}</div>
+                        </div>
+                        {% endfor %}
+                        <p class="mb-4 text-right">
+                            <a href="{% url 'password_reset' %}">{% trans 'Forgot my password' %}</a>
+                        </p>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-4 mb-sm-0">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    {% trans 'Login' %}
+                                </button>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <a class="btn btn-outline-success btn-lg btn-block" href="{% url 'signup' %}">
+                                    Sign up
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="panel panel-default LoginForm qj-home-register">
                     </div>
-                {% endif %}
-
-            {% for field in form.visible_fields %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {% render_field field class+="form-control" %}
-                    {{ field.errors }}
-                    <div class="helpText">{{ field.help_text|safe }}</div>
                 </div>
-            {% endfor %}
-                <p>
-                    <a href="{% url 'password_reset' %}">{% trans 'Forgot my password' %}</a>
-                </p>
-                <button type="submit" class="btn btn-ghost-white btn-lg">{% trans 'Login' %}</button>
-
-                <a class="btn btn-outline-success btn-lg" href="{% url 'signup' %}">Sign up</a>
-            </form>
+            </div>
         </div>
-      </div>
 
-            <div class="panel panel-default LoginForm qj-home-register">
+        <div class="d-none d-md-block col-6 login-data-container">
+            <div class="row">
+                <div class="col-12 offset-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 py-5 mt-4 mb-5">
+                    <h2 class="my-5 pt-5 font-weight-bold text-white">
+                        {% trans 'The Cannabis Industry Network' %}
+                    </h2>
+
+                    <p class="mb-5 h4 text-white">
+                        {% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock landing_header_content %}
+{% endblock content %}
 
 {% block js %}
 <script src="{% static 'js/account/login.js' %}"></script>
