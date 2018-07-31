@@ -56,17 +56,34 @@
     <div class="d-none d-md-block col-6 signup-data-container">
         <div class="row">
             <div class="col-12 offset-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 py-5 mt-4 mb-5">
-                <h2 class="my-5 pt-5 font-weight-bold text-white">
+                <h2 class="my-5 pt-5 font-weight-bold text-white text-center">
                     {% trans 'The Cannabis Industry Network' %}
                 </h2>
 
-                <p class="mb-5 font-weight-bold h2 text-white">
-                    {% trans 'Connect with companies and experts in different sectors of the cannabis industry.' %}
-                </p>
+                <div class="media mb-5 pb-3 pl-3">
+                    <img
+                        style="width: 30px"
+                        class="align-self-center mr-4 ml-5"
+                        src="{{ country.flag }}">
+                    <div class="media-body h4 text-white mb-0">
+                        {% trans 'Users and companies registered in' %}
+                        <span>
+                            {{ country.name }}
+                        </span>
+                    </div>
+                </div>
 
-                <!-- <div class="mb-5">
-                    <img src="{{ country.flag }}">
-                    <span>{{ country.name }}</span>
+                <!-- <div class="text-center mb-3">
+                    <img
+                        style="width: 30px"
+                        class="align-self-center"
+                        src="{{ country.flag }}">
+                </div>
+                <div class="h4 text-white text-center mb-5 pb-2 px-5">
+                    Users and companies registered in
+                    <span>
+                        {{ country.name }}
+                    </span>
                 </div> -->
 
                 <div class="row text-center text-white">
