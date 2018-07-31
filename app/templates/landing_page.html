@@ -4,9 +4,30 @@
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
 {% block css %}
-<link href="{% static 'libs/aos/css/aos.css' %}" rel="stylesheet">
-<link href="{% static 'css/landing_page.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/landing_page.min.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block header_content %}
+<div class="homeHeaderText">
+  <div class="container" data-aos="fade-right" data-aos-duration="1000">
+    <div class="row">
+      <div class="col-md-7 col-sm-12 px-0 mx-0">
+        <h2 class="display-4">The Cannabis Industry Network!!!</h2>
+        <h3 class="h5">Connect with companies and experts in different sectors of the cannabis industry.</h3>
+
+        <br>
+
+        <p class="font-italic text-justify p-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
+      </div>
+
+      <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
+        <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'signup' %}">Sign up</a>
+        <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'auth_login' %}">Log in</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock header_content %}
 
 {% block content %}
 <div class="qj-section bg-secondary">
@@ -47,7 +68,7 @@
 
 <div class="qj-section_2">
   <div class="row mx-0">
-    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'img/landing_page/da-img-2.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'img/landing_page/register-banner.png' %}');" data-aos="zoom-in"></div>
     <div class="col-md-6 pl-5 pt-5 pb-3">
       <div class="row">
         <div class="col-10 text-center">
@@ -94,7 +115,7 @@
       </div>
     </div>
 
-    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'img/landing_page/da-img-3.jpg' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'img/landing_page/profiles-banner.png' %}');" data-aos="zoom-in"></div>
   </div>
 </div>
 
@@ -168,6 +189,5 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'libs/aos/js/aos.js' %}"></script>
-<script src="{% static 'js/landing_page.js' %}"></script>
+<script src="{% static 'dist/js/landing_page.min.js' %}"></script>
 {% endblock js %}

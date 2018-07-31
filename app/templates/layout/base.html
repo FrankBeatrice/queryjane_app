@@ -33,13 +33,9 @@
     <link rel="apple-touch-icon-precomposed" href="{% static 'img/apple-touch-icon.png' %}">
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
-
-    <link href="{% static 'libs/bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'libs/bootstrap-social/bootstrap-social.css' %}" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link href="{% static 'dist/css/layout/new_layout.min.css' %}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -115,27 +111,7 @@
         </nav>
       </div>
 
-        {% block landing_header_content %}
-      <div class="homeHeaderText">
-        <div class="container" data-aos="fade-right" data-aos-duration="1000">
-          <div class="row">
-            <div class="col-md-7 col-sm-12 px-0 mx-0">
-              <h2 class="display-4">The Cannabis Industry Network!!!</h2>
-              <h3 class="h5">Connect with companies and experts in different sectors of the cannabis industry.</h3>
-
-              <br>
-
-              <p class="font-italic text-justify p-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
-            </div>
-
-            <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
-              <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'signup' %}">Sign up</a>
-              <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'auth_login' %}">Log in</a>
-            </div>
-          </div>
-        </div>
-      </div>
-        {% endblock landing_header_content %}
+      {% block header_content %}{% endblock header_content %}
     </header>
     {% endblock header %}
 
@@ -164,11 +140,9 @@
     <script src="{% static 'js/place/show_position.js' %}"></script>
     <!-- Dont remove this -->
 
-    <script src="{% static 'libs/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'libs/bootstrap4/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'libs/jquery-validation/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'js/utilities/custom_validators.js' %}"></script>
-    <script src="{% static 'js/navbar.js' %}"></script>
+    <!-- Js´s compilation -->
+    <script src="{% static 'dist/js/new_layout.min.js' %}"></script>
+
     {% block js %}{% endblock %}
   </body>
 </html>

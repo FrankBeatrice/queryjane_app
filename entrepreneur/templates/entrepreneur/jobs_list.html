@@ -1,11 +1,11 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}Job offers{% endblock %}
 
-{% block navbar %}
-{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
-{% endblock %}
+{% block header %}
+{% include 'layout/menu/inc_dark_navbar.html' %}
+{% endblock header %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/jobs_list.min.css' %}" rel="stylesheet">
@@ -79,7 +79,7 @@
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">{% trans 'Job offers' %}</h3>
+                <h3 class="panel-title mb-0 p-2">{% trans 'Job offers' %}</h3>
             </div>
 
             <div class="panel-body QjaneVentureJobOffersList">

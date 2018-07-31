@@ -1,3 +1,5 @@
+@import 'layout/libs/aos';
+
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -12,13 +14,15 @@ header {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.75);
+  color: #fff;
   letter-spacing: 1px;
   font-size: 0.95rem;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:active {
   color: #fff;
+  box-shadow: 0 1px 0 #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.4);
 }
 
 .homeHeaderText {
@@ -146,21 +150,6 @@ header {
   .da-contact .da-contact-detail {
     padding: 15px 0px 15px 0px;
   }
-}
-
-/*Footer*/
-footer .qj-social-link {
-  color: #fff;
-  margin-right: 20px;
-  text-decoration: none;
-}
-
-footer ul {
-  padding: 0;
-}
-
-footer ul li {
-  list-style-type: none;
 }
 
 /* Credit Style */
