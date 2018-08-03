@@ -1,11 +1,7 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static greetings i18n %}
 
-{% block title %}{% trans 'Register your company or your profile.' %}{% endblock %}
-
-{% block css %}
-<link href="{% static 'dist/css/account/signup_landing.min.css' %}" rel="stylesheet">
-{% endblock %}
+{% block title %}{% trans 'Welcome to QueryJane' %}{% endblock %}
 
 {% block content %}
 <section class="account QjaneSignupLanding">
