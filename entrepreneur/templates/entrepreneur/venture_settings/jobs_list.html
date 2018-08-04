@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - {% trans 'Jobs offers' %}{% endblock %}
+{% block title %}{{ company }} - {% trans 'Jobs offers' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings">
@@ -11,7 +11,7 @@
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
 
-                <a href="{% url 'entrepreneur:job_offer_form' venture.slug %}" class="btn btn-primary">
+                <a href="{% url 'entrepreneur:job_offer_form' company.slug %}" class="btn btn-primary">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     {% trans 'Create job offer' %}
                 </a>
@@ -63,7 +63,7 @@
 
                                 {% if job_offer.country %}
                                 <div>
-                                    <img src="{{ venture.country.flag }}">
+                                    <img src="{{ company.country.flag }}">
                                     <span>{{ job_offer.country }}</span>
                                 </div>
                                 {% endif %}

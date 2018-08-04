@@ -15,9 +15,9 @@ class MessagesView(CustomUserMixin, ListView):
     context_object_name = 'conversations_list'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -32,7 +32,7 @@ class MessagesView(CustomUserMixin, ListView):
         ).update(was_seen=True)
 
         context = super().get_context_data(**kwargs)
-        context['venture'] = company
+        context['company'] = company
         context['messages_active'] = True
 
         return context

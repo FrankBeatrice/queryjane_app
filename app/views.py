@@ -295,7 +295,7 @@ class CompanyDetail(DetailView):
             if user:
                 if (
                     not user.is_staff and
-                    not EntrepreneurPermissions.can_manage_venture(
+                    not EntrepreneurPermissions.can_manage_company(
                         self.request.user,
                         company,
                     )
@@ -315,7 +315,7 @@ class CompanyDetail(DetailView):
 
         # True if authenticated user has a membership as
         # company administrator.
-        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+        context['can_manage'] = EntrepreneurPermissions.can_manage_company(
             self.request.user,
             company,
         )
@@ -437,7 +437,7 @@ class JobOfferDetail(DetailView):
             if user:
                 if (
                     not user.is_staff and
-                    not EntrepreneurPermissions.can_manage_venture(
+                    not EntrepreneurPermissions.can_manage_company(
                         self.request.user,
                         job_offer.venture,
                     )
@@ -464,7 +464,7 @@ class JobOfferDetail(DetailView):
         context['job_offer'] = job_offer
 
         # Company administrators can manage job offers.
-        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+        context['can_manage'] = EntrepreneurPermissions.can_manage_company(
             self.request.user,
             job_offer.venture,
         )

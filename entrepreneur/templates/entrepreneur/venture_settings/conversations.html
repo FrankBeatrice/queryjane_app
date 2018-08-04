@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static i18n %}
 
-{% block title %}{{ venture }} - {% trans 'Messages' %}{% endblock %}
+{% block title %}{{ company }} - {% trans 'Messages' %}{% endblock %}
 
 {% block content %}
 <section>
@@ -31,7 +31,7 @@
                                     <p>{{ conversation.get_last_message.created_at }}</p>
 
                                     <a class="JSComposeMessage" href="javascript:void(0)"
-                                    data-toggle="modal" data-target="#composeMessageModal" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.id %}" data-company-from-id="{{ venture.id }}" data-user-to-id="{{ conversation.participating_users.all.0.id }}" data-to-name="{{ conversation.participating_users.all.0 }}">
+                                    data-toggle="modal" data-target="#composeMessageModal" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.id %}" data-company-from-id="{{ company.id }}" data-user-to-id="{{ conversation.participating_users.all.0.id }}" data-to-name="{{ conversation.participating_users.all.0 }}">
 
                                     <p>{{ conversation.get_last_message.message|truncatechars:70 }}</p>
                                     </a>

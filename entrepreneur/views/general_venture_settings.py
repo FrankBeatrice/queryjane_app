@@ -16,29 +16,32 @@ from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 
 
-class GeneralVentureFormView(CustomUserMixin, TemplateView):
-    template_name = 'entrepreneur/venture_settings/general_venture_form.html'
+class GeneralCompanyFormView(CustomUserMixin, TemplateView):
+    template_name = 'entrepreneur/venture_settings/general_company_settings.html'
 
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug'),
+        )
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object()
+            company=self.get_object()
         )
 
     def get(self, *args, **kwargs):
-        venture = self.get_object()
+        company = self.get_object()
 
         return self.render_to_response(
             self.get_context_data(
-                venture=venture,
+                company=company,
                 venture_logo_form=VentureLogoForm(),
                 description_form=VentureDescriptionForm(
                     initial={
-                        'description_es': venture.description_es,
-                        'description_en': venture.description_en,
+                        'description_es': company.description_es,
+                        'description_en': company.description_en,
                     },
                 ),
                 industry_categories=IndustryCategory.objects.all(),
@@ -54,9 +57,9 @@ class UpdateVentureLogoForm(CustomUserMixin, FormView):
         return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object()
+            company=self.get_object()
         )
 
     def form_valid(self, form):
@@ -72,9 +75,9 @@ class VentureCategoryView(CustomUserMixin, View):
         return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object()
+            company=self.get_object()
         )
 
     @transaction.atomic
@@ -112,9 +115,9 @@ class UpdateVentureDescriptionForm(CustomUserMixin, FormView):
         return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object()
+            company=self.get_object()
         )
 
     def form_valid(self, form):

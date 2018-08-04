@@ -36,13 +36,16 @@ class JobOffersListView(CustomUserMixin, ListView):
     context_object_name = 'job_offers_list'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug'),
+        )
 
     def get_queryset(self):
         queryset = JobOffer.objects.filter(
@@ -53,7 +56,7 @@ class JobOffersListView(CustomUserMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['venture'] = self.get_object()
+        context['company'] = self.get_object()
         context['jobs_active'] = True
 
         return context
@@ -65,9 +68,9 @@ class JobOfferFormView(CustomUserMixin, CreateView):
     template_name = 'entrepreneur/venture_settings/job_form.html'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):

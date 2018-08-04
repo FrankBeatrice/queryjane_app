@@ -3,8 +3,8 @@ from django.conf.urls import url
 from .views.contact_venture_settings import AjaxContactVentureFormView
 from .views.contact_venture_settings import AjaxLocationVentureFormView
 from .views.contact_venture_settings import AjaxMediaVentureFormView
-from .views.contact_venture_settings import ContactVentureFormView
-from .views.general_venture_settings import GeneralVentureFormView
+from .views.contact_venture_settings import ContactCompanyFormView
+from .views.general_venture_settings import GeneralCompanyFormView
 from .views.general_venture_settings import UpdateVentureDescriptionForm
 from .views.general_venture_settings import UpdateVentureLogoForm
 from .views.general_venture_settings import VentureCategoryView
@@ -15,7 +15,7 @@ from .views.manage_job_offers import JobOfferUpdateView
 from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
-from .views.roles_venture_settings import RolesVentureFormView
+from .views.roles_venture_settings import RolesCompanyFormView
 from .views.venture_views import VentureFormView
 from .views.venture_views import CompanySearch
 
@@ -34,7 +34,7 @@ urlpatterns = [
 
     url(
         r'^general/(?P<slug>[-\w]+)/$',
-        GeneralVentureFormView.as_view(),
+        GeneralCompanyFormView.as_view(),
         name='general_venture_form',
     ),
 
@@ -58,7 +58,7 @@ urlpatterns = [
 
     url(
         r'^settings/(?P<slug>[-\w]+)/contact/$',
-        ContactVentureFormView.as_view(),
+        ContactCompanyFormView.as_view(),
         name='contact_venture_form',
     ),
 
@@ -82,7 +82,7 @@ urlpatterns = [
 
     url(
         r'^settings/(?P<slug>[-\w]+)/roles/$',
-        RolesVentureFormView.as_view(),
+        RolesCompanyFormView.as_view(),
         name='roles_venture_form',
     ),
 

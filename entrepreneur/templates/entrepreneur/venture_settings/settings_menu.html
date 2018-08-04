@@ -2,44 +2,44 @@
 <div class="col-md-3">
     <div>
         <h4 class="h3 mt-xxs mb-s">
-            <a class="text-primary" href="{{ venture.get_absolute_url }}">
+            <a class="text-primary" href="{{ company.get_absolute_url }}">
                 <i class="fa fa-building" aria-hidden="true"></i>
-                {{ venture }}
+                {{ company }}
             </a>
         </h4>
     </div>
 
     <ul class="list-group QjaneVentureSettingsMenu">
         <li class="list-group-item {% if general_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:general_venture_form' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'General' %}</span>
                 <i class="fa fa-cog pull-right" aria-hidden="true"></i>
             </a>
         </li>
 
         <li class="list-group-item {% if contact_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:contact_venture_form' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:contact_venture_form' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Contact' %}</span>
                 <i class="fa fa-phone pull-right" aria-hidden="true"></i>
         </a>
         </li>
 
         <li class="list-group-item {% if roles_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:roles_venture_form' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:roles_venture_form' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Members' %}</span>
                 <i class="fa fa-users pull-right" aria-hidden="true"></i>
             </a>
         </li>
 
         <li class="list-group-item {% if messages_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:messages_adim' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:messages_adim' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Messages' %}</span>
                 <i class="fa fa-envelope pull-right" aria-hidden="true"></i>
             </a>
         </li>
 
         <li class="list-group-item {% if jobs_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:job_offers_list' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:job_offers_list' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Job Offers' %}</span>
                 <i class="fa fa-industry pull-right" aria-hidden="true"></i>
             </a>
@@ -47,7 +47,7 @@
 
         {% comment %}
         <li class="list-group-item {% if privacy_active %}active{% endif %}">
-            <a href="{% url 'entrepreneur:privacy_venture_form' venture.slug %}" class="clearfix">
+            <a href="{% url 'entrepreneur:privacy_venture_form' company.slug %}" class="clearfix">
                 <span class="pull-left">{% trans 'Privacy' %}</span>
                 <i class="fa fa-user-secret pull-right" aria-hidden="true"></i>
             </a>
