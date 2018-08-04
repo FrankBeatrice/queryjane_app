@@ -368,6 +368,7 @@ class JobsList(ListView):
     def get_queryset(self):
         # Jobs queryset to return.
         queryset = JobOffer.objects.filter(
+            venture__status=VENTURE_STATUS_ACTIVE,
             status__in=(
                 JOB_STATUS_ACTIVE,
                 JOB_STATUS_CLOSED,
@@ -430,6 +431,20 @@ class JobOfferDetail(DetailView):
     def get(self, request, *args, **kwargs):
         job_offer = self.get_object()
         user = request.user
+
+        # Only platform administrators and company
+        # administrators can view a job offer from
+        # an inactive or hidden company.
+        if job_offer.venture.is_inactive or job_offer.venture.is_hidden:
+            if user:
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_company(
+                        self.request.user,
+                        job_offer.venture,
+                    )
+                ):
+                    raise Http404
 
         # Closed or hidden job offers are visible only
         # for platform administrators or company administrators.

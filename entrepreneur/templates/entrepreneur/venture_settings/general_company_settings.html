@@ -198,10 +198,12 @@
 $(function() {
     'use strict';
 
+    // Scroll to company settings section to activate it again.
     $("#id_activate_link_scroll").on("click", function() {
       $("html, body").animate({ scrollTop: $('#id_activate_container').offset().top }, 1000);
     });
 
+    // Action to deactivate company on "Deactivate" click action.
     $('.jsDeactivateCompany').on('click', function() {
         var deactivate_company_url = $(this).data("deactivate-company-url");
 
@@ -214,9 +216,11 @@ $(function() {
                     action: function(){
                       $.post(deactivate_company_url, function (response) {
                           if (response === 'success') {
+                            // Hide deactivate button.
                             $('#id_deactivate_container').hide();
+                            // Hide activate button.
                             $('#id_activate_container').show();
-
+                            // Hide deactivate header alert.
                             $(".jsInactiveAlert").show();
 
                             $.alert({
@@ -238,12 +242,15 @@ $(function() {
         });
     });
 
+    // Action to sactivate company on "Activate" click action.
     $('.jsActivateCompany').on('click', function() {
         $.post($(this).data("activate-company-url"), function (response) {
             if (response === 'success') {
+              // Show deactivate button.
               $('#id_deactivate_container').show();
+              // Hide deactivate button.
               $('#id_activate_container').hide();
-
+              // Show deactivated company alert message.
               $(".jsInactiveAlert").hide();
 
               $.alert({

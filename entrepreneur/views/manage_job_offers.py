@@ -80,7 +80,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['industry_categories'] = IndustryCategory.objects.all()
         context['country_instance'] = get_user_country(self.request.META)
-        context['venture'] = self.get_object()
+        context['company'] = self.get_object()
         context['jobs_active'] = True
 
         return context

@@ -30,7 +30,7 @@
 
 {% block content %}
 <div class="container">
-  {% if company.is_inactive %}<div class="alert alert-danger" role="alert">{{ company }} is inactive.</div>
+  {% if company.is_inactive %}<div class="alert alert-danger" role="alert">{{ company }} {% trans "is inactive. Only company administrators and platform administrators can view this page." %}</div>
   {% elif company.is_hidden %}
   <div class="alert alert-warning" role="alert">{{ company }} {% trans 'has been hidden by a QueryJane administrator.' %}</div>
   {% endif %}

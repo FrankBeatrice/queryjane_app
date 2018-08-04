@@ -28,6 +28,11 @@
 
 {% block content %}
 <div class="container">
+  {% if job_offer.venture.is_inactive %}<div class="alert alert-danger" role="alert">{{ job_offer.venture }} {% trans "is inactive. Only company administrators and platform administrators can view this page." %}</div>
+  {% elif job_offer.venture.is_hidden %}
+  <div class="alert alert-warning" role="alert">{{ job_offer.venture }} {% trans 'has been hidden by a QueryJane administrator.' %}</div>
+  {% endif %}
+
   <div class="row">
     <div class="col-xs-12 col-sm-3">
       <div class="media-object">
