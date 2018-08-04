@@ -10,8 +10,10 @@ from django.views.generic import View
 
 from account.models import IndustryCategory
 from app.mixins import CustomUserMixin
-from entrepreneur.forms import VentureDescriptionForm
+from entrepreneur.data import VENTURE_STATUS_ACTIVE
+from entrepreneur.data import VENTURE_STATUS_INACTIVE
 from entrepreneur.forms import CompanyLogoForm
+from entrepreneur.forms import VentureDescriptionForm
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 
@@ -153,3 +155,49 @@ class UpdateVentureDescriptionForm(CustomUserMixin, FormView):
                 },
             },
         )
+
+
+class DeactivateCompanyView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        company = self.get_object()
+
+        company.status = VENTURE_STATUS_INACTIVE
+        company.save()
+
+        return HttpResponse('success')
+
+
+class ActivateCompanyView(CustomUserMixin, View):
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_manage_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        company = self.get_object()
+
+        company.status = VENTURE_STATUS_ACTIVE
+        company.save()
+
+        return HttpResponse('success')
