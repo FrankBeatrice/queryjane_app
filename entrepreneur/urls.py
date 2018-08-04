@@ -17,7 +17,7 @@ from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesVentureFormView
 from .views.venture_views import VentureFormView
-from .views.venture_views import VentureSearch
+from .views.venture_views import CompanySearch
 
 
 urlpatterns = [
@@ -27,9 +27,9 @@ urlpatterns = [
         name='venture_form',
     ),
     url(
-        r'^ax_venture_autocomplete/$',
-        VentureSearch.as_view(),
-        name='ax_ventury_autocomplete',
+        r'^ax_company_autocomplete/$',
+        CompanySearch.as_view(),
+        name='ax_company_autocomplete',
     ),
 
     url(

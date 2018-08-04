@@ -32,7 +32,7 @@ from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.data import JOB_TYPE_CHOICES
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.forms import JobOffersFilter
-from entrepreneur.forms import VentureFilter
+from entrepreneur.forms import CompanyFilter
 from entrepreneur.models import Applicant
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
@@ -218,7 +218,7 @@ class CompanyList(ListView):
 
     def get_list_filter(self):
         # Get filter form with the request content as instance.
-        list_filter = VentureFilter(
+        list_filter = CompanyFilter(
             self.request.GET,
         )
 
@@ -253,9 +253,9 @@ class CompanyList(ListView):
                 ).distinct()
 
             # Filter companies by company name.
-            venture_id = form.cleaned_data['venture_id']
-            if venture_id:
-                queryset = queryset.filter(id=venture_id)
+            company_id = form.cleaned_data['company_id']
+            if company_id:
+                queryset = queryset.filter(id=company_id)
 
         return queryset
 

@@ -12,7 +12,7 @@ from place.models import City
 from place.models import Country
 
 
-class VentureFilter(forms.Form):
+class CompanyFilter(forms.Form):
     country_search = forms.CharField(
         required=False,
         label=_('Country'),
@@ -50,12 +50,12 @@ class VentureFilter(forms.Form):
         empty_label=_('all sectors'),
     )
 
-    venture_search = forms.CharField(
+    company_search = forms.CharField(
         label=_('Search company'),
         required=False,
     )
 
-    venture_id = forms.CharField(
+    company_id = forms.CharField(
         required=False,
         label=_('company id'),
     )
