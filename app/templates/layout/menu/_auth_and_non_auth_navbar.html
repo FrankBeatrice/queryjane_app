@@ -18,8 +18,6 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {% if user.is_authenticated %}
                 {% include 'layout/menu/_navbar_user_menu.html' %}
-            {% else %}
-                {% include 'layout/menu/_navbar_login_form.html' %}
             {% endif %}
         </div>
     </div>

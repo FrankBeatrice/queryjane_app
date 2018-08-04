@@ -1,25 +1,24 @@
-from account.models import User
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import Q
 from django.http import Http404
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import View
 
-from account.forms import SignUpForm
 from account.forms import CompanyScoreForm
-from account.models import ProfessionalProfile
+from account.forms import SignUpForm
 from account.models import Conversation
+from account.models import ProfessionalProfile
+from account.models import User
 from account.models import UserNotification
 from account.permissions import AddressBookPermissions
 from account.permissions import CompanyScorePermissions
@@ -31,8 +30,8 @@ from entrepreneur.data import JOB_STATUS_ACTIVE
 from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.data import JOB_TYPE_CHOICES
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
-from entrepreneur.forms import JobOffersFilter
 from entrepreneur.forms import CompanyFilter
+from entrepreneur.forms import JobOffersFilter
 from entrepreneur.models import Applicant
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
@@ -622,36 +621,6 @@ class ContactFormView(FormView):
         )
 
         return redirect('contact_form_success')
-
-
-# TODO: This view must be removed.
-def ajax_login_form(request):
-    if not request.is_ajax():
-        raise Http404
-
-    try:
-        email = (request.POST['login_form-email'] or u'').lower()
-        password = request.POST['login_form-password']
-
-        user_ex = User.objects.get(email=email)
-
-    except User.DoesNotExist:
-        return HttpResponse('fail')
-
-    user = auth.authenticate(
-        username=user_ex.email,
-        password=password,
-    )
-
-    if user is not None:
-        if user.is_active:
-            auth.login(request, user)
-            return HttpResponse('successful_login')
-        else:
-            return HttpResponse('inactive_account')
-
-    else:
-        return HttpResponse('data_error')
 
 
 def user_logout(request):
