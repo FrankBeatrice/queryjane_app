@@ -24,6 +24,13 @@
                     </div>
                 </div>
 
+                {% if company.is_inactive %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>{{ company }}</strong> {% trans "is inactive. If you want to create a membership, before you must activate it." %}
+
+                    <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_activate_container">{% trans "Go to activate" %} {{ company }}.</a>
+                </div>
+                {% else %}
                 <div class="panel panel-default qjane-role-search">
                     <div class="panel-body">
                         <h4>{% trans 'Search by name, email or username.' %}</h4>
@@ -49,6 +56,7 @@
                         <ul class="media-list qjane-venture-new-role-list-to-confirm"></ul>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

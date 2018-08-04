@@ -14,7 +14,13 @@
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
-                {% if company.is_active %}
+                {% if company.is_inactive %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>{{ company }}</strong> {% trans "is inactive. If you want to create a job offer, before you must activate it." %}
+
+                    <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_activate_container">{% trans "Go to activate" %} {{ company }}.</a>
+                </div>
+                {% else %}
                 <div class="alert alert-info" role="alert">{% trans 'Job offers will be automatically closed 60 days after created.' %}</div>
 
                 <div class="panel panel-primary">
@@ -142,12 +148,6 @@
                             <button type="submit" class="btn btn-primary">{% trans 'Create' %}</button>
                         </form>
                     </div>
-                </div>
-                {% elif company.is_inactive %}
-                <div class="alert alert-danger" role="alert">
-                    {{ company }} {% trans "is inactive. If you want to create a job offer, before you must activate it." %}
-
-                    <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_activate_container">{% trans "Go to activate" %} {{ company }}.</a>
                 </div>
                 {% endif %}
             </div>

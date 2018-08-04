@@ -4,6 +4,7 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
@@ -87,7 +88,11 @@ class JobOfferFormView(CustomUserMixin, CreateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        venture = self.get_object()
+        company = self.get_object()
+
+        if company.is_inactive:
+            raise Http404
+
         job_offer = form.save(commit=False)
         slug = slugify(job_offer.title)
 
@@ -120,7 +125,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
 
             state = city.state
 
-        job_offer.venture = venture
+        job_offer.venture = company
         job_offer.slug = slug
         job_offer.country = country_instance
         job_offer.city = city
@@ -133,7 +138,7 @@ class JobOfferFormView(CustomUserMixin, CreateView):
         # Create potential applicants notifications.
         potential_applicants = ProfessionalProfile.objects.filter(
             industry_categories__in=job_offer.industry_categories.all(),
-        ).distinct().exclude(id__in=venture.get_active_administrator_ids)
+        ).distinct().exclude(id__in=company.get_active_administrator_ids)
 
         if job_offer.country:
             potential_applicants = potential_applicants.filter(
@@ -146,14 +151,14 @@ class JobOfferFormView(CustomUserMixin, CreateView):
             )
 
         description = 'New job offer that may interest you published by {}.'.format(
-            venture,
+            company,
         )
 
         for profile in potential_applicants.all():
             UserNotification.objects.create(
                 notification_type=NEW_JOB_OFFER,
                 noty_to=profile.user,
-                venture_from=venture,
+                venture_from=company,
                 job_offer=job_offer,
                 description=description,
                 created_by=self.request.user.professionalprofile,

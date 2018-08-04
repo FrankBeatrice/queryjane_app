@@ -158,6 +158,12 @@ class UpdateVentureDescriptionForm(CustomUserMixin, FormView):
 
 
 class DeactivateCompanyView(CustomUserMixin, View):
+    """
+    Ajax view to deactivate a company in the platform.
+    All company's information will be diabled for all users,
+    and will be available only for users with administrator
+    membership in the company and for platform administrators.
+    """
     def get_object(self):
         return get_object_or_404(
             Venture,
@@ -181,6 +187,11 @@ class DeactivateCompanyView(CustomUserMixin, View):
 
 
 class ActivateCompanyView(CustomUserMixin, View):
+    """
+    Ajax view to activate a company in the platform.
+    All company information will be available for all
+    users.
+    """
     def get_object(self):
         return get_object_or_404(
             Venture,

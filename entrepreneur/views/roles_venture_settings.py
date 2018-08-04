@@ -51,6 +51,11 @@ class RolesCompanyFormView(CustomUserMixin, TemplateView):
 
     @transaction.atomic
     def post(self, request, **kwargs):
+        company = self.get_object()
+
+        if company.is_inactive:
+            raise Http404
+
         membership_form = RoleVentureForm(
             request.POST,
         )
