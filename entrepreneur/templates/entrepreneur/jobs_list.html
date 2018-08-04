@@ -8,182 +8,176 @@
 {% endblock %}
 
 {% block content %}
-<section class="account">
-    <div class="container">
-        <div class="QJJOFilterForm">
-            <form id="id_QJJOfilterForm" method="get" class="jobs-form clearfix">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
-                            {{ filter_form.country_search.label_tag }}
-                            {% render_field filter_form.country_search class+="form-control" %}
-                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+<div class="container">
+  <form id="id_QJJOfilterForm" method="get" class="jobs-form clearfix">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+          {{ filter_form.country_search.label_tag }}
+          {% render_field filter_form.country_search class+="form-control" %}
+          <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
 
-                            <div style="display:none">
-                            {% render_field filter_form.country_code %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
-                            {{ filter_form.city_search.label_tag }}
-                            {% render_field filter_form.city_search class+="form-control" %}
-                            {{ filter_form.city_search.errors }}
-
-                            <div style="display:none">
-                            {% render_field filter_form.city_id %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="form-group">
-                            {{ filter_form.category.label_tag }}
-                            {% render_field filter_form.category class+="form-control" %}
-                            {{ filter_form.category.errors }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div id="id_QjaneVListAut" class="form-group" data-ax-ventury-autocomplete-url="{% url 'entrepreneur:ax_company_autocomplete' %}">
-                            {{ filter_form.venture_search.label_tag }}
-                            {% render_field filter_form.venture_search class+="form-control" %}
-                            {{ filter_form.venture_search.errors }}
-
-                            <div style="display:none">
-                            {% render_field filter_form.venture_id %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="form-group">
-                            {{ filter_form.job_type.label_tag }}
-                            {% render_field filter_form.job_type class+="form-control" %}
-                            {{ filter_form.job_type.errors }}
-                        </div>
-                    </div>
-                </div>
-                <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
-                <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
-            </form>
+          <div class="d-none">
+          {% render_field filter_form.country_code %}
+          </div>
         </div>
-        <br>
+      </div>
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title mb-0 p-2">{% trans 'Job offers' %}</h3>
-            </div>
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+            {{ filter_form.city_search.label_tag }}
+            {% render_field filter_form.city_search class+="form-control" %}
+            {{ filter_form.city_search.errors }}
 
-            <div class="panel-body QjaneVentureJobOffersList">
-                <table class="table table-striped jobs-table">
-                  <tbody>
-                    {% for job_offer in jobs_list %}
-                    <tr>
-                      <td>
-                        <div class="jobs-item">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-4 0 col-lg-3">
-                                    <div class="row hidden-xs">
-                                        <div class="col-xs-8">
-                                            <img class="thumbnail img-fluid" src="{{ job_offer.venture.get_logo }}" alt="{{ venture }}">
-                                        </div>
-                                    </div>
-
-                                    <h3 class="jobs-item__company-title">{{ job_offer.venture }}</h3>
-
-                                    <div class="AjVentureListLocation">
-                                        <p>
-                                            <img src="{{ job_offer.venture.country.flag }}">
-                                            <span>{{ job_offer.venture.country }}</span>
-                                            <span> - {{ job_offer.venture.city }} {% if job_offer.venture.state %}, {{ job_offer.venture.state }}.{% endif %}</span>
-                                        </p>
-
-                                        <div>
-                                        {% if job_offer.venture.address %}
-                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <span>{{ job_offer.venture.address }}</span>
-                                        {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <hr class="visible-xs">
-                                </div>
-
-                                <div class="col-xs-12 col-sm-8 col-lg-9">
-                                    <h2 class="jobs-item__offer-title">
-                                        {{ job_offer }}
-                                    </h2>
-
-                                    <p><strong>Status:</strong>
-                                    {% if job_offer.is_active %}
-                                    <span class="JODetailStatus label label-success">{% trans 'Active' %}</span>
-                                    {% else %}
-                                    <span class="JODetailStatus label label-warning">{% trans 'Closed' %}</span>
-                                    {% endif %}
-                                    </p>
-
-                                    {% get_current_language as LANGUAGE_CODE %}
-                                    <ul class="QJVentureDetCats">
-                                    {% for industry_category in job_offer.industry_categories.all %}
-                                        <li>
-                                        {% if LANGUAGE_CODE == 'es' %}
-                                        {{ industry_category.name_es }}
-                                        {% else %}
-                                        {{ industry_category.name_en }}
-                                        {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-
-                                    <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
-                                    <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
-
-                                    {% if job_offer.country %}
-                                    <div>
-                                        <img src="{{ venture.country.flag }}">
-                                        <span>{{ job_offer.country }}</span>
-                                    </div>
-                                    {% endif %}
-
-                                    {% if job_offer.city %}
-                                    <div>
-                                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                        <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
-                                    </div>
-                                    {% endif %}
-
-                                    <div>
-                                        {{ job_offer.description|safe|truncatechars_html:330 }}
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-3 col-md-2">
-                                            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td>
-                            {% trans 'No job offers found.' %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-            </div>
+          <div class="d-none">
+          {% render_field filter_form.city_id %}
+          </div>
         </div>
-
+      </div>
     </div>
-</section>
+
+    <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+        {{ filter_form.category.label_tag }}
+        {% render_field filter_form.category class+="form-control" %}
+        {{ filter_form.category.errors }}
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div id="id_QjaneVListAut" class="form-group" data-ax-company-autocomplete-url="{% url 'entrepreneur:ax_company_autocomplete' %}">
+          {{ filter_form.company_search.label_tag }}
+          {% render_field filter_form.company_search class+="form-control" %}
+          {{ filter_form.company_search.errors }}
+
+          <div style="display:none">
+          {% render_field filter_form.company_id %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+        {{ filter_form.job_type.label_tag }}
+        {% render_field filter_form.job_type class+="form-control" %}
+        {{ filter_form.job_type.errors }}
+        </div>
+      </div>
+    </div>
+    
+    <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
+
+    <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+  </form>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title mb-0 p-2">{% trans 'Job offers' %}</h3>
+    </div>
+
+    <div class="panel-body">
+      <table class="table table-striped jobs-table">
+        <tbody>
+          {% for job_offer in jobs_list %}
+          <tr>
+            <td>
+              <div class="jobs-item">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 0 col-lg-3">
+                    <div class="row hidden-xs">
+                      <div class="col-xs-8">
+                        <img class="thumbnail img-fluid" src="{{ job_offer.venture.get_logo }}" alt="{{ venture }}">
+                      </div>
+                    </div>
+
+                    <h3 class="jobs-item__company-title">{{ job_offer.venture }}</h3>
+
+                    <p>
+                      <img src="{{ job_offer.venture.country.flag }}">
+                      <span>{{ job_offer.venture.country }}</span>
+                      <span> - {{ job_offer.venture.city }} {% if job_offer.venture.state %}, {{ job_offer.venture.state }}.{% endif %}</span>
+                    </p>
+
+                    <div>
+                    {% if job_offer.venture.address %}
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      <span>{{ job_offer.venture.address }}</span>
+                    {% endif %}
+                    </div>
+
+                    <hr class="visible-xs">
+                  </div>
+
+                  <div class="col-xs-12 col-sm-8 col-lg-9">
+                    <h2>
+                        {{ job_offer }}
+                    </h2>
+
+                    <p><strong>Status:</strong>
+                    {% if job_offer.is_active %}
+                    <span class="JODetailStatus label label-success">{% trans 'Active' %}</span>
+                    {% else %}
+                    <span class="JODetailStatus label label-warning">{% trans 'Closed' %}</span>
+                    {% endif %}
+                    </p>
+
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <ul>
+                    {% for industry_category in job_offer.industry_categories.all %}
+                        <li>
+                        {% if LANGUAGE_CODE == 'es' %}
+                        {{ industry_category.name_es }}
+                        {% else %}
+                        {{ industry_category.name_en }}
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                    <p><strong>{% trans 'Created at:' %}</strong> {{ job_offer.created_at }}</p>
+                    <p><strong>{% trans 'Job type:' %}</strong> {{ job_offer.get_job_type_display }}</p>
+
+                    {% if job_offer.country %}
+                    <div>
+                        <img src="{{ venture.country.flag }}">
+                        <span>{{ job_offer.country }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if job_offer.city %}
+                    <div>
+                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                        <span>{{ job_offer.city }} {% if job_offer.state %}, {{ job_offer.state }}.{% endif %}</span>
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        {{ job_offer.description|safe|truncatechars_html:330 }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+              <td>
+                  {% trans 'No job offers found.' %}
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}

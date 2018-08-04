@@ -10,7 +10,7 @@ $(function () {
     });
 
     // City autocomplete
-    var venture_autocomplete_url = $('#id_QjaneVListAut').data('ax-ventury-autocomplete-url');
+    var venture_autocomplete_url = $('#id_QjaneVListAut').data('ax-company-autocomplete-url');
 
     var ventureSearch = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -22,7 +22,7 @@ $(function () {
       }
     });
 
-    $('#id_venture_search').typeahead({
+    $('#id_company_search').typeahead({
         hint: true,
         highlight: true,
         minLength: 2
@@ -35,6 +35,6 @@ $(function () {
             return false;
         }
     }).on('typeahead:autocompleted typeahead:selected', function (event, object) {
-        $('#id_venture_id').val(object.id);
+        $('#id_company_id').val(object.id);
     });
 })

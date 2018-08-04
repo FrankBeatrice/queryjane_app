@@ -102,12 +102,12 @@ class JobOffersFilter(forms.Form):
         empty_label=_('all sector'),
     )
 
-    venture_search = forms.CharField(
+    company_search = forms.CharField(
         label=_('Company'),
         required=False,
     )
 
-    venture_id = forms.CharField(
+    company_id = forms.CharField(
         required=False,
         label=_('company id'),
     )

@@ -398,7 +398,7 @@ class JobsList(ListView):
                 ).distinct()
 
             # Filter jobs by company.
-            company_id = form.cleaned_data['venture_id']
+            company_id = form.cleaned_data['company_id']
             if company_id:
                 queryset = queryset.filter(id=company_id)
 
