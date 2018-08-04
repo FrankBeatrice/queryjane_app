@@ -28,317 +28,284 @@
 {% if not company.logo %}https://queryjane.net{% endif %}{{ company.get_logo }}
 {% endblock %}
 
-<meta property="og:image:type" content="image/{{ company_logo_extension }}">
-
-{% block navbar %}
-{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
-{% endblock %}
-
 {% block content %}
-<section class="qjane-venture-profile">
-    <div class="container">
-        {% if company.is_inactive %}
-        <div class="alert alert-danger" role="alert">
-          {{ company }} is inactive.
-        </div>
-        {% elif company.is_hidden %}
-        <div class="alert alert-warning" role="alert">
-          {{ company }} {% trans 'has been hidden by a QueryJane administrator.' %}
-        </div>
-        {% endif %}
+<div class="container">
+  {% if company.is_inactive %}<div class="alert alert-danger" role="alert">{{ company }} is inactive.</div>
+  {% elif company.is_hidden %}
+  <div class="alert alert-warning" role="alert">{{ company }} {% trans 'has been hidden by a QueryJane administrator.' %}</div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <div class="media-object">
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <div class="media-object">
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-11 col-md-9">
-                            <img class="img-responsive thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
-                        </div>
-                    </div>
-                </div>
+          <div class="col-xs-8 col-sm-11 col-md-9">
+            <img class="img-responsive thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
+          </div>
+        </div>
+      </div>
 
-                <div>
-                    <div id="idCompanyScore" data-score="{{ company.get_score }}"></div>
+      <div>
+        <div id="idCompanyScore" data-score="{{ company.get_score }}"></div>
 
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</p>
+        <a href="javascript:void(0);" data-toggle="modal" data-target="#idCompanyScoreModal" id="idScoreMessage">{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</a>
 
-                    {% if can_add_score %}
-                    <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
-                    {% endif %}
-                    
-                </div>
+        {% if can_add_score %}
+        <a id="idScoreformLink" href="javascript:void(0);" class="btn btn-success" data-toggle="modal" data-target="#idCompanyScoreModal">{% trans 'Rate this company' %}</a>
+        {% endif %}
+      </div>
 
-                <br>
+    {% if can_manage %}
+      <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
 
-            {% if can_manage %}
-                <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="btn btn-ghost-purple">{% trans 'Settings' %}</a>
-                <br>
-                <br>
+      <a href="{% url 'entrepreneur:job_offer_form' company.slug %}" class="btn btn-primary">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        {% trans 'Create job offer' %}
+      </a>
+    {% endif %}
 
-                <a href="{% url 'entrepreneur:job_offer_form' company.slug %}" class="btn btn-primary">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                {% trans 'Create job offer' %}
+    {% get_user_venture_admin_notification user company as user_venture_admin_notification %}
+
+    {% if user_venture_admin_notification %}
+      <div>
+        <p>{% trans 'You have a management request for this company.' %}</p>
+
+        <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">{% trans 'Reject' %}</a>
+
+        <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">{% trans 'Accept' %}</a>
+      </div>
+    {% endif %}
+
+      <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' company.id %}" data-company-for-add-name="{{ company.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
+
+      <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company.id %}" data-company-for-remove-name="{{ company.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
+
+      {% if not can_manage and user.is_authenticated %}
+      {% get_company_conversation user company as company_conversation %}
+      <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ company.id }}" data-to-name="{{ company }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
+      {% endif %}
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-briefcase" aria-hidden="true"></i>
+
+          <span>{% if company.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
+        </div>
+
+        <div class="panel-body">
+          {% get_current_language as LANGUAGE_CODE %}
+          <ul>
+          {% for industry_category in company.industry_categories.all %}
+            <li>
+              {% if LANGUAGE_CODE == 'es' %}
+              {{ industry_category.name_es }}
+              {% else %}
+              {{ industry_category.name_en }}
+              {% endif %}
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+            <span>{% trans 'Location' %}</span>
+        </div>
+
+        <div class="panel-body">
+          <div>
+            <img src="{{ company.country.flag }}">
+            <span>{{ company.country }}</span>
+          </div>
+
+          <div>
+              <span>{{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
+          </div>
+
+          <div>
+          {% if company.address %}
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>{{ company.address }}</span>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% if company.url %}
+      <div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-link" aria-hidden="true"></i>
+            <span>{% trans 'Web page' %}</span>
+          </div>
+
+          <div class="panel-body">
+            <a href="{{ company.url }}" target="_blank">{{ company.url }}</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if company.facebook_url or company.twitter_url or company.instagram_url or company.linkedin_url or company.googleplus_url %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-globe" aria-hidden="true"></i>
+          <span>{% trans 'Social media' %}</span>
+        </div>
+
+        <div class="panel-body text-center">
+          {% if company.facebook_url %}
+          <a href="{{ company.facebook_url }}" target="_blank">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+
+          {% if company.twitter_url %}
+          <a href="{{ company.twitter_url }}" target="_blank">
+            <i class="fab fa-twitter" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+
+          {% if company.instagram_url %}
+          <a href="{{ company.instagram_url }}" target="_blank">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+
+          {% if company.linkedin_url %}
+          <a href="{{ company.linkedin_url }}" target="_blank">
+            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+
+          {% if company.googleplus_url %}
+          <a href="{{ company.googleplus_url }}" target="_blank">
+            <i class="fab fa-google-plus-g" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if company.phone_number or company.email %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-address-book-o" aria-hidden="true"></i>
+          <span>{% trans 'Contact' %}</span>
+        </div>
+
+        <div class="panel-body">
+          {% if company.phone_number %}
+          <div>
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <span>{{ company.phone_number }}</span>
+          </div>
+          {% endif %}
+
+          {% if company.email %}
+          <div>
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <span>{{ company.email }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if permission_app.manage_admin_views %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <span>{% trans 'Qjane Admin' %}</span>
+        </div>
+
+        <div class="panel-body">
+          <div class="JSCompanyActions">
+            {% if not company.shared_on_twitter and company.is_active %}
+            <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_company' company.slug %}">
+              <i class="fab fa-twitter"></i><i class="fab fa-facebook-f"></i> {% trans 'Share' %}
             </a>
-                <br>
-                <br>
             {% endif %}
 
-                {% get_user_venture_admin_notification user company as user_venture_admin_notification %}
+            <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
+              <i class="far fa-eye-slash"></i> {% trans 'Hide' %}
+            </a>
 
-                {% if user_venture_admin_notification %}
-                    <div class="QJAdminnotification">
-                        <p>{% trans 'You have a management request for this company.' %}</p>
-
-                        <a href="{% url 'account:admin_notification_reject' user_venture_admin_notification.id %}" class="btn btn-danger">{% trans 'Reject' %}</a>
-                        <a href="{% url 'account:admin_notification_accept' user_venture_admin_notification.id %}" class="btn btn-primary">{% trans 'Accept' %}</a>
-                    </div>
-                {% endif %}
-
-                <a href="javascript:void(0)" id="id_add_company_to_address_book" class="btn btn-info" data-add-company-to-address-book-url="{% url 'account:ajax_add_company_to_address_book' company.id %}" data-company-for-add-name="{{ company.name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</a>
-
-                <a href="javascript:void(0)" id="id_remove_company_from_address_book" class="btn btn-warning" data-remove-company-from-address-book-url="{% url 'account:ajax_remove_company_from_address_book' company.id %}" data-company-for-remove-name="{{ company.name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</a>
-
-                <br>
-                <br>
-
-                {% if not can_manage and user.is_authenticated %}
-                {% get_company_conversation user company as company_conversation %}
-                <a href="javascript:void(0)" class="JSComposeMessage btn btn-ghost-purple" data-toggle="modal" data-target="#composeMessageModal" data-company-to-id="{{ company.id }}" data-to-name="{{ company }}" data-load-conversation-url="{% if company_conversation %}{% url 'account:ajax_post_conversation_load' company_conversation.id %}{% endif %}">{% trans 'Send message' %}</a>
-                {% endif %}
-
-                <br>
-                <br>
-
-                <div class="QJVentureDetCategories">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if company.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            <ul class="QJVentureDetCats">
-                            {% for industry_category in company.industry_categories.all %}
-                                <li>
-                                    {% if LANGUAGE_CODE == 'es' %}
-                                    {{ industry_category.name_es }}
-                                    {% else %}
-                                    {{ industry_category.name_en }}
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="QJVentureDetLocation">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                            <span>{% trans 'Location' %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            <div>
-                                <img src="{{ company.country.flag }}">
-                                <span>{{ company.country }}</span>
-                            </div>
-
-                            <div>
-                                <span>{{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
-                            </div>
-
-                            <div>
-                            {% if company.address %}
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span>{{ company.address }}</span>
-                            {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {% if company.url %}
-                <div class="QJVenturWebPage">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-link" aria-hidden="true"></i>
-                            <span>{% trans 'Web page' %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            <a href="{{ company.url }}" target="_blank">{{ company.url }}</a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if company.facebook_url or company.twitter_url or company.instagram_url or company.linkedin_url or company.googleplus_url %}
-                <div class="QJVentureDetSocialMedia">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>{% trans 'Social media' %}</span>
-                        </div>
-
-                        <div class="panel-body text-center">
-                            {% if company.facebook_url %}
-                            <a href="{{ company.facebook_url }}" target="_blank">
-                                <i class="fa fa-facebook-f" aria-hidden="true"></i>
-                            </a>
-                            {% endif %}
-
-                            {% if company.twitter_url %}
-                            <a href="{{ company.twitter_url }}" target="_blank">
-                                <i class="fa fa-twitter" aria-hidden="true"></i>
-                            </a>
-                            {% endif %}
-
-                            {% if company.instagram_url %}
-                            <a href="{{ company.instagram_url }}" target="_blank">
-                                <i class="fa fa-instagram" aria-hidden="true"></i>
-                            </a>
-                            {% endif %}
-
-                            {% if company.linkedin_url %}
-                            <a href="{{ company.linkedin_url }}" target="_blank">
-                                <i class="fa fa-linkedin" aria-hidden="true"></i>
-                            </a>
-                            {% endif %}
-
-                            {% if company.googleplus_url %}
-                            <a href="{{ company.googleplus_url }}" target="_blank">
-                                <i class="fa fa-google-plus" aria-hidden="true"></i>
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if company.phone_number or company.email %}
-                <div class="QJVentureDetContact">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                            <span>{% trans 'Contact' %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            {% if company.phone_number %}
-                            <div>
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                <span>{{ company.phone_number }}</span>
-                            </div>
-                            {% endif %}
-
-                            {% if company.email %}
-                            <div>
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                <span>{{ company.email }}</span>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if permission_app.manage_admin_views %}
-                <div class="QJStaffVentureActions">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <span>{% trans 'Qjane Admin' %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="JSCompanyActions">
-                                {% if not company.shared_on_twitter and company.is_active %}
-                                <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_company' company.slug %}">
-                                    <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
-                                </a>
-                                {% endif %}
-
-                                <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
-                                    <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
-                                </a>
-
-                                <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
-                                    <i class="fa fa-fire"></i> {% trans 'Activate' %}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="col-xs-12 col-sm-9">
-                <h1>{{ company }}</h1>
-                {% get_company_description company as company_description %}
-                {{ company_description|safe }}
-            </div>
+            <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
+              <i class="fas fa-fire"></i> {% trans 'Activate' %}
+            </a>
+          </div>
         </div>
+      </div>
+      {% endif %}
     </div>
+
+    <div class="col-xs-12 col-sm-9">
+      <h1>{{ company }}</h1>
+      {% get_company_description company as company_description %}
+      {{ company_description|safe }}
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="idCompanyScoreModal" tabindex="-1" role="dialog" aria-labelledby="idCompanyScoreModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><strong>{{ company }}</strong> {% trans 'Rating' %}</h5>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><strong>{{ company }}</strong> {% trans 'Rating' %}</h5>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-            <div class="modal-body">
-                <div class="jsScoreFormContainer" style="{% if not can_add_score %}display:none{% endif %}">
-                    <p>Add your feedback about <strong>{{ company }}</strong>.</p>
+      <div class="modal-body">
+      <div class="jsScoreFormContainer" style="{% if not can_add_score %}display:none{% endif %}">
+        <p>Add your feedback about <strong>{{ company }}</strong>.</p>
 
-                    <p>{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</p>
+        <p>{% if not company.get_votes_quantity %}There are not scores yet.{% elif company.get_votes_quantity == 1 %}1 user has scored {{ company }}.{% else %}{{ company.get_votes_quantity }} users have scored {{ company }}.{% endif %}</p>
 
-                    <div id="idCompanyScoreInput"></div>
+        <div id="idCompanyScoreInput"></div>
 
-                    <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' company.id %}">
-                        {% csrf_token %}
+        <form id="idCompanyScoreForm" method="post" data-company-score-form-url="{% url 'account:company_score_form' company.id %}">
+            {% csrf_token %}
 
-                        <div>
-                            <label>
-                                {% trans 'Add a comment about this company.' %}
-                            </label>
+          <div>
+            <label>
+              {% trans 'Add a comment about this company.' %}
+            </label>
 
-                            {% render_field score_form.comment class+="form-control" %}
-                        </div>
+            {% render_field score_form.comment class+="form-control" %}
+          </div>
 
-                        <div style="display:none;">
-                            {% render_field score_form.score %}
-                        </div>
+          <div style="display:none;">
+            {% render_field score_form.score %}
+          </div>
 
-                        <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
-                    </form>
-                </div>
+          <button type="submit" class="btn btn-primary">{% trans 'Add score' %}</button>
+        </form>
+      </div>
 
-                <div class="jsCompanyScoreList">
-                    <table class="table table-striped">
-                        {% for company_score in company.companyscore_set.all %}
-                        {% include 'entrepreneur/company_score_line.html' %}
-                        {% empty %}
-                        <tr class="jsCompanyScoreEmpty">
-                            <td>There are not scores yet.</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
+        <div class="jsCompanyScoreList">
+          <table class="table table-striped">
+            {% for company_score in company.companyscore_set.all %}
+            {% include 'entrepreneur/company_score_line.html' %}
+            {% empty %}
+            <tr class="jsCompanyScoreEmpty">
+                <td>There are not scores yet.</td>
+            </tr>
+            {% endfor %}
+          </table>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-</section>
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/corporative/staff_venture_actions.min.js' %}"></script>
+<script src="{% static 'dist/js/corporative/staff_company_actions.min.js' %}"></script>
 <script src="{% static 'dist/js/entrepreneur/company_detail.min.js' %}"></script>
 {% endblock %}
