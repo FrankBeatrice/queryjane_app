@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="alert alert-info jsInactiveAlert" role="alert" style="{% if company.is_active %}display:none;{% endif %}">
+  <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if company.is_active %}display:none;{% endif %}">
     {% trans "This company is inactive, so users can't find it in the application. You can activate it when you want." %}
 
     <a href="#" id="id_activate_link_scroll">{% trans "Go to activate." %}</a>
@@ -171,7 +171,7 @@
 
                   <div id="id_activate_container" style="{% if company.is_active %}display:none;{% endif %}">
                     <h3>{% trans "Activate company" %}</h3>
-                    <p>{% trans "Allow application users to find your company." %}</p>
+                    <p>{% trans "Allow users of the application to find ." %} <strong>{{ company }}</strong></p>
 
                     <a href="javascript:void(0)" class="btn btn-success jsActivateCompany" data-activate-company-url="{% url 'entrepreneur:ax_activate_company' company.slug %}">{% trans "Activate" %}</a>
                   </div>
