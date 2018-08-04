@@ -240,7 +240,7 @@ class VentureForm(ModelForm):
             )
 
 
-class VentureLogoForm(Form):
+class CompanyLogoForm(Form):
     logo = forms.ImageField()
 
 

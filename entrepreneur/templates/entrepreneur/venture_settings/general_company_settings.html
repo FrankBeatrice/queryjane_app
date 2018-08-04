@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ company }} - {% trans 'Settings' %}{% endblock %}
@@ -9,153 +9,147 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+  <div class="row">
+    {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
-        <div class="col-md-9">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{% trans 'General information' %}</h3>
-                </div>
+    <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">{% trans 'General information' %}</div>
 
-                <div class="panel-body QjaneVentureGeneralInfo">
-                {% if not company.logo %}
-                    <div class="alert alert-warning" role="alert">{% trans 'Update the company logo to generate greater impact and brand recall.' %}</div>
-                {% endif %}
+          <div class="card-body">
+          {% if not company.logo %}
+            <div class="alert alert-warning jsUpdateCompanyLogoMessage" role="alert">{% trans 'Update the company logo to generate greater impact and brand recall.' %}</div>
+          {% endif %}
 
-                    <div class="row">
-                        <div class="col-md-3 col-xs-12 QjaneVentureSettingsLogoContainer">
-                            <img class="media-object thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
+            <div class="row">
+              <div class="col-md-3 col-xs-12 QjaneCompanySettingsLogoContainer">
+                <img class="media-object thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
 
-                            <form id="id_venture_change_logo_form" method="post" enctype="multipart/form-data" data-venture-update-logo-url="{% url 'entrepreneur:update_venture_logo_form' company.slug %}" style="display:none;">
-                                {% csrf_token %}
-                                <div class="logo">
-                                    {{ venture_logo_form.logo.label_tag }}
-                                    {% render_field venture_logo_form.logo %}
-                                </div>
+                <form id="id_company_change_logo_form" method="post" enctype="multipart/form-data" data-company-update-logo-url="{% url 'entrepreneur:update_company_logo_form' company.slug %}" style="display:none;">
+                  {% csrf_token %}
+                  <div class="logo">
+                      {{ company_logo_form.logo.label_tag }}
+                      {% render_field company_logo_form.logo %}
+                  </div>
 
-                                <button type="submit" id="submit_venture_logo_link"></button>
-                            </form>
-
-                            <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_venture_logo_update_link">
-                                <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
-                                {% trans 'Update' %}
-                            </a>
-                        </div>
-
-                        <div class="col-md-9 col-xs-12">
-                            {% get_current_language as LANGUAGE_CODE %}
-
-                            <p>{% trans 'Industry sectors' %}</p>
-
-                            <ul class="qjane-industry-categories-list" data-update-venture-category-url="{% url 'entrepreneur:ax_update_venture_category' company.slug %}">
-                                {% for industry_category in industry_categories %}
-                                <li>
-                                    <a class="btn {% if industry_category in company.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
-                                    {% if LANGUAGE_CODE == 'es' %}
-                                    {{ industry_category.name_es }}
-                                    {% else %}
-                                    {{ industry_category.name_en }}
-                                    {% endif %}
-                                    </a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-
-                            <p class="QjaneEmptyCategoriesBug"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="QjaneVentureSettingsDescriptionContainer" data-update-venture-description-form="{% url 'entrepreneur:update_venture_description_form' company.slug %}">
-
-                <form id="id_venture_change_description_form" method="post">
-                    {% csrf_token %}
-                    <div class="js_lan_form_container">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title clearfix">
-                                    <span class="pull-left">{% trans 'English description' %}</span>
-
-                                    <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                        {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
-                                    </a>
-                                </h3>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="QjaneUpdatedENdescVenture"></div>
-
-                                <div class="description_field_container" style="{% if company.description_en %}display:none;{% endif %}">
-
-                                    <div id="rich_editor_description_en">
-                                        {{ company.description_en|safe }}
-                                    </div>
-
-                                    <div style="display:none;">
-                                        {% render_field description_form.description_en %}
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary mt-xs">
-                                        {% trans 'Save' %}
-                                    </button>
-                                </div>
-
-                                <div class="desc_cont venture_description_en_content">
-                                {% if company.description_en %}
-                                    {{ company.description_en|safe }}
-                                {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="js_lan_form_container">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title clearfix">
-                                    <span class="pull-left">{% trans 'Spanish description' %}</span>
-
-                                    <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link pull-right">
-                                        {% trans 'Edit' %} <span class="fa fa-pencil-square-o js_edit_desc_link" aria-hidden="true"></span>
-                                    </a>
-                                </h3>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="QjaneUpdatedSPdescVenture"></div>
-
-                                <div class="description_field_container" style="{% if company.description_es %}display:none;{% endif %}">
-
-                                    <div id="rich_editor_description_es">
-                                        {{ company.description_es|safe }}
-                                    </div>
-
-                                    <div style="display: none;">
-                                        {% render_field description_form.description_es %}
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary mt-xs">
-                                        {% trans 'Save' %}
-                                    </button>
-                                </div>
-
-                                <div class="desc_cont venture_description_es_content">
-                                {% if company.description_es %}
-                                    {{ company.description_es|safe }}
-                                {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <button type="submit" id="submit_company_logo_link"></button>
                 </form>
+
+                <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_company_logo_update_link">
+                  <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
+                  {% trans 'Update' %}
+                </a>
+              </div>
+
+              <div class="col-md-9 col-xs-12">
+                {% get_current_language as LANGUAGE_CODE %}
+
+                <p>{% trans 'Industry sectors' %}</p>
+
+                <ul class="qjane-industry-categories-list" data-update-company-category-url="{% url 'entrepreneur:ax_update_company_category' company.slug %}">
+                  {% for industry_category in industry_categories %}
+                  <li>
+                      <a class="btn {% if industry_category in company.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                      {% if LANGUAGE_CODE == 'es' %}
+                      {{ industry_category.name_es }}
+                      {% else %}
+                      {{ industry_category.name_en }}
+                      {% endif %}
+                      </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+
+                  <p class="QjaneEmptyCategoriesBug"></p>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <div class="jsDescriptionCard" data-update-company-description-form="{% url 'entrepreneur:update_company_description_form' company.slug %}">
+
+          <form id="id_company_change_description_form" method="post">
+            {% csrf_token %}
+            <div class="js_lan_form_container">
+              <div class="card">
+                <div class="card-header clearfix">
+                  <span class="float-left">{% trans 'English description' %}</span>
+
+                  <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link float-right">
+                    {% trans 'Edit' %} <span class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></span>
+                  </a>
+                </div>
+
+                <div class="card-body">
+                  <div class="QjaneUpdatedENdescCompany"></div>
+
+                  <div class="description_field_container" style="{% if company.description_en %}display:none;{% endif %}">
+
+                      <div id="rich_editor_description_en">
+                          {{ company.description_en|safe }}
+                      </div>
+
+                      <div style="display:none;">
+                          {% render_field description_form.description_en %}
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mt-xs">
+                          {% trans 'Save' %}
+                      </button>
+                  </div>
+
+                  <div class="desc_cont company_description_en_content">
+                  {% if company.description_en %}
+                      {{ company.description_en|safe }}
+                  {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="js_lan_form_container">
+              <div class="card">
+                <div class="card-header clearfix">
+                  <span class="float-left">{% trans 'Spanish description' %}</span>
+
+                  <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link float-right">
+                      {% trans 'Edit' %} <span class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></span>
+                  </a>
+                </div>
+
+                <div class="card-body">
+                  <div class="QjaneUpdatedSPdescCompany"></div>
+
+                  <div class="description_field_container" style="{% if company.description_es %}display:none;{% endif %}">
+
+                    <div id="rich_editor_description_es">
+                      {{ company.description_es|safe }}
+                    </div>
+
+                    <div style="display: none;">
+                      {% render_field description_form.description_es %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-xs">
+                      {% trans 'Save' %}
+                    </button>
+                  </div>
+
+                  <div class="desc_cont company_description_es_content">
+                  {% if company.description_es %}
+                    {{ company.description_es|safe }}
+                  {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/entrepreneur/general_venture_form.min.js' %}"></script>
+<script src="{% static 'dist/js/entrepreneur/general_company_form.min.js' %}"></script>
 {% endblock %}

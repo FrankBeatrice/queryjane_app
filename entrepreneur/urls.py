@@ -6,8 +6,8 @@ from .views.contact_venture_settings import AjaxMediaVentureFormView
 from .views.contact_venture_settings import ContactCompanyFormView
 from .views.general_venture_settings import GeneralCompanyFormView
 from .views.general_venture_settings import UpdateVentureDescriptionForm
-from .views.general_venture_settings import UpdateVentureLogoForm
-from .views.general_venture_settings import VentureCategoryView
+from .views.general_venture_settings import UpdateCompanyLogoForm
+from .views.general_venture_settings import CompanyCategoryView
 from .views.manage_job_offers import JobOfferCloseView
 from .views.manage_job_offers import JobOfferFormView
 from .views.manage_job_offers import JobOffersListView
@@ -40,20 +40,20 @@ urlpatterns = [
 
     url(
         r'^ax_settings/(?P<slug>[-\w]+)/update_logo/$',
-        UpdateVentureLogoForm.as_view(),
-        name='update_venture_logo_form',
+        UpdateCompanyLogoForm.as_view(),
+        name='update_company_logo_form',
     ),
 
     url(
-        r'^ax_update_venture_category/(?P<slug>[-\w]+)/$',
-        VentureCategoryView.as_view(),
-        name='ax_update_venture_category',
+        r'^ax_update_company_category/(?P<slug>[-\w]+)/$',
+        CompanyCategoryView.as_view(),
+        name='ax_update_company_category',
     ),
 
     url(
         r'^ax_settings/(?P<slug>[-\w]+)/update_description/$',
         UpdateVentureDescriptionForm.as_view(),
-        name='update_venture_description_form',
+        name='update_company_description_form',
     ),
 
     url(

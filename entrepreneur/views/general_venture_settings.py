@@ -11,7 +11,7 @@ from django.views.generic import View
 from account.models import IndustryCategory
 from app.mixins import CustomUserMixin
 from entrepreneur.forms import VentureDescriptionForm
-from entrepreneur.forms import VentureLogoForm
+from entrepreneur.forms import CompanyLogoForm
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 
@@ -37,7 +37,7 @@ class GeneralCompanyFormView(CustomUserMixin, TemplateView):
         return self.render_to_response(
             self.get_context_data(
                 company=company,
-                venture_logo_form=VentureLogoForm(),
+                company_logo_form=CompanyLogoForm(),
                 description_form=VentureDescriptionForm(
                     initial={
                         'description_es': company.description_es,
@@ -50,29 +50,35 @@ class GeneralCompanyFormView(CustomUserMixin, TemplateView):
         )
 
 
-class UpdateVentureLogoForm(CustomUserMixin, FormView):
-    form_class = VentureLogoForm
+class UpdateCompanyLogoForm(CustomUserMixin, FormView):
+    form_class = CompanyLogoForm
 
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug'),
+        )
 
     def test_func(self):
         return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            company=self.get_object()
+            company=self.get_object(),
         )
 
     def form_valid(self, form):
-        venture = self.get_object()
-        venture.logo = form.cleaned_data['logo']
-        venture.save()
+        company = self.get_object()
+        company.logo = form.cleaned_data['logo']
+        company.save()
 
-        return JsonResponse({'content': venture.get_logo})
+        return JsonResponse({'content': company.get_logo})
 
 
-class VentureCategoryView(CustomUserMixin, View):
+class CompanyCategoryView(CustomUserMixin, View):
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
 
     def test_func(self):
         return EntrepreneurPermissions.can_manage_company(
@@ -82,7 +88,7 @@ class VentureCategoryView(CustomUserMixin, View):
 
     @transaction.atomic
     def post(self, request, **kwargs):
-        venture = self.get_object()
+        company = self.get_object()
 
         category_id = request.POST.get('category_id')
         new_status = request.POST.get('new_status')
@@ -94,16 +100,16 @@ class VentureCategoryView(CustomUserMixin, View):
         )
 
         if (
-            venture.industry_categories.count() == 1 and
+            company.industry_categories.count() == 1 and
             not new_status
         ):
             return HttpResponse('minimum_error')
 
         if new_status:
-            venture.industry_categories.add(category)
+            company.industry_categories.add(category)
         else:
-            venture.industry_categories.remove(category)
-        venture.save()
+            company.industry_categories.remove(category)
+        company.save()
 
         return HttpResponse('success')
 
