@@ -12,7 +12,7 @@
   <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if company.is_active %}display:none;{% endif %}">
     {% trans "This company is inactive, so users can't find it in the application. You can activate it when you want." %}
 
-    <a href="#" id="id_activate_link_scroll">{% trans "Go to activate." %}</a>
+    <a href="javascript:void(0)" id="id_activate_link_scroll">{% trans "Go to activate." %}</a>
   </div>
 
   <div class="row">
@@ -179,9 +179,16 @@
 
                 <div class="col-md-6 col-xs-12">
                     <h3>{% trans "Delete company" %}</h3>
-                    <p>{% trans "Tales y tales" %}</p>
 
-                    <button type="button" class="btn btn-danger">{% trans 'Delete' %}</button>
+                  {% if can_delete %}
+                    <p>{% trans "Delete company profile. Created job offers and memberships will be deleted too." %}</p>
+                    <a href="{% url 'entrepreneur:delete_company' company.slug %}" class="btn btn-danger">{% trans 'Delete' %}</a>
+                  {% else %}
+                    <p>{% trans "Only the company owner can delete it." %}</p>
+                    <p><strong>{{ company.owner }}</strong> {% trans "is de company owner." %}</p>
+
+                    <button type="button" class="btn btn-secondary btn-lg" disabled>Delete</button>
+                  {% endif %}
                 </div>
             </div>
           </div>

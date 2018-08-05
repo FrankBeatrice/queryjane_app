@@ -1,0 +1,97 @@
+{% extends "layout/base.html" %}
+{% load static widget_tweaks i18n %}
+
+{% block title %}{{ company }} - {% trans 'Settings' %}{% endblock %}
+
+{% block css %}
+<link href="{% static 'dist/css/entrepreneur/general_company_settings.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    {% include 'entrepreneur/venture_settings/settings_menu.html' %}
+
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="alert alert-warning" role="alert">
+            {% trans "Are you sure that you want to delete your company? You can consider to deactivate it. If you deactivate the company, all the related information will be hidden for the platform users, they will not be able to find your company, and you can activate it again when you want." %}
+          </div>
+
+          <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_deactivate_container" class="btn btn-success">{% trans "Deactivate" %} <strong>{{ company }}</strong></a>
+        </div>
+      </div>
+
+      {% if company.joboffer_set.count %}
+      <div class="card">
+        <div class="card-header">
+          {% trans "The following job offers will be deleted" %}
+        </div>
+
+        <div class="card-body">
+          <ul>
+          {% for job_offer in company.joboffer_set.all %}
+            <li>
+              <h4><a href="{{ job_offer.get_absolute_url }}">{{ job_offer }}</a></h4>
+              <p>
+                <strong>Status:</strong>
+                <span class="badge {% if job_offer.is_active %}badge-success{% else %}badge-warning{% endif %}">{{ job_offer.get_status_display }}</span>
+              </p>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if company.administratormembership_set.count %}
+      <div class="card">
+        <div class="card-header">
+          {% trans "The following memberships will be deleted" %}
+        </div>
+
+        <div class="card-body">
+          <ul>
+          {% for membership in company.administratormembership_set.all %}
+            <li>
+              <h4><a href="">{{ membership.admin }}</a></h4>
+              <p>
+                <strong>Status:</strong>
+                <span class="badge {% if membership.is_active %}badge-success{% else %}badge-warning{% endif %}">{{ membership.get_status_display }}</span>
+              </p>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card">
+        <div class="card-header">
+          {% trans "Delete company confirmation" %}
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title text-center">{% trans "Are you sure you want to delete your company definitely?" %}</h5>
+
+          <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <p>{% trans "QueryJane allows you to give visibility to your company. Allow the users of the application to know your company." %}</p>
+                <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="btn btn-outline-dark">{% trans "No, go back to the company settings page" %}</a>
+              </div>
+
+              <div class="col-md-6 col-xs-12">
+
+                <p>{% trans "This is an irreversible dicision, and will remove all your company information. We do not keep anything." %}</p>
+                <form method="post">{% csrf_token %}
+                  <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete" %} {{ company }}" />
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

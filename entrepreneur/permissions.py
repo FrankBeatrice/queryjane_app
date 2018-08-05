@@ -16,3 +16,13 @@ class EntrepreneurPermissions(object):
             return True
 
         return False
+
+    @classmethod
+    def can_delete_company(self, user, company):
+        """
+        Only company owner can delete it.
+        """
+        if company.owner == user.professionalprofile:
+            return True
+
+        return False

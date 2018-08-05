@@ -6,7 +6,9 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from django.views.generic import TemplateView
+from django.views.generic.edit import DeleteView
 from django.views.generic import View
+from django.urls import reverse
 
 from account.models import IndustryCategory
 from app.mixins import CustomUserMixin
@@ -48,6 +50,10 @@ class GeneralCompanyFormView(CustomUserMixin, TemplateView):
                 ),
                 industry_categories=IndustryCategory.objects.all(),
                 general_active=True,
+                can_delete=EntrepreneurPermissions.can_delete_company(
+                    user=self.request.user,
+                    company=self.get_object()
+                )
             )
         )
 
@@ -212,3 +218,39 @@ class ActivateCompanyView(CustomUserMixin, View):
         company.save()
 
         return HttpResponse('success')
+
+
+class DeleteCompanyView(CustomUserMixin, DeleteView):
+    """
+    Company delete view. Only company owner can delete a
+    company. User will be redirected to a view in which
+    he will be asked about confirmation for delete a company
+    definitely. A list with job offers and memberships that
+    will be delete is displayed too.
+    """
+    model = Venture
+    template_name = 'entrepreneur/venture_settings/company_delete.html'
+
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_delete_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    def get_success_url(self):
+        return reverse(
+            'dashboard',
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.get_object()
+        context['general_active'] = True
+
+        return context
