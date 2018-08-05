@@ -4,98 +4,96 @@
 {% block title %}{{ profile }}{% endblock %}
 
 {% block content %}
-<div class="qjane-profesional-profile">
-    <div class="container">
-        <h1>{{ profile }}</h1>
+<div class="container">
+    <h1>{{ profile }}</h1>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <div class="media-object">
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-11 col-md-9">
-                            <img class="img-responsive thumbnail" src="{{ profile.user.get_avatar }}" alt="{{ profile }}">
-                        </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <div class="media-object">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-11 col-md-9">
+                        <img class="img-responsive thumbnail" src="{{ profile.user.get_avatar }}" alt="{{ profile }}">
                     </div>
                 </div>
-
-                {% if can_send_message %}
-                {% get_user_conversation user profile.user as user_conversation  %}
-                <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-to-name="{{ profile }}" data-load-conversation-url="{% if user_conversation %}{% url 'account:ajax_post_conversation_load' user_conversation.pk %}{% endif %}">{% trans 'Send message' %}</button>
-                {% endif %}
-
-                <br>
-                <br>
-
-                <button type="button" id="id_add_user_to_address_book" class="btn btn-info" data-add-user-to-address-book-url="{% url 'account:ajax_add_user_to_address_book' profile.id %}" data-user-for-add-name="{{ profile.user.first_name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
-
-                <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' profile.id %}" data-user-for-remove-name="{{ profile.user.first_name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
-
-                <br>
-                <br>
-
-                <div class="QJProfileDetCategories">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <span>{% if profile.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            {% get_current_language as LANGUAGE_CODE %}
-
-                            <ul class="QJVentureDetCats">
-                            {% for industry_category in profile.industry_categories.all %}
-                                <li>
-                                {% if LANGUAGE_CODE == 'es' %}
-                                {{ industry_category.name_es }}
-                                {% else %}
-                                {{ industry_category.name_en }}
-                                {% endif %}
-                                </li>
-                            {% empty %}
-                                <li>{{ profile.user.first_name }} {% trans 'has not added industry sectors.' %}</li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                {% if profile.user.country or profile.user.city %}
-                <div class="QJVentureDetLocation">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-globe" aria-hidden="true"></i>
-                            <span>{% trans 'Location' %}</span>
-                        </div>
-
-                        <div class="panel-body">
-                            {% if profile.user.country %}
-                            <div>
-                                <img src="{{ profile.country.flag }}">
-                                <span>{{ profile.user.country }}</span>
-                            </div>
-                            {% endif %}
-
-                            {% if profile.user.city %}
-                            <div>
-                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                <span>{{ profile.user.city }} {% if profile.user.state %}, {{ profile.user.state }}.{% endif %}</span>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-9">
-            {% get_profile_description profile as profile_description %}
-                {% if profile_description %}
-                {{ profile_description|safe }}
-                {% else %}
-                <p>{% trans 'There is not information about this profile.' %}</p>
-                {% endif %}
+            {% if can_send_message %}
+            {% get_user_conversation user profile.user as user_conversation  %}
+            <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-to-name="{{ profile }}" data-load-conversation-url="{% if user_conversation %}{% url 'account:ajax_post_conversation_load' user_conversation.pk %}{% endif %}">{% trans 'Send message' %}</button>
+            {% endif %}
+
+            <br>
+            <br>
+
+            <button type="button" id="id_add_user_to_address_book" class="btn btn-info" data-add-user-to-address-book-url="{% url 'account:ajax_add_user_to_address_book' profile.id %}" data-user-for-add-name="{{ profile.user.first_name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
+
+            <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' profile.id %}" data-user-for-remove-name="{{ profile.user.first_name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
+
+            <br>
+            <br>
+
+            <div class="QJProfileDetCategories">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        <span>{% if profile.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
+                    </div>
+
+                    <div class="panel-body">
+                        {% get_current_language as LANGUAGE_CODE %}
+
+                        <ul class="QJVentureDetCats">
+                        {% for industry_category in profile.industry_categories.all %}
+                            <li>
+                            {% if LANGUAGE_CODE == 'es' %}
+                            {{ industry_category.name_es }}
+                            {% else %}
+                            {{ industry_category.name_en }}
+                            {% endif %}
+                            </li>
+                        {% empty %}
+                            <li>{{ profile.user.first_name }} {% trans 'has not added industry sectors.' %}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
                 </div>
+            </div>
+
+            {% if profile.user.country or profile.user.city %}
+            <div class="QJVentureDetLocation">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                        <span>{% trans 'Location' %}</span>
+                    </div>
+
+                    <div class="panel-body">
+                        {% if profile.user.country %}
+                        <div>
+                            <img src="{{ profile.country.flag }}">
+                            <span>{{ profile.user.country }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if profile.user.city %}
+                        <div>
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                            <span>{{ profile.user.city }} {% if profile.user.state %}, {{ profile.user.state }}.{% endif %}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-xs-12 col-sm-9">
+        {% get_profile_description profile as profile_description %}
+            {% if profile_description %}
+            {{ profile_description|safe }}
+            {% else %}
+            <p>{% trans 'There is not information about this profile.' %}</p>
+            {% endif %}
             </div>
         </div>
     </div>
