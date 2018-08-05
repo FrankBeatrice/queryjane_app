@@ -1,68 +1,58 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static greetings i18n %}
 
-{% block title %}{% trans 'Register your company or your profile.' %}{% endblock %}
-
-{% block css %}
-<link href="{% static 'dist/css/account/signup_landing.min.css' %}" rel="stylesheet">
-{% endblock %}
+{% block title %}{% trans 'Welcome to QueryJane' %}{% endblock %}
 
 {% block content %}
-<section class="account QjaneSignupLanding">
-    <div class="container">
-        <div class="row QjaneLandingWelcomeWords">
-        {% get_general_greeting as general_greeting %}
-            <div class="col-md-8 col-md-offset-2 text-center">
-            <h3>{{ general_greeting }} {{ user.first_name }}, {% trans 'welcome to QueryJane, the network to connect with experts and companies in different sectors of the cannabis industry.' %}</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-xs-12 QjaneLandingApplicant">
-                <div class="text-center">
-                    <h3>{% trans 'Register professional profile' %}</h3>
-                </div>
-
-                <p class="h4">{% trans 'If you are an expert in any sector of the industry and want to receive job offers, submit  your professional profile.' %}</p>
-
-                <p class="h4">{% trans 'Select sectors of the industry.' %}</p>
-
-                {% get_current_language as LANGUAGE_CODE %}
-
-                <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}" data-account-url="{% url 'account:profile_update' %}">
-                    {% for industry_category in industry_categories %}
-                    <li>
-                        <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
-                        {% if LANGUAGE_CODE == 'es' %}
-                        {{ industry_category.name_es }}
-                        {% else %}
-                        {{ industry_category.name_en }}
-                        {% endif %}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="QjanePPnextbutton">
-                {% if user.professionalprofile.industry_categories.all %}
-                    <a href="{% url 'account:profile_update' %}" class="btn btn-primary">{% trans 'Account settings' %}</a>
-                {% endif %}
-                </div>
-            </div>
-
-            <div class="col-md-6 col-xs-12 QjaneLandingCreateCompany">
-                <div class="text-center">
-                    <h3>{% trans 'Register company' %}</h3>
-                </div>
-
-                <p class="h4">{% trans 'If you have a company in any sector of the cannabis industry, create your company profile.' %}</p>
-
-                <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-primary">{% trans 'Register company' %}</a>
-            </div>
-        </div>
-
+<div class="container">
+  <div class="row">
+  {% get_general_greeting as general_greeting %}
+    <div class="col-md-8 offset-md-2 text-center h5">
+    {{ general_greeting }} {{ user.first_name }}, {% trans 'welcome to QueryJane, the network to connect with experts and companies in different sectors of the cannabis industry.' %}
     </div>
-</section>
+  </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <div class="text-center">
+                <h3>{% trans 'Register professional profile' %}</h3>
+            </div>
+
+            <p>{% trans 'If you are an expert in any sector of the industry and want to receive job offers, submit  your professional profile.' %}</p>
+
+            <p>{% trans 'Select sectors of the industry.' %}</p>
+
+            {% get_current_language as LANGUAGE_CODE %}
+
+            <ul class="qjane-industry-categories-list" data-update-professional-profile-category-url="{% url 'account:ax_update_professional_profile_category' %}" data-account-url="{% url 'account:profile_update' %}">
+                {% for industry_category in industry_categories %}
+                <li>
+                    <a class="btn {% if industry_category in user.professionalprofile.industry_categories.all %}btn-primary{% else %}btn-ghost-purple{% endif %}" href="javascript:void(0)" data-category-id="{{ industry_category.id }}">
+                    {% if LANGUAGE_CODE == 'es' %}
+                    {{ industry_category.name_es }}
+                    {% else %}
+                    {{ industry_category.name_en }}
+                    {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="jsQjanePPnextbutton"></div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+            <div class="text-center">
+                <h3>{% trans 'Register company' %}</h3>
+            </div>
+
+            <p>{% trans 'If you have a company in any sector of the cannabis industry, create your company profile.' %}</p>
+
+            <a href="{% url 'entrepreneur:venture_form' %}" class="btn btn-primary">{% trans 'Register company' %}</a>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
 
 {% block js %}

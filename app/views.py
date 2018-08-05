@@ -1,25 +1,24 @@
-from account.models import User
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import Q
 from django.http import Http404
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import View
 
-from account.forms import SignUpForm
 from account.forms import CompanyScoreForm
-from account.models import ProfessionalProfile
+from account.forms import SignUpForm
 from account.models import Conversation
+from account.models import ProfessionalProfile
+from account.models import User
 from account.models import UserNotification
 from account.permissions import AddressBookPermissions
 from account.permissions import CompanyScorePermissions
@@ -31,8 +30,8 @@ from entrepreneur.data import JOB_STATUS_ACTIVE
 from entrepreneur.data import JOB_STATUS_CLOSED
 from entrepreneur.data import JOB_TYPE_CHOICES
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
+from entrepreneur.forms import CompanyFilter
 from entrepreneur.forms import JobOffersFilter
-from entrepreneur.forms import VentureFilter
 from entrepreneur.models import Applicant
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
@@ -218,7 +217,7 @@ class CompanyList(ListView):
 
     def get_list_filter(self):
         # Get filter form with the request content as instance.
-        list_filter = VentureFilter(
+        list_filter = CompanyFilter(
             self.request.GET,
         )
 
@@ -253,9 +252,9 @@ class CompanyList(ListView):
                 ).distinct()
 
             # Filter companies by company name.
-            venture_id = form.cleaned_data['venture_id']
-            if venture_id:
-                queryset = queryset.filter(id=venture_id)
+            company_id = form.cleaned_data['company_id']
+            if company_id:
+                queryset = queryset.filter(id=company_id)
 
         return queryset
 
@@ -296,7 +295,7 @@ class CompanyDetail(DetailView):
             if user:
                 if (
                     not user.is_staff and
-                    not EntrepreneurPermissions.can_manage_venture(
+                    not EntrepreneurPermissions.can_manage_company(
                         self.request.user,
                         company,
                     )
@@ -316,7 +315,7 @@ class CompanyDetail(DetailView):
 
         # True if authenticated user has a membership as
         # company administrator.
-        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+        context['can_manage'] = EntrepreneurPermissions.can_manage_company(
             self.request.user,
             company,
         )
@@ -369,6 +368,7 @@ class JobsList(ListView):
     def get_queryset(self):
         # Jobs queryset to return.
         queryset = JobOffer.objects.filter(
+            venture__status=VENTURE_STATUS_ACTIVE,
             status__in=(
                 JOB_STATUS_ACTIVE,
                 JOB_STATUS_CLOSED,
@@ -398,7 +398,7 @@ class JobsList(ListView):
                 ).distinct()
 
             # Filter jobs by company.
-            company_id = form.cleaned_data['venture_id']
+            company_id = form.cleaned_data['company_id']
             if company_id:
                 queryset = queryset.filter(id=company_id)
 
@@ -432,13 +432,27 @@ class JobOfferDetail(DetailView):
         job_offer = self.get_object()
         user = request.user
 
+        # Only platform administrators and company
+        # administrators can view a job offer from
+        # an inactive or hidden company.
+        if job_offer.venture.is_inactive or job_offer.venture.is_hidden:
+            if user:
+                if (
+                    not user.is_staff and
+                    not EntrepreneurPermissions.can_manage_company(
+                        self.request.user,
+                        job_offer.venture,
+                    )
+                ):
+                    raise Http404
+
         # Closed or hidden job offers are visible only
         # for platform administrators or company administrators.
         if job_offer.is_closed or job_offer.is_hidden:
             if user:
                 if (
                     not user.is_staff and
-                    not EntrepreneurPermissions.can_manage_venture(
+                    not EntrepreneurPermissions.can_manage_company(
                         self.request.user,
                         job_offer.venture,
                     )
@@ -465,7 +479,7 @@ class JobOfferDetail(DetailView):
         context['job_offer'] = job_offer
 
         # Company administrators can manage job offers.
-        context['can_manage'] = EntrepreneurPermissions.can_manage_venture(
+        context['can_manage'] = EntrepreneurPermissions.can_manage_company(
             self.request.user,
             job_offer.venture,
         )
@@ -622,36 +636,6 @@ class ContactFormView(FormView):
         )
 
         return redirect('contact_form_success')
-
-
-# TODO: This view must be removed.
-def ajax_login_form(request):
-    if not request.is_ajax():
-        raise Http404
-
-    try:
-        email = (request.POST['login_form-email'] or u'').lower()
-        password = request.POST['login_form-password']
-
-        user_ex = User.objects.get(email=email)
-
-    except User.DoesNotExist:
-        return HttpResponse('fail')
-
-    user = auth.authenticate(
-        username=user_ex.email,
-        password=password,
-    )
-
-    if user is not None:
-        if user.is_active:
-            auth.login(request, user)
-            return HttpResponse('successful_login')
-        else:
-            return HttpResponse('inactive_account')
-
-    else:
-        return HttpResponse('data_error')
 
 
 def user_logout(request):

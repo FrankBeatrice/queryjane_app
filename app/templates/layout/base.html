@@ -59,60 +59,7 @@
 
   <body>
     {% block header %}
-    <header>
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand" href="/">
-            <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
-            <span>(BETA)</span>
-          </a>
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#da-navbarNav" aria-controls="da-navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse text-uppercase" id="da-navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'companies_list' %}">Companies</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'jobs_list' %}">Jobs</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'signup' %}">| Sing up |</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth_login' %}">Log in</a>
-              </li>
-
-              <li class="nav-item">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as languages %}
-
-              {% for lang_code, lang_name in languages %}
-                  {% if LANGUAGE_CODE != lang_code %}
-                  {% language lang_code %}
-                  <a class="nav-link" href="{% url 'landing_page' %}">
-                      | {% if  lang_name == 'Spanish' %}Español|{% else %}English{% endif %}</a>
-                  {% endlanguage %}
-                  {% endif %}
-              {% endfor %}
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-
-      {% block header_content %}{% endblock header_content %}
-    </header>
+    {% include 'layout/menu/inc_dark_navbar.html' %}
     {% endblock header %}
 
     <!-- Django messages -->

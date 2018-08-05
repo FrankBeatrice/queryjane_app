@@ -116,9 +116,9 @@ def venture_as_JSON(venture):
     }
 
 
-class VentureSearch(View):
+class CompanySearch(View):
     def get(self, request, *args, **kwargs):
-        venture_list = []
+        company_list = []
         if 'q' in request.GET and request.GET.get('q'):
             query = request.GET.get('q')
             query_set = Venture.objects.filter(
@@ -126,6 +126,6 @@ class VentureSearch(View):
             ).distinct()
 
             for venture in query_set:
-                venture_list.append(venture_as_JSON(venture))
+                company_list.append(venture_as_JSON(venture))
 
-        return JsonResponse(venture_list, safe=False)
+        return JsonResponse(company_list, safe=False)

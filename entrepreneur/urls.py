@@ -3,11 +3,14 @@ from django.conf.urls import url
 from .views.contact_venture_settings import AjaxContactVentureFormView
 from .views.contact_venture_settings import AjaxLocationVentureFormView
 from .views.contact_venture_settings import AjaxMediaVentureFormView
-from .views.contact_venture_settings import ContactVentureFormView
-from .views.general_venture_settings import GeneralVentureFormView
+from .views.contact_venture_settings import ContactCompanyFormView
+from .views.general_venture_settings import GeneralCompanyFormView
 from .views.general_venture_settings import UpdateVentureDescriptionForm
-from .views.general_venture_settings import UpdateVentureLogoForm
-from .views.general_venture_settings import VentureCategoryView
+from .views.general_venture_settings import UpdateCompanyLogoForm
+from .views.general_venture_settings import CompanyCategoryView
+from .views.general_venture_settings import DeactivateCompanyView
+from .views.general_venture_settings import ActivateCompanyView
+from .views.general_venture_settings import DeleteCompanyView
 from .views.manage_job_offers import JobOfferCloseView
 from .views.manage_job_offers import JobOfferFormView
 from .views.manage_job_offers import JobOffersListView
@@ -15,9 +18,9 @@ from .views.manage_job_offers import JobOfferUpdateView
 from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
-from .views.roles_venture_settings import RolesVentureFormView
+from .views.roles_venture_settings import RolesCompanyFormView
 from .views.venture_views import VentureFormView
-from .views.venture_views import VentureSearch
+from .views.venture_views import CompanySearch
 
 
 urlpatterns = [
@@ -27,38 +30,56 @@ urlpatterns = [
         name='venture_form',
     ),
     url(
-        r'^ax_venture_autocomplete/$',
-        VentureSearch.as_view(),
-        name='ax_ventury_autocomplete',
+        r'^ax_company_autocomplete/$',
+        CompanySearch.as_view(),
+        name='ax_company_autocomplete',
     ),
 
     url(
         r'^general/(?P<slug>[-\w]+)/$',
-        GeneralVentureFormView.as_view(),
+        GeneralCompanyFormView.as_view(),
         name='general_venture_form',
     ),
 
     url(
         r'^ax_settings/(?P<slug>[-\w]+)/update_logo/$',
-        UpdateVentureLogoForm.as_view(),
-        name='update_venture_logo_form',
+        UpdateCompanyLogoForm.as_view(),
+        name='update_company_logo_form',
     ),
 
     url(
-        r'^ax_update_venture_category/(?P<slug>[-\w]+)/$',
-        VentureCategoryView.as_view(),
-        name='ax_update_venture_category',
+        r'^ax_update_company_category/(?P<slug>[-\w]+)/$',
+        CompanyCategoryView.as_view(),
+        name='ax_update_company_category',
     ),
 
     url(
         r'^ax_settings/(?P<slug>[-\w]+)/update_description/$',
         UpdateVentureDescriptionForm.as_view(),
-        name='update_venture_description_form',
+        name='update_company_description_form',
+    ),
+
+    url(
+        r'^ax_settings/(?P<slug>[-\w]+)/deactivate/$',
+        DeactivateCompanyView.as_view(),
+        name='ax_deactivate_company',
+    ),
+
+    url(
+        r'^ax_settings/(?P<slug>[-\w]+)/activate/$',
+        ActivateCompanyView.as_view(),
+        name='ax_activate_company',
+    ),
+
+    url(
+        r'^(?P<slug>[-\w]+)/delete/$',
+        DeleteCompanyView.as_view(),
+        name='delete_company',
     ),
 
     url(
         r'^settings/(?P<slug>[-\w]+)/contact/$',
-        ContactVentureFormView.as_view(),
+        ContactCompanyFormView.as_view(),
         name='contact_venture_form',
     ),
 
@@ -82,7 +103,7 @@ urlpatterns = [
 
     url(
         r'^settings/(?P<slug>[-\w]+)/roles/$',
-        RolesVentureFormView.as_view(),
+        RolesCompanyFormView.as_view(),
         name='roles_venture_form',
     ),
 

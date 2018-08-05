@@ -20,26 +20,29 @@ from entrepreneur.models import AdministratorMembership
 from entrepreneur.data import QJANE_ADMIN
 
 
-class RolesVentureFormView(CustomUserMixin, TemplateView):
-    template_name = 'entrepreneur/venture_settings/roles_venture_form.html'
+class RolesCompanyFormView(CustomUserMixin, TemplateView):
+    template_name = 'entrepreneur/venture_settings/roles_company_form.html'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug'),
+        )
 
     def get(self, *args, **kwargs):
-        venture = self.get_object()
+        company = self.get_object()
 
-        memberships = venture.administratormembership_set.all()
+        memberships = company.administratormembership_set.all()
 
         return self.render_to_response(
             self.get_context_data(
-                venture=venture,
+                company=company,
                 memberships=memberships,
                 userprofile_form=ProfileAutocompleteForm(prefix='role'),
                 roles_active=True,
@@ -48,13 +51,18 @@ class RolesVentureFormView(CustomUserMixin, TemplateView):
 
     @transaction.atomic
     def post(self, request, **kwargs):
+        company = self.get_object()
+
+        if company.is_inactive:
+            raise Http404
+
         membership_form = RoleVentureForm(
             request.POST,
         )
 
         if membership_form.is_valid():
             profile_slug = membership_form.cleaned_data['profile_slug']
-            venture_slug = membership_form.cleaned_data['venture_slug']
+            company_slug = membership_form.cleaned_data['venture_slug']
             role = int(membership_form.cleaned_data['role'])
 
             profile = get_object_or_404(
@@ -62,20 +70,20 @@ class RolesVentureFormView(CustomUserMixin, TemplateView):
                 slug=profile_slug,
             )
 
-            venture = get_object_or_404(
+            company = get_object_or_404(
                 Venture,
-                slug=venture_slug,
+                slug=company_slug,
             )
 
             if AdministratorMembership.objects.filter(
                 admin=profile,
-                venture=venture,
+                venture=company,
             ):
                 return HttpResponse('registered-membership')
 
             membership = AdministratorMembership.objects.create(
                 admin=profile,
-                venture=venture,
+                venture=company,
                 role=role,
                 created_by=request.user.professionalprofile,
             )
@@ -83,7 +91,7 @@ class RolesVentureFormView(CustomUserMixin, TemplateView):
             UserNotification.objects.create(
                 notification_type=NEW_ENTREPRENEUR_ADMIN,
                 noty_to=profile.user,
-                venture_from=venture,
+                venture_from=company,
                 description='Invitation to administer company from {}.'.format(
                     self.request.user.professionalprofile,
                 ),

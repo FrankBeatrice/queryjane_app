@@ -24,7 +24,7 @@ $(function () {
             var account_url = $('.qjane-industry-categories-list').data('account-url');
 
             if (response === 'success') {
-                $('.QjanePPnextbutton').html('<a href="' + account_url + '" class="btn btn-primary">Completar perfil</a>');
+                $('.jsQjanePPnextbutton').html('<a href="' + account_url + '" class="btn btn-primary">Completar perfil</a>');
             }  else {
                 alert("something is wrong. Please reload and try again.")
             }

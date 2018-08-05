@@ -1,10 +1,10 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - {% trans 'Members settings' %}{% endblock %}
+{% block title %}{{ company }} - {% trans 'Members settings' %}{% endblock %}
 
 {% block content %}
-<section class="account qjane-venture-settings" data-venture-slug="{{ venture.slug }}">
+<section class="account qjane-venture-settings" data-venture-slug="{{ company.slug }}">
     <div class="container">
         <div class="row">
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
@@ -24,16 +24,23 @@
                     </div>
                 </div>
 
+                {% if company.is_inactive %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>{{ company }}</strong> {% trans "is inactive. If you want to create a membership, before you must activate it." %}
+
+                    <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_activate_container">{% trans "Go to activate" %} {{ company }}.</a>
+                </div>
+                {% else %}
                 <div class="panel panel-default qjane-role-search">
                     <div class="panel-body">
                         <h4>{% trans 'Search by name, email or username.' %}</h4>
 
-                        <p>{% trans 'Search your partners and allow them to administrate' %} <strong>{{ venture }}.</strong></p>
+                        <p>{% trans 'Search your partners and allow them to administrate' %} <strong>{{ company }}.</strong></p>
                     </div>
 
                     <div class="row" style="padding-bottom: 50px;">
                         <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                            <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' venture.slug %}">
+                            <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' company.slug %}">
                                 <div class="form-group">
                                 {% render_field userprofile_form.userprofile class+="form-control" %}
                                 {{ userprofile_form.userprofile.errors }}
@@ -49,6 +56,7 @@
                         <ul class="media-list qjane-venture-new-role-list-to-confirm"></ul>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

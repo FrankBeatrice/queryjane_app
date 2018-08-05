@@ -3,150 +3,141 @@
 
 {% block title %}{% trans 'Companies' %}{% endblock %}
 
-<!-- TODO: FIX AUTOCOMPLETE -->
-
 {% block css %}
-<link href="{% static 'dist/css/entrepreneur/venture_list.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/company_list.min.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block header %}
-{% include 'layout/menu/inc_dark_navbar.html' %}
-{% endblock header %}
-
 {% block content %}
-<section class="account">
-    <div class="container">
-        <div class="QJVFilterForm">
-            <form id="id_QJVfilterForm" method="get" class="venture-form clearfix">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
-                            {{ filter_form.country_search.label_tag }}
-                            {% render_field filter_form.country_search class+="form-control" %}
-                            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+<div class="container">
+  <div class="QJVFilterForm">
+    <form id="id_QJVfilterForm" method="get" class="company-form clearfix">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
+            {{ filter_form.country_search.label_tag }}
+            {% render_field filter_form.country_search class+="form-control" %}
+            <img id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
 
-                            <div style="display:none">
-                            {% render_field filter_form.country_code %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ filter_form.category.label_tag }}
-                            {% render_field filter_form.category class+="form-control" %}
-                            {{ filter_form.category.errors }}
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
-                            {{ filter_form.city_search.label_tag }}
-                            {% render_field filter_form.city_search class+="form-control" %}
-                            {{ filter_form.city_search.errors }}
-
-                            <div style="display:none">
-                            {% render_field filter_form.city_id %}
-                            </div>
-                        </div>
-                        <div id="id_QjaneVListAut" class="form-group" data-ax-ventury-autocomplete-url="{% url 'entrepreneur:ax_ventury_autocomplete' %}">
-                            {{ filter_form.venture_search.label_tag }}
-                            {% render_field filter_form.venture_search class+="form-control" %}
-                            {{ filter_form.venture_search.errors }}
-
-                            <div style="display:none">
-                            {% render_field filter_form.venture_id %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
-                <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
-            </form>
-        </div>
-        <br>
-
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title mb-0 p-2">{% trans 'Companies' %}</h3>
+            <div style="display:none">
+            {% render_field filter_form.country_code %}
             </div>
+          </div>
 
-            <div class="panel-body QJVentList">
-                <table class="table table-striped venture-table">
-                    <tbody>
-                        {% for company in company_list %}
-                        <tr>
-                            <td>
-                                <div class="QJVentListItem venture-item">
-                                    <div class="row">
-                                        <div class="hidden-xs col-sm-3 col-lg-2">
-                                            <img class="thumbnail img-fluid venture-item__company-img" src="{{ company.get_logo }}" alt="{{ company }}">
-                                        </div>
-
-                                        <div class="col-xs-12 col-sm-9 col-lg-10">
-                                            <div class="QJVentureListData">
-                                                <h3 class="venture-item__company-title">
-                                                    {{ company }}
-                                                </h3>
-
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-sm-6">
-                                                        <div class="AjVentureListLocation">
-                                                            <p>
-                                                                <img src="{{ company.country.flag }}">
-                                                                <span>{{ company.country }}</span>
-                                                                <span> - {{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
-                                                            </p>
-
-                                                            <p>
-                                                            {% if company.address %}
-                                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                                <span>{{ company.address }}</span>
-                                                            {% endif %}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xs-12 col-sm-6">
-                                                        {% get_current_language as LANGUAGE_CODE %}
-                                                        <ul class="QJventureListCategories">
-                                                        {% for category in company.industry_categories.all %}
-                                                            <li>
-                                                            {% if LANGUAGE_CODE == 'es' %}
-                                                            {{ category.name_es }}
-                                                            {% else %}
-                                                            {{ category.name_en }}
-                                                            {% endif %}
-                                                            </li>
-                                                        {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-sm-3 col-md-2">
-                                                        <a href="{{ company.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td>
-                                {% trans 'No companies found.' %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+          <div class="form-group">
+          {{ filter_form.category.label_tag }}
+          {% render_field filter_form.category class+="form-control" %}
+          {{ filter_form.category.errors }}
+          </div>
         </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+              {{ filter_form.city_search.label_tag }}
+              {% render_field filter_form.city_search class+="form-control" %}
+              {{ filter_form.city_search.errors }}
+
+              <div style="display:none">
+              {% render_field filter_form.city_id %}
+              </div>
+          </div>
+
+          <div id="id_QjaneVListAut" class="form-group" data-ax-company-autocomplete-url="{% url 'entrepreneur:ax_company_autocomplete' %}">
+              {{ filter_form.company_search.label_tag }}
+              {% render_field filter_form.company_search class+="form-control" %}
+              {{ filter_form.company_search.errors }}
+
+              <div style="display:none">
+              {% render_field filter_form.company_id %}
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
+
+      <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+    </form>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title mb-0 p-2">{% trans 'Companies' %}</h3>
     </div>
-</section>
+
+    <div class="panel-body">
+      <table class="table table-striped company-table">
+        <tbody>
+          {% for company in company_list %}
+          <tr>
+            <td>
+              <div class="company-item">
+                <div class="row">
+                  <div class="hidden-xs col-sm-3 col-lg-2">
+                    <img class="thumbnail img-fluid" src="{{ company.get_logo }}" alt="{{ company }}">
+                  </div>
+
+                  <div class="col-xs-12 col-sm-9 col-lg-10">
+                    <h3>
+                        {{ company }}
+                    </h3>
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <p>
+                          <img src="{{ company.country.flag }}">
+                          <span>{{ company.country }}</span>
+                          <span> - {{ company.city }} {% if company.state %}, {{ company.state }}.{% endif %}</span>
+                        </p>
+
+                        <p>
+                        {% if company.address %}
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          <span>{{ company.address }}</span>
+                        {% endif %}
+                        </p>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-6">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <ul>
+                        {% for category in company.industry_categories.all %}
+                          <li>
+                          {% if LANGUAGE_CODE == 'es' %}
+                          {{ category.name_es }}
+                          {% else %}
+                          {{ category.name_en }}
+                          {% endif %}
+                          </li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-3 col-md-2">
+                        <a href="{{ company.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td>
+            {% trans 'No companies found.' %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
-<script src="{% static 'dist/js/entrepreneur/venture_list.min.js' %}"></script>
+<script src="{% static 'dist/js/entrepreneur/company_list.min.js' %}"></script>
 {% endblock %}

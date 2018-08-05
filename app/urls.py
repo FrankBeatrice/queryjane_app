@@ -6,7 +6,6 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.conf.urls.i18n import i18n_patterns
 
-from .views import ajax_login_form
 from .views import ContactFormView
 from .views import LandingPageView
 from .views import DashboardView
@@ -115,13 +114,6 @@ urlpatterns += i18n_patterns(
             ),
         ),
         name='password_reset_confirm',
-    ),
-
-    # Login Form
-    url(
-        r'^general-login-form/$',
-        ajax_login_form,
-        name='ajax_login_form',
     ),
 
     url(

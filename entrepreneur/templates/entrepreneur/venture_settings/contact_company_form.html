@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - {% trans 'Contact settings' %}{% endblock %}
+{% block title %}{{ company }} - {% trans 'Contact settings' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings">
@@ -18,7 +18,7 @@
                     <div class="panel-body QjaneVentureContactForm">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form method="POST" id="id_venture_contact_form" data-venture-contact-form-url="{% url 'entrepreneur:ax_contact_venture_form' venture.id %}">
+                                <form method="POST" id="id_venture_contact_form" data-venture-contact-form-url="{% url 'entrepreneur:ax_contact_venture_form' company.id %}">
                                     {% csrf_token %}
                                     <div>
                                         <label>
@@ -63,7 +63,7 @@
                                 <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Contact data updated correctly.' %}</div>
                                 <div class="alert alert-danger" role="alert" style="display:none;">{% trans 'There are errors in the form. Make sure that the city corresponds to the country you have chosen.' %}</div>
 
-                                <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' venture.id %}">
+                                <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' company.id %}">
                                     {% csrf_token %}
 
                                     <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
@@ -136,7 +136,7 @@
                     <div class="panel-body QJVentureMediaUpdate">
                         <div class="row">
                             <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Social media information updted correctly.' %}</div>
-                            <form method="POST" id="id_venture_media_form" data-venture-media-form-url="{% url 'entrepreneur:ax_media_venture_form' venture.id %}">
+                            <form method="POST" id="id_venture_media_form" data-venture-media-form-url="{% url 'entrepreneur:ax_media_venture_form' company.id %}">
                                 {% csrf_token %}
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="form-group">

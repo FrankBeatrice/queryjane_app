@@ -217,6 +217,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    def get_short_name(self):
+        return self.first_name if self.first_name else self.email.split('@')[0]
+
     @property
     def get_avatar(self):
         avatar = '/static/img/profile_default_avatar.svg'

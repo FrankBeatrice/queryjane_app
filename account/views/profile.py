@@ -7,10 +7,12 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
+from django.views.generic.edit import DeleteView
 
 from account.forms import AvatarForm
 from account.forms import ProfileDescriptionForm
@@ -27,7 +29,7 @@ def profile_as_JSON(profile):
     Function used to return a JSON object with information
     about an user. Returned information is made with the
     user id and the user name. This function is used in the
-    user profile autocomplete requests.
+    user profile auto-complete requests.
     """
     name = '{0} ({1})'.format(
         profile.user.get_full_name,
@@ -43,7 +45,7 @@ def profile_as_JSON(profile):
 class ProfileSearch(LoginRequiredMixin, View):
     """
     View to receive a get request with a query to
-    search users ba email, name or username. It
+    search users be email, name or username. It
     uses the profile_as_JSON to made the response.
     """
     def get(self, request, *args, **kwargs):
@@ -65,7 +67,7 @@ class ProfileSearch(LoginRequiredMixin, View):
 class NewUserLandingView(LoginRequiredMixin, TemplateView):
     """
     Landing page to new registered users. A form to select
-    interesting indsutry categories is displayed here.
+    interesting industry categories is displayed here.
     """
     template_name = 'account/signup_landing.html'
 
@@ -243,3 +245,22 @@ class EmailNotificationsUpdateView(LoginRequiredMixin, View):
         professionalprofile.save()
 
         return HttpResponse('success')
+
+
+class DeleteAccountView(LoginRequiredMixin, DeleteView):
+    """
+    Account delete view. Users are the unique owners of their
+    data, and for this reason, they can delete their own
+    account when they want. If users is the owner of a company,
+    the company will be deleted too.
+    """
+    model = User
+    template_name = 'account/account_delete.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse(
+            'landing_page',
+        )

@@ -23,6 +23,7 @@ from account.views.profile import UpdateProfileAvatarForm
 from account.views.profile import UpdateProfileDescriptionForm
 from account.views.profile import UpdateProfileFormView
 from account.views.profile import EmailNotificationsUpdateView
+from account.views.profile import DeleteAccountView
 
 urlpatterns = [
     # API Userprofile
@@ -42,6 +43,12 @@ urlpatterns = [
         r'^update/$',
         UpdateProfileFormView.as_view(),
         name='profile_update',
+    ),
+
+    url(
+        r'^delete/$',
+        DeleteAccountView.as_view(),
+        name='account_delete',
     ),
 
     url(

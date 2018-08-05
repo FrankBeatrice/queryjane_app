@@ -14,7 +14,7 @@ $(function () {
     });
 
     // Logo Validation
-    $('#id_venture_change_logo_form').validate({
+    $('#id_company_change_logo_form').validate({
         ignore: [],
         rules: {
             logo: {
@@ -29,23 +29,23 @@ $(function () {
         },
         errorPlacement: function(error, element) {
             if (element.attr('name') === 'logo') {
-                error.insertAfter('#id_venture_logo_update_link');
+                error.insertAfter('#id_company_logo_update_link');
             }
         }
     });
 
 
-    $('#id_venture_logo_update_link').on('click', function() {
+    $('#id_company_logo_update_link').on('click', function() {
         $('#id_logo').click();
     });
 
     $('#id_logo').on('change', function () {
-        $('#submit_venture_logo_link').click();
+        $('#submit_company_logo_link').click();
     });
 
-    var venture_update_logo_url = $('#id_venture_change_logo_form').data('venture-update-logo-url');
+    var venture_update_logo_url = $('#id_company_change_logo_form').data('company-update-logo-url');
 
-    $('#id_venture_change_logo_form').on('submit', function() {
+    $('#id_company_change_logo_form').on('submit', function() {
         var formData = new FormData(this);
 
         $.ajax({
@@ -55,7 +55,7 @@ $(function () {
             processData: false,
             contentType: false,
             success:function(response){
-                $('.QjaneVentureGeneralInfo .alert-warning').remove();
+                $('.jsUpdateCompanyLogoMessage').remove();
                 $('.QjaneVentureSettingsLogoContainer img').attr('src', response.content);
             },
         });
@@ -63,7 +63,7 @@ $(function () {
     });
 
     // Update venture categories
-    var venture_category_url = $('.qjane-industry-categories-list').data('update-venture-category-url');
+    var venture_category_url = $('.qjane-industry-categories-list').data('update-company-category-url');
 
     $(".qjane-industry-categories-list").on('click', '.btn', function () {
         var category_id = $(this).data('category-id');
@@ -85,7 +85,7 @@ $(function () {
         $.post(venture_category_url, {'category_id': category_id, 'new_status': new_status}, function (response) {
             if (response == 'minimum_error') {
                 cat_pressed_button.addClass('btn-primary').removeClass('btn-ghost-purple');
-                $('.QjaneEmptyCategoriesBug').text('debes elegir al menos un sector.');
+                $('.QjaneEmptyCategoriesBug').text('You must choose at least one sector.');
 
                 setTimeout(function(){
                      $('.QjaneEmptyCategoriesBug').text('');
@@ -101,9 +101,9 @@ $(function () {
     });
 
 
-    var venture_update_description_url = $('.QjaneVentureSettingsDescriptionContainer').data('update-venture-description-form');
+    var venture_update_description_url = $('.jsDescriptionCard').data('update-company-description-form');
 
-    $('#id_venture_change_description_form').on('submit', function() {
+    $('#id_company_change_description_form').on('submit', function() {
         if($(this).valid()) {
             var formData = new FormData(this);
 
@@ -114,8 +114,8 @@ $(function () {
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('.venture_description_es_content').html(response.content.description_es);
-                    $('.venture_description_en_content').html(response.content.description_en);
+                    $('.company_description_es_content').html(response.content.description_es);
+                    $('.company_description_en_content').html(response.content.description_en);
 
                     // Use updated_es and updated_en for hide description_field_container
                     $('.description_field_container').hide();
@@ -123,11 +123,11 @@ $(function () {
 
                     // Sucess message
                     if (response.content.updated_es) {
-                        $('.QjaneUpdatedSPdescVenture').html('<div class="alert alert-success" role="alert">Successful update</div>');
+                        $('.QjaneUpdatedSPdescCompany').html('<div class="alert alert-success" role="alert">Successful update</div>');
                     }
 
                     if (response.content.updated_en) {
-                        $('.QjaneUpdatedENdescVenture').html('<div class="alert alert-success" role="alert">Successful update</div>');
+                        $('.QjaneUpdatedENdescCompany').html('<div class="alert alert-success" role="alert">Successful update</div>');
                     }
                 },
             });
@@ -137,7 +137,7 @@ $(function () {
     });
 
     // Validate
-    $('#id_venture_change_description_form').validate({
+    $('#id_company_change_description_form').validate({
         ignore: [],
         rules: {
             description_en: {
@@ -156,5 +156,73 @@ $(function () {
                 error.insertAfter(element);
             }
         }
+    });
+
+    // Scroll to company settings section to activate it again.
+    $("#id_activate_link_scroll").on("click", function() {
+      $("html, body").animate({ scrollTop: $('#id_activate_container').offset().top }, 1000);
+    });
+
+    // Action to deactivate company on "Deactivate" click action.
+    $('.jsDeactivateCompany').on('click', function() {
+        var deactivate_company_url = $(this).data("deactivate-company-url");
+
+        $.confirm({
+            title: 'Do you want to deactivate this company?',
+            content: 'Company profile page, and all the information related to the company will only be available for users with administrator membership.',
+            buttons: {
+                deactivate: {
+                    btnClass: 'btn-warning',
+                    action: function(){
+                      $.post(deactivate_company_url, function (response) {
+                          if (response === 'success') {
+                            // Hide deactivate button.
+                            $('#id_deactivate_container').hide();
+                            // Hide activate button.
+                            $('#id_activate_container').show();
+                            // Hide deactivate header alert.
+                            $(".jsInactiveAlert").show();
+
+                            $.alert({
+                                title: 'Deactivated!',
+                                content: 'This company has been deactivated. You can activate it again when you want.',
+                            });
+
+                          } else {
+                            $.alert({
+                                title: 'Error!',
+                                content: 'something is wrong. Please reload and try again.',
+                            });
+                          }
+                      });
+                    }
+                },
+                cancel: function () {}
+            }
+        });
+    });
+
+    // Action to activate company on "Activate" click action.
+    $('.jsActivateCompany').on('click', function() {
+        $.post($(this).data("activate-company-url"), function (response) {
+            if (response === 'success') {
+              // Show deactivate button.
+              $('#id_deactivate_container').show();
+              // Hide deactivate button.
+              $('#id_activate_container').hide();
+              // Show deactivated company alert message.
+              $(".jsInactiveAlert").hide();
+
+              $.alert({
+                  title: 'Activated!',
+                  content: 'This company has been activated!!!',
+              });
+            } else {
+              $.alert({
+                  title: 'Error!',
+                  content: 'something is wrong. Please reload and try again.',
+              });
+            }
+        });
     });
 })

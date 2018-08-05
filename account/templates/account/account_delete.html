@@ -1,0 +1,70 @@
+{% extends "layout/base.html" %}
+{% load static widget_tweaks i18n %}
+
+{% block title %}{% trans 'Delete account' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="alert alert-warning" role="alert">
+        {% trans "Are you sure that you want to delete your account?" %}
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          {% trans "You are your data owner" %}
+        </div>
+
+        <div class="card-body">
+          <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
+
+          <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page." %}</a></p> 
+        </div>
+      </div>
+
+      {% if user.professionalprofile.venture_set.count %}
+      <div class="card">
+        <div class="card-header">
+          {% trans "The following companies will be deleted" %}
+        </div>
+
+        <div class="card-body">
+          <p>{% trans "You are the owner of the following companies, and, for this reason, all the information related to them will be deleted too." %} </p>
+
+          <ul>
+            {% for company in user.professionalprofile.venture_set.all %}
+            <li>
+              <a href="{{ company.get_absolute_url }}">{{ company }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card">
+        <div class="card-header">
+          {% trans "Delete account confirmation" %}
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title text-center">{% trans "Are you sure you want to delete your account definitely?" %}</h5>
+
+          <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <a href="{% url 'account:profile_update' %}" class="btn btn-outline-dark">{% trans "No, go back to my account settings page" %}</a>
+              </div>
+
+              <div class="col-md-6 col-xs-12">
+                <form method="post">{% csrf_token %}
+                  <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete my account" %}" />
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

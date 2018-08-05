@@ -10,9 +10,9 @@ class PrivacyVentureFormView(CustomUserMixin, TemplateView):
     template_name = 'entrepreneur/venture_settings/privacy_venture_form.html'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):

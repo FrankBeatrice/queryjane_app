@@ -1,7 +1,7 @@
 {% extends "layout/index.html" %}
 {% load static widget_tweaks i18n %}
 
-{% block title %}{{ venture }} - {% trans 'Job offer form' %}{% endblock %}
+{% block title %}{{ company }} - {% trans 'Job offer form' %}{% endblock %}
 
 {% block css %}
 <link href="{% static 'dist/css/entrepreneur/job_offer_form.min.css' %}" rel="stylesheet">
@@ -14,7 +14,13 @@
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
+                {% if company.is_inactive %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>{{ company }}</strong> {% trans "is inactive. If you want to create a job offer, before you must activate it." %}
 
+                    <a href="{% url 'entrepreneur:general_venture_form' company.slug %}#id_activate_container">{% trans "Go to activate" %} {{ company }}.</a>
+                </div>
+                {% else %}
                 <div class="alert alert-info" role="alert">{% trans 'Job offers will be automatically closed 60 days after created.' %}</div>
 
                 <div class="panel panel-primary">
@@ -143,6 +149,7 @@
                         </form>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

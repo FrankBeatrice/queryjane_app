@@ -1,65 +1,61 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load widget_tweaks static i18n %}
 
 {% block title %}{% trans 'Contact Us' %}{% endblock %}
 
-{% block navbar %}
-{% include 'layout/menu/_auth_and_non_auth_navbar.html' %}
-{% endblock %}
-
 {% block content %}
 <section>
-    <div class="container">
-        <div class="QJContactForm">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                    <h1 class="text-center">{% trans 'Contact Us!' %}</h1>
-                    
-                    <p class="h5 text-center">{% trans 'Do you think we can help you with advice in the cannabis industry?' %}</p>
-                    <p class="h5 text-center">{% trans 'Do you have questions about the use of the platform?' %}</p>
-                    <p class="h5 text-center">---</p>
-
-                    <p class="h5">{% trans 'Feel free to contact us, we will be happy to talk about how we can help boost the cannabis industry and to listen your doubts and suggestions.' %}</p>
-
-                    <form method="post" id="idContactForm">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            {{ form.subject.label_tag }}
-                            {% render_field form.subject class+="form-control" %}
-                            {{ form.subject.errors }}
-                        </div>
-
-                        <div class="form-group name">
-                            {{ form.name.label_tag }}
-                            {% render_field form.name class+="form-control" %}
-                            {{ form.name.errors }}
-                        </div>
-
-                        <div class="form-group email" {% if user.is_authenticated %}style="display:none;"{% endif %}>
-                            {{ form.email.label_tag }}
-                            {% render_field form.email class+="form-control" %}
-                            {{ form.email.errors }}
-                        </div>
-
-                        <div class="form-group phone">
-                            {{ form.phone.label_tag }}
-                            {% render_field form.phone class+="form-control" %}
-                            {{ form.phone.errors }}
-                        </div>
-
-                        <div class="form-group message">
-                            {{ form.message.label_tag }}
-                            {% render_field form.message class+="form-control" %}
-                            {{ form.message.errors }}
-                        </div>
-                        <button type="submit" class="btn btn-primary">{% trans 'send' %}</button>
-                    </form>
-                    <br>
-                    <br>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="text-center">
+          <h1>{% trans 'Contact Us!' %}</h1>
+          
+          <p>{% trans 'Do you think we can help you with advice in the cannabis industry?' %}</p>
+          <p>{% trans 'Do you have questions about the use of the platform?' %}</p>
+          <p>---</p>
         </div>
+
+        <p>{% trans 'Feel free to contact us, we will be happy to talk about how we can help boost the cannabis industry and to listen your doubts and suggestions.' %}</p>
+
+        <form method="post" id="idContactForm">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.subject.label_tag }}
+                {% render_field form.subject class+="form-control" %}
+                {{ form.subject.errors }}
+            </div>
+
+            <div class="form-group name">
+                {{ form.name.label_tag }}
+                {% render_field form.name class+="form-control" %}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="form-group email {% if user.is_authenticated %}d-none{% endif %}">
+                {{ form.email.label_tag }}
+                {% render_field form.email class+="form-control" %}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-group phone">
+                {{ form.phone.label_tag }}
+                {% render_field form.phone class+="form-control" %}
+                {{ form.phone.errors }}
+            </div>
+
+            <div class="form-group message">
+                {{ form.message.label_tag }}
+                {% render_field form.message class+="form-control" %}
+                {{ form.message.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary">{% trans 'send' %}</button>
+        </form>
+        <br>
+        <br>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock %}
 

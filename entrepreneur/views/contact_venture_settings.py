@@ -16,28 +16,31 @@ from place.models import City
 from place.models import Country
 
 
-class ContactVentureFormView(CustomUserMixin, TemplateView):
-    template_name = 'entrepreneur/venture_settings/contact_venture_form.html'
+class ContactCompanyFormView(CustomUserMixin, TemplateView):
+    template_name = 'entrepreneur/venture_settings/contact_company_form.html'
 
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object()
+            company=self.get_object()
         )
 
     def get_object(self):
-        return get_object_or_404(Venture, slug=self.kwargs.get('slug'))
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug'),
+        )
 
     def get(self, *args, **kwargs):
-        venture = self.get_object()
-        contact_form = ContactVentureForm(instance=venture)
-        media_form = SocialMediaVentureForm(instance=venture)
-        location_form = LocationVentureForm(instance=venture)
+        company = self.get_object()
+        contact_form = ContactVentureForm(instance=company)
+        media_form = SocialMediaVentureForm(instance=company)
+        location_form = LocationVentureForm(instance=company)
 
         return self.render_to_response(
             self.get_context_data(
-                venture=venture,
-                country_instance=venture.country,
+                company=company,
+                country_instance=company.country,
                 contact_form=contact_form,
                 media_form=media_form,
                 location_form=location_form,
@@ -48,9 +51,9 @@ class ContactVentureFormView(CustomUserMixin, TemplateView):
 
 class AjaxContactVentureFormView(CustomUserMixin, View):
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -80,9 +83,9 @@ class AjaxContactVentureFormView(CustomUserMixin, View):
 
 class AjaxMediaVentureFormView(CustomUserMixin, View):
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
@@ -112,9 +115,9 @@ class AjaxMediaVentureFormView(CustomUserMixin, View):
 
 class AjaxLocationVentureFormView(CustomUserMixin, View):
     def test_func(self):
-        return EntrepreneurPermissions.can_manage_venture(
+        return EntrepreneurPermissions.can_manage_company(
             user=self.request.user,
-            venture=self.get_object(),
+            company=self.get_object(),
         )
 
     def get_object(self):
