@@ -1,7 +1,7 @@
 {% load i18n entrepreneur_tags %}
 <tr>
     <td>
-        <img class="thumbnail img-responsive" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
+        <img class="thumbnail img-fluid" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
         <p class="h4">
             <a href="{{ company.get_absolute_url }}">{{ company }}</a>
 
@@ -36,7 +36,7 @@
             <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
                 <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
             </a>
-            
+
             <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
                 <i class="fa fa-fire"></i> Activate
             </a>
