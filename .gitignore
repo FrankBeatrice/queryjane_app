@@ -12,6 +12,7 @@ env/
 build/
 develop-eggs/
 dist/
+public/
 downloads/
 eggs/
 .eggs/
@@ -107,7 +108,6 @@ ENV/
 *.swn
 *.swo
 *.swp
-*.lock
 
 # OS files
 .DS_Store
