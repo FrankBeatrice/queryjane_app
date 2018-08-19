@@ -1,0 +1,29 @@
+.jobs-form {
+  #id_QjaneVFcountryAutImg {
+    position: absolute;
+  }
+}
+
+.jobs-item {
+  padding: 8px 10px;
+
+  &__offer-title {
+    margin-top: 0;
+
+    @media screen and (min-width: 768px) {
+      margin-top: 20px;
+    }
+  }
+
+  &__company-title {
+    margin-top: 0;
+  }
+
+  hr {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.jobs-table {
+  margin-bottom: 0;
+}

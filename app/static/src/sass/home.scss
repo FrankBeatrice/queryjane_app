@@ -1,0 +1,46 @@
+@import 'layout/variables';
+
+.navbar {
+  z-index: 1;
+  margin-bottom: 0;
+}
+// General styles END
+
+.qj-home-background {
+  background-image: url('../img/home/background-photo.jpg');
+  position: absolute;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.qj-home-register {
+  margin-top: 12%;
+  margin-bottom: 12%;
+  background-color: rgba(0, 0, 0, .8);
+  color: #fff;
+
+  .panel-heading {
+    background-color: rgba(0, 0, 0, .8);
+    color: #fff;
+  }
+
+  .social-network-wrapper {
+    margin-bottom: 15px;
+
+    @media screen and (min-width: 992px) {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.QJHcountryCount .fa {
+  margin-right: 5px;
+}
+
+.QJHDivider {
+  margin-right: 5px;
+  margin-left: 5px;
+}
