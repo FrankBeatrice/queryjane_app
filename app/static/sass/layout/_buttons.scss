@@ -1,30 +1,30 @@
 // Btn Ghost Purple
 .btn-ghost-purple {
-  color: purple;
+  color: $qj-purple;
   background-color: transparent;
-  border-color: purple;
+  border-color: $qj-purple;
   border-radius: 0;
 }
 
 .btn-ghost-purple:focus,
 .btn-ghost-purple.focus {
-  color: purple;
+  color: $qj-purple;
   background-color: transparent;
-  border-color: purple;
+  border-color: $qj-purple;
 }
 
 .btn-ghost-purple:hover {
-  color: purple;
+  color: $qj-purple;
   background-color: transparent;
-  border-color: purple;
+  border-color: $qj-purple;
 }
 
 .btn-ghost-purple:active,
 .btn-ghost-purple.active,
 .open > .dropdown-toggle.btn-ghost-purple {
-  color: purple;
+  color: $qj-purple;
   background-color: transparent;
-  border-color: purple;
+  border-color: $qj-purple;
 }
 
 .btn-ghost-purple:active:hover,
@@ -36,9 +36,9 @@
 .btn-ghost-purple:active.focus,
 .btn-ghost-purple.active.focus,
 .open > .dropdown-toggle.btn-ghost-purple.focus {
-  color: purple;
+  color: $qj-purple;
   background-color: transparent;
-  border-color: purple;
+  border-color: $qj-purple;
 }
 
 .btn-ghost-purple:active,
@@ -56,13 +56,13 @@ fieldset[disabled] .btn-ghost-purple:focus,
 .btn-ghost-purple.disabled.focus,
 .btn-ghost-purple[disabled].focus,
 fieldset[disabled] .btn-ghost-purple.focus {
-  background-color: purple;
-  border-color: purple;
+  background-color: $qj-purple;
+  border-color: $qj-purple;
 }
 
 .btn-ghost-purple .badge {
-  color: purple;
-  background-color: purple;
+  color: $qj-purple;
+  background-color: $qj-purple;
 }
 
 // Btn Ghost White
