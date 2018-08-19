@@ -83,30 +83,54 @@
 
             <ul class="dropdown-menu">
               <li class="dropdown-item">
-                  <a href="{% url 'professional_detail' user.professionalprofile.slug %}" class="clearfix">
-                      <span class="float-left">{% trans 'Profile' %}</span>
-                      <i class="fa fa-user float-right"></i>
+                  <a class="text-qj-purple" href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                      <div class="media">
+                        <div class="media-body">
+                            {% trans 'Profile' %}
+                        </div>
+                        <div class="align-self-center ml-3 d-inline fa-container">
+                            <i class="fa fa-user"></i>
+                        </div>
+                      </div>
                   </a>
               </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'account:profile_update' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Account' %}</span>
-                        <i class="fa fa-cog float-right"></i>
-                     </a>
+                    <a class="text-qj-purple" href="{% url 'account:profile_update' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Account' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </div>
+                    </a>
                  </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'account:address_book' %}" class="clearfix">
-                        <span class="float-left">{% trans 'address book' %}</span>
-                        <i class="fa fa-address-book float-right"></i>
+                    <a class="text-qj-purple" href="{% url 'account:address_book' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Address book' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-address-book"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'entrepreneur:venture_form' %}" class="clearfix">
-                        <span class="float-left">{% trans 'New company' %}</span>
-                        <i class="fa fa-briefcase float-right"></i>
+                    <a class="text-qj-purple" href="{% url 'entrepreneur:venture_form' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'New company' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
             {% get_user_venture_memberships user as user_venture_memberships %}
@@ -121,18 +145,30 @@
 
             {% if permission_app.manage_admin_views %}
                 <li class="dropdown-item">
-                    <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Qjane Admin' %}</span>
-                        <i class="fa fa-star float-right"></i>
+                    <a class="text-qj-purple" href="{% url 'corporative:admin_dashboard' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Qjane Admin' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
                 <li class="dropdown-divider"></li>
             {% endif %}
 
                 <li class="dropdown-item">
-                    <a href="{% url 'user_logout' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Log out' %}</span>
-                        <i class="fa fa-power-off float-right"></i>
+                    <a class="text-qj-purple" href="{% url 'user_logout' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Log out' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-power-off"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
             </ul>
