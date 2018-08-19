@@ -45,7 +45,7 @@
                         {% csrf_token %}
 
                         <div class="row">
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label>
                                         {{ form.first_name.label }}
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-6 col-12">
                                 <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
                                     <label>
                                         {% trans 'Country' %}
@@ -243,7 +243,7 @@
         </div>
         <div class="card-body ManageEmailNotifications" data-update-email-notifications-url="{% url 'account:ax_email_notification_update' %}">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12 mb-4">
                     <h3>{% trans 'Job offers' %}</h3>
                     <p>{% trans 'Notify me about new job offers that fit my profile.' %}</p>
 
@@ -254,7 +254,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12 mb-4">
                     <h3>{% trans 'Private messages' %}</h3>
                     <p>{% trans 'notify me when I receive a new inbox message.' %}</p>
 
@@ -265,7 +265,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12 mb-4">
                     <h3>{% trans 'New applicants' %}</h3>
                     <p>{% trans 'notify me when users apply for job offers published by companies I manage.' %}</p>
 
@@ -276,7 +276,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12 mb-4">
                     <h3>{% trans 'Messages to my companies' %}</h3>
                     <p>{% trans 'Notify me when companies I manage receive messages from users.' %}</p>
 
@@ -287,7 +287,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12">
                     <h3>{% trans 'New scores to my companies' %}</h3>
                     <p>{% trans 'Notify me when companies I manage receive new scores from users.' %}</p>
 
@@ -307,11 +307,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12">
                     <!-- Deactivate account. -->
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12">
                     <h3>{% trans "Delete my account" %}</h3>
 
                     <p>{% trans "Delete your profile and all your data from the platform." %}</p>
