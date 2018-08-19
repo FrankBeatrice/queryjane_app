@@ -1,5 +1,5 @@
 // CSS
-import './../../sass/layout/new_layout.scss';
+import './../sass/layout/new_layout.scss';
 
 // Js dependencies
 import $ from 'jquery';

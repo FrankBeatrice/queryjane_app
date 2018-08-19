@@ -3,7 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    layout: './app/static/src/js/new_layout.js'
+    'layout/layout': './app/static/src/js/new_layout.js'
   },
   output: {
     filename: 'js/[name].min.js',
