@@ -12,7 +12,7 @@
   <div class="QJVFilterForm mb-5">
     <form id="id_QJVfilterForm" method="get" class="company-form clearfix">
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-12 col-sm-6">
           <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
             {{ filter_form.country_search.label_tag }}
             {% render_field filter_form.country_search class+="form-control" %}
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-12 col-sm-6">
           <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
               {{ filter_form.city_search.label_tag }}
               {% render_field filter_form.city_search class+="form-control" %}
@@ -53,18 +53,32 @@
         </div>
       </div>
 
-      <a href="javascript:void(0)" id="id_QJCleanVfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
+      <div class="row mt-3">
+          <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <a
+              class="btn btn-ghost-purple btn-block"
+              href="javascript:void(0)"
+              id="id_QJCleanVfilter">
+              {% trans 'Clean' %}
+            </a>
+          </div>
 
-      <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+          <div class="col-12 col-sm-4">
+            <button
+              class="btn btn-primary btn-block"
+              type="submit">
+              {% trans 'Search' %}
+            </button>
+          </div>
+        </div>
     </form>
   </div>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title mb-0 p-2">{% trans 'Companies' %}</h3>
+  <div class="card rounded-0 border-0">
+    <div class="card-header bg-qj-purple rounded-0">
+      <h3 class="h4 m-0 text-white">{% trans 'Companies' %}</h3>
     </div>
-
-    <div class="panel-body">
+    <div class="card-body p-0 border border-muted border-top-0">
       <table class="table table-striped company-table">
         <tbody>
           {% for company in company_list %}
@@ -76,13 +90,13 @@
                     <img class="thumbnail img-fluid" src="{{ company.get_logo }}" alt="{{ company }}">
                   </div>
 
-                  <div class="col-xs-12 col-sm-9 col-lg-10">
+                  <div class="col-12 col-sm-9 col-lg-10">
                     <h3>
                         {{ company }}
                     </h3>
 
                     <div class="row">
-                      <div class="col-xs-12 col-sm-6">
+                      <div class="col-12 col-sm-6">
                         <p>
                           <img src="{{ company.country.flag }}">
                           <span>{{ company.country }}</span>
@@ -97,7 +111,7 @@
                         </p>
                       </div>
 
-                      <div class="col-xs-12 col-sm-6">
+                      <div class="col-12 col-sm-6">
                         {% get_current_language as LANGUAGE_CODE %}
                         <ul>
                         {% for category in company.industry_categories.all %}
@@ -114,7 +128,7 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-xs-12 col-sm-3 col-md-2">
+                      <div class="col-12 col-sm-3 col-md-2">
                         <a href="{{ company.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
                       </div>
                     </div>
