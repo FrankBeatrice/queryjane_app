@@ -1,19 +1,17 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static i18n entrepreneur_tags user_conversations %}
 
 {% block title %}{{ profile }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ profile }}</h1>
+<div class="container py-4">
+    <h1 class="mb-4">{{ profile }}</h1>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-3">
-            <div class="media-object">
-                <div class="row">
-                    <div class="col-xs-8 col-sm-11 col-md-9">
-                        <img class="img-fluid thumbnail" src="{{ profile.user.get_avatar }}" alt="{{ profile }}">
-                    </div>
+        <div class="col-12 col-sm-3">
+            <div class="row">
+                <div class="col-xs-8 col-sm-11 col-md-9">
+                    <img class="img-fluid" src="{{ profile.user.get_avatar }}" alt="{{ profile }}">
                 </div>
             </div>
 
@@ -21,9 +19,6 @@
             {% get_user_conversation user profile.user as user_conversation  %}
             <button type="button" class="JSComposeMessage btn btn-success" data-toggle="modal" data-target="#composeMessageModal" data-user-to-id="{{ profile.user.id }}" data-to-name="{{ profile }}" data-load-conversation-url="{% if user_conversation %}{% url 'account:ajax_post_conversation_load' user_conversation.pk %}{% endif %}">{% trans 'Send message' %}</button>
             {% endif %}
-
-            <br>
-            <br>
 
             <button type="button" id="id_add_user_to_address_book" class="btn btn-info" data-add-user-to-address-book-url="{% url 'account:ajax_add_user_to_address_book' profile.id %}" data-user-for-add-name="{{ profile.user.first_name }}" style="{% if not can_add_to_address_book %}display:none;{% endif %}">{% trans 'Add to my address book' %}</button>
 
@@ -34,7 +29,7 @@
 
             <div class="QJProfileDetCategories">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading text-qj-purple">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
                         <span>{% if profile.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
                     </div>
@@ -87,7 +82,7 @@
             {% endif %}
         </div>
 
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-12 col-sm-9">
         {% get_profile_description profile as profile_description %}
             {% if profile_description %}
             {{ profile_description|safe }}
