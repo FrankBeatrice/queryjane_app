@@ -10,7 +10,8 @@ module.exports = {
     'account/login': './app/static/src/js/account/login.js',
     'account/password_reset_form': './app/static/src/js/account/password_reset_form.js',
     'entrepreneur/company_list': './app/static/src/js/entrepreneur/company_list.js',
-    'entrepreneur/job_offers_list': './app/static/src/js/entrepreneur/job_offers_list.js'
+    'entrepreneur/job_offers_list': './app/static/src/js/entrepreneur/job_offers_list.js',
+    'corporative/contact_form': './app/static/src/js/corporative/contact_form.js'
   },
   output: {
     filename: 'js/[name].min.js',
