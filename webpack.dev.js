@@ -34,7 +34,7 @@ module.exports = merge(common, {
           options: {
             context: path.resolve(__dirname, './app/static/src/img'),
             name: '[path][name].[ext]',
-            outputPath: 'img/'
+            outputPath: '/static/img/'
           }
         }]
       }
