@@ -4,7 +4,11 @@
 }
 
 .qj-body {
-  margin-bottom: 130px;
+  margin-bottom: 569px;
+
+  @media (min-width: 576px) {
+    margin-bottom: 437px;
+  }
 }
 
 .footer {
@@ -72,6 +76,18 @@
 }
 
 /*Footer*/
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 569px;
+  background-color: transparent;
+
+  @media (min-width: 576px) {
+    margin-bottom: 437px;
+  }
+}
+
 footer .qj-social-link {
   color: #fff;
   margin-right: 20px;
