@@ -12,6 +12,7 @@ module.exports = {
     'account/signup_landing': './app/static/src/js/account/signup_landing.js',
     'account/profile_update': './app/static/src/js/account/profile_update.js',
     'account/professional_profile': './app/static/src/js/account/professional_profile.js',
+    'account/address_book': './app/static/src/js/account/address_book.js',
     'entrepreneur/company_list': './app/static/src/js/entrepreneur/company_list.js',
     'entrepreneur/job_offers_list': './app/static/src/js/entrepreneur/job_offers_list.js',
     'corporative/contact_form': './app/static/src/js/corporative/contact_form.js'
