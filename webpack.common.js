@@ -6,6 +6,9 @@ module.exports = {
   entry: {
     'layout/layout': './app/static/src/js/new_layout.js',
     'landing_page': './app/static/src/js/landing_page.js',
+    'signup': './app/static/src/js/signup.js',
+    'account/login': './app/static/src/js/account/login.js',
+    'account/password_reset_form': './app/static/src/js/account/password_reset_form.js',
     'entrepreneur/company_list': './app/static/src/js/entrepreneur/company_list.js',
     'entrepreneur/job_offers_list': './app/static/src/js/entrepreneur/job_offers_list.js'
   },

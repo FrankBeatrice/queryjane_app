@@ -1,4 +1,4 @@
-import './../js/new_layout.js';
+import './new_layout.js';
 
 var AOS = require('aos');
 
