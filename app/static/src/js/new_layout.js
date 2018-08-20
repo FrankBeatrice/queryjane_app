@@ -7,7 +7,10 @@ import 'typeahead.js/dist/typeahead.jquery.min.js';
 import 'jquery-validation';
 import 'jquery-validation/dist/additional-methods.js';
 import 'jquery-confirm/js/jquery-confirm.js';
+import Bloodhound from 'typeahead.js/dist/bloodhound.min.js';
+window.Bloodhound = Bloodhound;
 import Quill from 'quill';
+window.Quill = Quill;
 import bootstrapSwitch from 'bootstrap-switch';
 // TODO: Solve rateyo dependencie
 // import 'rateyo/src/jquery.rateyo.js';

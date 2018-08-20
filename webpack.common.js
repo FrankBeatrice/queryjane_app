@@ -9,6 +9,9 @@ module.exports = {
     'signup': './app/static/src/js/signup.js',
     'account/login': './app/static/src/js/account/login.js',
     'account/password_reset_form': './app/static/src/js/account/password_reset_form.js',
+    'account/signup_landing': './app/static/src/js/account/signup_landing.js',
+    'account/profile_update': './app/static/src/js/account/profile_update.js',
+    'account/professional_profile': './app/static/src/js/account/professional_profile.js',
     'entrepreneur/company_list': './app/static/src/js/entrepreneur/company_list.js',
     'entrepreneur/job_offers_list': './app/static/src/js/entrepreneur/job_offers_list.js',
     'corporative/contact_form': './app/static/src/js/corporative/contact_form.js'
@@ -21,8 +24,7 @@ module.exports = {
     new CleanWebpackPlugin(['./app/static/public/']),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery',
-      Bloodhound: 'typeahead.js/dist/bloodhound.min.js'
+      jQuery: 'jquery'
     })
   ]
 }
