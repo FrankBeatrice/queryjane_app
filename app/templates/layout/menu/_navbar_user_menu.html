@@ -54,7 +54,7 @@
             <li class="dropdown-item">
                 <div class="JSComposeMessage d-block" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                     <div class="media">
-                        <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3 text-qj-purple" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                        <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
                         <div class="media-body align-self-center">
                             <a href="javascript:void(0)">
                                 {% if conversation.get_last_message.company_from %}

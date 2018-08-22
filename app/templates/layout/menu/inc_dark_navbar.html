@@ -31,7 +31,7 @@
               <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
                 <div class="qjane-notification-link" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
                     <div class="media">
-                        <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %} align-self-center mr-3 text-qj-purple" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
+                        <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %} align-self-center mr-3" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
                         <div class="media-body align-self-center notification-container">
                             <a href="javascript:void(0)">
                                 {{ notification }}
@@ -64,7 +64,7 @@
                 <li class="dropdown-item">
                     <div class="JSComposeMessage d-block" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
                         <div class="media">
-                            <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3 text-qj-purple" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                            <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
                             <div class="media-body align-self-center">
                                 <a href="javascript:void(0)">
                                     {% if conversation.get_last_message.company_from %}
@@ -95,7 +95,7 @@
 
             <ul class="dropdown-menu">
               <li class="dropdown-item">
-                  <a class="text-qj-purple" href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                  <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
                       <div class="media">
                         <div class="media-body">
                             {% trans 'Profile' %}
@@ -108,7 +108,7 @@
               </li>
 
                 <li class="dropdown-item">
-                    <a class="text-qj-purple" href="{% url 'account:profile_update' %}">
+                    <a href="{% url 'account:profile_update' %}">
                         <div class="media">
                             <div class="media-body">
                                 {% trans 'Account' %}
@@ -121,7 +121,7 @@
                  </li>
 
                 <li class="dropdown-item">
-                    <a class="text-qj-purple" href="{% url 'account:address_book' %}">
+                    <a href="{% url 'account:address_book' %}">
                         <div class="media">
                             <div class="media-body">
                                 {% trans 'Address book' %}
@@ -134,7 +134,7 @@
                 </li>
 
                 <li class="dropdown-item">
-                    <a class="text-qj-purple" href="{% url 'entrepreneur:venture_form' %}">
+                    <a href="{% url 'entrepreneur:venture_form' %}">
                         <div class="media">
                             <div class="media-body">
                                 {% trans 'New company' %}
@@ -157,7 +157,7 @@
 
             {% if permission_app.manage_admin_views %}
                 <li class="dropdown-item">
-                    <a class="text-qj-purple" href="{% url 'corporative:admin_dashboard' %}">
+                    <a href="{% url 'corporative:admin_dashboard' %}">
                         <div class="media">
                             <div class="media-body">
                                 {% trans 'Qjane Admin' %}
@@ -172,7 +172,7 @@
             {% endif %}
 
                 <li class="dropdown-item">
-                    <a class="text-qj-purple" href="{% url 'user_logout' %}">
+                    <a href="{% url 'user_logout' %}">
                         <div class="media">
                             <div class="media-body">
                                 {% trans 'Log out' %}

@@ -46,6 +46,19 @@
 
     .dropdown-item {
       white-space: normal;
+
+      // TODO: Improve those classes
+      .fa {
+        color: $qj-purple;
+      }
+
+      // TODO: Improve those classes
+      &:hover {
+        a,
+        .fa {
+          color: #fff;
+        }
+      }
     }
 
     .notification-container {
