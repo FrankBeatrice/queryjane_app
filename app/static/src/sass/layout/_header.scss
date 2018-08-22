@@ -34,14 +34,27 @@
   .navbar-nav .show .dropdown-menu {
     border-radius: 0;
     background-color: #fff;
+    width: 100%;
 
     @media (min-width: 768px) {
       border-radius: 4px;
     }
 
+    @media (min-width: 992px) {
+      width: 270px;
+    }
+
+    .dropdown-item {
+      white-space: normal;
+    }
+
     .notification-container {
       white-space: normal;
-      width: 200px;
+      width: 100%;
+
+      @media (min-width: 992px) {
+        width: 200px;
+      }
     }
   }
 
