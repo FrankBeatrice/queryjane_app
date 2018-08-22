@@ -31,12 +31,17 @@
     }
   }
 
-  .navbar-nav .open .dropdown-menu {
+  .navbar-nav .show .dropdown-menu {
     border-radius: 0;
     background-color: #fff;
 
     @media (min-width: 768px) {
       border-radius: 4px;
+    }
+
+    .notification-container {
+      white-space: normal;
+      width: 200px;
     }
   }
 
