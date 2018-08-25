@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-4">
   <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if company.is_active %}display:none;{% endif %}">
     {% trans "This company is inactive, so users can't find it in the application. You can activate it when you want." %}
 
@@ -20,7 +20,7 @@
 
     <div class="col-md-9">
         <!-- Logo and categories -->
-        <div class="card">
+        <div class="card mb-4">
           <div class="card-header">{% trans 'General information' %}</div>
 
           <div class="card-body">
@@ -80,7 +80,7 @@
           <form id="id_company_change_description_form" method="post">
             {% csrf_token %}
             <div class="js_lan_form_container">
-              <div class="card">
+              <div class="card mb-4">
                 <div class="card-header clearfix">
                   <span class="float-left">{% trans 'English description' %}</span>
 
@@ -117,7 +117,7 @@
             </div>
 
             <div class="js_lan_form_container">
-              <div class="card">
+              <div class="card mb-4">
                 <div class="card-header clearfix">
                   <span class="float-left">{% trans 'Spanish description' %}</span>
 
@@ -199,5 +199,5 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/entrepreneur/general_company_form.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/general_company_form.min.js' %}"></script>
 {% endblock %}
