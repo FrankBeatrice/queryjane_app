@@ -1,21 +1,20 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ company }} - {% trans 'Contact settings' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings">
-    <div class="container">
+    <div class="container py-4">
         <div class="row">
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{% trans 'Contact information' %}</h3>
+                <div class="card rounded-0 border-0 mb-4">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">{% trans 'Contact information' %}</h3>
                     </div>
-
-                    <div class="panel-body QjaneVentureContactForm">
+                    <div class="card-body border border-muted border-top-0 QjaneVentureContactForm">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <form method="POST" id="id_venture_contact_form" data-venture-contact-form-url="{% url 'entrepreneur:ax_contact_venture_form' company.id %}">
@@ -52,12 +51,11 @@
                     </div>
                 </div>
 
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{% trans 'Location' %}</h3>
+                <div class="card rounded-0 border-0 mb-4">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">{% trans 'Location' %}</h3>
                     </div>
-
-                    <div class="panel-body QjaneVentureLocationForm">
+                    <div class="card-body border border-muted border-top-0 QjaneVentureLocationForm">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Contact data updated correctly.' %}</div>
@@ -128,12 +126,11 @@
                     </div>
                 </div>
 
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{% trans 'Social media' %}</h3>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">{% trans 'Social media' %}</h3>
                     </div>
-
-                    <div class="panel-body QJVentureMediaUpdate">
+                    <div class="card-body border border-muted border-top-0 QJVentureMediaUpdate">
                         <div class="row">
                             <div class="alert alert-success" role="alert" style="display:none;">{% trans 'Social media information updted correctly.' %}</div>
                             <form method="POST" id="id_venture_media_form" data-venture-media-form-url="{% url 'entrepreneur:ax_media_venture_form' company.id %}">
@@ -206,6 +203,7 @@
                             </form>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -213,8 +211,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
-<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
-<script src="{% static 'dist/js/entrepreneur/contact_venture_form.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/contact_venture_form.min.js' %}"></script>
 {% endblock %}
 
