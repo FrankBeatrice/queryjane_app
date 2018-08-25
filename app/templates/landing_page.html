@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
 {% block css %}
-<link href="{% static 'public/css/landing_page.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/landing_page.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block header %}
@@ -12,7 +12,7 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <a class="navbar-brand" href="/">
-        <img src="{% static 'public/img/brand.svg' %}" alt="Logitpo Query Jane">
+        <img src="{% static 'dist/img/brand.svg' %}" alt="Logitpo Query Jane">
         <span>(BETA)</span>
       </a>
 
@@ -213,7 +213,7 @@
     <div class="row">
       <div class="col-md-4 text-center" data-aos="fade-up">
         <a href="https://augustaking.org/" target="_blank">
-          <img class="img-fluid" src="{% static 'public/img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
+          <img class="img-fluid" src="{% static 'dist/img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
         </a>
       </div>
 
@@ -222,7 +222,7 @@
         <p class="h4">QueryJane is open source and free...</p>
 
         <hr>
-        <img src="{% static 'public/img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
+        <img src="{% static 'dist/img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
         <hr>
 
         <p>QueryJane is an open source application developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a> created to boost the growth of emerging economies around cannabis indsutry.</p>
@@ -240,5 +240,5 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'public/js/landing_page.min.js' %}"></script>
+<script src="{% static 'dist/js/landing_page.min.js' %}"></script>
 {% endblock js %}

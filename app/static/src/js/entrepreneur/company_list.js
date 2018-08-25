@@ -2,6 +2,9 @@
 import './../new_layout.js';
 import './../place/place_autocomplete.js';
 
+// Images
+import './../../img/venture_default_logo.svg';
+
 $(function () {
     'use strict';
 

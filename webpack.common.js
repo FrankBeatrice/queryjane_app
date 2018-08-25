@@ -26,10 +26,10 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].min.js',
-    path: path.resolve(__dirname, './app/static/public/')
+    path: path.resolve(__dirname, './app/static/dist/')
   },
   plugins: [
-    new CleanWebpackPlugin(['./app/static/public/']),
+    new CleanWebpackPlugin(['./app/static/dist/']),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'

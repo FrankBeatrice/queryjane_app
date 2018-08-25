@@ -4,6 +4,7 @@ import './../sass/layout/new_layout.scss';
 // Images
 import './../img/brand.svg';
 import './../img/landing_page/augusta-king-transparent.png';
+import './../img/brand-authenticated.svg';
 
 // Js dependencies
 import 'bootstrap';

@@ -33,7 +33,7 @@ module.exports = merge(common, {
             context: path.resolve(__dirname, './app/static/src/img'),
             name: '[path][name].[ext]',
             outputPath: 'img/',
-            publicPath: '/static/public/img/'
+            publicPath: '/static/dist/img/'
           }
         }]
       }
@@ -47,7 +47,7 @@ module.exports = merge(common, {
     })
   ],
   devServer: {
-    publicPath: '/static/public/',
+    publicPath: '/static/dist/',
     port: 8080,
     proxy: {
       '/': 'http://127.0.0.1:8000'
