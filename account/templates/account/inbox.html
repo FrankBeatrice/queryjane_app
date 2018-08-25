@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static messages i18n %}
 
 {% block title %}{% trans 'Inbox' %}{% endblock %}
@@ -12,12 +12,13 @@
             {% get_user_messages_count user as user_messages_count %}
             {% get_new_user_messages_count user as new_user_messages_count %}
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{% trans 'Inbox' %} - <span class="NewMessagesCounter">{{ new_user_messages_count }}</span> {% trans 'new messages.' %}</h3>
+            <div class="card rounded-0 border-0">
+                <div class="card-header bg-qj-purple rounded-0">
+                    <h3 class="h5 m-0 text-white">
+                        {% trans 'Inbox' %} - <span class="NewMessagesCounter">{{ new_user_messages_count }}</span> {% trans 'new messages.' %}
+                    </h3>
                 </div>
-
-                <div class="panel-body QjaneInboxList">
+                <div class="card-body border border-muted border-top-0 QjaneInboxList">
                     <table class="table">
                         {% for conversation in conversations_list %}
                         <tr class="{% if message.unread %}active{% endif %}">

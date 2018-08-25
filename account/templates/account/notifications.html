@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static notifications i18n %}
 
 {% block title %}{% trans 'Notification' %}{% endblock %}
@@ -12,12 +12,13 @@
             {% get_user_notifications_count user as user_notifications_count %}
             {% get_new_user_notifications_count user as new_user_notifications_count %}
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{% trans 'Notifications' %} - <span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span> {% trans 'new notifications.' %}</h3>
+            <div class="card rounded-0 border-0">
+                <div class="card-header bg-qj-purple rounded-0">
+                    <h3 class="h5 m-0 text-white">
+                        {% trans 'Notifications' %} - <span class="NewNotificationsCounter">{{ new_user_notifications_count }}</span> {% trans 'new notifications.' %}
+                    </h3>
                 </div>
-
-                <div class="panel-body QjaneNotificationsList">
+                <div class="card-body border border-muted border-top-0 QjaneNotificationsList">
                     <table class="table">
                         {% for notification in notifications_list %}
                         <tr class="{% if not notification.was_seen %}active{% endif %}">

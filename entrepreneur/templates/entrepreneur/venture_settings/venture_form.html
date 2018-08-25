@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{% trans 'Register company' %}{% endblock %}
@@ -10,12 +10,13 @@
 {% block content %}
 <section class="account qjane-venture-create">
     <div class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title text-center">{% trans 'REGISTER COMPANY' %}</h2>
+        <div class="card rounded-0 border-0 PasswordResetConfirm qj-home-register">
+            <div class="card-header bg-qj-purple rounded-0">
+                <h3 class="h5 m-0 text-white">
+                    {% trans 'REGISTER COMPANY' %}
+                </h3>
             </div>
-
-            <div class="panel-body">
+            <div class="card-body border border-muted border-top-0">
                 <div class="row">
                     <div class="col-md-10 offset-md-1 QjaneVFHeaderText">
 <!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus ante nulla, ac blandit nunc ultricies non. Sed cursus lorem quis faucibus mattis. Aliquam nec nunc sapien. -->
