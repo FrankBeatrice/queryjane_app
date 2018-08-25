@@ -1,21 +1,20 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ company }} - {% trans 'Members settings' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings" data-venture-slug="{{ company.slug }}">
-    <div class="container">
+    <div class="container py-4">
         <div class="row">
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Roles</h3>
+                <div class="card rounded-0 border-0 mb-4">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">Roles</h3>
                     </div>
-
-                    <div class="panel-body">
+                    <div class="card-body border border-muted border-top-0">
                         <ul class="media-list qjane-venture-roles-list">
                         {% for membership in memberships %}
                             {% include 'entrepreneur/venture_settings/_membership_line.html' %}
@@ -64,7 +63,7 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/entrepreneur/role_userprofile_autocomplete.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/role_userprofile_autocomplete.min.js' %}"></script>
 
 <script>
 $(function() {

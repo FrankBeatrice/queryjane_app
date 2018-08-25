@@ -18,6 +18,8 @@ module.exports = {
     'entrepreneur/company_detail': './app/static/src/js/entrepreneur/company_detail.js',
     'entrepreneur/general_company_form': './app/static/src/js/entrepreneur/general_company_form.js',
     'entrepreneur/contact_venture_form': './app/static/src/js/entrepreneur/contact_venture_form.js',
+    'entrepreneur/role_userprofile_autocomplete': './app/static/src/js/entrepreneur/role_userprofile_autocomplete.js',
+    'entrepreneur/job_offer_actions': './app/static/src/js/entrepreneur/job_offer_actions.js',
     'corporative/contact_form': './app/static/src/js/corporative/contact_form.js',
     'corporative/staff_company_actions': './app/static/src/js/corporative/staff_company_actions.js'
   },
