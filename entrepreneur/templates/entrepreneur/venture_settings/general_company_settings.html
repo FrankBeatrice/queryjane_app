@@ -29,7 +29,7 @@
           {% endif %}
 
             <div class="row">
-              <div class="col-md-3 col-xs-12 QjaneCompanySettingsLogoContainer">
+              <div class="col-md-3 col-12 QjaneCompanySettingsLogoContainer">
                 <img class="media-object thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
 
                 <form id="id_company_change_logo_form" method="post" enctype="multipart/form-data" data-company-update-logo-url="{% url 'entrepreneur:update_company_logo_form' company.slug %}" style="display:none;">
@@ -48,7 +48,7 @@
                 </a>
               </div>
 
-              <div class="col-md-9 col-xs-12">
+              <div class="col-md-9 col-12">
                 {% get_current_language as LANGUAGE_CODE %}
 
                 <p>{% trans 'Industry sectors' %}</p>
@@ -161,7 +161,7 @@
 
           <div class="card-body">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12">
                   <div id="id_deactivate_container" style="{% if company.is_inactive %}display:none;{% endif %}">
                     <h3>{% trans "Deactivate company" %}</h3>
                     <p>{% trans "User will not be able to find your company. Users whit administrator membership can activate/deactivate a company when they want." %}</p>
@@ -177,7 +177,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-12">
                     <h3>{% trans "Delete company" %}</h3>
 
                   {% if can_delete %}

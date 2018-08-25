@@ -76,12 +76,12 @@
           <h5 class="card-title text-center">{% trans "Are you sure you want to delete your company definitely?" %}</h5>
 
           <div class="row">
-              <div class="col-md-6 col-xs-12">
+              <div class="col-md-6 col-12">
                 <p>{% trans "QueryJane allows you to give visibility to your company. Allow the users of the application to know your company." %}</p>
                 <a href="{% url 'entrepreneur:general_venture_form' company.slug %}" class="btn btn-outline-dark">{% trans "No, go back to the company settings page" %}</a>
               </div>
 
-              <div class="col-md-6 col-xs-12">
+              <div class="col-md-6 col-12">
 
                 <p>{% trans "This is an irreversible dicision, and will remove all your company information. We do not keep anything." %}</p>
                 <form method="post">{% csrf_token %}

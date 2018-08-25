@@ -7,7 +7,7 @@
 <section class="QjaneInbox">
     <div class="container">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
+          <div class="col-md-6 offset-md-3">
 
             {% get_user_messages_count user as user_messages_count %}
             {% get_new_user_messages_count user as new_user_messages_count %}
@@ -41,7 +41,7 @@
                                     {% else %}
                                     {{ conversation.get_last_message.user_from }}
                                     {% endif %}
-                                    
+
                                 </span>
                                 <p>{{ conversation.updated_at }}</p>
 

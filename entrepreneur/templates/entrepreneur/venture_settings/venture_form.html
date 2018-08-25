@@ -17,13 +17,13 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1 QjaneVFHeaderText">
+                    <div class="col-md-10 offset-md-1 QjaneVFHeaderText">
 <!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus ante nulla, ac blandit nunc ultricies non. Sed cursus lorem quis faucibus mattis. Aliquam nec nunc sapien. -->
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-10 offset-md-1">
                         <div class="QjaneVFContainer">
                             <form method="POST">
                                 {% csrf_token %}
@@ -35,7 +35,7 @@
                                 {% endif %}
 
                                 <div class="row">
-                                    <div class="col-md-6 col-xs-12 form-group">
+                                    <div class="col-md-6 col-12 form-group">
                                         <div class="form-group">
                                             <label>
                                                 {% trans 'Company name' %}
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-xs-12">
+                                    <div class="col-md-6 col-12">
                                         {% get_current_language as LANGUAGE_CODE %}
                                         <p>{% trans 'Select your company sector or sectors in the industry.' %}</p>
 
@@ -165,7 +165,7 @@
 
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xs-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>{% trans 'Web' %}</label>
 
@@ -193,7 +193,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>Instagram</label>
 
