@@ -3,8 +3,6 @@ const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.js');
-const Dotenv = require('dotenv-webpack');
-require('dotenv').config({path: __dirname + '/.env-prod'});
 
 module.exports = merge(common, {
   mode: 'production',
@@ -53,9 +51,6 @@ module.exports = merge(common, {
     new ExtractTextPlugin({
       filename: 'css/[name].min.css',
       allChunks: true
-    }),
-    new Dotenv({
-      path: './.env-prod'
     })
   ]
 });

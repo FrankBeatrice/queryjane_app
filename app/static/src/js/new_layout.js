@@ -1,6 +1,10 @@
 // CSS
 import './../sass/layout/new_layout.scss';
 
+// Images
+import './../img/brand.svg';
+import './../img/landing_page/augusta-king-transparent.png';
+
 // Js dependencies
 import 'bootstrap';
 import 'typeahead.js/dist/typeahead.jquery.min.js';
