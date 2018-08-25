@@ -6,7 +6,7 @@ body {
 
 /*Header Style*/
 header {
-  background: url("../img/landing_page/cannabis_leaf.jpg") no-repeat center center;
+  background: url('./../img/landing_page/cannabis_leaf.jpg') no-repeat center center;
   position: relative;
   height: auto;
   min-height: 600px;
@@ -49,19 +49,21 @@ header {
   }
 }
 
-/*Projects Style*/
+/* Projects Style */
 .qj-section_2 .qj-section_2-1 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
+  background-image: url('./../img/landing_page/register-banner.png');
 }
 
-.qj-section_2 .qj-section_2-1 {
+.qj-section_2 .qj-section_2-2 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
+  background-image: url('./../img/landing_page/profiles-banner.png');
 }
 
 /* Expertise Skills Style */
@@ -136,7 +138,7 @@ header {
 
 /*Contact Style*/
 .da-contact {
-  background: url("../images/staticmap.png") no-repeat center center;
+  // background: url('./../img/landing_page/') no-repeat center center;
   position: relative;
   min-height: 700px;
   background-size: cover;
