@@ -1,3 +1,8 @@
+// Dependencies
+import './../new_layout.js';
+import './../place/show_position.js';
+import './../place/place_autocomplete.js';
+
 $(function () {
     var quill = new Quill('#rich_editor_description', {
         theme: 'snow'

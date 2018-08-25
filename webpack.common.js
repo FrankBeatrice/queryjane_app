@@ -20,6 +20,7 @@ module.exports = {
     'entrepreneur/contact_venture_form': './app/static/src/js/entrepreneur/contact_venture_form.js',
     'entrepreneur/role_userprofile_autocomplete': './app/static/src/js/entrepreneur/role_userprofile_autocomplete.js',
     'entrepreneur/job_offer_actions': './app/static/src/js/entrepreneur/job_offer_actions.js',
+    'entrepreneur/job_offer_form': './app/static/src/js/entrepreneur/job_offer_form.js',
     'corporative/contact_form': './app/static/src/js/corporative/contact_form.js',
     'corporative/staff_company_actions': './app/static/src/js/corporative/staff_company_actions.js'
   },

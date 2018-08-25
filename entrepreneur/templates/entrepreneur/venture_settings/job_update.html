@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ job_offer }} - {{ venture }}{% endblock %}
@@ -14,12 +14,13 @@
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{% trans 'Job offer update' %}</h3>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            {% trans 'Job offer update' %}
+                        </h3>
                     </div>
-
-                    <div class="panel-body QjaneVentureJobOfferForm">
+                    <div class="card-body border border-muted border-top-0 QjaneVentureJobOfferForm">
                         <form method="POST">
                             {% csrf_token %}
 
@@ -139,8 +140,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
-<script src="{% static 'dist/js/entrepreneur/job_offer_form.min.js' %}"></script>
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/job_offer_form.min.js' %}"></script>
 {% endblock %}
 

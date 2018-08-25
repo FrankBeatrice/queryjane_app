@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ company }} - {% trans 'Job offer form' %}{% endblock %}
@@ -9,7 +9,7 @@
 
 {% block content %}
 <section class="account qjane-venture-settings">
-    <div class="container">
+    <div class="container py-4">
         <div class="row">
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
@@ -23,12 +23,13 @@
                 {% else %}
                 <div class="alert alert-info" role="alert">{% trans 'Job offers will be automatically closed 60 days after created.' %}</div>
 
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{% trans 'Create new job offer' %}</h3>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            {% trans 'Create new job offer' %}
+                        </h3>
                     </div>
-
-                    <div class="panel-body QjaneVentureJobOfferForm">
+                    <div class="card-body border border-muted border-top-0 QjaneVentureJobOfferForm">
                         <form method="POST">
                             {% csrf_token %}
 
@@ -157,8 +158,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
-<script src="{% static 'dist/js/entrepreneur/job_offer_form.min.js' %}"></script>
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/job_offer_form.min.js' %}"></script>
 {% endblock %}
 
