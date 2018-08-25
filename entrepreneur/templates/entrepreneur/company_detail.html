@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 
 {% load static entrepreneur_tags i18n user_conversations widget_tweaks %}
 
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-4">
   {% if company.is_inactive %}<div class="alert alert-danger" role="alert">{{ company }} {% trans "is inactive. Only company administrators and platform administrators can view this page." %}</div>
   {% elif company.is_hidden %}
   <div class="alert alert-warning" role="alert">{{ company }} {% trans 'has been hidden by a QueryJane administrator.' %}</div>
@@ -306,6 +306,5 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/corporative/staff_company_actions.min.js' %}"></script>
-<script src="{% static 'dist/js/entrepreneur/company_detail.min.js' %}"></script>
+<script src="{% static 'public/js/entrepreneur/company_detail.min.js' %}"></script>
 {% endblock %}
