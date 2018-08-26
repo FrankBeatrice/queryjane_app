@@ -34,7 +34,7 @@
                                 <td class="media">
                                 <div class="media-left">
                                     <a href="{% url 'professional_detail' contact.user_contact.slug %}">
-                                        <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ contact.user_contact.user.get_avatar }}" alt="{{ contact }}">
+                                        <img style="width: 50px; height: 50px" class="media-object" src="{{ contact.user_contact.user.get_avatar }}" alt="{{ contact }}">
                                     </a>
                                 </div>
 
@@ -72,7 +72,7 @@
                                 <td class="media">
                                 <div class="media-left">
                                     <a href="{{ company_contact.company.get_absolute_url }}">
-                                        <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ company_contact.company.get_logo }}" alt="{{ company_contact.company }}">
+                                        <img style="width: 50px; height: 50px" class="media-object" src="{{ company_contact.company.get_logo }}" alt="{{ company_contact.company }}">
                                     </a>
                                 </div>
 
