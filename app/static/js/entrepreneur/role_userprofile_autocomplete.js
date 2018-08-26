@@ -96,4 +96,15 @@ $(function () {
 
         return false;
     });
+
+    $('.js_qjane_action').on('click', '.js_qjane_resend_admin_invitation', function () {
+        var resend_link = $(this);
+        var resend_admin_invitation = $(this).data('resend-admin-invitation-url');
+
+        $.post(resend_admin_invitation, function (response) {
+            resend_link.closest('li').html(response.content);
+
+            return false;
+        });
+    });
 })

@@ -2,6 +2,9 @@
 import './../new_layout.js';
 import './../place/place_autocomplete.js';
 
+// CSS
+import './../../sass/entrepreneur/jobs_list.scss';
+
 $(function () {
     'use strict';
 
