@@ -1,6 +1,7 @@
 // Dependencies
 import './../new_layout.js';
-import './../corporative/staff_company_actions.js';
+
+// TODO: Review if staff_company_action.js file is necessary in this view.
 
 function score_list_update_rateyo() {
     $(".jsCompanyScoreList .jsLineScore").each(function(idx, element) {
