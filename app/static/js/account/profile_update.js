@@ -244,8 +244,8 @@ $(function () {
 
         $.post($('.ManageEmailNotifications').data('update-email-notifications-url'), {'notification': notification, 'value': value}, function (response) {
             if (response === 'success') {
-                button.parent().find('.btn').removeClass('btn-primary').addClass('btn-default');
-                button.addClass('btn-primary').removeClass('btn-default');
+                button.parent().find('.btn').removeClass('btn-primary').addClass('btn-ghost-purple');
+                button.addClass('btn-primary').removeClass('btn-ghost-purple');
             }
         });
     });
