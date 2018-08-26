@@ -1,6 +1,5 @@
 import './../new_layout.js';
 import './../place/place_autocomplete.js';
-import './../place/show_position.js';
 
 $(function () {
     'use strict';

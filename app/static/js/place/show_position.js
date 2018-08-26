@@ -87,3 +87,5 @@ function showPosition(position) {
         error: function () { console.log('error'); }
     });
 }
+
+window.showPosition = showPosition;
