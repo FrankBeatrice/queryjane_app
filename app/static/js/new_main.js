@@ -233,7 +233,6 @@ $('#id-qjane-home-signup-form').validate({
 
       $('#composeMessageModal .modal-title').text("Compose message to " + $(this).data('to-name'));
 
-
       if (load_conversation_url){
         $.post($(this).data('load-conversation-url')).done(function (response) {
             $('#JSconversationDetail').html(response.content);

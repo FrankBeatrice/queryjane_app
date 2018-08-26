@@ -23,7 +23,8 @@ module.exports = {
     'entrepreneur/job_offer_form': './app/static/js/entrepreneur/job_offer_form.js',
     'entrepreneur/venture_form': './app/static/js/entrepreneur/venture_form.js',
     'corporative/contact_form': './app/static/js/corporative/contact_form.js',
-    'corporative/staff_company_actions': './app/static/js/corporative/staff_company_actions.js'
+    'corporative/staff_company_actions': './app/static/js/corporative/staff_company_actions.js',
+    'corporative/legal_item': './app/static/js/corporative/legal_item.js'
   },
   output: {
     filename: 'js/[name].min.js',
