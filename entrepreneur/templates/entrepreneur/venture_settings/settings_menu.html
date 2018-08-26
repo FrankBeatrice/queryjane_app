@@ -1,12 +1,14 @@
 {% load i18n %}
 <div class="col-md-3">
-    <div>
-        <h4 class="h3 mt-xxs mb-s">
-            <a class="text-primary" href="{{ company.get_absolute_url }}">
-                <i class="fa fa-building" aria-hidden="true"></i>
-                {{ company }}
-            </a>
-        </h4>
+    <div class="media mb-4">
+        <i class="fa fa-building fa-3x align-self-center mr-3 text-muted" aria-hidden="true"></i>
+        <div class="media-body">
+            <h4 class="h3 my-0">
+                <a class="text-primary" href="{{ company.get_absolute_url }}">
+                    {{ company }}
+                </a>
+            </h4>
+        </div>
     </div>
 
     <ul class="list-group QjaneVentureSettingsMenu">

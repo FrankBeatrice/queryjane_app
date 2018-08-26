@@ -30,7 +30,7 @@
                             </div>
                             <div class="card-body border border-muted border-top-0">
                                 {% if hidden_companies %}
-                                <table class="table table-striped jobs-table">
+                                <table class="table table-striped jobs-table mb-0">
                                 <tbody>
                                 {% for company in hidden_companies %}
                                     {% include 'account/dashboard_company_line.html' %}
@@ -51,7 +51,7 @@
                             </div>
                             <div class="card-body border border-muted border-top-0">
                                 {% if hidden_job_offer %}
-                                <table class="table table-striped jobs-table">
+                                <table class="table table-striped jobs-table mb-0">
                                 <tbody>
                                 {% for job_offer in hidden_job_offer %}
                                     {% include 'account/dashboard_job_offer_line.html' %}
@@ -76,7 +76,7 @@
                             </div>
                             <div class="card-body border border-muted border-top-0">
                                 {% if unshared_companies_list %}
-                                <table class="table table-striped jobs-table">
+                                <table class="table table-striped jobs-table mb-0">
                                 <tbody>
                                 {% for company in unshared_companies_list %}
                                     {% include 'account/dashboard_company_line.html' %}
@@ -97,7 +97,7 @@
                             </div>
                             <div class="card-body border border-muted border-top-0">
                                 {% if unshared_jobs_list %}
-                                <table class="table table-striped jobs-table">
+                                <table class="table table-striped jobs-table mb-0">
                                 <tbody>
                                 {% for job_offer in unshared_jobs_list %}
                                     {% include 'account/dashboard_job_offer_line.html' %}

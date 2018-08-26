@@ -1,8 +1,8 @@
 {% load i18n entrepreneur_tags %}
 <tr>
     <td>
-        <img class="img-fluid" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
-        <p class="h4">
+        <img class="img-fluid mb-3" src="{{ company.get_logo }}" alt="{{ company }}" style="width: 80px; height: auto">
+        <p class="h4 mb-3">
             <a href="{{ company.get_absolute_url }}">{{ company }}</a>
 
             <p>
@@ -28,21 +28,37 @@
         </ul>
 
         <div class="pull-right JSCompanyActions">
-            <a href="javascript:void(0)" class="JSShareCompany btn btn-ghost-purple" data-share-url="{% url 'corporative:ax_twitter_share_company' company.slug %}" style="{% if not permission_app.manage_admin_views or company.shared_on_twitter or not company.is_active %}display:none;{% endif %}">
-                <i class="fa fa-twitter"></i><i class="fa fa-facebook"></i> {% trans 'Share' %}
+            <a
+                class="JSShareCompany btn btn-ghost-purple mb-3 mr-2"
+                href="javascript:void(0)"
+                data-share-url="{% url 'corporative:ax_twitter_share_company' company.slug %}"
+                style="{% if not permission_app.manage_admin_views or company.shared_on_twitter or not company.is_active %}display:none;{% endif %}">
+                <i class="fab fa-twitter mr-1"></i><i class="fab fa-facebook-f mr-1"></i> {% trans 'Share' %}
             </a>
 
             {% if permission_app.manage_admin_views %}
-            <a href="javascript:void(0)" class="js_hideCompany btn btn-ghost-purple" data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}" style="{% if company.is_hidden %}display:none;{% endif %}">
-                <i class="fa fa-eye-slash"></i> {% trans 'Hide' %}
+            <a
+                class="js_hideCompany btn btn-ghost-purple mb-3 mr-2"
+                href="javascript:void(0)"
+                data-hide-url="{% url 'corporative:ax_hide_company' company.slug %}"
+                style="{% if company.is_hidden %}display:none;{% endif %}">
+                <i class="far fa-eye-slash"></i> {% trans 'Hide' %}
             </a>
 
-            <a href="javascript:void(0)" class="js_activateCompany btn btn-ghost-purple" data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}" style="{% if not company.is_hidden %}display:none;{% endif %}">
-                <i class="fa fa-fire"></i> Activate
+            <a
+                class="js_activateCompany btn btn-ghost-purple mb-3 mr-2"
+                href="javascript:void(0)"
+                data-activate-url="{% url 'corporative:ax_activate_company' company.slug %}"
+                style="{% if not company.is_hidden %}display:none;{% endif %}">
+                <i class="far fa-fire"></i> Activate
             </a>
             {% endif %}
 
-            <a href="{{ company.get_absolute_url }}" class="btn btn-primary">{% trans 'View' %}</a>
+            <a
+                class="btn btn-primary mb-3 mr-2"
+                href="{{ company.get_absolute_url }}">
+                {% trans 'View' %}
+            </a>
         </div>
     </td>
 </tr>
