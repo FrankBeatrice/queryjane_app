@@ -9,7 +9,7 @@
 
 {% block content %}
 <section class="account qjane-venture-create">
-    <div class="container">
+    <div class="container py-4">
         <div class="card rounded-0 border-0 PasswordResetConfirm qj-home-register">
             <div class="card-header bg-qj-purple rounded-0">
                 <h3 class="h5 m-0 text-white">
@@ -125,12 +125,13 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">{% trans 'Company description' %}</h3>
+                                <div class="card rounded-0 border-0 mb-4">
+                                    <div class="card-header bg-qj-purple rounded-0">
+                                        <h3 class="h5 m-0 text-white">
+                                            {% trans 'Company description' %}
+                                        </h3>
                                     </div>
-
-                                    <div class="panel-body">
+                                    <div class="card-body border border-muted border-top-0">
                                         <div class="form-group">
                                             <label>
                                                 {% trans 'English description' %}
@@ -159,12 +160,13 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">{% trans 'Social media' %}</h3>
+                                <div class="card rounded-0 border-0 mb-4">
+                                    <div class="card-header bg-qj-purple rounded-0">
+                                        <h3 class="h5 m-0 text-white">
+                                            {% trans 'Social media' %}
+                                        </h3>
                                     </div>
-
-                                    <div class="panel-body">
+                                    <div class="card-body border border-muted border-top-0">
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
@@ -225,7 +227,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">{% trans 'Next' %}</button>
                             </form>
                         </div>
@@ -238,8 +239,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
 <script src="{% static 'dist/js/entrepreneur/venture_form.min.js' %}"></script>
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
 {% endblock %}
 

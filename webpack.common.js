@@ -21,6 +21,7 @@ module.exports = {
     'entrepreneur/role_userprofile_autocomplete': './app/static/js/entrepreneur/role_userprofile_autocomplete.js',
     'entrepreneur/job_offer_actions': './app/static/js/entrepreneur/job_offer_actions.js',
     'entrepreneur/job_offer_form': './app/static/js/entrepreneur/job_offer_form.js',
+    'entrepreneur/venture_form': './app/static/js/entrepreneur/venture_form.js',
     'corporative/contact_form': './app/static/js/corporative/contact_form.js',
     'corporative/staff_company_actions': './app/static/js/corporative/staff_company_actions.js'
   },
