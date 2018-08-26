@@ -33,7 +33,7 @@
                     <div class="card-body border border-muted border-top-0">
                         {% get_current_language as LANGUAGE_CODE %}
 
-                        <ul class="QJVentureDetCats">
+                        <ul class="QJVentureDetCats mb-0">
                         {% for industry_category in profile.industry_categories.all %}
                             <li>
                             {% if LANGUAGE_CODE == 'es' %}
