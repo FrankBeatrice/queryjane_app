@@ -243,41 +243,71 @@
         </div>
         <div class="card-body ManageEmailNotifications" data-update-email-notifications-url="{% url 'account:ax_email_notification_update' %}">
             <div class="row">
-                <div class="col-md-6 col-12 mb-4">
-                    <h3>{% trans 'Job offers' %}</h3>
+                <div class="col-md-6 col-12 mb-4 text-center">
+                    <h3 class="h4">{% trans 'Job offers' %}</h3>
                     <p>{% trans 'Notify me about new job offers that fit my profile.' %}</p>
 
                     <div data-notification="email_jobs_notifications">
-                        <button type="button" data-value="notify" class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2">{% trans 'Yes' %}</button>
+                        <button
+                            class="btn {% if professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2"
+                            type="button"
+                            data-value="notify">
+                            {% trans 'Yes' %}
+                        </button>
 
-                        <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}">{% trans 'No' %}</button>
+                        <button
+                            class="btn {% if not professional_profile.email_jobs_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}"
+                            type="button"
+                            data-value="not_notify">
+                            {% trans 'No' %}
+                        </button>
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12 mb-4">
-                    <h3>{% trans 'Private messages' %}</h3>
+                <div class="col-md-6 col-12 mb-4 pb-2 text-center">
+                    <h3 class="h4">{% trans 'Private messages' %}</h3>
                     <p>{% trans 'notify me when I receive a new inbox message.' %}</p>
 
                     <div data-notification="email_messages_notifications">
-                        <button type="button" data-value="notify" class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2">{% trans 'Yes' %}</button>
+                        <button
+                            class="btn {% if professional_profile.email_messages_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2"
+                            type="button"
+                            data-value="notify">
+                            {% trans 'Yes' %}
+                        </button>
 
-                        <button type="button" data-value="not_notify" class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}">{% trans 'No' %}</button>
+                        <button
+                            class="btn {% if not professional_profile.email_messages_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}"
+                            type="button"
+                            data-value="not_notify">
+                            {% trans 'No' %}
+                        </button>
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12 mb-4">
-                    <h3>{% trans 'New applicants' %}</h3>
+                <div class="col-md-6 col-12 mb-4 pb-2 text-center">
+                    <h3 class="h4">{% trans 'New applicants' %}</h3>
                     <p>{% trans 'notify me when users apply for job offers published by companies I manage.' %}</p>
 
                     <div data-notification="new_applicants_notifications">
-                        <button type="button" data-value="notify" class="btn {% if professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2">{% trans 'Yes' %}</button>
+                        <button
+                            class="btn {% if professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %} mr-2"
+                            type="button"
+                            data-value="notify">
+                            {% trans 'Yes' %}
+                        </button>
 
-                        <button type="button" data-value="not_notify" class="btn {% if not professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}">{% trans 'No' %}</button>
+                        <button
+                            class="btn {% if not professional_profile.new_applicants_notifications %}btn-primary{% else %}btn-ghost-purple{% endif %}"
+                            type="button"
+                            data-value="not_notify">
+                            {% trans 'No' %}
+                        </button>
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12 mb-4">
-                    <h3>{% trans 'Messages to my companies' %}</h3>
+                <div class="col-md-6 col-12 mb-4 pb-2 text-center">
+                    <h3 class="h4">{% trans 'Messages to my companies' %}</h3>
                     <p>{% trans 'Notify me when companies I manage receive messages from users.' %}</p>
 
                     <div data-notification="new_company_messages_notifications">
@@ -287,8 +317,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12">
-                    <h3>{% trans 'New scores to my companies' %}</h3>
+                <div class="col-md-6 col-12 text-center">
+                    <h3 class="h4">{% trans 'New scores to my companies' %}</h3>
                     <p>{% trans 'Notify me when companies I manage receive new scores from users.' %}</p>
 
                     <div data-notification="new_company_scores_notifications">
