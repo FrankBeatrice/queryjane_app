@@ -24,17 +24,13 @@
 
             <button type="button" id="id_remove_user_from_address_book" class="btn btn-warning" data-remove-user-from-address-book-url="{% url 'account:ajax_remove_user_from_address_book' profile.id %}" data-user-for-remove-name="{{ profile.user.first_name }}" style="{% if not can_remove_from_address_book %}display:none;{% endif %}">{% trans 'Remove from my address book' %}</button>
 
-            <br>
-            <br>
-
-            <div class="QJProfileDetCategories">
-                <div class="panel panel-default">
-                    <div class="panel-heading text-qj-purple">
+            <div class="QJProfileDetCategories mt-5">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0 text-white">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
                         <span>{% if profile.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
                     </div>
-
-                    <div class="panel-body">
+                    <div class="card-body border border-muted border-top-0">
                         {% get_current_language as LANGUAGE_CODE %}
 
                         <ul class="QJVentureDetCats">
