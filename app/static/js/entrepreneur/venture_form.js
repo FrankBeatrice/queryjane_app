@@ -1,3 +1,6 @@
+// Dependencies
+import './../new_layout.js';
+
 $(function () {
     var quill_en = new Quill('#rich_editor_description_en', {
         theme: 'snow'

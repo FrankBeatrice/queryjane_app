@@ -4,14 +4,14 @@
 {% block title %}Job offers{% endblock %}
 
 {% block css %}
-<link href="{% static 'dist/css/entrepreneur/jobs_list.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/job_offers_list.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <form id="id_QJJOfilterForm" method="get" class="jobs-form clearfix">
+<div class="container py-4">
+  <form id="id_QJJOfilterForm" method="get" class="jobs-form clearfix mb-5">
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6">
+      <div class="col-12 col-sm-6">
         <div id="id_QjaneVFcountryAut" class="form-group" data-country-autocomplete-url="{% url 'place:country_search' %}">
           {{ filter_form.country_search.label_tag }}
           {% render_field filter_form.country_search class+="form-control" %}
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-sm-6 col-md-6">
+      <div class="col-12 col-sm-6">
         <div class="form-group" id="id_QjaneVFcityAut" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
             {{ filter_form.city_search.label_tag }}
             {% render_field filter_form.city_search class+="form-control" %}
@@ -37,7 +37,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-sm-4 col-12">
         <div class="form-group">
         {{ filter_form.category.label_tag }}
         {% render_field filter_form.category class+="form-control" %}
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-sm-4 col-12">
         <div id="id_QjaneVListAut" class="form-group" data-ax-company-autocomplete-url="{% url 'entrepreneur:ax_company_autocomplete' %}">
           {{ filter_form.company_search.label_tag }}
           {% render_field filter_form.company_search class+="form-control" %}
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-sm-4 col-12">
         <div class="form-group">
         {{ filter_form.job_type.label_tag }}
         {% render_field filter_form.job_type class+="form-control" %}
@@ -65,29 +65,43 @@
         </div>
       </div>
     </div>
-    
-    <a href="javascript:void(0)" id="id_QJCleanJOfilter" class="btn btn-ghost-purple">{% trans 'Clean' %}</a>
 
-    <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+    <div class="row mt-3">
+      <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+        <a
+          class="btn btn-ghost-purple btn-block"
+          href="javascript:void(0)"
+          id="id_QJCleanJOfilter">
+          {% trans 'Clean' %}
+        </a>
+      </div>
+
+      <div class="col-12 col-sm-4">
+        <button
+          class="btn btn-primary btn-block"
+          type="submit">
+          {% trans 'Search' %}
+        </button>
+      </div>
+    </div>
   </form>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title mb-0 p-2">{% trans 'Job offers' %}</h3>
+  <div class="card rounded-0 border-0">
+    <div class="card-header bg-qj-purple rounded-0">
+      <h3 class="h5 m-0 text-white">{% trans 'Job offers' %}</h3>
     </div>
-
-    <div class="panel-body">
-      <table class="table table-striped jobs-table">
+    <div class="card-body p-0 border border-muted border-top-0">
+      <table class="table table-striped jobs-table mb-0">
         <tbody>
           {% for job_offer in jobs_list %}
           <tr>
             <td>
               <div class="jobs-item">
                 <div class="row">
-                  <div class="col-xs-12 col-sm-4 0 col-lg-3">
-                    <div class="row hidden-xs">
+                  <div class="col-12 col-sm-4 col-lg-3">
+                    <div class="row d-none d-sm-block">
                       <div class="col-xs-8">
-                        <img class="thumbnail img-fluid" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}">
+                        <img class="img-fluid" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}">
                       </div>
                     </div>
 
@@ -109,7 +123,7 @@
                     <hr class="visible-xs">
                   </div>
 
-                  <div class="col-xs-12 col-sm-8 col-lg-9">
+                  <div class="col-12 col-sm-8 col-lg-9">
                     <h2>
                         {{ job_offer }}
                     </h2>
@@ -157,7 +171,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3 col-md-2">
+                        <div class="col-12 col-sm-3 col-md-2">
                             <a href="{{ job_offer.get_absolute_url }}" class="btn btn-block btn-primary">{% trans 'View' %}</a>
                         </div>
                     </div>
@@ -181,6 +195,5 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
 <script src="{% static 'dist/js/entrepreneur/job_offers_list.min.js' %}"></script>
 {% endblock %}

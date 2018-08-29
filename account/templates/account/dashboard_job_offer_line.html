@@ -1,8 +1,8 @@
 {% load i18n %}
 <tr>
     <td>
-        <img class="thumbnail img-responsive" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}" style="width: 80px; height: auto">
-        <p class="h4">
+        <img class="img-fluid mb-3" src="{{ job_offer.venture.get_logo }}" alt="{{ job_offer.venture }}" style="width: 80px; height: auto">
+        <p class="h4 mb-3">
             <a href="{{ job_offer.venture.get_absolute_url }}">{{ job_offer.venture }}</a>
         </p>
     </td>

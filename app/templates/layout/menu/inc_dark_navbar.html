@@ -3,7 +3,7 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <a class="navbar-brand" href="/">
-        <img src="{% static 'img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
+        <img src="{% static 'dist/img/brand-authenticated.svg' %}" alt="Logitpo Query Jane">
         <span>(BETA)</span>
       </a>
 
@@ -29,10 +29,16 @@
             <ul class="dropdown-menu header-notification-list">
           {% for notification in recent_user_notifications %}
               <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
-                  <a class="qjane-notification-link" href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
-                      <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
-                      {{ notification }}
-                  </a>
+                <div class="qjane-notification-link" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
+                    <div class="media">
+                        <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %} align-self-center mr-3" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
+                        <div class="media-body align-self-center notification-container">
+                            <a href="javascript:void(0)">
+                                {{ notification }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
               </li>
           {% endfor %}
 
@@ -56,16 +62,22 @@
             <ul class="dropdown-menu header-messages-list">
             {% for conversation in recent_user_conversations %}
                 <li class="dropdown-item">
-                    <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
-                        <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
-                        {% if conversation.get_last_message.company_from %}
-                        From: {{ conversation.get_last_message.company_from }}
-                        {% else %}
-                        From: {{ conversation.get_last_message.user_from }}
-                        {% endif %}
+                    <div class="JSComposeMessage d-block" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                        <div class="media">
+                            <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                            <div class="media-body align-self-center">
+                                <a href="javascript:void(0)">
+                                    {% if conversation.get_last_message.company_from %}
+                                    From: {{ conversation.get_last_message.company_from }}
+                                    {% else %}
+                                    From: {{ conversation.get_last_message.user_from }}
+                                    {% endif %}
 
-                        <p>{{ conversation.get_last_message.created_at }}</p>
-                    </a>
+                                    <p class="mb-0">{{ conversation.get_last_message.created_at }}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
 
@@ -83,30 +95,54 @@
 
             <ul class="dropdown-menu">
               <li class="dropdown-item">
-                  <a href="{% url 'professional_detail' user.professionalprofile.slug %}" class="clearfix">
-                      <span class="float-left">{% trans 'Profile' %}</span>
-                      <i class="fa fa-user float-right"></i>
+                  <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
+                      <div class="media">
+                        <div class="media-body">
+                            {% trans 'Profile' %}
+                        </div>
+                        <div class="align-self-center ml-3 d-inline fa-container">
+                            <i class="fa fa-user"></i>
+                        </div>
+                      </div>
                   </a>
               </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'account:profile_update' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Account' %}</span>
-                        <i class="fa fa-cog float-right"></i>
-                     </a>
+                    <a href="{% url 'account:profile_update' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Account' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </div>
+                    </a>
                  </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'account:address_book' %}" class="clearfix">
-                        <span class="float-left">{% trans 'address book' %}</span>
-                        <i class="fa fa-address-book float-right"></i>
+                    <a href="{% url 'account:address_book' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Address book' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-address-book"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
 
                 <li class="dropdown-item">
-                    <a href="{% url 'entrepreneur:venture_form' %}" class="clearfix">
-                        <span class="float-left">{% trans 'New company' %}</span>
-                        <i class="fa fa-briefcase float-right"></i>
+                    <a href="{% url 'entrepreneur:venture_form' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'New company' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
             {% get_user_venture_memberships user as user_venture_memberships %}
@@ -121,18 +157,30 @@
 
             {% if permission_app.manage_admin_views %}
                 <li class="dropdown-item">
-                    <a href="{% url 'corporative:admin_dashboard' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Qjane Admin' %}</span>
-                        <i class="fa fa-star float-right"></i>
+                    <a href="{% url 'corporative:admin_dashboard' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Qjane Admin' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
                 <li class="dropdown-divider"></li>
             {% endif %}
 
                 <li class="dropdown-item">
-                    <a href="{% url 'user_logout' %}" class="clearfix">
-                        <span class="float-left">{% trans 'Log out' %}</span>
-                        <i class="fa fa-power-off float-right"></i>
+                    <a href="{% url 'user_logout' %}">
+                        <div class="media">
+                            <div class="media-body">
+                                {% trans 'Log out' %}
+                            </div>
+                            <div class="align-self-center ml-3 d-inline fa-container">
+                                <i class="fa fa-power-off"></i>
+                            </div>
+                        </div>
                     </a>
                 </li>
             </ul>

@@ -19,7 +19,7 @@
         <div class="card-body">
           <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
 
-          <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page." %}</a></p> 
+          <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page." %}</a></p>
         </div>
       </div>
 
@@ -52,11 +52,11 @@
           <h5 class="card-title text-center">{% trans "Are you sure you want to delete your account definitely?" %}</h5>
 
           <div class="row">
-              <div class="col-md-6 col-xs-12">
+              <div class="col-md-6 col-12">
                 <a href="{% url 'account:profile_update' %}" class="btn btn-outline-dark">{% trans "No, go back to my account settings page" %}</a>
               </div>
 
-              <div class="col-md-6 col-xs-12">
+              <div class="col-md-6 col-12">
                 <form method="post">{% csrf_token %}
                   <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete my account" %}" />
                 </form>

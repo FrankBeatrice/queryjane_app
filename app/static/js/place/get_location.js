@@ -12,3 +12,5 @@ function getLocation() {
       alert("Geolocation is not supported by this browser.");
   }
 }
+
+window.getLocation = getLocation;

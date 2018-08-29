@@ -1,18 +1,18 @@
 {% load static i18n %}
 <li class="media">
-    <div class="media-left">
+    <div class="mr-3">
         <a href="{% url 'professional_detail' membership.admin.slug %}">
-            <img style="width: 50px; height: 50px" class="media-object thumbnail" src="{{ membership.admin.user.get_avatar }}" alt="{{ membership.admin }}">
+            <img style="width: 50px; height: 50px" class="media-object" src="{{ membership.admin.user.get_avatar }}" alt="{{ membership.admin }}">
         </a>
     </div>
 
     <div class="media-body">
-        <h4 class="media-heading">{{ membership.admin.get_print }}</h4>
+        <h4>{{ membership.admin.get_print }}</h4>
         <p>{{ membership.admin.slug }}</p>
         <p>{{ membership.get_role_display }}</p>
     </div>
 
-    <div class="media-right js_qjane_action">
+    <div class="ml-3 js_qjane_action">
         <p>{{ membership.get_status_display }}</p>
 
     {% if membership.is_rejected %}

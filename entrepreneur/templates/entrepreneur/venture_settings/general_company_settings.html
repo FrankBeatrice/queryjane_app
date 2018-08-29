@@ -4,11 +4,11 @@
 {% block title %}{{ company }} - {% trans 'Settings' %}{% endblock %}
 
 {% block css %}
-<link href="{% static 'dist/css/entrepreneur/general_company_settings.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/entrepreneur/general_company_form.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-4">
   <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if company.is_active %}display:none;{% endif %}">
     {% trans "This company is inactive, so users can't find it in the application. You can activate it when you want." %}
 
@@ -20,17 +20,18 @@
 
     <div class="col-md-9">
         <!-- Logo and categories -->
-        <div class="card">
-          <div class="card-header">{% trans 'General information' %}</div>
-
-          <div class="card-body">
-          {% if not company.logo %}
-            <div class="alert alert-warning jsUpdateCompanyLogoMessage" role="alert">{% trans 'Update the company logo to generate greater impact and brand recall.' %}</div>
-          {% endif %}
+        <div class="card rounded-0 border-0 mb-4">
+          <div class="card-header bg-qj-purple rounded-0 text-white">
+              <h3 class="h5 m-0 text-white">{% trans 'General information' %}</h3>
+          </div>
+          <div class="card-body border border-muted border-top-0">
+            {% if not company.logo %}
+              <div class="alert alert-warning jsUpdateCompanyLogoMessage" role="alert">{% trans 'Update the company logo to generate greater impact and brand recall.' %}</div>
+            {% endif %}
 
             <div class="row">
-              <div class="col-md-3 col-xs-12 QjaneCompanySettingsLogoContainer">
-                <img class="media-object thumbnail" src="{{ company.get_logo }}" alt="{{ company }}">
+              <div class="col-md-3 col-12 QjaneCompanySettingsLogoContainer">
+                <img class="img-fluid" src="{{ company.get_logo }}" alt="{{ company }}">
 
                 <form id="id_company_change_logo_form" method="post" enctype="multipart/form-data" data-company-update-logo-url="{% url 'entrepreneur:update_company_logo_form' company.slug %}" style="display:none;">
                   {% csrf_token %}
@@ -42,13 +43,13 @@
                   <button type="submit" id="submit_company_logo_link"></button>
                 </form>
 
-                <a class="btn btn-ghost-purple" href="javascript:void(0)" id="id_company_logo_update_link">
+                <a class="btn btn-ghost-purple btn-block mt-3" href="javascript:void(0)" id="id_company_logo_update_link">
                   <i class="fa fa-camera fa-fw" aria-hidden="true"></i>
                   {% trans 'Update' %}
                 </a>
               </div>
 
-              <div class="col-md-9 col-xs-12">
+              <div class="col-md-9 col-12">
                 {% get_current_language as LANGUAGE_CODE %}
 
                 <p>{% trans 'Industry sectors' %}</p>
@@ -80,16 +81,15 @@
           <form id="id_company_change_description_form" method="post">
             {% csrf_token %}
             <div class="js_lan_form_container">
-              <div class="card">
-                <div class="card-header clearfix">
-                  <span class="float-left">{% trans 'English description' %}</span>
+              <div class="card rounded-0 border-0 mb-4">
+                <div class="card-header bg-qj-purple rounded-0 text-white">
+                    <span class="float-left">{% trans 'English description' %}</span>
 
-                  <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link float-right">
-                    {% trans 'Edit' %} <span class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></span>
-                  </a>
+                    <a href="javascript:void(0)" class="js_edit_desc_link float-right text-white">
+                      {% trans 'Edit' %} <i class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></i>
+                    </a>
                 </div>
-
-                <div class="card-body">
+                <div class="card-body border border-muted border-top-0">
                   <div class="QjaneUpdatedENdescCompany"></div>
 
                   <div class="description_field_container" style="{% if company.description_en %}display:none;{% endif %}">
@@ -117,20 +117,18 @@
             </div>
 
             <div class="js_lan_form_container">
-              <div class="card">
-                <div class="card-header clearfix">
+              <div class="card rounded-0 border-0 mb-4">
+                <div class="card-header bg-qj-purple rounded-0 text-white">
                   <span class="float-left">{% trans 'Spanish description' %}</span>
 
-                  <a href="javascript:void(0)" class="btn btn-primary js_edit_desc_link float-right">
-                      {% trans 'Edit' %} <span class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></span>
+                  <a href="javascript:void(0)" class="js_edit_desc_link float-right text-white">
+                    {% trans 'Edit' %} <i class="fas fa-pencil-alt js_edit_desc_link" aria-hidden="true"></i>
                   </a>
                 </div>
-
-                <div class="card-body">
+                <div class="card-body border border-muted border-top-0">
                   <div class="QjaneUpdatedSPdescCompany"></div>
 
                   <div class="description_field_container" style="{% if company.description_es %}display:none;{% endif %}">
-
                     <div id="rich_editor_description_es">
                       {{ company.description_es|safe }}
                     </div>
@@ -156,40 +154,41 @@
         </div>
         <!-- End company description -->
 
-        <div class="card">
-          <div class="card-header">{% trans "Company settings" %}</div>
-
-          <div class="card-body">
+        <div class="card rounded-0 border-0 mb-4">
+          <div class="card-header bg-qj-purple rounded-0 text-white">
+            {% trans "Company settings" %}
+          </div>
+          <div class="card-body border border-muted border-top-0">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
-                  <div id="id_deactivate_container" style="{% if company.is_inactive %}display:none;{% endif %}">
-                    <h3>{% trans "Deactivate company" %}</h3>
-                    <p>{% trans "User will not be able to find your company. Users whit administrator membership can activate/deactivate a company when they want." %}</p>
+              <div class="col-md-6 col-12">
+                <div id="id_deactivate_container" style="{% if company.is_inactive %}display:none;{% endif %}">
+                  <h3>{% trans "Deactivate company" %}</h3>
+                  <p>{% trans "User will not be able to find your company. Users whit administrator membership can activate/deactivate a company when they want." %}</p>
 
-                    <a href="javascript:void(0)" class="btn btn-warning jsDeactivateCompany" data-deactivate-company-url="{% url 'entrepreneur:ax_deactivate_company' company.slug %}">{% trans "Deactivate" %}</a>
-                  </div>
-
-                  <div id="id_activate_container" style="{% if company.is_active %}display:none;{% endif %}">
-                    <h3>{% trans "Activate company" %}</h3>
-                    <p>{% trans "Allow users of the application to find ." %} <strong>{{ company }}</strong></p>
-
-                    <a href="javascript:void(0)" class="btn btn-success jsActivateCompany" data-activate-company-url="{% url 'entrepreneur:ax_activate_company' company.slug %}">{% trans "Activate" %}</a>
-                  </div>
+                  <a href="javascript:void(0)" class="btn btn-warning jsDeactivateCompany" data-deactivate-company-url="{% url 'entrepreneur:ax_deactivate_company' company.slug %}">{% trans "Deactivate" %}</a>
                 </div>
 
-                <div class="col-md-6 col-xs-12">
-                    <h3>{% trans "Delete company" %}</h3>
+                <div id="id_activate_container" style="{% if company.is_active %}display:none;{% endif %}">
+                  <h3>{% trans "Activate company" %}</h3>
+                  <p>{% trans "Allow users of the application to find ." %} <strong>{{ company }}</strong></p>
 
-                  {% if can_delete %}
-                    <p>{% trans "Delete company profile. Created job offers and memberships will be deleted too." %}</p>
-                    <a href="{% url 'entrepreneur:delete_company' company.slug %}" class="btn btn-danger">{% trans 'Delete' %}</a>
-                  {% else %}
-                    <p>{% trans "Only the company owner can delete it." %}</p>
-                    <p><strong>{{ company.owner }}</strong> {% trans "is de company owner." %}</p>
-
-                    <button type="button" class="btn btn-secondary btn-lg" disabled>Delete</button>
-                  {% endif %}
+                  <a href="javascript:void(0)" class="btn btn-success jsActivateCompany" data-activate-company-url="{% url 'entrepreneur:ax_activate_company' company.slug %}">{% trans "Activate" %}</a>
                 </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                  <h3>{% trans "Delete company" %}</h3>
+
+                {% if can_delete %}
+                  <p>{% trans "Delete company profile. Created job offers and memberships will be deleted too." %}</p>
+                  <a href="{% url 'entrepreneur:delete_company' company.slug %}" class="btn btn-danger">{% trans 'Delete' %}</a>
+                {% else %}
+                  <p>{% trans "Only the company owner can delete it." %}</p>
+                  <p><strong>{{ company.owner }}</strong> {% trans "is de company owner." %}</p>
+
+                  <button type="button" class="btn btn-secondary btn-lg" disabled>Delete</button>
+                {% endif %}
+              </div>
             </div>
           </div>
         </div>

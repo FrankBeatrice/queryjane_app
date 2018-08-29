@@ -1,4 +1,4 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{% trans 'Register company' %}{% endblock %}
@@ -9,21 +9,22 @@
 
 {% block content %}
 <section class="account qjane-venture-create">
-    <div class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title text-center">{% trans 'REGISTER COMPANY' %}</h2>
+    <div class="container py-4">
+        <div class="card rounded-0 border-0 PasswordResetConfirm qj-home-register">
+            <div class="card-header bg-qj-purple rounded-0">
+                <h3 class="h5 m-0 text-white">
+                    {% trans 'REGISTER COMPANY' %}
+                </h3>
             </div>
-
-            <div class="panel-body">
+            <div class="card-body border border-muted border-top-0">
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1 QjaneVFHeaderText">
+                    <div class="col-md-10 offset-md-1 QjaneVFHeaderText">
 <!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus ante nulla, ac blandit nunc ultricies non. Sed cursus lorem quis faucibus mattis. Aliquam nec nunc sapien. -->
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-10 offset-md-1">
                         <div class="QjaneVFContainer">
                             <form method="POST">
                                 {% csrf_token %}
@@ -35,7 +36,7 @@
                                 {% endif %}
 
                                 <div class="row">
-                                    <div class="col-md-6 col-xs-12 form-group">
+                                    <div class="col-md-6 col-12 form-group">
                                         <div class="form-group">
                                             <label>
                                                 {% trans 'Company name' %}
@@ -102,7 +103,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-xs-12">
+                                    <div class="col-md-6 col-12">
                                         {% get_current_language as LANGUAGE_CODE %}
                                         <p>{% trans 'Select your company sector or sectors in the industry.' %}</p>
 
@@ -124,12 +125,13 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">{% trans 'Company description' %}</h3>
+                                <div class="card rounded-0 border-0 mb-4">
+                                    <div class="card-header bg-qj-purple rounded-0">
+                                        <h3 class="h5 m-0 text-white">
+                                            {% trans 'Company description' %}
+                                        </h3>
                                     </div>
-
-                                    <div class="panel-body">
+                                    <div class="card-body border border-muted border-top-0">
                                         <div class="form-group">
                                             <label>
                                                 {% trans 'English description' %}
@@ -158,14 +160,15 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">{% trans 'Social media' %}</h3>
+                                <div class="card rounded-0 border-0 mb-4">
+                                    <div class="card-header bg-qj-purple rounded-0">
+                                        <h3 class="h5 m-0 text-white">
+                                            {% trans 'Social media' %}
+                                        </h3>
                                     </div>
-
-                                    <div class="panel-body">
+                                    <div class="card-body border border-muted border-top-0">
                                         <div class="row">
-                                            <div class="col-md-6 col-xs-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>{% trans 'Web' %}</label>
 
@@ -193,7 +196,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>Instagram</label>
 
@@ -224,7 +227,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">{% trans 'Next' %}</button>
                             </form>
                         </div>
@@ -237,8 +239,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'dist/js/place/show_position.min.js' %}"></script>
 <script src="{% static 'dist/js/entrepreneur/venture_form.min.js' %}"></script>
-<script src="{% static 'dist/js/place/place_autocomplete.min.js' %}"></script>
 {% endblock %}
 

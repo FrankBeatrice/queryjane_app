@@ -31,12 +31,43 @@
     }
   }
 
-  .navbar-nav .open .dropdown-menu {
+  .navbar-nav .show .dropdown-menu {
     border-radius: 0;
     background-color: #fff;
+    width: 100%;
 
     @media (min-width: 768px) {
       border-radius: 4px;
+    }
+
+    @media (min-width: 992px) {
+      width: 270px;
+    }
+
+    .dropdown-item {
+      white-space: normal;
+
+      // TODO: Improve those classes
+      .fa {
+        color: $qj-purple;
+      }
+
+      // TODO: Improve those classes
+      &:hover {
+        a,
+        .fa {
+          color: #fff;
+        }
+      }
+    }
+
+    .notification-container {
+      white-space: normal;
+      width: 100%;
+
+      @media (min-width: 992px) {
+        width: 200px;
+      }
     }
   }
 

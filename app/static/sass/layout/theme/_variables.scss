@@ -1,0 +1,14 @@
+$qj-purple: #822990;
+
+$theme-colors: (
+  "qj-purple": $qj-purple
+);
+
+// Links
+//
+// Style anchor elements.
+
+$link-color:                $qj-purple;
+
+$dropdown-link-hover-bg:            $qj-purple;
+$dropdown-link-active-bg:           $qj-purple;

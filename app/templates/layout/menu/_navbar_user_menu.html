@@ -19,10 +19,16 @@
         <ul class="dropdown-menu header-notification-list"  aria-labelledby="navbarDropdownNotificationsLink">
         {% for notification in recent_user_notifications %}
             <li class="dropdown-item" data-toggle="modal" data-target="#generalModalMessage">
-                <a class="qjane-notification-link href="javascript:void(0)" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
-                    <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %}" aria-hidden="true" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
-                    {{ notification }}
-                </a>
+                <div class="qjane-notification-link d-block" data-notification-url="{% url 'account:ajax_post_notification_load' notification.pk  %}">
+                    <div class="media">
+                        <i class="JSNotificationStatus fa {% if notification.was_seen %}fa-eye{% else %}fa-eye-slash{% endif %} align-self-center mr-3" aria-hidden="true" title="{% if notification.was_seen %}Viewed notification{% else %}New notification{% endif %}"></i>
+                        <div class="media-body align-self-center notification-container">
+                            <a href="javascript:void(0)">
+                                {{ notification }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </li>
         {% endfor %}
 
@@ -46,17 +52,22 @@
         <ul class="dropdown-menu header-messages-list"  aria-labelledby="navbarDropdownMessagesLink">
         {% for conversation in recent_user_conversations %}
             <li class="dropdown-item">
-                <a class="JSComposeMessage" href="javascript:void(0)" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
-                    <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %}" aria-hidden="true" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
-                    From:
-                    {% if conversation.get_last_message.company_from %}
-                    {{ conversation.get_last_message.company_from }}
-                    {% else %}
-                    {{ conversation.get_last_message.user_from }}
-                    {% endif %}
+                <div class="JSComposeMessage d-block" data-toggle="modal" data-target="#composeMessageModal" {% if conversation.participating_company %}data-company-to-id="{{ conversation.participating_company.id }}"{% else %}data-user-to-id="{{ conversation.get_last_message.user_from.id }}"{% endif %} data-to-name="{% if conversation.participating_company %}{{ conversation.participating_company }}{% else %}{{ conversation.get_last_message.user_from }}{% endif %}" data-load-conversation-url="{% url 'account:ajax_post_conversation_load' conversation.pk %}">
+                    <div class="media">
+                        <i class="JSMessagestatus fa {% if conversation.unread %}fa-envelope{% else %}fa-envelope-open{% endif %} align-self-center mr-3" title="{% if message.unread %}{% trans 'New conversation' %}{% else %}{% trans 'Viewed conversation' %}{% endif %}"></i>
+                        <div class="media-body align-self-center">
+                            <a href="javascript:void(0)">
+                                {% if conversation.get_last_message.company_from %}
+                                {{ conversation.get_last_message.company_from }}
+                                {% else %}
+                                {{ conversation.get_last_message.user_from }}
+                                {% endif %}
 
-                    <p>{{ conversation.get_last_message.created_at }}</p>
-                </a>
+                                <p class="mb-0">{{ conversation.get_last_message.created_at }}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </li>
         {% endfor %}
 

@@ -1,3 +1,5 @@
+import './../new_layout.js';
+
 $(function () {
     'use strict';
 

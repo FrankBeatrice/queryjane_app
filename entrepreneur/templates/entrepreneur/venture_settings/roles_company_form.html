@@ -1,22 +1,21 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static widget_tweaks i18n %}
 
 {% block title %}{{ company }} - {% trans 'Members settings' %}{% endblock %}
 
 {% block content %}
 <section class="account qjane-venture-settings" data-venture-slug="{{ company.slug }}">
-    <div class="container">
+    <div class="container py-4">
         <div class="row">
             {% include 'entrepreneur/venture_settings/settings_menu.html' %}
 
             <div class="col-md-9 QjaneVentuerSettingsContent">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Roles</h3>
+                <div class="card rounded-0 border-0 mb-4">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">Roles</h3>
                     </div>
-
-                    <div class="panel-body">
-                        <ul class="media-list qjane-venture-roles-list">
+                    <div class="card-body border border-muted border-top-0">
+                        <ul class="list-unstyled qjane-venture-roles-list">
                         {% for membership in memberships %}
                             {% include 'entrepreneur/venture_settings/_membership_line.html' %}
                         {% endfor %}
@@ -39,7 +38,7 @@
                     </div>
 
                     <div class="row" style="padding-bottom: 50px;">
-                        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                        <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
                             <form class="qjane-userprofile-autocomplete-form" data-profile-autocomplete-url="{% url 'account:profile-search' %}" data-membership-line-url="{% url 'entrepreneur:membership_line_url' %}" data-send-role-invitation-url="{% url 'entrepreneur:roles_venture_form' company.slug %}">
                                 <div class="form-group">
                                 {% render_field userprofile_form.userprofile class+="form-control" %}
@@ -65,21 +64,4 @@
 
 {% block js %}
 <script src="{% static 'dist/js/entrepreneur/role_userprofile_autocomplete.min.js' %}"></script>
-
-<script>
-$(function() {
-    'use strict';
-
-    $('.js_qjane_action').on('click', '.js_qjane_resend_admin_invitation', function () {
-        var resend_link = $(this);
-        var resend_admin_invitation = $(this).data('resend-admin-invitation-url');
-
-        $.post(resend_admin_invitation, function (response) {
-            resend_link.closest('li').html(response.content);
-
-            return false;
-        });
-    });
-});
-</script>
 {% endblock %}

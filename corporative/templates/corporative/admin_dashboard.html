@@ -1,102 +1,117 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static i18n %}
 
 {% block title %}{% trans 'Admin dashboard' %}{% endblock %}
 
 {% block content %}
 <section class="AdminDashboard">
-    <div class="container">
-        <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#companiesAdmin">{% trans 'Companies' %}</a></li>
-          <li><a data-toggle="tab" href="#socialnetworksAdmin">{% trans 'Social Networks' %}</a></li>
+    <div class="container py-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="companies-admin-tab" data-toggle="tab" href="#companiesAdmin" role="tab" aria-controls="companies-admin" aria-selected="true">
+                    {% trans 'Companies' %}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="social-networks-admin-tab" data-toggle="tab" href="#socialnetworksAdmin" role="tab" aria-controls="social-networks-admin" aria-selected="false">
+                    {% trans 'Social Networks' %}
+                </a>
+            </li>
         </ul>
 
-        <div class="tab-content">
-          <div id="companiesAdmin" class="tab-pane fade in active">
-            <br>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{% trans 'Hidden companies' %}</div>
-                        <div class="panel-body">
-                            {% if hidden_companies %}
-                            <table class="table table-striped jobs-table">
-                              <tbody>
-                            {% for company in hidden_companies %}
-                                {% include 'account/dashboard_company_line.html' %}
-                            {% endfor %}
-                              </tbody>
-                            </table>
-                            {% else %}
-                            <p class="h4">{% trans 'There are not hidden companies.' %}</p>
-                            {% endif %}
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active p-3" id="companiesAdmin" role="tabpanel" aria-labelledby="companies-admin-tab">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="card rounded-0 border-0">
+                            <div class="card-header bg-qj-purple rounded-0">
+                                <h3 class="h5 m-0 text-white">{% trans 'Hidden companies' %}</h3>
+                            </div>
+                            <div class="card-body border border-muted border-top-0">
+                                {% if hidden_companies %}
+                                <table class="table table-striped jobs-table mb-0">
+                                <tbody>
+                                {% for company in hidden_companies %}
+                                    {% include 'account/dashboard_company_line.html' %}
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                {% else %}
+                                <p class="h4 mb-0">{% trans 'There are not hidden companies.' %}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xs-12 col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{% trans 'Hidden Job offers' %}</div>
-                        <div class="panel-body">
-                            {% if hidden_job_offer %}
-                            <table class="table table-striped jobs-table">
-                              <tbody>
-                            {% for job_offer in hidden_job_offer %}
-                                {% include 'account/dashboard_job_offer_line.html' %}
-                            {% endfor %}
-                              </tbody>
-                            </table>
-                            {% else %}
-                            <p class="h4">{% trans 'There are not hidden job offers.' %}</p>
-                            {% endif %}
+                    <div class="col-12 col-sm-6">
+                        <div class="card rounded-0 border-0">
+                            <div class="card-header bg-qj-purple rounded-0">
+                                <h3 class="h5 m-0 text-white">{% trans 'Hidden Job offers' %}</h3>
+                            </div>
+                            <div class="card-body border border-muted border-top-0">
+                                {% if hidden_job_offer %}
+                                <table class="table table-striped jobs-table mb-0">
+                                <tbody>
+                                {% for job_offer in hidden_job_offer %}
+                                    {% include 'account/dashboard_job_offer_line.html' %}
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                {% else %}
+                                <p class="h4 mb-0">{% trans 'There are not hidden job offers.' %}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
 
-          <div id="socialnetworksAdmin" class="tab-pane fade">
-            <br>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{% trans 'Companies to share' %}</div>
-                        <div class="panel-body">
-                            {% if unshared_companies_list %}
-                            <table class="table table-striped jobs-table">
-                              <tbody>
-                            {% for company in unshared_companies_list %}
-                                {% include 'account/dashboard_company_line.html' %}
-                            {% endfor %}
-                              </tbody>
-                            </table>
-                            {% else %}
-                            <p class="h4">{% trans 'There are not unshared companies.' %}</p>
-                            {% endif %}
+            <div class="tab-pane fade p-3" id="socialnetworksAdmin" role="tabpanel" aria-labelledby="social-networks-admin-tab">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="card rounded-0 border-0">
+                            <div class="card-header bg-qj-purple rounded-0">
+                                <h3 class="h5 m-0 text-white">{% trans 'Companies to share' %}</h3>
+                            </div>
+                            <div class="card-body border border-muted border-top-0">
+                                {% if unshared_companies_list %}
+                                <table class="table table-striped jobs-table mb-0">
+                                <tbody>
+                                {% for company in unshared_companies_list %}
+                                    {% include 'account/dashboard_company_line.html' %}
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                {% else %}
+                                <p class="h4 mb-0">{% trans 'There are not unshared companies.' %}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xs-12 col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{% trans 'Job offers to share' %}</div>
-                        <div class="panel-body">
-                            {% if unshared_jobs_list %}
-                            <table class="table table-striped jobs-table">
-                              <tbody>
-                            {% for job_offer in unshared_jobs_list %}
-                                {% include 'account/dashboard_job_offer_line.html' %}
-                            {% endfor %}
-                              </tbody>
-                            </table>
-                            {% else %}
-                            <p class="h5">{% trans 'There are not unshared job offers' %}</p>
-                            {% endif %}
+                    <div class="col-12 col-sm-6">
+                        <div class="card rounded-0 border-0">
+                            <div class="card-header bg-qj-purple rounded-0">
+                                <h3 class="h5 m-0 text-white">{% trans 'Job offers to share' %}</h3>
+                            </div>
+                            <div class="card-body border border-muted border-top-0">
+                                {% if unshared_jobs_list %}
+                                <table class="table table-striped jobs-table mb-0">
+                                <tbody>
+                                {% for job_offer in unshared_jobs_list %}
+                                    {% include 'account/dashboard_job_offer_line.html' %}
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                {% else %}
+                                <p class="h5 mb-0">{% trans 'There are not unshared job offers' %}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
         </div>
     </div>
 </section>
