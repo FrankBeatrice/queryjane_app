@@ -18,7 +18,7 @@ import Quill from 'quill';
 window.Quill = Quill;
 import bootstrapSwitch from 'bootstrap-switch';
 // TODO: Solve rateyo dependencie
-// import 'rateyo/min/jquery.rateyo.min.js';
+import './vendor/jquery.rateyo.js';
 
 // Utilities
 import './utils/mediaQueryDetector';
