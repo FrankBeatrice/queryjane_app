@@ -1,5 +1,8 @@
 import './../new_layout.js';
 
+// CSS
+import './../../sass/password_reset_form.scss';
+
 $(function() {
   'use strict';
 

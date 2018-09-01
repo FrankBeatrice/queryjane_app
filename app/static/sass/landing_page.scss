@@ -1,4 +1,8 @@
-@import 'layout/libs/aos';
+// Dependencies
+@import '~aos/dist/aos.css';
+
+// Layout
+@import './layout/new_layout.scss';
 
 body {
   font-family: "Montserrat", sans-serif;
