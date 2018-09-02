@@ -1,3 +1,6 @@
+// Dependencies
+import './../new_layout.js';
+
 $(function () {
     // CLose job offer.
     $('.job_offer_close_link').on('click', function () {

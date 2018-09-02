@@ -28,6 +28,10 @@
 {% if not company.logo %}https://queryjane.net{% endif %}{{ company.get_logo }}
 {% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
   {% if company.is_inactive %}<div class="alert alert-danger" role="alert">{{ company }} {% trans "is inactive. Only company administrators and platform administrators can view this page." %}</div>

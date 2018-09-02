@@ -3,6 +3,10 @@
 
 {% block title %}{{ company }} - {% trans 'Messages' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <section>
     <div class="container py-4">
@@ -37,11 +41,15 @@
                                 </td>
                             </tr>
                             {% endfor %}
-                        </table
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/layout/layout.min.js' %}"></script>
 {% endblock %}

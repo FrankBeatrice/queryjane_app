@@ -4,6 +4,10 @@
 
 {% block title %}{{ object.en_title }}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
   <h1>{{ object.en_title }}</h1>

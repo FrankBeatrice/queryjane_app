@@ -1,5 +1,8 @@
 import './../new_layout.js';
 
+// CSS
+import './../../sass/login.scss';
+
 $(function () {
   'use strict';
 

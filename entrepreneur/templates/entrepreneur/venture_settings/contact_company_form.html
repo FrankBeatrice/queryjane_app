@@ -3,6 +3,10 @@
 
 {% block title %}{{ company }} - {% trans 'Contact settings' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <section class="account qjane-venture-settings">
     <div class="container py-4">

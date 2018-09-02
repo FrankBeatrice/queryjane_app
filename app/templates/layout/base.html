@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{% block title %}{% endblock %} | QueryJane</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}">
-    <meta itemprop="type" property="og:type" content="website">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
 
+    <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}">
+
+    <!-- Open graph protocol -->
+    <meta itemprop="type" property="og:type" content="website">
     <meta property="og:site_name" content="QueryJane">
     <meta itemprop="name" property="og:title" content="{% block meta_title %}QueryJane | The Cannabis Industry Network{% endblock %}">
     <meta itemprop="description" property="og:description" name="description" content="{% block meta_description %}{% trans 'QueryJane, the Cannabis Industry Network. Connect with companies and experts in different sectors of the cannabis industry.' %}{% endblock %}">
@@ -28,14 +31,9 @@
     <meta property="twitter:image" content="{% block meta_twitter_image %}https://queryjane.net{% static 'img/qjane-logo-share.png' %}{% endblock %}">
     <meta property="twitter:url" content="https://{{ request.get_host }}{{ request.get_full_path }}">
 
-    <meta name="apple-mobile-web-app-title" content="QueryJane">
-    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
-    <link rel="apple-touch-icon-precomposed" href="{% static 'img/apple-touch-icon.png' %}">
-    <link rel="icon" href="{% static 'img/favicon.ico' %}">
-
+    <!-- Icons and fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
-    <link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -54,6 +52,8 @@
     ga('send', 'pageview');
     </script>
     <!-- End Google Analytics -->
+
+    <!-- CSS´s compilation -->
     {% block css %}{% endblock %}
   </head>
 
