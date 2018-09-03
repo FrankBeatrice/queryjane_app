@@ -34,9 +34,10 @@ module.exports = merge(common, {
         use: [{
           loader: 'file-loader',
           options: {
-            context: path.resolve(__dirname, './app/static/src/img'),
+            context: path.resolve(__dirname, './app/static/img'),
             name: '[path][name].[ext]',
-            outputPath: 'img/'
+            outputPath: 'img/',
+            publicPath: '/static/dist/img/'
           }
         }]
       }
