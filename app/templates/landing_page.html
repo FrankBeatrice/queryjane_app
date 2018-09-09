@@ -12,7 +12,7 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <a class="navbar-brand" href="/">
-        <img src="{% static 'img/brand.svg' %}" alt="Logitpo Query Jane">
+        <img src="{% static 'dist/img/brand.svg' %}" alt="Logitpo Query Jane">
         <span>(BETA)</span>
       </a>
 
@@ -60,21 +60,21 @@
     </nav>
   </div>
 
-  <div class="homeHeaderText">
+  <div class="home-header-text">
     <div class="container" data-aos="fade-right" data-aos-duration="1000">
       <div class="row">
-        <div class="col-md-7 col-sm-12 px-0 mx-0">
+        <div class="col-md-7 col-sm-12">
           <h2 class="display-4">The Cannabis Industry Network!!!</h2>
           <h3 class="h5">Connect with companies and experts in different sectors of the cannabis industry.</h3>
 
           <br>
 
-          <p class="font-italic text-justify p-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
+          <p class="font-italic text-justify p-4 mb-0 mb-md-4" style="font-size: 18px;">"QueryJane is the digital network of active participants in the cannabis industry, developed with the aim of promoting the consolidation of this industry globally and generating growth in this economy sector."</p>
         </div>
 
-        <div class="col-md-5 col-sm-12 px-0 mx-0 text-center">
-          <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'signup' %}">Sign up</a>
-          <a class="btn btn-outline-light mt-4 btn-lg" href="{% url 'auth_login' %}">Log in</a>
+        <div class="col-md-5 col-sm-12 text-center">
+          <a class="btn btn-outline-light mt-4 btn-lg d-inline-block mr-3" href="{% url 'signup' %}">Sign up</a>
+          <a class="btn btn-outline-light mt-4 btn-lg d-inline-block" href="{% url 'auth_login' %}">Log in</a>
         </div>
       </div>
     </div>
@@ -121,7 +121,7 @@
 
 <div class="qj-section_2">
   <div class="row mx-0">
-    <div class="col-md-6 px-0 qj-section_2-1" style="background-image: url('{% static 'img/landing_page/register-banner.png' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-1" data-aos="zoom-in"></div>
     <div class="col-md-6 pl-5 pt-5 pb-3">
       <div class="row">
         <div class="col-10 text-center">
@@ -133,21 +133,19 @@
 
       <div class="row">
         <div class="col-10">
-          <a class="btn btn-outline-success mt-4 btn-block" href="{% url 'signup' %}">Register your company</a>
+          <a class="btn btn-outline-success mt-4 mb-2 btn-block" href="{% url 'signup' %}">Register your company</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row  mx-0">
-    <div class="container">
-      <div class="col-md-12 text-center">
-        <hr>
-        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
-        <span class="h5">QueryJane is free, and always will be!!!</span>
-        <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
-        <hr>
-      </div>
+  <div class="w-100">
+    <div class="text-center">
+      <hr class="mt-0">
+      <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+      <span class="h5">QueryJane is free, and always will be!!!</span>
+      <i class="text-success fas fa-cannabis fa-2x fa-fw"></i>
+      <hr class="mb-0">
     </div>
   </div>
 
@@ -163,12 +161,12 @@
 
       <div class="row">
         <div class="col-10">
-          <a class="btn btn-outline-success mt-4 btn-block" href="{% url 'signup' %}">Register your profile</a>
+          <a class="btn btn-outline-success mt-4 mb-2 btn-block" href="{% url 'signup' %}">Register your profile</a>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6 px-0 qj-section_2-2" style="background-image: url('{% static 'img/landing_page/profiles-banner.png' %}');" data-aos="zoom-in"></div>
+    <div class="col-md-6 px-0 qj-section_2-2" data-aos="zoom-in"></div>
   </div>
 </div>
 
@@ -215,7 +213,7 @@
     <div class="row">
       <div class="col-md-4 text-center" data-aos="fade-up">
         <a href="https://augustaking.org/" target="_blank">
-          <img class="img-fluid" src="{% static 'img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
+          <img class="img-fluid" src="{% static 'dist/img/landing_page/augusta_king.png' %}" alt="Augusta King Foundation"/>
         </a>
       </div>
 
@@ -224,7 +222,7 @@
         <p class="h4">QueryJane is open source and free...</p>
 
         <hr>
-        <img src="{% static 'img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
+        <img src="{% static 'dist/img/landing_page/qjane-icon.png' %}" alt="Logitpo Query Jane" style="width: 200px;">
         <hr>
 
         <p>QueryJane is an open source application developed by <a href="https://augustaking.org/" target="_blank">Augusta King Foundation</a> created to boost the growth of emerging economies around cannabis indsutry.</p>

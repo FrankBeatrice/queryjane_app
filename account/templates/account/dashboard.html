@@ -1,22 +1,30 @@
-{% extends "layout/index.html" %}
+{% extends "layout/base.html" %}
 {% load static entrepreneur_tags i18n %}
 
 {% block title %}Dashboard{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="qjaneDashboard">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-4">
+    <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col-12 col-md-4 mb-4 mb-md-0">
                 {% get_user_venture_memberships user as user_venture_memberships %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ user }}</div>
-                    <div class="panel-body">
-                        <table class="table table-striped jobs-table">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            {{ user }}
+                        </h3>
+                    </div>
+                    <div class="card-body border border-muted border-top-0">
+                        <table class="table table-striped jobs-table mb-3">
                           <tbody>
                             <tr>
                                 <td>
-                                    <img class="img-responsive thumbnail" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
+                                    <img class="img-fluid" src="{{ user.get_avatar }}" alt="{{ user }}" style="width: 50px; height: 50px">
                                 </td>
                                 <td>
                                     <a href="{% url 'professional_detail' user.professionalprofile.slug %}">
@@ -27,7 +35,7 @@
                           </tbody>
                         </table>
                         {% if user.professionalprofile.industry_categories.all %}
-                        <ul>
+                        <ul class="mb-0">
                         {% get_current_language as LANGUAGE_CODE %}
 
                         {% for industry_category in user.professionalprofile.industry_categories.all %}
@@ -51,40 +59,17 @@
                         {% endif %}
                     </div>
                 </div>
-
-                {% if user_venture_memberships %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <i class="fa fa-briefcase" aria-hidden="true"></i>
-                        <span>{% trans 'Your companies.' %}</span>
-                    </div>
-
-                    <div class="panel-body">
-                        <table class="table">
-                        {% for membership in user_venture_memberships %}
-                            <tr>
-                                <td>
-                                    <a href="{{ membership.venture.get_absolute_url }}">
-                                        <img class="" src="{{ membership.venture.get_logo }}" alt="{{ user }}" style="width: 30px; height: 30px">
-                                        {{ membership.venture }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                        <span>{% trans 'New messages' %} (<span class="NewMessagesCounter">{{ new_conversations.count }}</span>)</span>
+            <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span>{% trans 'New messages' %} (<span class="NewMessagesCounter">{{ new_conversations.count }}</span>)</span>
+                        </h3>
                     </div>
-
-                    <div class="panel-body QjaneInboxList">
+                    <div class="card-body border border-muted border-top-0">
                         {% if new_conversations %}
                         <table class="table">
                         {% for conversation in new_conversations|slice:":4" %}
@@ -107,20 +92,21 @@
                         {% endif %}
 
                         {% else %}
-                        <p class="h5">You don't have new messages.</p>
+                        <p class="h5 mb-0">You don't have new messages.</p>
                         {% endif %}
                     </div>
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
-                        <span>{% trans 'Notifications' %} (<span class="NewNotificationsCounter">{{ new_notifications.count }}</span>)</span>
+            <div class="col-12 col-md-4">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span>{% trans 'Notifications' %} (<span class="NewNotificationsCounter">{{ new_notifications.count }}</span>)</span>
+                        </h3>
                     </div>
-
-                    <div class="panel-body QjaneNotificationsList">
+                    <div class="card-body border border-muted border-top-0">
                         {% if new_notifications %}
                         <table class="table">
                         {% for notification in new_notifications|slice:":4" %}
@@ -141,7 +127,7 @@
                         </a>
                         {% endif %}
                         {% else %}
-                        <p class="h5">You don't have new notifications.</p>
+                        <p class="h5 mb-0">You don't have new notifications.</p>
                         {% endif %}
                     </div>
                 </div>
@@ -149,63 +135,68 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 {% if interest_sector_jobs %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <span class="pull-left">{% trans 'Job offers that might interest you.' %}</span>
-                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
-                            <i class="fa fa-list-ul"></i>
-                            {% trans 'View all' %}
-                        </a>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <span class="float-left">{% trans 'Job offers that might interest you.' %}</span>
+                            <a href="{% url 'jobs_list' %}" class="btn btn-primary float-right">
+                                <i class="fa fa-list-ul"></i>
+                                {% trans 'View all' %}
+                            </a>
+                        </h3>
                     </div>
-
-                    <div class="panel-body">
-                        <table class="table table-striped jobs-table">
-                          <tbody>
-                        {% for job_offer in interest_sector_jobs %}
-                            {% include 'account/dashboard_job_offer_line.html' %}
-                        {% endfor %}
-                          </tbody>
+                    <div class="card-body border border-muted border-top-0">
+                        <table class="table table-striped jobs-table mb-0">
+                            <tbody>
+                            {% for job_offer in interest_sector_jobs %}
+                                {% include 'account/dashboard_job_offer_line.html' %}
+                            {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </div>
                 {% endif %}
 
                 {% if last_jobs %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <span class="pull-left">{% trans 'Last job offers.' %}</span>
-                        <a href="{% url 'jobs_list' %}" class="btn btn-primary pull-right">
-                            <i class="fa fa-list-ul"></i>
-                            {% trans 'View all' %}
-                        </a>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <span class="float-left">{% trans 'Last job offers.' %}</span>
+                            <a href="{% url 'jobs_list' %}" class="btn btn-primary float-right">
+                                <i class="fa fa-list-ul"></i>
+                                {% trans 'View all' %}
+                            </a>
+                        </h3>
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-striped jobs-table">
-                          <tbody>
-                        {% for job_offer in last_jobs %}
-                            {% include 'account/dashboard_job_offer_line.html' %}
-                        {% endfor %}
-                          </tbody>
+                    <div class="card-body border border-muted border-top-0">
+                        <table class="table table-striped jobs-table mb-0">
+                            <tbody>
+                            {% for job_offer in last_jobs %}
+                                {% include 'account/dashboard_job_offer_line.html' %}
+                            {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </div>
                 {% endif %}
 
                 {% if random_companies %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <div class="pull-left">
-                            <span>{% trans 'Know some registered companies.' %}</span>
-                        </div>
-                        <a href="{% url 'companies_list' %}" class="btn btn-primary pull-right">
-                            <i class="fa fa-list-ul"></i>
-                            {% trans 'View all' %}
-                        </a>
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <div class="float-left">
+                                <span>{% trans 'Know some registered companies.' %}</span>
+                            </div>
+                            <a href="{% url 'companies_list' %}" class="btn btn-primary float-right">
+                                <i class="fa fa-list-ul"></i>
+                                {% trans 'View all' %}
+                            </a>
+                        </h3>
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-striped jobs-table">
+                    <div class="card-body border border-muted border-top-0">
+                        <table class="table table-striped jobs-table mb-0">
                           <tbody>
                         {% for company in random_companies %}
                             {% include 'account/dashboard_company_line.html' %}
@@ -217,21 +208,22 @@
                 {% endif %}
             </div>
 
-            <div class="col-xs-12 col-sm-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <div class="pull-left">
-                            <img id="id_QjaneVFcountryAutImg" src="{{ user.country.flag }}">
-                            <span>{% trans 'Some local companies.' %}</span>
-                        </div>
-                        <a href="{% url 'companies_list' %}" class="btn btn-primary pull-right">
-                            <i class="fa fa-list-ul"></i>
-                            {% trans 'View all' %}
-                        </a>
+            <div class="col-12 col-md-6">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0">
+                        <h3 class="h5 m-0 text-white">
+                            <div class="float-left">
+                                <span>{% trans 'Some local companies.' %}</span>
+                            </div>
+                            <a href="{% url 'companies_list' %}" class="btn btn-primary float-right">
+                                <i class="fa fa-list-ul"></i>
+                                {% trans 'View all' %}
+                            </a>
+                        </h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body border border-muted border-top-0">
                         {% if local_companies %}
-                        <table class="table table-striped jobs-table">
+                        <table class="table table-striped jobs-table mb-0">
                           <tbody>
                         {% for company in local_companies %}
                             {% include 'account/dashboard_company_line.html' %}
@@ -239,7 +231,7 @@
                           </tbody>
                         </table>
                         {% else %}
-                        <p class="h4">{% trans 'There are not registered companies in your country yet.' %}</p>
+                        <p class="h5 mb-0">{% trans 'There are not registered companies in your country yet.' %}</p>
                         {% endif %}
                     </div>
                 </div>

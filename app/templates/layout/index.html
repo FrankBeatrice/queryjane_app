@@ -115,9 +115,9 @@
         {% block footer %}
         <footer class="footer {% if user.is_authenticated %} authenticated {% endif %}">
             <div class="container">
-                <hr class="hidden-xs hidden-sm"/>
+                <hr class="d-none d-sm-block"/>
                 <div class="row footer__content">
-                    <div class="col-xs-12 col-md-9 footer__content__company-section">
+                    <div class="col-12 col-md-9 footer__content__company-section">
                         <div class="footer-links">
                             <a href="{% url 'corporative:legal_item' 'user-agreement' %}">{% trans "User agreement" %}</a>
                             ·
@@ -138,7 +138,7 @@
                         </p>
                     </div>
 
-                    <div class="col-xs-12 col-md-3">
+                    <div class="col-12 col-md-3">
                         {% get_current_language as LANGUAGE_CODE %}
                         {% get_available_languages as languages %}
 

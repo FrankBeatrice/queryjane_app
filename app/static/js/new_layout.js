@@ -1,29 +1,37 @@
-var $ = require('jquery');
- window.jQuery = $;
-window.$ = $;
-// The only change for the new home is bootstrap 3 by 4
-require('popper.js');
-require('../libs/bootstrap4/js/bootstrap.min.js');
-require('typeahead.js/dist/typeahead.jquery.min.js');
-var Bloodhound = require('typeahead.js/dist/bloodhound.min.js');
+// CSS
+import './../sass/layout/new_layout.scss';
+
+// Images
+import './../img/brand.svg';
+import './../img/landing_page/augusta-king-transparent.png';
+import './../img/brand-authenticated.svg';
+
+// Js dependencies
+import 'bootstrap';
+import 'typeahead.js/dist/typeahead.jquery.min.js';
+import 'jquery-validation';
+import 'jquery-validation/dist/additional-methods.js';
+import 'jquery-confirm/js/jquery-confirm.js';
+import Bloodhound from 'typeahead.js/dist/bloodhound.min.js';
 window.Bloodhound = Bloodhound;
-require('jquery-validation');
-require('jquery-validation/dist/additional-methods.js');
-require('jquery-confirm');
-var Quill = require('quill');
+import Quill from 'quill';
 window.Quill = Quill;
-var bootstrapSwitch = require('bootstrap-switch');
-window.bootstrapSwitch = bootstrapSwitch;
-require('rateyo/min/jquery.rateyo.min.js');
+import bootstrapSwitch from 'bootstrap-switch';
+// TODO: Solve rateyo dependencie
+import './vendor/jquery.rateyo.js';
 
 // Utilities
-require('./utilities/mediaQueryDetector');
+import './utils/mediaQueryDetector';
 
 // Global variables
-require('./globalVariables');
+import './globalVariables';
+
+// Place
+import './place/get_location.js';
+import './place/show_position.js';
 
 // Main
-require('./new_main');
+import './new_main';
 
 // Navbar
-require('./navbar');
+import './navbar';

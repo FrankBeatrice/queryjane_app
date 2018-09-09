@@ -1,3 +1,8 @@
+// Dependencies
+import './../new_layout.js';
+
+// TODO: Review if staff_company_action.js file is necessary in this view.
+
 function score_list_update_rateyo() {
     $(".jsCompanyScoreList .jsLineScore").each(function(idx, element) {
         $(element).rateYo({
@@ -17,7 +22,7 @@ $(function () {
         rating: $('#idCompanyScore').data('score'),
         readOnly: true
     });
-    
+
     $('#idCompanyScoreForm').on('submit', function () {
       $.post($('#idCompanyScoreForm').data('company-score-form-url'), $('#idCompanyScoreForm').serialize(), function (response) {
         $('.jsScoreFormContainer').text('Thank you. ' + response.message);

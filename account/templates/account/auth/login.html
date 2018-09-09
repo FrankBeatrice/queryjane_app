@@ -3,6 +3,10 @@
 
 {% block title %}{% trans 'Login' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/account/login.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -79,5 +83,5 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'js/account/login.js' %}"></script>
+<script src="{% static 'dist/js/account/login.min.js' %}"></script>
 {% endblock %}

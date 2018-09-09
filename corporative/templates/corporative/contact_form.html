@@ -3,14 +3,18 @@
 
 {% block title %}{% trans 'Contact Us' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <section>
-  <div class="container">
+  <div class="container py-4">
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <div class="text-center">
           <h1>{% trans 'Contact Us!' %}</h1>
-          
+
           <p>{% trans 'Do you think we can help you with advice in the cannabis industry?' %}</p>
           <p>{% trans 'Do you have questions about the use of the platform?' %}</p>
           <p>---</p>
@@ -60,30 +64,5 @@
 {% endblock %}
 
 {% block js %}
-<script>
-$(function() {
-    'use strict';
-
-    $('#idContactForm').validate({
-        rules: {
-            subject: {
-                maxlength: 200,
-                required: true
-            },
-            name: {
-                minlength: 4,
-                required: true
-            },
-            email: {
-                email: true,
-                required: true
-            },
-            message: {
-                minlength: 10,
-                required: true
-            }
-        }
-    });
-});
-</script>
+<script src="{% static 'dist/js/corporative/contact_form.min.js' %}"></script>
 {% endblock %}

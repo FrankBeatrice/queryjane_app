@@ -1,3 +1,8 @@
+import './new_layout.js';
+
+// CSS
+import './../sass/signup.scss';
+
 $(function () {
   'use strict';
 

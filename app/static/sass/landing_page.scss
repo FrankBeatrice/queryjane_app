@@ -1,4 +1,8 @@
-@import 'layout/libs/aos';
+// Dependencies
+@import '~aos/dist/aos.css';
+
+// Layout
+@import './layout/new_layout.scss';
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -6,11 +10,17 @@ body {
 
 /*Header Style*/
 header {
-  background: url("../img/landing_page/cannabis_leaf.jpg") no-repeat center center;
+  background: url('./../img/landing_page/cannabis_leaf.jpg') no-repeat center center;
   position: relative;
-  height: 100vh;
+  height: auto;
   min-height: 600px;
   background-size: cover;
+  padding-bottom: 40px;
+
+  @media (min-width: 768px) {
+    height: 100vh;
+    padding-bottom: 0;
+  }
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -25,7 +35,7 @@ header {
   text-shadow: 1px 1px 2px rgba(0,0,0,.4);
 }
 
-.homeHeaderText {
+.home-header-text {
   padding-top: 6rem;
   color: #fff;
 }
@@ -35,27 +45,29 @@ header {
 }
 
 @media (max-width: 575.98px) {
-  .homeHeaderText {
-    padding-top: 8rem;
+  .home-header-text {
+    padding-top: 1.5rem;
   }
-  .homeHeaderText .display-3 {
+  .home-header-text .display-3 {
     font-size: 3rem;
   }
 }
 
-/*Projects Style*/
+/* Projects Style */
 .qj-section_2 .qj-section_2-1 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
+  background-image: url('./../img/landing_page/register-banner.png');
 }
 
-.qj-section_2 .qj-section_2-1 {
+.qj-section_2 .qj-section_2-2 {
   position: relative;
   max-height: 300px;
   background-size: cover;
   background-image: center center;
+  background-image: url('./../img/landing_page/profiles-banner.png');
 }
 
 /* Expertise Skills Style */
@@ -130,7 +142,7 @@ header {
 
 /*Contact Style*/
 .da-contact {
-  background: url("../images/staticmap.png") no-repeat center center;
+  // background: url('./../img/landing_page/') no-repeat center center;
   position: relative;
   min-height: 700px;
   background-size: cover;

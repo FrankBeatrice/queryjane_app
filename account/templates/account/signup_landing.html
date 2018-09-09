@@ -4,17 +4,17 @@
 {% block title %}{% trans 'Welcome to QueryJane' %}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-4">
   <div class="row">
   {% get_general_greeting as general_greeting %}
-    <div class="col-md-8 offset-md-2 text-center h5">
+    <div class="col-md-8 offset-md-2 text-center h5 mb-5">
     {{ general_greeting }} {{ user.first_name }}, {% trans 'welcome to QueryJane, the network to connect with experts and companies in different sectors of the cannabis industry.' %}
     </div>
   </div>
 
     <div class="row">
-        <div class="col-md-6 col-xs-12">
-            <div class="text-center">
+        <div class="col-md-6 col-12">
+            <div class="text-center mb-5">
                 <h3>{% trans 'Register professional profile' %}</h3>
             </div>
 
@@ -41,8 +41,8 @@
             <div class="jsQjanePPnextbutton"></div>
         </div>
 
-        <div class="col-md-6 col-xs-12">
-            <div class="text-center">
+        <div class="col-md-6 col-12">
+            <div class="text-center mb-5">
                 <h3>{% trans 'Register company' %}</h3>
             </div>
 

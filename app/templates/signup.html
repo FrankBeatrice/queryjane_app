@@ -3,6 +3,10 @@
 
 {% block title %}{% trans 'Cannabis Industry Network' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/signup.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
   <div class="row">
@@ -96,5 +100,5 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'js/signup.js' %}"></script>
+<script src="{% static 'dist/js/signup.min.js' %}"></script>
 {% endblock js %}

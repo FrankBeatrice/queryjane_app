@@ -1,4 +1,5 @@
-@import "./libs/bootstrap4";
+
+@import './theme/theme';
 @import "./libs/jquery-confirm";
 @import "./libs/quill.snow";
 @import "./libs/boostrap-switch";
@@ -64,22 +65,4 @@
     margin-bottom: 15px;
     margin-right: 8px;
   }
-}
-
-// Signup
-.signup-data-container {
-  background-image: url('./../../img/sign-up.jpg');
-  background-size: cover;
-}
-
-// Login
-.login-data-container {
-  background-image: url('./../../img/login.jpg');
-  background-size: cover;
-}
-
-// Reset password
-.reset-password-data-container {
-  background-image: url('./../../img/password.jpg');
-  background-size: cover;
 }

@@ -24,9 +24,9 @@ services:
     command: yarn install
     volumes:
       - .:/code
-  gulp:
+  webpack:
     image: queryjane
-    command: gulp
+    command: yarn build
     volumes:
       - .:/code
   migration:
