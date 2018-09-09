@@ -226,7 +226,6 @@ $('#id-qjane-home-signup-form').validate({
       $('.navigation-bar a').each(function () {
           // Remove last slash from href.
           var href = $(this).attr('href');
-          console.log(href);
           href = href.substring(0, href.length - 1);
 
           if (path.substring(0, href.length) === href) {
