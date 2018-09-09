@@ -169,7 +169,7 @@ $(function () {
 
         $.confirm({
             title: 'Do you want to deactivate this company?',
-            content: 'Company profile page, and all the information related to the company will only be available for users with administrator membership.',
+            content: 'Company profile page, and all the information related to the company will only be available for users with administrator membership for Qjane administrators.',
             buttons: {
                 deactivate: {
                     btnClass: 'btn-warning',
