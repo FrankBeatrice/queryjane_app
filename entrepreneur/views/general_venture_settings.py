@@ -10,10 +10,13 @@ from django.views.generic.edit import DeleteView
 from django.views.generic import View
 from django.urls import reverse
 
+from account.data import DEACTIVATED_COMPANY
 from account.models import IndustryCategory
 from app.mixins import CustomUserMixin
+from account.models import UserNotification
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_INACTIVE
+from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.forms import CompanyLogoForm
 from entrepreneur.forms import VentureDescriptionForm
 from entrepreneur.models import Venture
@@ -188,6 +191,23 @@ class DeactivateCompanyView(CustomUserMixin, View):
 
         company.status = VENTURE_STATUS_INACTIVE
         company.save()
+
+        for membership in company.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=request.user.id):
+            subject = '{0} has been deactivated by {1}.'.format(
+                company,
+                request.user,
+            )
+
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=DEACTIVATED_COMPANY,
+                venture_from=company,
+                noty_to=membership.admin.user,
+                description=subject,
+                created_by=request.user.professionalprofile,
+            )
 
         return HttpResponse('success')
 

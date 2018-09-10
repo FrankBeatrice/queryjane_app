@@ -12,6 +12,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
 
+from .data import DEACTIVATED_COMPANY
 from .data import NEW_APPLICANTS
 from .data import NEW_COMPANY_SCORE
 from .data import NEW_ENTREPRENEUR_ADMIN
@@ -468,6 +469,10 @@ class UserNotification(models.Model):
     @property
     def is_old_job_offer_closed(self):
         return self.notification_type == OLD_JOB_OFFER_CLOSED
+
+    @property
+    def is_company_deactivation(self):
+        return self.notification_type == DEACTIVATED_COMPANY
 
     class Meta:
         ordering = ('-created_at',)

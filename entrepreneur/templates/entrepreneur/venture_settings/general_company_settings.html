@@ -184,7 +184,7 @@
                   <a href="{% url 'entrepreneur:delete_company' company.slug %}" class="btn btn-danger">{% trans 'Delete' %}</a>
                 {% else %}
                   <p>{% trans "Only the company owner can delete it." %}</p>
-                  <p><strong>{{ company.owner }}</strong> {% trans "is de company owner." %}</p>
+                  <p><strong>{{ company.owner }}</strong> {% trans "is the company owner." %}</p>
 
                   <button type="button" class="btn btn-secondary btn-lg" disabled>Delete</button>
                 {% endif %}
