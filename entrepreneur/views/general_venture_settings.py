@@ -11,12 +11,13 @@ from django.views.generic import View
 from django.urls import reverse
 
 from account.data import DEACTIVATED_COMPANY
+from account.data import DELETED_COMPANY
 from account.models import IndustryCategory
-from app.mixins import CustomUserMixin
 from account.models import UserNotification
+from app.mixins import CustomUserMixin
+from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_INACTIVE
-from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.forms import CompanyLogoForm
 from entrepreneur.forms import VentureDescriptionForm
 from entrepreneur.models import Venture
@@ -274,3 +275,24 @@ class DeleteCompanyView(CustomUserMixin, DeleteView):
         context['general_active'] = True
 
         return context
+
+    def delete(self, request, *args, **kwargs):
+        company = self.get_object()
+
+        for membership in company.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=request.user.id):
+            subject = '{0} has been deleted by {1}.'.format(
+                company,
+                request.user,
+            )
+
+            # Create platform notification.
+            u = UserNotification.objects.create(
+                notification_type=DELETED_COMPANY,
+                noty_to=membership.admin.user,
+                description=subject,
+                created_by=request.user.professionalprofile,
+            )
+
+        return super().delete(request, *args, **kwargs)

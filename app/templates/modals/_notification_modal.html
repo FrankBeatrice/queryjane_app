@@ -5,6 +5,8 @@
         {{ notification.venture_from }}
     {% elif notification.is_new_message_to_company or notification.is_new_score_to_company %}
         {{ notification.venture_to }}
+    {% elif notification.is_company_elimination %}
+        {% trans 'A company that you manage has been eliminated.' %}
     {% elif notification.is_updated_user_agreement or notification.is_updated_privacy_policy %}
         {{ notification.description }}
     {% endif %}
@@ -49,6 +51,10 @@
     <p>
         <strong>{{ notification.venture_from }}</strong> has been deactivated by {{ notification.created_by }}.
     </p>
+{% elif notification.is_company_elimination %}
+    <p>
+       {{ notification.description }} 
+    </p>
 {% endif %}
   </div>
 
@@ -68,6 +74,8 @@
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
 {% elif notification.is_company_deactivation %}
     <a href="{% url 'entrepreneur:general_venture_form' notification.venture_from.slug %}" class="btn btn-primary">{% trans 'Go to company settings' %}</a>
+{% elif notification.is_company_elimination %}
+    <p>{% trans 'Your administrator membership has been deleted too.' %}</p>
 {% elif notification.is_updated_user_agreement %}
     {% if not user.accepted_terms %}
     <a href="{% url 'corporative:legal_item_agree' 'user-agreement' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
