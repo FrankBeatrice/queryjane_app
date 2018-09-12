@@ -55,14 +55,13 @@
             </div>
 
             {% if profile.user.country or profile.user.city %}
-            <div class="QJVentureDetLocation">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="QJVentureDetLocation mt-4">
+                <div class="card rounded-0 border-0">
+                    <div class="card-header bg-qj-purple rounded-0 text-white">
                         <i class="fa fa-globe" aria-hidden="true"></i>
                         <span>{% trans 'Location' %}</span>
                     </div>
-
-                    <div class="panel-body">
+                    <div class="card-body border border-muted border-top-0">
                         {% if profile.user.country %}
                         <div>
                             <img src="{{ profile.country.flag }}">
