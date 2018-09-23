@@ -86,6 +86,7 @@
   $.validator.setDefaults({
       validClass: 'valid',
       errorClass: 'invalid',
+      ignore: ":hidden, [contenteditable='true']:not([name])",
       highlight: function (element, errorClass, validClass) {
           var $field = $(element);
 
