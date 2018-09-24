@@ -228,4 +228,40 @@ $(function () {
             }
         });
     });
+
+  // Transfer company ownership.
+  $('#id_transfer_company_ownership').on('submit', function() {
+    $.confirm({
+        title: 'Transfer company ownership.',
+        content: 'Are you sure that you want to transfer the company ownership? New owner will have all main administration privilegies, and you will keep your role as administrator in the company.',
+        buttons: {
+            transfer: {
+                btnClass: 'btn-warning',
+                action: function(){
+                  $.post($('#id_transfer_company_ownership').data('url'), $('#id_transfer_company_ownership').serialize(), function (response) {
+                      if (response === 'success') {
+                        $.alert({
+                            title: 'Company ownership has been transfered.',
+                            content: 'Transfer successfully executed.',
+                        });
+
+                        setTimeout(function () {
+                          location.reload();
+                        }, 1500);
+
+                      } else {
+                        $.alert({
+                            title: 'Error!',
+                            content: 'something is wrong. Please reload and try again.',
+                        });
+                      }
+                  });
+                }
+            },
+            cancel: function () {}
+        }
+    });
+
+    return false;
+  });
 })
