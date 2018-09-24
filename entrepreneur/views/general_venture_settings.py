@@ -4,21 +4,23 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 from django.views.generic import TemplateView
-from django.views.generic.edit import DeleteView
 from django.views.generic import View
-from django.urls import reverse
+from django.views.generic.edit import DeleteView
 
 from account.data import DEACTIVATED_COMPANY
 from account.data import DELETED_COMPANY
+from account.data import TRANSFERED_COMPANY
 from account.models import IndustryCategory
 from account.models import UserNotification
 from app.mixins import CustomUserMixin
 from entrepreneur.data import ACTIVE_MEMBERSHIP
-from entrepreneur.data import VENTURE_STATUS_ACTIVE
-from entrepreneur.data import QJANE_ADMIN
 from entrepreneur.data import OWNER
+from entrepreneur.data import QJANE_ADMIN
+from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_INACTIVE
 from entrepreneur.forms import CompanyLogoForm
 from entrepreneur.forms import TransferCompany
@@ -213,7 +215,7 @@ class TransferCompanyView(CustomUserMixin, View):
             new_owner = transfer_form.cleaned_data['owner']
             new_owner_membership = AdministratorMembership.objects.get(
                 venture=company,
-                admin=request.user.professionalprofile
+                admin=new_owner
             )
 
             # Set role for new owner.
@@ -225,6 +227,21 @@ class TransferCompanyView(CustomUserMixin, View):
             company.save()
 
             # Create notification.
+            subject = '{0} owner membership has been transfered to you by {1}.'.format(
+                company,
+                owner_membership,
+            )
+
+            subject = _('New role in {}'.format(company))
+
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=TRANSFERED_COMPANY,
+                venture_from=company,
+                noty_to=new_owner_membership.admin.user,
+                description=subject,
+                created_by=owner_membership.admin,
+            )
 
             return HttpResponse('success')
 

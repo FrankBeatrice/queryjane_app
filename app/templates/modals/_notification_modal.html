@@ -1,7 +1,7 @@
 {% load i18n legal_item_tags notifications entrepreneur_tags %}
 <div class="modal-header">
     <h5 class="modal-title">
-    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed or notification.is_company_deactivation  %}
+    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed or notification.is_company_deactivation or notification.is_company_transfer  %}
         {{ notification.venture_from }}
     {% elif notification.is_new_message_to_company or notification.is_new_score_to_company %}
         {{ notification.venture_to }}
@@ -55,6 +55,10 @@
     <p>
        {{ notification.description }} 
     </p>
+{% elif notification.is_company_transfer %}
+    <p>
+       <strong>{{ notification.company }}</strong> {% trans 'owner membership has been transfered to you by ' %} <strong>{{ notification.created_by }}</strong>.
+    </p>
 {% endif %}
   </div>
 
@@ -72,7 +76,7 @@
     <a href="{% url 'entrepreneur:messages_adim' notification.venture_to.slug %}" class="btn btn-primary">{% trans 'Go to recevied messages' %}</a>
 {% elif notification.is_new_score_to_company %}
     <a href="{{ notification.venture_to.get_absolute_url }}" class="btn btn-primary">{% trans 'Check it out' %}</a>
-{% elif notification.is_company_deactivation %}
+{% elif notification.is_company_deactivation or notification.is_company_transfer %}
     <a href="{% url 'entrepreneur:general_venture_form' notification.venture_from.slug %}" class="btn btn-primary">{% trans 'Go to company settings' %}</a>
 {% elif notification.is_company_elimination %}
     <p>{% trans 'Your administrator membership has been deleted too.' %}</p>

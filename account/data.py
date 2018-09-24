@@ -10,6 +10,7 @@ UPDATED_PRIVACY_POLICY = 70
 OLD_JOB_OFFER_CLOSED = 80
 DEACTIVATED_COMPANY = 90
 DELETED_COMPANY = 100
+TRANSFERED_COMPANY = 110
 
 NOTIFICATION_TYPE_CHOICES = (
     (NEW_ENTREPRENEUR_ADMIN, _('Invitation to administer company.')),
@@ -22,4 +23,5 @@ NOTIFICATION_TYPE_CHOICES = (
     (OLD_JOB_OFFER_CLOSED, _('Old job offer has been closed.')),
     (DEACTIVATED_COMPANY, _('Company has been deactivated.')),
     (DELETED_COMPANY, _('Company has been deleted.')),
+    (TRANSFERED_COMPANY, _('Company has been transfered.')),
 )
