@@ -22,6 +22,7 @@ module.exports = {
     'entrepreneur/job_offer_actions': './app/static/js/entrepreneur/job_offer_actions.js',
     'entrepreneur/job_offer_form': './app/static/js/entrepreneur/job_offer_form.js',
     'entrepreneur/venture_form': './app/static/js/entrepreneur/venture_form.js',
+    'entrepreneur/general_company_settings': './app/static/js/entrepreneur/general_company_settings.js',
     'corporative/contact_form': './app/static/js/corporative/contact_form.js',
     'corporative/staff_company_actions': './app/static/js/corporative/staff_company_actions.js',
     'corporative/legal_item': './app/static/js/corporative/legal_item.js'

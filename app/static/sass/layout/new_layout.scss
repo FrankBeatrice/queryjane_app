@@ -24,7 +24,8 @@
     font-weight: 400;
   }
 
-  .form-control + label {
+  .form-control + label,
+  .invalid {
     font-weight: 400;
     font-style: italic;
     font-size: 14px;
