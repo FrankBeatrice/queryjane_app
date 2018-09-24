@@ -3,15 +3,19 @@
 
 {% block title %}{% trans 'Delete account' %}{% endblock %}
 
+{% block css %}
+<link href="{% static 'dist/css/layout/layout.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<div class="container">
+<div class="container py-4">
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <div class="alert alert-warning" role="alert">
         {% trans "Are you sure that you want to delete your account?" %}
       </div>
 
-      <div class="card">
+      <div class="card mb-4">
         <div class="card-header">
           {% trans "You are your data owner" %}
         </div>
@@ -24,7 +28,7 @@
       </div>
 
       {% if user.professionalprofile.venture_set.count %}
-      <div class="card">
+      <div class="card mb-4">
         <div class="card-header">
           {% trans "The following companies will be deleted" %}
         </div>

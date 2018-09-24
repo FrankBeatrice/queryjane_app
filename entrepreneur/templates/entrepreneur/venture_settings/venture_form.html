@@ -80,7 +80,9 @@
                                                 <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
                                                 <p>{{ form.city_search.errors }}</p>
 
-                                                <p class="QJgUbicationMessage">{% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'Please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}</p>
+                                                <small class="form-text QJgUbicationMessage">
+                                                    {% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'Please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}
+                                                </small>
                                             </div>
 
                                             <div class="form-group" style="display:none;">
