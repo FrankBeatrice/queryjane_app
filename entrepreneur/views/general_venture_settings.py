@@ -17,9 +17,13 @@ from account.models import UserNotification
 from app.mixins import CustomUserMixin
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
+from entrepreneur.data import QJANE_ADMIN
+from entrepreneur.data import OWNER
 from entrepreneur.data import VENTURE_STATUS_INACTIVE
 from entrepreneur.forms import CompanyLogoForm
+from entrepreneur.forms import TransferCompany
 from entrepreneur.forms import VentureDescriptionForm
+from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 
@@ -171,6 +175,62 @@ class UpdateVentureDescriptionForm(CustomUserMixin, FormView):
         )
 
 
+class TransferCompanyView(CustomUserMixin, View):
+    """
+    Ajax view to transfer a company ownership.
+    """
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_transfer_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        company = self.get_object()
+
+        transfer_form = TransferCompany(
+            request.POST,
+            instance=company,
+        )
+
+        if transfer_form.is_valid():
+            owner_membership = AdministratorMembership.objects.get(
+                venture=company,
+                admin=request.user.professionalprofile
+            )
+
+            # Change role for old owner.
+            owner_membership.role = QJANE_ADMIN
+            owner_membership.save()
+
+            new_owner = transfer_form.cleaned_data['owner']
+            new_owner_membership = AdministratorMembership.objects.get(
+                venture=company,
+                admin=request.user.professionalprofile
+            )
+
+            # Set role for new owner.
+            new_owner_membership.role = OWNER
+            new_owner_membership.save()
+
+            # Change company owner.
+            company.owner = new_owner
+            company.save()
+
+            # Create notification.
+
+            return HttpResponse('success')
+
+        return HttpResponse('fail')
+
+
 class DeactivateCompanyView(CustomUserMixin, View):
     """
     Ajax view to deactivate a company in the platform.
@@ -292,7 +352,7 @@ class DeleteCompanyView(CustomUserMixin, DeleteView):
             )
 
             # Create platform notification.
-            u = UserNotification.objects.create(
+            UserNotification.objects.create(
                 notification_type=DELETED_COMPANY,
                 noty_to=membership.admin.user,
                 description=subject,

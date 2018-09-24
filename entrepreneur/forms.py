@@ -3,13 +3,14 @@ from django.forms import Form
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 
-from .data import ADMINISTRATOR_ROLES
 from .data import ACTIVE_MEMBERSHIP
+from .data import ADMINISTRATOR_ROLES
 from .data import JOB_TYPE_CHOICES
 from .models import JobOffer
 from .models import Venture
-from account.models import ProfessionalProfile
 from account.models import IndustryCategory
+from account.models import ProfessionalProfile
+from entrepreneur.models import AdministratorMembership
 from place.models import City
 from place.models import Country
 
@@ -468,12 +469,12 @@ class TransferCompany(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = kwargs.get('instance', None)
+        self.instance = kwargs.get('instance', None)
 
         # Get active memverships available to translate the company.
-        memberships = instance.administratormembership_set.filter(
+        memberships = self.instance.administratormembership_set.filter(
             status=ACTIVE_MEMBERSHIP,
-        ).exclude(id=instance.owner.id)
+        ).exclude(admin__id=self.instance.owner.id)
 
         administrator_ids = list(
             memberships.values_list('admin__id', flat=True)
@@ -486,3 +487,17 @@ class TransferCompany(forms.ModelForm):
 
         # Change owner field queryet.
         self.fields['owner'].queryset = queryset
+
+    def clean_owner(self):
+        data = self.cleaned_data['owner']
+
+        if not AdministratorMembership.objects.filter(
+            venture=self.instance,
+            admin=data,
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            raise forms.ValidationError(
+                _('User can not be selected as owner.')
+            )
+
+        return data
