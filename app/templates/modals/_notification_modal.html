@@ -57,7 +57,7 @@
     </p>
 {% elif notification.is_company_transfer %}
     <p>
-       <strong>{{ notification.company }}</strong> {% trans 'owner membership has been transfered to you by ' %} <strong>{{ notification.created_by }}</strong>.
+        {% trans 'Company owner membership has been transfered to you by ' %} <strong>{{ notification.created_by }}</strong>.
     </p>
 {% endif %}
   </div>

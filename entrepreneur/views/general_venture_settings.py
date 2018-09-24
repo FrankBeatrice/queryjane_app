@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -9,6 +10,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django.views.generic import View
+from django.template.loader import render_to_string
 from django.views.generic.edit import DeleteView
 
 from account.data import DEACTIVATED_COMPANY
@@ -17,6 +19,7 @@ from account.data import TRANSFERED_COMPANY
 from account.models import IndustryCategory
 from account.models import UserNotification
 from app.mixins import CustomUserMixin
+from app.tasks import send_email
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import OWNER
 from entrepreneur.data import QJANE_ADMIN
@@ -226,21 +229,29 @@ class TransferCompanyView(CustomUserMixin, View):
             company.owner = new_owner
             company.save()
 
-            # Create notification.
-            subject = '{0} owner membership has been transfered to you by {1}.'.format(
-                company,
-                owner_membership,
-            )
-
             subject = _('New role in {}'.format(company))
 
             # Create platform notification.
-            UserNotification.objects.create(
+            notification = UserNotification.objects.create(
                 notification_type=TRANSFERED_COMPANY,
                 venture_from=company,
                 noty_to=new_owner_membership.admin.user,
                 description=subject,
                 created_by=owner_membership.admin,
+            )
+
+            body = render_to_string(
+                'entrepreneur/emails/company_transfer.html', {
+                    'title': subject,
+                    'notification': notification,
+                    'base_url': settings.BASE_URL,
+                },
+            )
+
+            send_email(
+                subject=subject,
+                body=body,
+                mail_to=[new_owner_membership.admin.user.email],
             )
 
             return HttpResponse('success')
