@@ -7,6 +7,7 @@ from .data import ADMINISTRATOR_ROLES
 from .data import JOB_TYPE_CHOICES
 from .models import JobOffer
 from .models import Venture
+from account.models import ProfessionalProfile
 from account.models import IndustryCategory
 from place.models import City
 from place.models import Country
@@ -455,3 +456,20 @@ class JobOfferForm(forms.ModelForm):
         if city:
             self.fields['city_search'].initial = job_offer.city.name
             self.fields['city_id'].initial = job_offer.city.id
+
+
+class TransferCompany(forms.ModelForm):
+    class Meta:
+        model = Venture
+        fields = (
+            'owner',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance', None)
+
+        queryset = ProfessionalProfile.objects.filter(
+        )
+
+        self.fields['owner'].queryset = queryset

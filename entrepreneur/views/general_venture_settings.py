@@ -56,7 +56,11 @@ class GeneralCompanyFormView(CustomUserMixin, TemplateView):
                 general_active=True,
                 can_delete=EntrepreneurPermissions.can_delete_company(
                     user=self.request.user,
-                    company=self.get_object()
+                    company=self.get_object(),
+                ),
+                can_transfer=EntrepreneurPermissions.can_transfer_company(
+                    user=self.request.user,
+                    company=self.get_object(),
                 )
             )
         )

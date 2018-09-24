@@ -18,6 +18,19 @@ class EntrepreneurPermissions(object):
         return False
 
     @classmethod
+    def can_transfer_company(self, user, company):
+        if company.owner != user.professionalprofile:
+            return False
+
+        if AdministratorMembership.objects.filter(
+            venture=company,
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=user.professionalprofile.id):
+            return True
+
+        return False
+
+    @classmethod
     def can_delete_company(self, user, company):
         """
         Only company owner can delete it.
