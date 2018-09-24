@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 
 from .data import ADMINISTRATOR_ROLES
+from .data import ACTIVE_MEMBERSHIP
 from .data import JOB_TYPE_CHOICES
 from .models import JobOffer
 from .models import Venture
@@ -469,7 +470,19 @@ class TransferCompany(forms.ModelForm):
         super().__init__(*args, **kwargs)
         instance = kwargs.get('instance', None)
 
-        queryset = ProfessionalProfile.objects.filter(
+        # Get active memverships available to translate the company.
+        memberships = instance.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(id=instance.owner.id)
+
+        administrator_ids = list(
+            memberships.values_list('admin__id', flat=True)
         )
 
+        # Set valid professional profiles to transfer the membership.
+        queryset = ProfessionalProfile.objects.filter(
+            administratormembership__admin__in=administrator_ids,
+        )
+
+        # Change owner field queryet.
         self.fields['owner'].queryset = queryset

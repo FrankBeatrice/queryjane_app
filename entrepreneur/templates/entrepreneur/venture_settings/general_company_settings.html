@@ -165,7 +165,19 @@
                   <h3>{% trans "Transfer company ownership." %}</h3>
                   {% if can_transfer %}
                   {% get_transfer_company_form company as transfer_company_form %}
-                  {{ transfer_company_form }}
+
+                  <p>{% trans "Transfer company ownership to another active administrator. You will keep your role as administrator active." %}</p>
+
+                  <form id="id_transfer_company_ownership" method="post">
+                    {% csrf_token %}
+
+                    <div class="logo">
+                        {% render_field transfer_company_form.owner %}
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">Transfer</button>
+                  </form>
+
                   {% else %}
                   <p>{% trans 'To transfer a company to another user, this user must have an active administrator membership in the company' %}. <a href="{% url 'entrepreneur:roles_venture_form' company.slug %}">{% trans 'Go to roles section.' %}</a></p>
                   {% endif %}
