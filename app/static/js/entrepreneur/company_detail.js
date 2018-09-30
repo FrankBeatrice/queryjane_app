@@ -191,4 +191,20 @@ $(function () {
             $('#newMessageConversation').html(response.content);
         });
     });
+
+    $('.show-spanish-description-link').on('click', function () {
+        $(this).hide();
+        $('.hidden-spanish-description').show();
+        $('.initial-description').hide();
+        $('.hidden-english-description').hide();
+        $('.show-english-description-link').show();
+    });
+
+    $('.show-english-description-link').on('click', function () {
+        $(this).hide();
+        $('.hidden-english-description').show();
+        $('.initial-description').hide();
+        $('.hidden-spanish-description').hide();
+        $('.show-spanish-description-link').show();
+    });
 })

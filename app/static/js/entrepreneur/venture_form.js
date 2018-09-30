@@ -76,12 +76,10 @@ $(function () {
                 required: true
             },
             description_en: {
-                required: false,
-                minlength: 40
+                required: false
             },
             description_es: {
-                required: false,
-                minlength: 40
+                required: false
             },
             industry_categories: {
                 required: true

@@ -1,21 +1,34 @@
 import json
 
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 from django.views.generic import TemplateView
-from django.views.generic.edit import DeleteView
 from django.views.generic import View
-from django.urls import reverse
+from django.template.loader import render_to_string
+from django.views.generic.edit import DeleteView
 
+from account.data import DEACTIVATED_COMPANY
+from account.data import DELETED_COMPANY
+from account.data import TRANSFERED_COMPANY
 from account.models import IndustryCategory
+from account.models import UserNotification
 from app.mixins import CustomUserMixin
+from app.tasks import send_email
+from entrepreneur.data import ACTIVE_MEMBERSHIP
+from entrepreneur.data import OWNER
+from entrepreneur.data import QJANE_ADMIN
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_INACTIVE
 from entrepreneur.forms import CompanyLogoForm
+from entrepreneur.forms import TransferCompany
 from entrepreneur.forms import VentureDescriptionForm
+from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
 
@@ -52,7 +65,11 @@ class GeneralCompanyFormView(CustomUserMixin, TemplateView):
                 general_active=True,
                 can_delete=EntrepreneurPermissions.can_delete_company(
                     user=self.request.user,
-                    company=self.get_object()
+                    company=self.get_object(),
+                ),
+                can_transfer=EntrepreneurPermissions.can_transfer_company(
+                    user=self.request.user,
+                    company=self.get_object(),
                 )
             )
         )
@@ -163,6 +180,85 @@ class UpdateVentureDescriptionForm(CustomUserMixin, FormView):
         )
 
 
+class TransferCompanyView(CustomUserMixin, View):
+    """
+    Ajax view to transfer a company ownership.
+    """
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_transfer_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        company = self.get_object()
+
+        transfer_form = TransferCompany(
+            request.POST,
+            instance=company,
+        )
+
+        if transfer_form.is_valid():
+            owner_membership = AdministratorMembership.objects.get(
+                venture=company,
+                admin=request.user.professionalprofile
+            )
+
+            # Change role for old owner.
+            owner_membership.role = QJANE_ADMIN
+            owner_membership.save()
+
+            new_owner = transfer_form.cleaned_data['owner']
+            new_owner_membership = AdministratorMembership.objects.get(
+                venture=company,
+                admin=new_owner
+            )
+
+            # Set role for new owner.
+            new_owner_membership.role = OWNER
+            new_owner_membership.save()
+
+            # Change company owner.
+            company.owner = new_owner
+            company.save()
+
+            subject = _('New role in {}'.format(company))
+
+            # Create platform notification.
+            notification = UserNotification.objects.create(
+                notification_type=TRANSFERED_COMPANY,
+                venture_from=company,
+                noty_to=new_owner_membership.admin.user,
+                description=subject,
+                created_by=owner_membership.admin,
+            )
+
+            body = render_to_string(
+                'entrepreneur/emails/company_transfer.html', {
+                    'title': subject,
+                    'notification': notification,
+                    'base_url': settings.BASE_URL,
+                },
+            )
+
+            send_email(
+                subject=subject,
+                body=body,
+                mail_to=[new_owner_membership.admin.user.email],
+            )
+
+            return HttpResponse('success')
+
+        return HttpResponse('fail')
+
+
 class DeactivateCompanyView(CustomUserMixin, View):
     """
     Ajax view to deactivate a company in the platform.
@@ -188,6 +284,23 @@ class DeactivateCompanyView(CustomUserMixin, View):
 
         company.status = VENTURE_STATUS_INACTIVE
         company.save()
+
+        for membership in company.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=request.user.id):
+            subject = '{0} has been deactivated by {1}.'.format(
+                company,
+                request.user,
+            )
+
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=DEACTIVATED_COMPANY,
+                venture_from=company,
+                noty_to=membership.admin.user,
+                description=subject,
+                created_by=request.user.professionalprofile,
+            )
 
         return HttpResponse('success')
 
@@ -254,3 +367,24 @@ class DeleteCompanyView(CustomUserMixin, DeleteView):
         context['general_active'] = True
 
         return context
+
+    def delete(self, request, *args, **kwargs):
+        company = self.get_object()
+
+        for membership in company.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=request.user.id):
+            subject = '{0} has been deleted by {1}.'.format(
+                company,
+                request.user,
+            )
+
+            # Create platform notification.
+            UserNotification.objects.create(
+                notification_type=DELETED_COMPANY,
+                noty_to=membership.admin.user,
+                description=subject,
+                created_by=request.user.professionalprofile,
+            )
+
+        return super().delete(request, *args, **kwargs)

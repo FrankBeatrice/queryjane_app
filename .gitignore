@@ -107,6 +107,7 @@ ENV/
 *.swn
 *.swo
 *.swp
+*.lock
 
 # OS files
 .DS_Store

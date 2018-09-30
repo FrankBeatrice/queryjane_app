@@ -3,11 +3,14 @@ from django.forms import Form
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 
+from .data import ACTIVE_MEMBERSHIP
 from .data import ADMINISTRATOR_ROLES
 from .data import JOB_TYPE_CHOICES
 from .models import JobOffer
 from .models import Venture
 from account.models import IndustryCategory
+from account.models import ProfessionalProfile
+from entrepreneur.models import AdministratorMembership
 from place.models import City
 from place.models import Country
 
@@ -455,3 +458,46 @@ class JobOfferForm(forms.ModelForm):
         if city:
             self.fields['city_search'].initial = job_offer.city.name
             self.fields['city_id'].initial = job_offer.city.id
+
+
+class TransferCompany(forms.ModelForm):
+    class Meta:
+        model = Venture
+        fields = (
+            'owner',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instance = kwargs.get('instance', None)
+
+        # Get active memverships available to translate the company.
+        memberships = self.instance.administratormembership_set.filter(
+            status=ACTIVE_MEMBERSHIP,
+        ).exclude(admin__id=self.instance.owner.id)
+
+        administrator_ids = list(
+            memberships.values_list('admin__id', flat=True)
+        )
+
+        # Set valid professional profiles to transfer the membership.
+        queryset = ProfessionalProfile.objects.filter(
+            administratormembership__admin__in=administrator_ids,
+        )
+
+        # Change owner field queryet.
+        self.fields['owner'].queryset = queryset
+
+    def clean_owner(self):
+        data = self.cleaned_data['owner']
+
+        if not AdministratorMembership.objects.filter(
+            venture=self.instance,
+            admin=data,
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            raise forms.ValidationError(
+                _('User can not be selected as owner.')
+            )
+
+        return data

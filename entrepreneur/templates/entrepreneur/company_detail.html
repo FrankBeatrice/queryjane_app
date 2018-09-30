@@ -130,7 +130,6 @@
           <span>{% if company.industry_categories.count > 1 %}{% trans 'Sectors' %}{% else %}{% trans 'Sector' %}{% endif %}</span>
         </div>
         <div class="card-body border border-muted border-top-0">
-          {% get_current_language as LANGUAGE_CODE %}
           <ul class="mb-0">
           {% for industry_category in company.industry_categories.all %}
             <li>
@@ -286,9 +285,33 @@
     </div>
 
     <div class="col-12 col-sm-9">
+      {% get_current_language as LANGUAGE_CODE %}
       <h1>{{ company }}</h1>
+
+      {% if company.description_es and company.description_en %}
+        <div class="clearfix">
+          <a class="show-spanish-description-link float-right" href="javascript:void(0)" style="{% if LANGUAGE_CODE == 'es' %}display:none;{% endif %}">View Spanish description.</a>
+
+          <a class="show-english-description-link float-right" href="javascript:void(0)" style="{% if LANGUAGE_CODE == 'en' %}display:none;{% endif %}">View English description.</a>
+
+        </div>
+
+        <div class="hidden-descriptions">
+          <div class="hidden-spanish-description"  style="display:none;">
+          {{ company.description_es|safe }}
+          </div>
+
+          <div class="hidden-english-description"  style="display:none;">
+          {{  company.description_en|safe }}
+          </div>
+
+        </div>
+      {% endif %}
+
+      <div class="initial-description">
       {% get_company_description company as company_description %}
       {{ company_description|safe }}
+      </div>
     </div>
   </div>
 </div>

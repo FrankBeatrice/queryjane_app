@@ -1,5 +1,5 @@
 {% extends "layout/base.html" %}
-{% load static widget_tweaks i18n %}
+{% load static widget_tweaks i18n entrepreneur_tags %}
 
 {% block title %}{{ company }} - {% trans 'Settings' %}{% endblock %}
 
@@ -160,16 +160,40 @@
           </div>
           <div class="card-body border border-muted border-top-0">
             <div class="row">
+              {% if company.owner == user.professionalprofile %}
+              <div class="col-md-6 col-12">
+                  <h3>{% trans "Transfer company ownership." %}</h3>
+                  {% if can_transfer %}
+                  {% get_transfer_company_form company as transfer_company_form %}
+
+                  <p>{% trans "Transfer company ownership to another active administrator. You will keep your role as administrator active." %}</p>
+
+                  <form id="id_transfer_company_ownership" data-url="{% url 'entrepreneur:ax_transfer_company' company.slug %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="logo">
+                        {% render_field transfer_company_form.owner %}
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">Transfer</button>
+                  </form>
+
+                  {% else %}
+                  <p>{% trans 'To transfer a company to another user, this user must have an active administrator membership in the company' %}. <a href="{% url 'entrepreneur:roles_venture_form' company.slug %}">{% trans 'Go to roles section.' %}</a></p>
+                  {% endif %}
+              </div>
+              {% endif %}
+
               <div class="col-md-6 col-12">
                 <div id="id_deactivate_container" style="{% if company.is_inactive %}display:none;{% endif %}">
-                  <h3>{% trans "Deactivate company" %}</h3>
+                  <h3>{% trans "Deactivate company." %}</h3>
                   <p>{% trans "User will not be able to find your company. Users whit administrator membership can activate/deactivate a company when they want." %}</p>
 
                   <a href="javascript:void(0)" class="btn btn-warning jsDeactivateCompany" data-deactivate-company-url="{% url 'entrepreneur:ax_deactivate_company' company.slug %}">{% trans "Deactivate" %}</a>
                 </div>
 
                 <div id="id_activate_container" style="{% if company.is_active %}display:none;{% endif %}">
-                  <h3>{% trans "Activate company" %}</h3>
+                  <h3>{% trans "Activate company." %}</h3>
                   <p>{% trans "Allow users of the application to find ." %} <strong>{{ company }}</strong></p>
 
                   <a href="javascript:void(0)" class="btn btn-success jsActivateCompany" data-activate-company-url="{% url 'entrepreneur:ax_activate_company' company.slug %}">{% trans "Activate" %}</a>
@@ -177,14 +201,14 @@
               </div>
 
               <div class="col-md-6 col-12">
-                  <h3>{% trans "Delete company" %}</h3>
+                  <h3>{% trans "Delete company." %}</h3>
 
                 {% if can_delete %}
                   <p>{% trans "Delete company profile. Created job offers and memberships will be deleted too." %}</p>
                   <a href="{% url 'entrepreneur:delete_company' company.slug %}" class="btn btn-danger">{% trans 'Delete' %}</a>
                 {% else %}
                   <p>{% trans "Only the company owner can delete it." %}</p>
-                  <p><strong>{{ company.owner }}</strong> {% trans "is de company owner." %}</p>
+                  <p><strong>{{ company.owner }}</strong> {% trans "is the company owner." %}</p>
 
                   <button type="button" class="btn btn-secondary btn-lg" disabled>Delete</button>
                 {% endif %}
