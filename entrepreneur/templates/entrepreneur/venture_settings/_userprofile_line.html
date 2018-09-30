@@ -1,25 +1,26 @@
 {% load static widget_tweaks i18n %}
-<li class="media qjane-userprofile-line">
-    <div class="media-left">
-        <a href="#">
-            <img class="media-object" src="http://placehold.it/50x50" alt="...">
-        </a>
-    </div>
+<li class="qjane-userprofile-line">
+    <div class="media">
+        <div class="mr-3">
+            <a href="">
+                <img class="media-object" src="http://placehold.it/50x50" alt="...">
+            </a>
+        </div>
 
-    <div class="media-body">
-        <h4 class="media-heading">{{ userprofile.get_print }}</h4>
-        <p>{{ userprofile.slug }}</p>
-    </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{ userprofile.get_print }}</h4>
+            <p>{{ userprofile.slug }}</p>
+        </div>
 
-    <div class="media-right">
-        <form class="qjane-send-membership-form">
-            {% render_field role_form.venture_slug %}
-            {% render_field role_form.profile_slug %}
-            <div style="display:none;">
-            {% render_field role_form.role %}
-            </div>
-
-            <button type="submit" class="btn btn-success btn-sm">{% trans 'Add' %}</button>
-        </form>
+        <div class="ml-3">
+            <form class="qjane-send-membership-form">
+                {% render_field role_form.venture_slug %}
+                {% render_field role_form.profile_slug %}
+                <div style="display:none;">
+                {% render_field role_form.role %}
+                </div>
+                <button type="submit" class="btn btn-success btn-sm">{% trans 'Add' %}</button>
+            </form>
+        </div>
     </div>
 </li>
