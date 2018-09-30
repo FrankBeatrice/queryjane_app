@@ -1,5 +1,5 @@
 // Dependencies
-import './../new_layout.js';
+// import './../new_layout.js';
 
 $(function () {
     var quill_en = new Quill('#rich_editor_description_en', {
@@ -12,10 +12,6 @@ $(function () {
         theme: 'snow'
     }).on('text-change', function () {
         $('#id_description_es').val($('#rich_editor_description_es .ql-editor').html());
-    });
-
-    $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
-        getLocation();
     });
 
     var initial_country_code = $('#id_country_code').val();

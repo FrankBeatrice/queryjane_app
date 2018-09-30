@@ -9,16 +9,13 @@ function showPosition(position) {
 
     var ax_city_create_url = $('#id_QjaneVFcityAut').data('ax-city-create-url');
 
-
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=false",
+        url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=false&key=AIzaSyALzuwqc_2I55_CIx_DLOcyEBFUNSkXra4",
+
         data: {},
         success: function(data) {
-            var status = data['status'];
-            var results = data['results'][0];
-
             if (status === "OK") {
                 $.each(results['address_components'], function(i, val) {
                     if (val['types'] == "administrative_area_level_2,political") {
@@ -89,3 +86,54 @@ function showPosition(position) {
 }
 
 window.showPosition = showPosition;
+
+
+function getLocation() {
+  if (navigator.geolocation) {
+      $('.QjaneShareGPSloading').show();
+      $('.QjaneShareGPSfigure').hide();
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+          showPosition(position);
+      }, function() {
+          $('.QjaneShareGPSloading').hide();
+          $('.QjaneShareGPSfigure').show();
+      });
+  } else {
+      alert("Geolocation is not supported by this browser.");
+  }
+}
+
+window.getLocation = getLocation;
+
+
+$(function () {
+   $.ajaxSetup({
+       beforeSend: function(xhr, settings) {
+           function getCookie(name) {
+               var cookieValue = null;
+               if (document.cookie && document.cookie != '') {
+                   var cookies = document.cookie.split(';');
+                   for (var i = 0; i < cookies.length; i++) {
+                       var cookie = jQuery.trim(cookies[i]);
+                       // Does this cookie string begin with the name we want?
+                       if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                           break;
+                       }
+                   }
+               }
+               return cookieValue;
+           }
+           if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+               // Only send the token to relative URLs i.e. locally.
+               xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+           }
+       }
+  });
+
+    // Get location links.
+    $('.QjaneShareGPSfigure, .QjaneShareGPStext').on('click', function() {
+        getLocation();
+    });
+})
