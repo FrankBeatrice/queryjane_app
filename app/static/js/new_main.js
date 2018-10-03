@@ -224,7 +224,7 @@ $('#id-qjane-home-signup-form').validate({
       path = decodeURIComponent(path);
 
       // Add active class to menu item.
-      $('.navigation-bar a').each(function () {
+      $('.enable-js-active a').each(function () {
           // Remove last slash from href.
           var href = $(this).attr('href');
           href = href.substring(0, href.length - 1);
