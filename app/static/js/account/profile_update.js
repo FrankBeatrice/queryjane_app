@@ -189,7 +189,6 @@ $(function () {
 
     // Validate
     $('#id_profile_change_description_form').validate({
-        ignore: [],
         rules: {
             description_en: {
                 minlength: 40
