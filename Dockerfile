@@ -23,11 +23,6 @@ RUN wget https://github.com/sass/sassc/archive/3.4.2.tar.gz \
 WORKDIR /usr/local/lib/sassc-3.4.2/
 RUN make && ln -s /usr/local/lib/sassc-3.4.2/bin/sassc /usr/local/bin/sassc
 
-RUN npm install gulp-cli -g
-
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.24.6
-RUN ln -s /root/.yarn/bin/yarn /usr/local/bin/yarn
-
 RUN easy_install -U pip
 RUN apt-get update && apt-get install -y gettext libgettextpo-dev
 
