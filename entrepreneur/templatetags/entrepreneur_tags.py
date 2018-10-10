@@ -4,6 +4,7 @@ from entrepreneur.models import AdministratorMembership
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
+from entrepreneur.forms import TransferCompany
 from account.models import UserNotification
 from account.data import NEW_ENTREPRENEUR_ADMIN
 
@@ -83,3 +84,8 @@ def get_profile_description(context, profile):
         profile_description = profile.description_es
 
     return profile_description
+
+
+@register.assignment_tag
+def get_transfer_company_form(company):
+    return TransferCompany(instance=company)

@@ -86,6 +86,7 @@
   $.validator.setDefaults({
       validClass: 'valid',
       errorClass: 'invalid',
+      ignore: ":hidden, [contenteditable='true']:not([name])",
       highlight: function (element, errorClass, validClass) {
           var $field = $(element);
 
@@ -214,4 +215,26 @@ $('#id-qjane-home-signup-form').validate({
 
   // Set global methods
   qjGlobal.mqDetector = mqDetector;
+
+  // Handle selecting menu item for the current viewed page.
+  var setNavigation = function() {
+      // Get url path.
+      var path = window.location.pathname;
+      path = path.replace(/\/$/, "");
+      path = decodeURIComponent(path);
+
+      // Add active class to menu item.
+      $('.enable-js-active a').each(function () {
+          // Remove last slash from href.
+          var href = $(this).attr('href');
+          href = href.substring(0, href.length - 1);
+
+          if (path.substring(0, href.length) === href) {
+              $(this).closest('li').addClass('active');
+          }
+      });
+  };
+
+  // Activate current navigation menu item.
+  setNavigation();
 })();

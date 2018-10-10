@@ -26,10 +26,6 @@ import './utils/mediaQueryDetector';
 // Global variables
 import './globalVariables';
 
-// Place
-import './place/get_location.js';
-import './place/show_position.js';
-
 // Main
 import './new_main';
 

@@ -4,13 +4,14 @@ from .views.contact_venture_settings import AjaxContactVentureFormView
 from .views.contact_venture_settings import AjaxLocationVentureFormView
 from .views.contact_venture_settings import AjaxMediaVentureFormView
 from .views.contact_venture_settings import ContactCompanyFormView
-from .views.general_venture_settings import GeneralCompanyFormView
-from .views.general_venture_settings import UpdateVentureDescriptionForm
-from .views.general_venture_settings import UpdateCompanyLogoForm
+from .views.general_venture_settings import ActivateCompanyView
 from .views.general_venture_settings import CompanyCategoryView
 from .views.general_venture_settings import DeactivateCompanyView
-from .views.general_venture_settings import ActivateCompanyView
 from .views.general_venture_settings import DeleteCompanyView
+from .views.general_venture_settings import GeneralCompanyFormView
+from .views.general_venture_settings import TransferCompanyView
+from .views.general_venture_settings import UpdateCompanyLogoForm
+from .views.general_venture_settings import UpdateVentureDescriptionForm
 from .views.manage_job_offers import JobOfferCloseView
 from .views.manage_job_offers import JobOfferFormView
 from .views.manage_job_offers import JobOffersListView
@@ -19,8 +20,8 @@ from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesCompanyFormView
-from .views.venture_views import VentureFormView
 from .views.venture_views import CompanySearch
+from .views.venture_views import VentureFormView
 
 
 urlpatterns = [
@@ -57,6 +58,12 @@ urlpatterns = [
         r'^ax_settings/(?P<slug>[-\w]+)/update_description/$',
         UpdateVentureDescriptionForm.as_view(),
         name='update_company_description_form',
+    ),
+
+    url(
+        r'^ax_settings/(?P<slug>[-\w]+)/trasnfer/$',
+        TransferCompanyView.as_view(),
+        name='ax_transfer_company',
     ),
 
     url(

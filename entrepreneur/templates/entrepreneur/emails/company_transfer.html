@@ -1,0 +1,12 @@
+{% extends 'layout/base_email.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<p>{% trans 'Company owner membership has been transfered to you by' %} <strong>{{ notification.created_by }}</strong>.</p>
+
+<h3>
+    <a href="{{ base_url }}/{{ notification.venture_from.slug }}">{{ notification.venture_from }}</a>
+</h3>
+{% endblock %}
