@@ -9,7 +9,11 @@
 
 {% block content %}
 <section class="AdminDashboard">
+
     <div class="container py-4">
+
+        <a href="{% url 'corporative:city_bulk_form' %}">Load cities by country form.</a>
+
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="companies-admin-tab" data-toggle="tab" href="#companiesAdmin" role="tab" aria-controls="companies-admin" aria-selected="true">

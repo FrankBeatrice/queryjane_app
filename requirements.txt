@@ -9,6 +9,7 @@ twython==3.6.0
 pygeoip==0.3.2
 Sphinx==1.7.5
 social-auth-app-django==2.1.0
+xlrd==1.1.0
 
 # Apps
 django-widget-tweaks==1.4.1
