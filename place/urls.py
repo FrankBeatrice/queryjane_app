@@ -6,6 +6,7 @@ from django.conf.urls import url
 from .views import CitySearch
 from .views import CountrySearch
 from .views import CityCreate
+from .views import CountryFlag
 
 
 urlpatterns = [
@@ -26,5 +27,11 @@ urlpatterns = [
         r'^ax-city-create/$',
         CityCreate.as_view(),
         name='ax_city_create',
+    ),
+
+    url(
+        r'^ax-country-flag/$',
+        CountryFlag.as_view(),
+        name='country_flag',
     ),
 ]

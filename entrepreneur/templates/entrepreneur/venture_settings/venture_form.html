@@ -50,23 +50,16 @@
                                         </div>
 
 
-                                        <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                        <div class="form-group country-field">
                                             <label>
                                                 {% trans 'Country' %}
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div class="country-field__typeahead">
-                                                {% render_field form.country_search  class+="form-control" %}
 
-                                                <img id="id_QjaneVFcountryAutImg" class="country-field__typeahead__flag-icon" src="{{ country_instance.flag }}">
+                                            <img id="id_country_flag" src="{{ country_instance.flag }}" data-url="{% url 'place:country_flag'%}">
 
-                                                <p>{{ form.country_search.errors }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" style="display:none;">
-                                            {% render_field form.country_code %}
-                                            <p>{{ form.country_code.errors }}</p>
+                                            {% render_field form.country %}
+                                            <p>{{ form.country.errors }}</p>
                                         </div>
 
                                         <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
@@ -242,5 +235,20 @@
 
 {% block js %}
 <script src="{% static 'dist/js/entrepreneur/venture_form.min.js' %}"></script>
+<script src="{% static 'js/place/place_autocomplete.js' %}"></script>
+
+<script>
+$(function () {
+    $("#id_country").on("change", function () {
+        var selected_country = $("#id_country option:selected");
+        // Get country flag.
+        var country_flag_url = $("#id_country_flag").data("url");
+
+        $.get(country_flag_url, {country_id: selected_country.val()}, function(response) {
+            $('#id_country_flag').attr('src', response);
+        });
+    })
+})
+</script>
 {% endblock %}
 

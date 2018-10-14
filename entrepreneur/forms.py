@@ -141,21 +141,6 @@ class VentureForm(ModelForm):
         ),
     )
 
-    country_search = forms.CharField(
-        required=True,
-        label=_('country'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the contry name and select one from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=True,
-        label=_('country code'),
-    )
-
     city_search = forms.CharField(
         label=_('city'),
         widget=forms.TextInput(
@@ -178,8 +163,7 @@ class VentureForm(ModelForm):
         model = Venture
         fields = [
             'name',
-            'country_search',
-            'country_code',
+            'country',
             'city_search',
             'city_id',
             'address',
