@@ -96,6 +96,28 @@ class GetStateOptions(View):
         return JsonResponse(options, safe=False)
 
 
+class GetCityOptions(View):
+    def get(self, request, *args, **kwargs):
+        state_id = request.GET.get('state_id')
+
+        state = get_object_or_404(
+            State,
+            id=state_id,
+        )
+
+        options = []
+
+        for city in City.objects.filter(state=state):
+            options.append(
+                {
+                    'id': city.id,
+                    'name': city.name,
+                }
+            )
+
+        return JsonResponse(options, safe=False)
+
+
 class CityCreate(View):
     def post(self, request, **kwargs):
         city_name = request.POST.get('city_name')

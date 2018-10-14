@@ -142,19 +142,6 @@ class VentureForm(ModelForm):
         ),
     )
 
-    city_search = forms.CharField(
-        label=_('city'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        label=_('city id'),
-    )
-
     coordinates = forms.CharField(
         required=False,
         label=_('coordinates'),
@@ -166,8 +153,7 @@ class VentureForm(ModelForm):
             'name',
             'country',
             'state',
-            'city_search',
-            'city_id',
+            'city',
             'address',
             'coordinates',
             'description_en',
@@ -185,6 +171,7 @@ class VentureForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['state'].queryset = State.objects.none()
+        self.fields['city'].queryset = City.objects.none()
 
     def clean(self):
         cleaned_data = super().clean()

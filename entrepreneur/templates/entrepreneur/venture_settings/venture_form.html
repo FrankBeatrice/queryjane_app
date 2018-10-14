@@ -61,7 +61,7 @@
                                             <p>{{ form.country.errors }}</p>
                                         </div>
 
-                                        <div class="form-group" id="id_state_filed_container" data-get-options-url="{% url 'place:get_state_options' %}">
+                                        <div class="form-group" id="id_state_field_container" data-get-options-url="{% url 'place:get_state_options' %}">
                                             <label>
                                                 {% trans 'State' %}
                                                 <span class="QJRequiredField">*</span>
@@ -69,27 +69,16 @@
 
                                             {% render_field form.state %}
                                             <p>{{ form.state.errors }}</p>
-                                        </div
+                                        </div>
 
-                                        <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                        <div class="form-group" id="id_city_field_container" data-get-options-url="{% url 'place:get_city_options' %}">
                                             <label>
                                                 {% trans 'City' %}
                                                 <span class="QJRequiredField">*</span>
                                             </label>
-                                            <div class="city-field__typeahead">
-                                                {% render_field form.city_search  class+="form-control" %}
-                                                <i class="fa fa-spinner fa-pulse fa-fw city-field__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
-                                                <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
-                                                <p>{{ form.city_search.errors }}</p>
 
-                                                <small class="form-text QJgUbicationMessage">
-                                                    {% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'Please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}
-                                                </small>
-                                            </div>
-
-                                            <div class="form-group" style="display:none;">
-                                                {% render_field form.city_id %}
-                                            </div>
+                                            {% render_field form.city %}
+                                            <p>{{ form.city.errors }}</p>
                                         </div>
 
                                         <div class="form-group">
@@ -258,8 +247,9 @@ $(function () {
 
         // Change options in state input.
         $("#id_state").empty();
+        $("#id_city").empty();
 
-        var state_options_url = $("#id_state_filed_container").data('get-options-url');
+        var state_options_url = $("#id_state_field_container").data('get-options-url');
 
         $.get(state_options_url, {country_id: selected_country.val()}, function(response) {
             var options_number = response.length;
@@ -270,6 +260,26 @@ $(function () {
                 var option = $('<option></option>').attr("value", state_dict.id).text(state_dict.name);
                 
                 $("#id_state").append(option);
+            }
+        });
+    })
+
+    $("#id_state").on("change", function () {
+        var selected_state = $("#id_state option:selected");
+
+        $("#id_city").empty();
+
+        var city_options_url = $("#id_city_field_container").data('get-options-url');
+
+        $.get(city_options_url, {state_id: selected_state.val()}, function(response) {
+            var options_number = response.length;
+
+            for (var i = 0; i < options_number; i++) {
+                var city_dict = response[i]
+                
+                var option = $('<option></option>').attr("value", city_dict.id).text(city_dict.name);
+                
+                $("#id_city").append(option);
             }
         });
     })
