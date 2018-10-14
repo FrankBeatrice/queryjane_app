@@ -13,6 +13,7 @@ from account.models import ProfessionalProfile
 from entrepreneur.models import AdministratorMembership
 from place.models import City
 from place.models import Country
+from place.models import State
 
 
 class CompanyFilter(forms.Form):
@@ -164,6 +165,7 @@ class VentureForm(ModelForm):
         fields = [
             'name',
             'country',
+            'state',
             'city_search',
             'city_id',
             'address',
@@ -178,6 +180,11 @@ class VentureForm(ModelForm):
             'linkedin_url',
             'googleplus_url',
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['state'].queryset = State.objects.none()
 
     def clean(self):
         cleaned_data = super().clean()

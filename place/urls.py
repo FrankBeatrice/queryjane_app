@@ -7,6 +7,7 @@ from .views import CitySearch
 from .views import CountrySearch
 from .views import CityCreate
 from .views import CountryFlag
+from .views import GetStateOptions
 
 
 urlpatterns = [
@@ -33,5 +34,11 @@ urlpatterns = [
         r'^ax-country-flag/$',
         CountryFlag.as_view(),
         name='country_flag',
+    ),
+
+    url(
+        r'^ax-get-state-option/$',
+        GetStateOptions.as_view(),
+        name='get_state_options',
     ),
 ]

@@ -74,6 +74,28 @@ class CountryFlag(View):
         return JsonResponse(country.flag, safe=False)
 
 
+class GetStateOptions(View):
+    def get(self, request, *args, **kwargs):
+        country_id = request.GET.get('country_id')
+
+        country = get_object_or_404(
+            Country,
+            id=country_id,
+        )
+
+        options = []
+
+        for state in State.objects.filter(country=country):
+            options.append(
+                {
+                    'id': state.id,
+                    'name': state.name,
+                }
+            )
+
+        return JsonResponse(options, safe=False)
+
+
 class CityCreate(View):
     def post(self, request, **kwargs):
         city_name = request.POST.get('city_name')
