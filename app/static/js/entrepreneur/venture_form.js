@@ -1,5 +1,6 @@
 // Dependencies
 import './../new_layout.js';
+import './../../sass/entrepreneur/venture_form.scss';
 
 $(function () {
     var quill_en = new Quill('#rich_editor_description_en', {

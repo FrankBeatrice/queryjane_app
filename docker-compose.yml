@@ -19,14 +19,14 @@ services:
       - .:/tmp/data/
   redis:
     image: redis:3.2.8
-  yarn:
+  npm:
     image: queryjane
-    command: yarn install
+    command: npm install
     volumes:
       - .:/code
   webpack:
     image: queryjane
-    command: yarn build
+    command: npm run build
     volumes:
       - .:/code
   migration:
