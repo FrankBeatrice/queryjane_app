@@ -1,5 +1,6 @@
 // Dependencies
-// import './../new_layout.js';
+import './../new_layout.js';
+import './../../sass/entrepreneur/venture_form.scss';
 
 $(function () {
     var quill_en = new Quill('#rich_editor_description_en', {
@@ -57,20 +58,6 @@ $(function () {
                 maxlength: 50,
                 required: true
             },
-            country_search: {
-                required: true
-            },
-            country_code: {
-                required: true,
-                maxlength: 2
-            },
-            city_search: {
-                required: true
-            },
-            city_id: {
-                maxlength: 10,
-                required: true
-            },
             description_en: {
                 required: false
             },
@@ -100,15 +87,7 @@ $(function () {
             }
         },
         errorPlacement: function(error, element) {
-            if (element.attr('name') === 'country_search') {
-                error.insertAfter('#id_QjaneVFcountryAutImg');
-            } else if (element.attr('name') === 'country_code') {
-                error.insertAfter('#id_QjaneVFcountryAutImg');
-            } else if (element.attr('name') === 'city_search') {
-                error.insertAfter('.QjaneShareGPSfigure');
-            } else if (element.attr('name') === 'city_id') {
-                error.insertAfter('.QjaneShareGPSfigure');
-            } else if (element.attr('name') === 'industry_categories') {
+            if (element.attr('name') === 'industry_categories') {
                 error.insertAfter('.qjane-industry-categories-list');
             } else if (element.attr('name') === 'description_en') {
                 error.insertAfter('#rich_editor_description_en');

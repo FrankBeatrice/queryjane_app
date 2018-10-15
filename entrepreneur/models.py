@@ -1,5 +1,4 @@
 from app.validators import FileSizeValidator
-from django.contrib.gis.db.models import PointField
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -63,19 +62,16 @@ class Venture(models.Model):
 
     country = models.ForeignKey(
         'place.Country',
-        null=True,
         verbose_name=_('country'),
     )
 
     state = models.ForeignKey(
         'place.State',
-        null=True,
         verbose_name=_('state'),
     )
 
     city = models.ForeignKey(
         'place.City',
-        null=True,
         verbose_name=_('city'),
     )
 
@@ -83,12 +79,6 @@ class Venture(models.Model):
         max_length=50,
         blank=True,
         verbose_name=_('address'),
-    )
-
-    point = PointField(
-        verbose_name=_('location'),
-        null=True,
-        blank=True,
     )
 
     email = models.EmailField(

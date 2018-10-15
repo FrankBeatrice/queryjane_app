@@ -103,33 +103,8 @@ class JobOfferFormView(CustomUserMixin, CreateView):
                 random_string.lower(),
             )
 
-        country_instance = None
-        state = None
-        city = None
-
-        country_code = form.cleaned_data['country_code']
-
-        if country_code:
-            country_instance = get_object_or_404(
-                Country,
-                country=country_code,
-            )
-
-        city_id = form.cleaned_data['city_id']
-
-        if city_id:
-            city = get_object_or_404(
-                City,
-                id=int(form.cleaned_data['city_id']),
-            )
-
-            state = city.state
-
         job_offer.venture = company
         job_offer.slug = slug
-        job_offer.country = country_instance
-        job_offer.city = city
-        job_offer.state = state
         job_offer.save()
 
         job_offer.industry_categories = form.cleaned_data['industry_categories']
@@ -207,7 +182,7 @@ class JobOfferUpdateView(CustomUserMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['industry_categories'] = IndustryCategory.objects.all()
-        context['venture'] = self.get_object().venture
+        context['company'] = self.get_object().venture
         context['job_offer'] = self.get_object()
         context['jobs_active'] = True
 
@@ -215,35 +190,7 @@ class JobOfferUpdateView(CustomUserMixin, UpdateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        job_offer = form.save()
-
-        country_code = form.cleaned_data['country_code']
-
-        country_instance = None
-        state = None
-        city = None
-
-        if country_code:
-            country_instance = get_object_or_404(
-                Country,
-                country=country_code,
-            )
-
-        city_id = form.cleaned_data['city_id']
-
-        if city_id:
-            city = get_object_or_404(
-                City,
-                id=int(city_id),
-            )
-
-            state = city.state
-
-        job_offer.country = country_instance
-        job_offer.state = state
-        job_offer.city = city
-
-        job_offer.save()
+        form.save()
 
         return redirect(
             self.get_object().get_absolute_url()

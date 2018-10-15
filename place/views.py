@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.views.generic import View
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 from place.models import City
 from place.models import State
@@ -59,6 +60,62 @@ class CitySearch(View):
                 city_list.append(city_as_JSON(city))
 
         return JsonResponse(city_list, safe=False)
+
+
+class CountryFlag(View):
+    def get(self, request, *args, **kwargs):
+        country_id = request.GET.get('country_id')
+
+        country = get_object_or_404(
+            Country,
+            id=country_id,
+        )
+
+        return JsonResponse(country.flag, safe=False)
+
+
+class GetStateOptions(View):
+    def get(self, request, *args, **kwargs):
+        country_id = request.GET.get('country_id')
+
+        country = get_object_or_404(
+            Country,
+            id=country_id,
+        )
+
+        options = []
+
+        for state in State.objects.filter(country=country):
+            options.append(
+                {
+                    'id': state.id,
+                    'name': state.name,
+                }
+            )
+
+        return JsonResponse(options, safe=False)
+
+
+class GetCityOptions(View):
+    def get(self, request, *args, **kwargs):
+        state_id = request.GET.get('state_id')
+
+        state = get_object_or_404(
+            State,
+            id=state_id,
+        )
+
+        options = []
+
+        for city in City.objects.filter(state=state):
+            options.append(
+                {
+                    'id': city.id,
+                    'name': city.name,
+                }
+            )
+
+        return JsonResponse(options, safe=False)
 
 
 class CityCreate(View):

@@ -145,23 +145,7 @@ class UpdateProfileFormView(LoginRequiredMixin, UpdateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        user = self.get_object()
-
-        country_code = form.cleaned_data['country_code']
-        country_instance = get_object_or_404(
-            Country,
-            country=country_code,
-        )
-
-        city = get_object_or_404(
-            City,
-            id=int(form.cleaned_data['city_id']),
-        )
-
-        user.country = country_instance
-        user.city = city
-        user.state = city.state
-        user.save()
+        form.save()
 
         return HttpResponse('success')
 

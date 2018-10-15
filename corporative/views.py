@@ -1,3 +1,5 @@
+import xlrd
+
 from django.conf import settings
 
 from django.contrib import messages
@@ -7,12 +9,14 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
+from django.views.generic import FormView
 from django.template.loader import render_to_string
 
 from .models import LegalItem
@@ -26,12 +30,16 @@ from app.mixins import CustomUserMixin
 from corporative.forms import LegalItemForm
 from corporative.tasks import share_company_on_twitter
 from corporative.tasks import share_job_on_twitter
+from corporative.forms import FormBulkForm
 from entrepreneur.data import JOB_STATUS_ACTIVE
 from entrepreneur.data import JOB_STATUS_HIDDEN
 from entrepreneur.data import VENTURE_STATUS_ACTIVE
 from entrepreneur.data import VENTURE_STATUS_HIDDEN
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
+from place.models import State
+from place.models import City
+from place.models import Country
 
 
 class LegalItemView(DetailView):
@@ -391,3 +399,52 @@ class ActivateJobOfferView(CustomUserMixin, View):
         job_offer.save()
 
         return HttpResponse('Active')
+
+
+class CityBulkFormView(CustomUserMixin, FormView):
+    form_class = FormBulkForm
+    template_name = 'corporative/city_bulk_form.html'
+    success_url = reverse_lazy('corporative:admin_dashboard')
+
+    def test_func(self):
+        return AdminPermissions.can_manage_admin_views(
+            user=self.request.user,
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        file = form.cleaned_data['excel_file']
+        country_code = form.cleaned_data['country_code']
+
+        country = Country.objects.get(country=country_code)
+
+        # Read xls file to create economic activities instances.
+        book = xlrd.open_workbook(file_contents=file.read())
+        first_sheet = book.sheet_by_index(0)
+
+        num_rows = first_sheet.nrows
+
+        for row_idx in range(0, num_rows):
+            state = first_sheet.cell(row_idx, 0).value
+            state = str(state).title()
+
+            city = first_sheet.cell(row_idx, 1).value
+            city = str(city).title()
+
+            state_instance = State.objects.get_or_create(
+                name=state,
+                country=country,
+            )[0]
+
+            City.objects.get_or_create(
+                name=city,
+                country=country,
+                state=state_instance,
+            )
+
+        return super().form_valid(form)

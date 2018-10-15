@@ -10,6 +10,7 @@ from .views import LegalItemFormView
 from .views import TwitterShareJobView
 from .views import TwitterShareCompanyView
 from .views import LegalItemAgreeView
+from .views import CityBulkFormView
 
 urlpatterns = [
     url(
@@ -58,6 +59,12 @@ urlpatterns = [
         r'^legal_item_agree/(?P<slug>[-\w]+)/$',
         LegalItemAgreeView.as_view(),
         name='legal_item_agree',
+    ),
+
+    url(
+        r'^city-bulk-form/$',
+        CityBulkFormView.as_view(),
+        name='city_bulk_form',
     ),
 
     url(

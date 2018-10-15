@@ -13,6 +13,7 @@ from account.models import ProfessionalProfile
 from entrepreneur.models import AdministratorMembership
 from place.models import City
 from place.models import Country
+from place.models import State
 
 
 class CompanyFilter(forms.Form):
@@ -141,49 +142,14 @@ class VentureForm(ModelForm):
         ),
     )
 
-    country_search = forms.CharField(
-        required=True,
-        label=_('country'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the contry name and select one from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=True,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        label=_('city'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        label=_('city id'),
-    )
-
-    coordinates = forms.CharField(
-        required=False,
-        label=_('coordinates'),
-    )
-
     class Meta:
         model = Venture
         fields = [
             'name',
-            'country_search',
-            'country_code',
-            'city_search',
-            'city_id',
+            'country',
+            'state',
+            'city',
             'address',
-            'coordinates',
             'description_en',
             'description_es',
             'industry_categories',
@@ -195,44 +161,14 @@ class VentureForm(ModelForm):
             'googleplus_url',
         ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['state'].choices = ()
+        self.fields['city'].choices = ()
+
     def clean(self):
         cleaned_data = super().clean()
-        country_code = cleaned_data.get('country_code')
-        city_id = cleaned_data.get('city_id')
-
-        if not country_code:
-            self.add_error(
-                'country_search',
-                _('Type the country name and select it from the list.'),
-            )
-
-        if not city_id:
-            self.add_error(
-                'city_search',
-                _('Type the city name and select it from the list.'),
-            )
-
-        city = None
-        country = None
-
-        try:
-            city = City.objects.get(id=int(city_id))
-        except City.DoesNotExist:
-            pass
-
-        try:
-            country = Country.objects.get(
-                country=country_code,
-            )
-        except Country.DoesNotExist:
-            pass
-
-        if country and city:
-            if city.country != country:
-                self.add_error(
-                    'city_search',
-                    'select a city in {}'.format(country.name),
-                )
 
         description_en = cleaned_data.get('description_en')
         description_es = cleaned_data.get('description_es')
@@ -286,98 +222,27 @@ class SocialMediaVentureForm(ModelForm):
 
 
 class LocationVentureForm(ModelForm):
-    country_search = forms.CharField(
-        required=True,
-        label=_('Country'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the country name and select it from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=True,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        label=_('City'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        label=_('City id'),
-    )
-
-    coordinates = forms.CharField(
-        required=False,
-        label=_('coordinates'),
-    )
-
     class Meta:
         model = Venture
         fields = [
+            'country',
+            'state',
+            'city',
             'address',
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        venture = kwargs.get('instance', None)
-
-        self.fields['country_search'].initial = venture.country.name
-        self.fields['country_code'].initial = venture.country.country.code
-        self.fields['city_search'].initial = venture.city.name
-        self.fields['city_id'].initial = venture.city.id
-
-        if venture.point:
-            self.fields['coordinates'].initial = '{},{}'.format(
-                venture.point.coords[0],
-                venture.point.coords[1],
-            )
-
     def clean(self):
         cleaned_data = super().clean()
-        country_code = cleaned_data.get('country_code')
-        city_id = cleaned_data.get('city_id')
 
-        if not country_code:
-            self.add_error(
-                'country_search',
-                _('Type the country name and select it from the list.'),
-            )
+        country = cleaned_data.get('country')
+        state = cleaned_data.get('state')
+        city = cleaned_data.get('city')
 
-        if not city_id:
-            self.add_error(
-                'city_search',
-                _('Type the city name and select it from the list.'),
-            )
+        if state.country != country:
+            raise forms.ValidationError('Bad data')
 
-        city = None
-        country = None
-
-        try:
-            city = City.objects.get(id=int(city_id))
-        except City.DoesNotExist:
-            pass
-
-        try:
-            country = Country.objects.get(
-                country=country_code,
-            )
-        except Country.DoesNotExist:
-            pass
-
-        if country and city:
-            if city.country != country:
-                self.add_error(
-                    'city_search',
-                    'Select a city in {}'.format(country.name),
-                )
+        if city.state != state:
+            raise forms.ValidationError('bad data')
 
 
 class RoleVentureForm(Form):
@@ -397,36 +262,6 @@ class RoleVentureForm(Form):
 
 
 class JobOfferForm(forms.ModelForm):
-    country_search = forms.CharField(
-        required=False,
-        label='Country',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the country name and select one from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=False,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        required=False,
-        label=_('City'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        required=False,
-        label=_('city id'),
-    )
-
     class Meta:
         model = JobOffer
         fields = (
@@ -434,30 +269,23 @@ class JobOfferForm(forms.ModelForm):
             'job_type',
             'description',
             'industry_categories',
-            'country_search',
-            'country_code',
-            'city_search',
-            'city_id',
+            'country',
+            'state',
+            'city',
         )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        job_offer = kwargs.get('instance', None)
+    def clean(self):
+        cleaned_data = super().clean()
 
-        country = None
-        city = None
+        country = cleaned_data.get('country')
+        state = cleaned_data.get('state')
+        city = cleaned_data.get('city')
 
-        if job_offer:
-            country = job_offer.country
-            city = job_offer.city
+        if state.country != country:
+            raise forms.ValidationError('Select a state of the selected country.')
 
-        if country:
-            self.fields['country_search'].initial = job_offer.country.name
-            self.fields['country_code'].initial = job_offer.country.country.code
-
-        if city:
-            self.fields['city_search'].initial = job_offer.city.name
-            self.fields['city_id'].initial = job_offer.city.id
+        if city.state != state:
+            raise forms.ValidationError('Select a city of the selected state.')
 
 
 class TransferCompany(forms.ModelForm):

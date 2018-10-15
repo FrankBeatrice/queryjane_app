@@ -6,6 +6,9 @@ from django.conf.urls import url
 from .views import CitySearch
 from .views import CountrySearch
 from .views import CityCreate
+from .views import CountryFlag
+from .views import GetStateOptions
+from .views import GetCityOptions
 
 
 urlpatterns = [
@@ -26,5 +29,23 @@ urlpatterns = [
         r'^ax-city-create/$',
         CityCreate.as_view(),
         name='ax_city_create',
+    ),
+
+    url(
+        r'^ax-country-flag/$',
+        CountryFlag.as_view(),
+        name='country_flag',
+    ),
+
+    url(
+        r'^ax-get-state-option/$',
+        GetStateOptions.as_view(),
+        name='get_state_options',
+    ),
+
+    url(
+        r'^ax-get-city-option/$',
+        GetCityOptions.as_view(),
+        name='get_city_options',
     ),
 ]

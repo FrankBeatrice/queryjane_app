@@ -68,44 +68,36 @@
                                 <form method="POST" id="id_venture_location_form" data-venture-location-form-url="{% url 'entrepreneur:ax_location_venture_form' company.id %}">
                                     {% csrf_token %}
 
-                                    <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                    <div class="form-group">
                                         <label>
                                             {% trans 'Country' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div class="country-field__typeahead">
-                                            {% render_field location_form.country_search class+="form-control" %}
 
-                                            <img class="country-field__typeahead__flag-icon" id="id_QjaneVFcountryAutImg" src="{{ country_instance.flag }}">
+                                        <img id="id_country_flag" src="{{ country_instance.flag }}" data-url="{% url 'place:country_flag'%}">
 
-                                            <p>{{ location_form.country_search.errors }}</p>
-                                        </div>
+                                        {% render_field location_form.country %}
+                                        <p>{{ location_form.country.errors }}</p>
                                     </div>
 
-                                    <div class="form-group" style="display:none;">
-                                        {% render_field location_form.country_code %}
-                                        <p>{{ location_form.country_code.errors }}</p>
+                                    <div class="form-group" id="id_state_field_container" data-get-options-url="{% url 'place:get_state_options' %}">
+                                        <label>
+                                            {% trans 'State' %}
+                                            <span class="QJRequiredField">*</span>
+                                        </label>
+
+                                        {% render_field location_form.state %}
+                                        <p>{{ location_form.state.errors }}</p>
                                     </div>
 
-                                    <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                    <div class="form-group" id="id_city_field_container" data-get-options-url="{% url 'place:get_city_options' %}">
                                         <label>
                                             {% trans 'City' %}
                                             <span class="QJRequiredField">*</span>
                                         </label>
-                                        <div class="city-field__typeahead">
-                                            {% render_field location_form.city_search class+="form-control" %}
-                                            <i class="fa fa-spinner fa-pulse fa-fw city-field__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
-                                            <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
-                                            <p>{{ location_form.city_search.errors }}</p>
 
-                                            <small class="form-text QJgUbicationMessage">
-                                                {% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}
-                                            </small>
-                                        </div>
-
-                                        <div class="form-group" style="display:none;">
-                                            {% render_field location_form.city_id %}
-                                        </div>
+                                        {% render_field location_form.city %}
+                                        <p>{{ location_form.city.errors }}</p>
                                     </div>
 
                                     <div class="form-group">
@@ -218,5 +210,6 @@
 
 {% block js %}
 <script src="{% static 'dist/js/entrepreneur/contact_venture_form.min.js' %}"></script>
+<script src="{% static 'js/place/location_fields.js' %}"></script>
 {% endblock %}
 
