@@ -10,6 +10,8 @@
 {% block content %}
 <section class="AdminDashboard">
     <div class="container py-4">
+      <p>Upload cities and states for an specific country code.</p>
+
       <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {% if form.non_field_errors %}
