@@ -19,16 +19,16 @@ services:
       - .:/tmp/data/
   redis:
     image: redis:3.2.8
-  npm:
-    image: queryjane
-    command: npm install
-    volumes:
-      - .:/code
-  webpack:
-    image: queryjane
-    command: npm run build
-    volumes:
-      - .:/code
+  # npm:
+  #   image: queryjane
+  #   command: npm install
+  #   volumes:
+  #     - .:/code
+  # webpack:
+  #   image: queryjane
+  #   command: npm run build
+  #   volumes:
+  #     - .:/code
   migration:
     image: queryjane
     command: ./manage.py migrate --noinput

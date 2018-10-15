@@ -419,7 +419,7 @@ class CityBulkFormView(CustomUserMixin, FormView):
     @transaction.atomic
     def form_valid(self, form):
         file = form.cleaned_data['excel_file']
-        country_code = 'CO'
+        country_code = form.cleaned_data['country_code']
 
         country = Country.objects.get(country=country_code)
 
@@ -430,8 +430,11 @@ class CityBulkFormView(CustomUserMixin, FormView):
         num_rows = first_sheet.nrows
 
         for row_idx in range(0, num_rows):
-            state = first_sheet.cell(row_idx, 0).value.title()
-            city = first_sheet.cell(row_idx, 1).value.title()
+            state = first_sheet.cell(row_idx, 0).value
+            state = str(state).title()
+
+            city = first_sheet.cell(row_idx, 1).value
+            city = str(city).title()
 
             state_instance = State.objects.get_or_create(
                 name=state,

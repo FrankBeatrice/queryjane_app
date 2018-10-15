@@ -18,6 +18,12 @@
 
         <div class="row">
           <div class="form-group col-md-6">
+            <p>{{ form.country_code.label_tag }}</p>
+            {% render_field form.country_code class+="form-control" %}
+            {{ form.country_code.errors }}
+          </div>
+
+          <div class="form-group col-md-6">
             <p>{{ form.excel_file.label_tag }}</p>
             {% render_field form.excel_file class+="form-control" %}
             {{ form.excel_file.errors }}

@@ -66,6 +66,10 @@ class FormBulkForm(forms.Form):
     """
     Form to upload excel file with cities list by country.
     """
+    country_code = forms.CharField(
+        label=_('country code'),
+    )
+
     excel_file = forms.FileField(
         help_text=_('.xlsx o xls.'),
         validators=[FileSizeValidator(4000)],
