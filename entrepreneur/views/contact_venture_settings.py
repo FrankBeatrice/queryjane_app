@@ -133,34 +133,7 @@ class AjaxLocationVentureFormView(CustomUserMixin, View):
         )
 
         if location_form.is_valid():
-            country_code = location_form.cleaned_data['country_code']
-            city_id = location_form.cleaned_data['city_id']
-            address = location_form.cleaned_data['address']
-            coordinates = location_form.cleaned_data['coordinates']
-
-            country_instance = get_object_or_404(
-                Country,
-                country=country_code,
-            )
-
-            city = get_object_or_404(
-                City,
-                id=int(city_id),
-            )
-
-            latitude = None
-            longitude = None
-            point = None
-
-            if coordinates:
-                latitude, longitude = coordinates.split(',')
-                point = Point(float(latitude), float(longitude))
-
-            venture.country = country_instance
-            venture.city = city
-            venture.address = address
-            venture.coordinates = point
-            venture.save()
+            location_form.save()
 
             return HttpResponse('success')
         else:

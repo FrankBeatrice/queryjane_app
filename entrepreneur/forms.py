@@ -222,98 +222,27 @@ class SocialMediaVentureForm(ModelForm):
 
 
 class LocationVentureForm(ModelForm):
-    country_search = forms.CharField(
-        required=True,
-        label=_('Country'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the country name and select it from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=True,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        label=_('City'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        label=_('City id'),
-    )
-
-    coordinates = forms.CharField(
-        required=False,
-        label=_('coordinates'),
-    )
-
     class Meta:
         model = Venture
         fields = [
+            'country',
+            'state',
+            'city',
             'address',
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        venture = kwargs.get('instance', None)
-
-        self.fields['country_search'].initial = venture.country.name
-        self.fields['country_code'].initial = venture.country.country.code
-        self.fields['city_search'].initial = venture.city.name
-        self.fields['city_id'].initial = venture.city.id
-
-        if venture.point:
-            self.fields['coordinates'].initial = '{},{}'.format(
-                venture.point.coords[0],
-                venture.point.coords[1],
-            )
-
     def clean(self):
         cleaned_data = super().clean()
-        country_code = cleaned_data.get('country_code')
-        city_id = cleaned_data.get('city_id')
 
-        if not country_code:
-            self.add_error(
-                'country_search',
-                _('Type the country name and select it from the list.'),
-            )
+        country = cleaned_data.get('country')
+        state = cleaned_data.get('state')
+        city = cleaned_data.get('city')
 
-        if not city_id:
-            self.add_error(
-                'city_search',
-                _('Type the city name and select it from the list.'),
-            )
+        if state.country != country:
+            raise forms.ValidationError('Bad data')
 
-        city = None
-        country = None
-
-        try:
-            city = City.objects.get(id=int(city_id))
-        except City.DoesNotExist:
-            pass
-
-        try:
-            country = Country.objects.get(
-                country=country_code,
-            )
-        except Country.DoesNotExist:
-            pass
-
-        if country and city:
-            if city.country != country:
-                self.add_error(
-                    'city_search',
-                    'Select a city in {}'.format(country.name),
-                )
+        if city.state != state:
+            raise forms.ValidationError('bad data')
 
 
 class RoleVentureForm(Form):

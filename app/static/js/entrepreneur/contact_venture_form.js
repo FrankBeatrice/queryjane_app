@@ -1,6 +1,5 @@
 // Dependencies
 import './../new_layout.js';
-import './../place/place_autocomplete.js';
 
 $(function () {
     'use strict';
@@ -54,46 +53,14 @@ $(function () {
     $('#id_venture_location_form').validate({
         ignore: [],
         rules: {
-            country_search: {
+            country: {
                 required: true
             },
-            country_code: {
-                required: true,
-                maxlength: 2
-            },
-            city_search: {
+            state: {
                 required: true
             },
-            city_id: {
-                maxlength: 10,
+            city: {
                 required: true
-            }
-        },
-        messages: {
-            country_search: {
-                required: 'Country is required.'
-            },
-            country_code: {
-                required: 'Select a country from de list.'
-            },
-            city_search: {
-                required: 'City is required.'
-            },
-            city_id: {
-                required: 'Select a city from the list. If your city is not available, please allow us to get your location.'
-            }
-        },
-        errorPlacement: function(error, element) {
-            if (element.attr('name') === 'country_search') {
-                error.insertAfter('#id_QjaneVFcountryAutImg');
-            } else if (element.attr('name') === 'country_code') {
-                error.insertAfter('#id_QjaneVFcountryAutImg');
-            } else if (element.attr('name') === 'city_search') {
-                error.insertAfter('.QjaneShareGPSfigure');
-            } else if (element.attr('name') === 'city_id') {
-                error.insertAfter('.QjaneShareGPSfigure');
-            } else {
-                error.insertAfter(element);
             }
         }
     });
