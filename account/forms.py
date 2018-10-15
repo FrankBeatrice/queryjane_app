@@ -84,60 +84,29 @@ class ProfileForm(ModelForm):
     countries and cities in the application and to autocomplete
     their names.
     """
-    country_search = forms.CharField(
-        required=True,
-        label='country',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the contry name and select one from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=True,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        label=_('city'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        label=_('city id'),
-    )
-
     class Meta:
         model = User
         fields = [
             'first_name',
             'last_name',
             'email',
-            'country_search',
-            'country_code',
-            'city_search',
-            'city_id',
+            'country',
+            'state',
+            'city',
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        user = kwargs.get('instance', None)
+    def clean(self):
+        cleaned_data = super().clean()
 
-        country = user.country
-        city = user.city
+        country = cleaned_data.get('country')
+        state = cleaned_data.get('state')
+        city = cleaned_data.get('city')
 
-        if country:
-            self.fields['country_search'].initial = user.country.name
-            self.fields['country_code'].initial = user.country.country.code
+        if state.country != country:
+            raise forms.ValidationError('Bad data')
 
-        if city:
-            self.fields['city_search'].initial = user.city.name
-            self.fields['city_id'].initial = user.city.id
+        if city.state != state:
+            raise forms.ValidationError('bad data')
 
 
 class ProfileDescriptionForm(Form):

@@ -39,7 +39,7 @@
 
                 <div class="col-12 col-sm-9">
                     <div class="alert alert-success successfullyProfileUpdate" role="alert" style="display:none;">{% trans 'Profile updated successfully.' %}</div>
-                    <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">{% trans 'There was an error. Reload the page and try again.' %}</div>
+                    <div class="alert alert-warning badProfileUpdate" role="alert" style="display:none;">{% trans 'There was an error. Check that selected city and state correspond to the selected country.' %}</div>
 
                     <form class="profile-form" id="id_user_profile_form" data-profile-update-url="{% url 'account:profile_update' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -78,44 +78,36 @@
                             </div>
 
                             <div class="col-md-6 col-12">
-                                <div id="id_QjaneVFcountryAut" class="form-group country-field" data-country-autocomplete-url="{% url 'place:country_search' %}">
+                                <div class="form-group">
                                     <label>
                                         {% trans 'Country' %}
                                         <span class="QJRequiredField">*</span>
                                     </label>
-                                    <div class="country-field__typeahead">
-                                        {% render_field form.country_search class+="form-control" %}
 
-                                        <img id="id_QjaneVFcountryAutImg" class="country-field__typeahead__flag-icon" src="{{ professional_profile.user.country.flag }}">
+                                    <img id="id_country_flag" src="{{ country_instance.flag }}" data-url="{% url 'place:country_flag'%}">
 
-                                        <p>{{ form.country_search.errors }}</p>
-                                    </div>
+                                    {% render_field form.country %}
+                                    <p>{{ form.country.errors }}</p>
                                 </div>
 
-                                <div class="form-group" style="display:none;">
-                                    {% render_field form.country_code %}
-                                    <p>{{ form.country_code.errors }}</p>
+                                <div class="form-group" id="id_state_field_container" data-get-options-url="{% url 'place:get_state_options' %}">
+                                    <label>
+                                        {% trans 'State' %}
+                                        <span class="QJRequiredField">*</span>
+                                    </label>
+
+                                    {% render_field form.state %}
+                                    <p>{{ form.state.errors }}</p>
                                 </div>
 
-                                <div id="id_QjaneVFcityAut" class="form-group city-field" data-ax-city-create-url="{% url 'place:ax_city_create' %}" data-ax-city-autocomplete-url="{% url 'place:city_search' %}">
+                                <div class="form-group" id="id_city_field_container" data-get-options-url="{% url 'place:get_city_options' %}">
                                     <label>
                                         {% trans 'City' %}
                                         <span class="QJRequiredField">*</span>
                                     </label>
-                                    <div class="city-field__typeahead">
-                                        {% render_field form.city_search class+="form-control" %}
-                                        <i class="fa fa-spinner fa-pulse fa-fw city-field__typeahead__spinner-icon QjaneShareGPSloading" style="display: none;"></i>
-                                        <a class="fa fa-paper-plane city-field__typeahead__send-icon QjaneShareGPSfigure" aria-hidden="true" href="javascript:void(0)" title="Obtener por ubicación"></a>
-                                        <p>{{ form.city_search.errors }}</p>
 
-                                        <small class="form-text QJgUbicationMessage">
-                                            {% trans 'If when writing the name of the city, it does not appear available in the list,' %} <a href="javascript:void(0)" class="QjaneShareGPStext">{% trans 'please, allow us to try to obtain your location' %}</a> {% trans 'and register it in the application.' %}
-                                        </small>
-                                    </div>
-
-                                    <div class="form-group" style="display:none;">
-                                        {% render_field form.city_id %}
-                                    </div>
+                                    {% render_field form.city %}
+                                    <p>{{ form.city.errors }}</p>
                                 </div>
                             </div>
                         </div>
@@ -366,4 +358,5 @@
 
 {% block js %}
 <script src="{% static 'dist/js/account/profile_update.min.js' %}"></script>
+<script src="{% static 'js/place/location_fields.js' %}"></script>
 {% endblock %}
