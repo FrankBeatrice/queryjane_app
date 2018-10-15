@@ -262,36 +262,6 @@ class RoleVentureForm(Form):
 
 
 class JobOfferForm(forms.ModelForm):
-    country_search = forms.CharField(
-        required=False,
-        label='Country',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the country name and select one from the list.'),
-            },
-        ),
-    )
-
-    country_code = forms.CharField(
-        required=False,
-        label=_('country code'),
-    )
-
-    city_search = forms.CharField(
-        required=False,
-        label=_('City'),
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': _('Type the city name.'),
-            },
-        ),
-    )
-
-    city_id = forms.CharField(
-        required=False,
-        label=_('city id'),
-    )
-
     class Meta:
         model = JobOffer
         fields = (
@@ -299,30 +269,23 @@ class JobOfferForm(forms.ModelForm):
             'job_type',
             'description',
             'industry_categories',
-            'country_search',
-            'country_code',
-            'city_search',
-            'city_id',
+            'country',
+            'state',
+            'city',
         )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        job_offer = kwargs.get('instance', None)
+    def clean(self):
+        cleaned_data = super().clean()
 
-        country = None
-        city = None
+        country = cleaned_data.get('country')
+        state = cleaned_data.get('state')
+        city = cleaned_data.get('city')
 
-        if job_offer:
-            country = job_offer.country
-            city = job_offer.city
+        if state.country != country:
+            raise forms.ValidationError('Select a state of the selected country.')
 
-        if country:
-            self.fields['country_search'].initial = job_offer.country.name
-            self.fields['country_code'].initial = job_offer.country.country.code
-
-        if city:
-            self.fields['city_search'].initial = job_offer.city.name
-            self.fields['city_id'].initial = job_offer.city.id
+        if city.state != state:
+            raise forms.ValidationError('Select a city of the selected state.')
 
 
 class TransferCompany(forms.ModelForm):
