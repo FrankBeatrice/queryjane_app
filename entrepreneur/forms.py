@@ -142,11 +142,6 @@ class VentureForm(ModelForm):
         ),
     )
 
-    coordinates = forms.CharField(
-        required=False,
-        label=_('coordinates'),
-    )
-
     class Meta:
         model = Venture
         fields = [
@@ -155,7 +150,6 @@ class VentureForm(ModelForm):
             'state',
             'city',
             'address',
-            'coordinates',
             'description_en',
             'description_es',
             'industry_categories',
@@ -170,47 +164,11 @@ class VentureForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['state'].queryset = State.objects.none()
-        self.fields['city'].queryset = City.objects.none()
+        self.fields['state'].choices = ()
+        self.fields['city'].choices = ()
 
     def clean(self):
         cleaned_data = super().clean()
-        country_code = cleaned_data.get('country_code')
-        city_id = cleaned_data.get('city_id')
-
-        if not country_code:
-            self.add_error(
-                'country_search',
-                _('Type the country name and select it from the list.'),
-            )
-
-        if not city_id:
-            self.add_error(
-                'city_search',
-                _('Type the city name and select it from the list.'),
-            )
-
-        city = None
-        country = None
-
-        try:
-            city = City.objects.get(id=int(city_id))
-        except City.DoesNotExist:
-            pass
-
-        try:
-            country = Country.objects.get(
-                country=country_code,
-            )
-        except Country.DoesNotExist:
-            pass
-
-        if country and city:
-            if city.country != country:
-                self.add_error(
-                    'city_search',
-                    'select a city in {}'.format(country.name),
-                )
 
         description_en = cleaned_data.get('description_en')
         description_es = cleaned_data.get('description_es')

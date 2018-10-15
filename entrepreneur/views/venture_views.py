@@ -17,8 +17,6 @@ from entrepreneur.data import OWNER
 from entrepreneur.forms import VentureForm
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
-from place.models import City
-from place.models import Country
 from place.utils import get_user_country
 
 
@@ -34,12 +32,10 @@ class VentureFormView(LoginRequiredMixin, CreateView):
 
         return context
 
-    def get_initial(self):
-        current_country_instance = get_user_country(self.request.META)
-        return {
-            'country_search': current_country_instance.name,
-            'country_code': current_country_instance.country.code,
-        }
+    @transaction.atomic
+    def form_invalid(self, form):
+        print("form.errors")
+        print(form.errors)
 
     @transaction.atomic
     def form_valid(self, form):
@@ -56,32 +52,8 @@ class VentureFormView(LoginRequiredMixin, CreateView):
                 random_string.lower(),
             )
 
-        country_code = form.cleaned_data['country_code']
-        country_instance = get_object_or_404(
-            Country,
-            country=country_code,
-        )
-
-        city = get_object_or_404(
-            City,
-            id=int(form.cleaned_data['city_id']),
-        )
-
-        coordinates = form.cleaned_data['coordinates']
-        latitude = None
-        longitude = None
-        point = None
-
-        if coordinates:
-            latitude, longitude = coordinates.split(',')
-            point = Point(float(latitude), float(longitude))
-
         venture.owner = self.request.user.professionalprofile
         venture.slug = slug
-        venture.country = country_instance
-        venture.city = city
-        venture.state = city.state
-        venture.point = point
         venture.save()
 
         venture.industry_categories = form.cleaned_data['industry_categories']
