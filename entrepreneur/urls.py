@@ -12,6 +12,7 @@ from .views.general_venture_settings import GeneralCompanyFormView
 from .views.general_venture_settings import TransferCompanyView
 from .views.general_venture_settings import UpdateCompanyLogoForm
 from .views.general_venture_settings import UpdateVentureDescriptionForm
+from .views.general_venture_settings import DeleteCompanyMessageView
 from .views.manage_job_offers import JobOfferCloseView
 from .views.manage_job_offers import JobOfferFormView
 from .views.manage_job_offers import JobOffersListView
@@ -76,6 +77,12 @@ urlpatterns = [
         r'^ax_settings/(?P<slug>[-\w]+)/activate/$',
         ActivateCompanyView.as_view(),
         name='ax_activate_company',
+    ),
+
+    url(
+        r'^(?P<slug>[-\w]+)/delete-company-message/$',
+        DeleteCompanyMessageView.as_view(),
+        name='delete_company_message',
     ),
 
     url(

@@ -82,8 +82,20 @@
               </div>
 
               <div class="col-md-6 col-12">
-
                 <p>{% trans "This is an irreversible dicision, and will remove all your company information. We do not keep anything." %}</p>
+
+                <a href="javascript:void(0)" id="id_delete_object_toggle">{% trans 'Please, let us know why you want to delete your account.' %}</a>
+
+                <form id="id_delete_company_message_form" data-delete-company-message-form-url="{% url 'entrepreneur:delete_company_message' company.slug %}" style="display: none;">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                    {% render_field delete_object_form.message class+="form-control" %}
+                  </div>
+
+                  <button type="submit" class="btn btn-outline-primary">{% trans 'Send' %}</button>
+                </form>
+
                 <form method="post">{% csrf_token %}
                   <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete" %} {{ company }}" />
                 </form>
@@ -96,4 +108,7 @@
 </div>
 {% endblock %}
 
-
+{% block js %}
+<script src="{% static 'dist/js/layout/layout.min.js' %}"></script>
+<script src="{% static 'js/entrepreneur/company_delete.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'layout/base_email.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>QueryJane: {% trans 'New message from user.' %}</h1>
+
+<h3>{% trans 'Detail' %}</h3>
+
+<p><bold>{% trans 'Subject:' %} </bold> {{ title }}</p>
+<p><bold>{% trans 'company:' %} </bold> {{ company }}</p>
+<p><bold>{% trans 'user:' %} </bold> {{ user }}</p>
+
+<p><bold>{% trans 'message:' %} </bold> {{ message }}</p>
+{% endblock %}
