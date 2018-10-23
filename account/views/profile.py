@@ -287,3 +287,17 @@ class DeleteAccountView(LoginRequiredMixin, DeleteView):
         return reverse(
             'landing_page',
         )
+
+
+class DeactivateAccountView(LoginRequiredMixin, View):
+    """
+    Deactivate user account view. User profile will be
+    disabled from search forms.
+    """
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        user = request.user
+        user.is_active = False
+        user.save()
+
+        return HttpResponse('success')

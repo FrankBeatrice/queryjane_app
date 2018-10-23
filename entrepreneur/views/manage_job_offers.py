@@ -26,8 +26,6 @@ from entrepreneur.forms import JobOfferForm
 from entrepreneur.models import JobOffer
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
-from place.models import City
-from place.models import Country
 from place.utils import get_user_country
 
 

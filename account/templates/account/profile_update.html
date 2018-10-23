@@ -9,6 +9,12 @@
 
 {% block content %}
 <div class="container py-4">
+    <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if user.is_active %}display:none;{% endif %}">
+    {% trans "Your profile is inactive, so users can't find it in the application. You can activate it when you want." %}
+
+    <a href="javascript:void(0)" id="id_activate_link_scroll">{% trans "Go to activate." %}</a>
+    </div>
+
     <div class="card rounded-0 border-0 mb-4">
         <div class="card-header bg-qj-purple rounded-0">
             <h3 class="h5 m-0 text-white">{% trans 'Basic information' %}</h3>
@@ -340,7 +346,13 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <!-- Deactivate account. -->
+                  <div id="id_deactivate_container" style="{% if user.is_inactive %}display:none;{% endif %}">
+                    <h3>{% trans "Deactivate my account" %}</h3>
+
+                    <p>{% trans "Users will not be able to find your prublic profile." %}</p>
+
+                    <a href="javascript:void(0)" class="btn btn-warning jsDeactivateAccount" data-deactivate-account-url="{% url 'account:deactivate_account' %}">{% trans "Deactivate" %}</a>
+                  </div>
                 </div>
 
                 <div class="col-md-6 col-12">
@@ -359,4 +371,52 @@
 {% block js %}
 <script src="{% static 'dist/js/account/profile_update.min.js' %}"></script>
 <script src="{% static 'js/place/location_fields.js' %}"></script>
+
+<script>
+$(function () {
+    // Scroll to account settings section to activate it again.
+    $("#id_activate_link_scroll").on("click", function() {
+      $("html, body").animate({ scrollTop: $('#id_activate_container').offset().top }, 1000);
+    });
+
+    // Action to deactivate company on "Deactivate" click action.
+    $('.jsDeactivateAccount').on('click', function() {
+        var deactivate_account_url = $(this).data("deactivate-account-url");
+
+        $.confirm({
+            title: 'Do you want to deactivate your account?',
+            content: 'Your pubic profile will be hidden for other users in the application. You will be able to send a receive private messages.',
+            buttons: {
+                deactivate: {
+                    btnClass: 'btn-warning',
+                    action: function(){
+                      $.post(deactivate_account_url, function (response) {
+                          if (response === 'success') {
+                            // Hide deactivate button.
+                            $('#id_deactivate_container').hide();
+                            // Hide activate button.
+                            $('#id_activate_container').show();
+                            // Hide deactivate header alert.
+                            $(".jsInactiveAlert").show();
+
+                            $.alert({
+                                title: 'Deactivated!',
+                                content: 'This account has been deactivated. You can activate it again when you want.',
+                            });
+
+                          } else {
+                            $.alert({
+                                title: 'Error!',
+                                content: 'something is wrong. Please reload and try again.',
+                            });
+                          }
+                      });
+                    }
+                },
+                cancel: function () {}
+            }
+        });
+    });
+})
+</script>
 {% endblock %}
