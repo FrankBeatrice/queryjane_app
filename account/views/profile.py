@@ -55,6 +55,7 @@ class ProfileSearch(LoginRequiredMixin, View):
         if 'q' in request.GET and request.GET.get('q'):
             query = request.GET.get('q')
             query_set = ProfessionalProfile.objects.filter(
+                Q(user__is_active=True) |
                 Q(user__email__icontains=query) |
                 Q(user__first_name__icontains=query) |
                 Q(user__last_name__icontains=query),
@@ -298,6 +299,19 @@ class DeactivateAccountView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         user = request.user
         user.is_active = False
+        user.save()
+
+        return HttpResponse('success')
+
+
+class ActivateAccountView(LoginRequiredMixin, View):
+    """
+    Activate user account view.
+    """
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        user = request.user
+        user.is_active = True
         user.save()
 
         return HttpResponse('success')

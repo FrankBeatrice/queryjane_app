@@ -346,12 +346,20 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 col-12">
-                  <div id="id_deactivate_container" style="{% if user.is_inactive %}display:none;{% endif %}">
+                  <div id="id_deactivate_container" style="{% if not user.is_active %}display:none;{% endif %}">
                     <h3>{% trans "Deactivate my account" %}</h3>
 
                     <p>{% trans "Users will not be able to find your prublic profile." %}</p>
 
                     <a href="javascript:void(0)" class="btn btn-warning jsDeactivateAccount" data-deactivate-account-url="{% url 'account:deactivate_account' %}">{% trans "Deactivate" %}</a>
+                  </div>
+
+                  <div id="id_activate_container" style="{% if user.is_active %}display:none;{% endif %}">
+                    <h3>{% trans "Activate account." %}</h3>
+
+                    <p>{% trans "Allow Queryjane users to find your profile." %}</p>
+
+                    <a href="javascript:void(0)" class="btn btn-success jsActivateAccount" data-activate-account-url="{% url 'account:activate_account' %}">{% trans "Activate" %}</a>
                   </div>
                 </div>
 
@@ -414,6 +422,30 @@ $(function () {
                     }
                 },
                 cancel: function () {}
+            }
+        });
+    });
+
+    // Action to activate account on "Activate" click action.
+    $('.jsActivateAccount').on('click', function() {
+        $.post($(this).data("activate-account-url"), function (response) {
+            if (response === 'success') {
+              // Show deactivate button.
+              $('#id_deactivate_container').show();
+              // Hide deactivate button.
+              $('#id_activate_container').hide();
+              // Show deactivated company alert message.
+              $(".jsInactiveAlert").hide();
+
+              $.alert({
+                  title: 'Activated!',
+                  content: 'Your account has been activated!!!',
+              });
+            } else {
+              $.alert({
+                  title: 'Error!',
+                  content: 'something is wrong. Please reload and try again.',
+              });
             }
         });
     });

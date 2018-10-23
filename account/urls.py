@@ -26,6 +26,7 @@ from account.views.profile import ProfileSearch
 from account.views.profile import UpdateProfileAvatarForm
 from account.views.profile import UpdateProfileDescriptionForm
 from account.views.profile import UpdateProfileFormView
+from account.views.profile import ActivateAccountView
 
 urlpatterns = [
     # API Userprofile
@@ -51,6 +52,12 @@ urlpatterns = [
         r'^ax-deactivate-account/$',
         DeactivateAccountView.as_view(),
         name='deactivate_account',
+    ),
+
+    url(
+        r'^ax-activate-account/$',
+        ActivateAccountView.as_view(),
+        name='activate_account',
     ),
 
     url(
