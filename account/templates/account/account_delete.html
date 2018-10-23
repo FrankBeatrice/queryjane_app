@@ -53,7 +53,7 @@
         </div>
 
         <div class="card-body">
-          <h5 class="card-title text-center">{% trans "Are you sure you want to delete your account definitely?" %}</h5>
+          <h5 class="card-title text-center">{% trans "Are you sure about delete your account definitely?" %}</h5>
 
           <div class="row">
               <div class="col-md-6 col-12">
@@ -61,6 +61,18 @@
               </div>
 
               <div class="col-md-6 col-12">
+                <a href="javascript:void(0)" id="id_delete_object_toggle">{% trans 'Please, let us know why you want to delete your account.' %}</a>
+
+                <form id="id_delete_account_message_form" data-delete-account-message-form-url="{% url 'account:delete_account_message' %}" style="display: none;">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                    {% render_field delete_object_form.message class+="form-control" %}
+                  </div>
+
+                  <button type="submit" class="btn btn-outline-primary">{% trans 'Send' %}</button>
+                </form>
+
                 <form method="post">{% csrf_token %}
                   <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete my account" %}" />
                 </form>
@@ -71,4 +83,9 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/layout/layout.min.js' %}"></script>
+<script src="{% static 'js/account/account_delete.js' %}"></script>
 {% endblock %}

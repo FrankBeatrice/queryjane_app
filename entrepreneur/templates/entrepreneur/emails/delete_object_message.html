@@ -9,7 +9,9 @@
 <h3>{% trans 'Detail' %}</h3>
 
 <p><bold>{% trans 'Subject:' %} </bold> {{ title }}</p>
+{% if company %}
 <p><bold>{% trans 'company:' %} </bold> {{ company }}</p>
+{% endif %}
 <p><bold>{% trans 'user:' %} </bold> {{ user }}</p>
 
 <p><bold>{% trans 'message:' %} </bold> {{ message }}</p>

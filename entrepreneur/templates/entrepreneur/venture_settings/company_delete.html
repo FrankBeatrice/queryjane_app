@@ -84,7 +84,7 @@
               <div class="col-md-6 col-12">
                 <p>{% trans "This is an irreversible dicision, and will remove all your company information. We do not keep anything." %}</p>
 
-                <a href="javascript:void(0)" id="id_delete_object_toggle">{% trans 'Please, let us know why you want to delete your account.' %}</a>
+                <a href="javascript:void(0)" id="id_delete_object_toggle">{% trans 'Please, let us know why you want to delete your company.' %}</a>
 
                 <form id="id_delete_company_message_form" data-delete-company-message-form-url="{% url 'entrepreneur:delete_company_message' company.slug %}" style="display: none;">
                   {% csrf_token %}
