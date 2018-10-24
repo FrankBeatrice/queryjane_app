@@ -219,4 +219,72 @@ $(function () {
             }
         });
     });
+
+    // Scroll to account settings section to activate it again.
+    $("#id_activate_link_scroll").on("click", function() {
+      $("html, body").animate({ scrollTop: $('#id_activate_container').offset().top }, 1000);
+    });
+
+    // Action to deactivate company on "Deactivate" click action.
+    $('.jsDeactivateAccount').on('click', function() {
+        var deactivate_account_url = $(this).data("deactivate-account-url");
+
+        $.confirm({
+            title: 'Do you want to deactivate your account?',
+            content: 'Your pubic profile will be hidden for other users in the application. You will be able to send a receive private messages.',
+            buttons: {
+                deactivate: {
+                    btnClass: 'btn-warning',
+                    action: function(){
+                      $.post(deactivate_account_url, function (response) {
+                          if (response === 'success') {
+                            // Hide deactivate button.
+                            $('#id_deactivate_container').hide();
+                            // Hide activate button.
+                            $('#id_activate_container').show();
+                            // Hide deactivate header alert.
+                            $(".jsInactiveAlert").show();
+
+                            $.alert({
+                                title: 'Deactivated!',
+                                content: 'This account has been deactivated. You can activate it again when you want.',
+                            });
+
+                          } else {
+                            $.alert({
+                                title: 'Error!',
+                                content: 'something is wrong. Please reload and try again.',
+                            });
+                          }
+                      });
+                    }
+                },
+                cancel: function () {}
+            }
+        });
+    });
+
+    // Action to activate account on "Activate" click action.
+    $('.jsActivateAccount').on('click', function() {
+        $.post($(this).data("activate-account-url"), function (response) {
+            if (response === 'success') {
+              // Show deactivate button.
+              $('#id_deactivate_container').show();
+              // Hide deactivate button.
+              $('#id_activate_container').hide();
+              // Show deactivated company alert message.
+              $(".jsInactiveAlert").hide();
+
+              $.alert({
+                  title: 'Activated!',
+                  content: 'Your account has been activated!!!',
+              });
+            } else {
+              $.alert({
+                  title: 'Error!',
+                  content: 'something is wrong. Please reload and try again.',
+              });
+            }
+        });
+    });
 })

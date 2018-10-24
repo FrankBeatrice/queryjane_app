@@ -11,19 +11,18 @@
 <div class="container py-4">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <div class="alert alert-warning" role="alert">
-        {% trans "Are you sure that you want to delete your account?" %}
-      </div>
-
       <div class="card mb-4">
         <div class="card-header">
           {% trans "You are your data owner" %}
         </div>
+        <div class="card-body text-center">
+          <div class="alert alert-warning" role="alert">
+            <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
 
-        <div class="card-body">
-          <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
+            <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page" %}</a> {% trans "if you don't want ro receive emails from the platform." %}</p>
+          </div>
 
-          <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page." %}</a></p>
+          <a href="{% url 'account:profile_update' %}#id_deactivate_container" class="btn btn-success">{% trans "Deactivate my account" %}</a>
         </div>
       </div>
 
