@@ -136,3 +136,26 @@ class MembershipLineView(LoginRequiredMixin, View):
             },
             request=self.request,
         )})
+
+
+class DeleteMembershipView(CustomUserMixin, View):
+    """
+    Delete company membership.
+    """
+    def test_func(self):
+        return EntrepreneurPermissions.can_delete_membership(
+            user=self.request.user,
+            membership=self.get_object(),
+        )
+
+    def get_object(self):
+        return get_object_or_404(
+            AdministratorMembership,
+            id=self.kwargs.get('membership_id'),
+        )
+
+    def post(self, request, **kwargs):
+        membership = self.get_object()
+        membership.delete()
+
+        return HttpResponse('success')

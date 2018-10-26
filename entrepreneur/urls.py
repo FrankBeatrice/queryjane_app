@@ -21,6 +21,7 @@ from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesCompanyFormView
+from .views.roles_venture_settings import DeleteMembershipView
 from .views.venture_views import CompanySearch
 from .views.venture_views import VentureFormView
 
@@ -161,5 +162,11 @@ urlpatterns = [
         r'^get-membership-line/$',
         MembershipLineView.as_view(),
         name='membership_line_url',
+    ),
+
+    url(
+        r'^ax-delete-membership/(?P<membership_id>\d+)/$',
+        DeleteMembershipView.as_view(),
+        name='delete_membership',
     ),
 ]

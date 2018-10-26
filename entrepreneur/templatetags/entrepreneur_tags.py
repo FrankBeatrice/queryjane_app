@@ -1,12 +1,13 @@
 from django import template
 
-from entrepreneur.models import AdministratorMembership
+from account.data import NEW_ENTREPRENEUR_ADMIN
+from account.models import UserNotification
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.data import REJECTED_MEMBERSHIP
 from entrepreneur.data import SENT_INVITATION
 from entrepreneur.forms import TransferCompany
-from account.models import UserNotification
-from account.data import NEW_ENTREPRENEUR_ADMIN
+from entrepreneur.models import AdministratorMembership
+from entrepreneur.permissions import EntrepreneurPermissions
 
 
 register = template.Library()
@@ -89,3 +90,11 @@ def get_profile_description(context, profile):
 @register.assignment_tag
 def get_transfer_company_form(company):
     return TransferCompany(instance=company)
+
+
+@register.assignment_tag
+def get_can_delete_membership(user, membership):
+    return EntrepreneurPermissions.can_delete_membership(
+        user,
+        membership,
+    )
