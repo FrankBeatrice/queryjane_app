@@ -1,7 +1,7 @@
 {% load i18n legal_item_tags notifications entrepreneur_tags %}
 <div class="modal-header">
     <h5 class="modal-title">
-    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed or notification.is_company_deactivation or notification.is_company_transfer  %}
+    {% if notification.is_new_entrepreneur_admin or notification.is_interest_job_offer or notification.is_new_job_offer_applicants or notification.is_old_job_offer_closed or notification.is_company_deactivation or notification.is_company_transfer or notification.is_deleted_membership  %}
         {{ notification.venture_from }}
     {% elif notification.is_new_message_to_company or notification.is_new_score_to_company %}
         {{ notification.venture_to }}
@@ -52,9 +52,9 @@
         <strong>{{ notification.venture_from }}</strong> has been deactivated by {{ notification.created_by }}.
     </p>
 {% elif notification.is_company_elimination %}
-    <p>
-       {{ notification.description }} 
-    </p>
+    <p>{{ notification.description }}</p>
+{% elif notification.is_deleted_membership %}
+    <p>{% trans 'Your administrator membership has been deleted by ' %}{{ notification.created_by }}.</p>
 {% elif notification.is_company_transfer %}
     <p>
         {% trans 'Company owner membership has been transfered to you by ' %} <strong>{{ notification.created_by }}</strong>.

@@ -15,6 +15,7 @@ from entrepreneur.forms import RoleVentureForm
 from account.models import UserNotification
 from account.forms import ProfileAutocompleteForm
 from account.data import NEW_ENTREPRENEUR_ADMIN
+from account.data import DELETED_MEMBERSHIP
 from account.models import ProfessionalProfile
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.data import QJANE_ADMIN
@@ -156,6 +157,20 @@ class DeleteMembershipView(CustomUserMixin, View):
 
     def post(self, request, **kwargs):
         membership = self.get_object()
+
+        noty_to = membership.admin.user
+        company = membership.venture
+
         membership.delete()
+
+        UserNotification.objects.create(
+            notification_type=DELETED_MEMBERSHIP,
+            noty_to=noty_to,
+            venture_from=company,
+            description='Administrator membership delete by {}.'.format(
+                self.request.user.professionalprofile,
+            ),
+            created_by=self.request.user.professionalprofile,
+        )
 
         return HttpResponse('success')

@@ -12,11 +12,11 @@
         <p>{{ membership.get_role_display }}</p>
     </div>
 
-    <div class="ml-3 js_qjane_action">
+    <div class="ml-3 js_membership_action">
         <p>{{ membership.get_status_display }}</p>
 
     {% if membership.is_rejected %}
-        <a href="javascript:void(0)" class="btn btn-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}">{% trans 'Resend' %}</a>
+        <a href="javascript:void(0)" class="btn btn-outline-primary js_qjane_resend_admin_invitation" data-resend-admin-invitation-url="{% url 'account:admin_notification_resend' membership.invitation.id %}" title="{% trans 'Resend' %}"><i class="fas fa-reply"></i></a>
     {% endif %}
 
 
