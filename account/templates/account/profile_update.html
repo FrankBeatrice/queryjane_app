@@ -9,6 +9,12 @@
 
 {% block content %}
 <div class="container py-4">
+    <div class="alert alert-danger jsInactiveAlert" role="alert" style="{% if user.is_active %}display:none;{% endif %}">
+    {% trans "Your profile is inactive, so users can't find it in the application. You can activate it when you want." %}
+
+    <a href="javascript:void(0)" id="id_activate_link_scroll">{% trans "Go to activate." %}</a>
+    </div>
+
     <div class="card rounded-0 border-0 mb-4">
         <div class="card-header bg-qj-purple rounded-0">
             <h3 class="h5 m-0 text-white">{% trans 'Basic information' %}</h3>
@@ -340,7 +346,21 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <!-- Deactivate account. -->
+                  <div id="id_deactivate_container" style="{% if not user.is_active %}display:none;{% endif %}">
+                    <h3>{% trans "Deactivate my account" %}</h3>
+
+                    <p>{% trans "Users will not be able to find your prublic profile." %}</p>
+
+                    <a href="javascript:void(0)" class="btn btn-warning jsDeactivateAccount" data-deactivate-account-url="{% url 'account:deactivate_account' %}">{% trans "Deactivate" %}</a>
+                  </div>
+
+                  <div id="id_activate_container" style="{% if user.is_active %}display:none;{% endif %}">
+                    <h3>{% trans "Activate account." %}</h3>
+
+                    <p>{% trans "Allow Queryjane users to find your profile." %}</p>
+
+                    <a href="javascript:void(0)" class="btn btn-success jsActivateAccount" data-activate-account-url="{% url 'account:activate_account' %}">{% trans "Activate" %}</a>
+                  </div>
                 </div>
 
                 <div class="col-md-6 col-12">

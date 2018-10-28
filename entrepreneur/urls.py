@@ -12,6 +12,7 @@ from .views.general_venture_settings import GeneralCompanyFormView
 from .views.general_venture_settings import TransferCompanyView
 from .views.general_venture_settings import UpdateCompanyLogoForm
 from .views.general_venture_settings import UpdateVentureDescriptionForm
+from .views.general_venture_settings import DeleteCompanyMessageView
 from .views.manage_job_offers import JobOfferCloseView
 from .views.manage_job_offers import JobOfferFormView
 from .views.manage_job_offers import JobOffersListView
@@ -20,6 +21,7 @@ from .views.messages import MessagesView
 from .views.privacy_venture_settings import PrivacyVentureFormView
 from .views.roles_venture_settings import MembershipLineView
 from .views.roles_venture_settings import RolesCompanyFormView
+from .views.roles_venture_settings import DeleteMembershipView
 from .views.venture_views import CompanySearch
 from .views.venture_views import VentureFormView
 
@@ -76,6 +78,12 @@ urlpatterns = [
         r'^ax_settings/(?P<slug>[-\w]+)/activate/$',
         ActivateCompanyView.as_view(),
         name='ax_activate_company',
+    ),
+
+    url(
+        r'^(?P<slug>[-\w]+)/delete-company-message/$',
+        DeleteCompanyMessageView.as_view(),
+        name='delete_company_message',
     ),
 
     url(
@@ -154,5 +162,11 @@ urlpatterns = [
         r'^get-membership-line/$',
         MembershipLineView.as_view(),
         name='membership_line_url',
+    ),
+
+    url(
+        r'^ax-delete-membership/(?P<membership_id>\d+)/$',
+        DeleteMembershipView.as_view(),
+        name='delete_membership',
     ),
 ]

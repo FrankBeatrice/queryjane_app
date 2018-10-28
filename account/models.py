@@ -24,6 +24,7 @@ from .data import OLD_JOB_OFFER_CLOSED
 from .data import TRANSFERED_COMPANY
 from .data import UPDATED_PRIVACY_POLICY
 from .data import UPDATED_TERMS
+from .data import DELETED_MEMBERSHIP
 from entrepreneur.data import ACTIVE_MEMBERSHIP
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
@@ -483,6 +484,10 @@ class UserNotification(models.Model):
     @property
     def is_company_transfer(self):
         return self.notification_type == TRANSFERED_COMPANY
+
+    @property
+    def is_deleted_membership(self):
+        return self.notification_type == DELETED_MEMBERSHIP
 
     class Meta:
         ordering = ('-created_at',)

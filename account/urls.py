@@ -1,29 +1,32 @@
 from django.conf.urls import url
 
+from account.views.address_book import AddCompanyToAddressBookView
 from account.views.address_book import AddressBookView
 from account.views.address_book import AddUserToAddressBookView
-from account.views.address_book import AddCompanyToAddressBookView
-from account.views.address_book import RemoveUserFromAddressBookView
 from account.views.address_book import RemoveCompanyToAddressBookView
+from account.views.address_book import RemoveUserFromAddressBookView
+from account.views.company_score import CompanyScoreEditView
+from account.views.company_score import CompanyScoreFormView
+from account.views.company_score import CompanyScoreRemoveView
 from account.views.messages import InboxView
 from account.views.messages import LoadConversationView
 from account.views.messages import UserMessageFormView
-from account.views.company_score import CompanyScoreFormView
-from account.views.company_score import CompanyScoreRemoveView
-from account.views.company_score import CompanyScoreEditView
 from account.views.notifications import AdminNotificationAcceptView
 from account.views.notifications import AdminNotificationRejectView
 from account.views.notifications import AdminNotificationResendView
 from account.views.notifications import LoadNotificationModal
 from account.views.notifications import NotificationsView
+from account.views.profile import DeactivateAccountView
+from account.views.profile import DeleteAccountMessageView
+from account.views.profile import DeleteAccountView
+from account.views.profile import EmailNotificationsUpdateView
 from account.views.profile import NewUserLandingView
 from account.views.profile import ProfessionalProfileCategoryView
 from account.views.profile import ProfileSearch
 from account.views.profile import UpdateProfileAvatarForm
 from account.views.profile import UpdateProfileDescriptionForm
 from account.views.profile import UpdateProfileFormView
-from account.views.profile import EmailNotificationsUpdateView
-from account.views.profile import DeleteAccountView
+from account.views.profile import ActivateAccountView
 
 urlpatterns = [
     # API Userprofile
@@ -43,6 +46,24 @@ urlpatterns = [
         r'^update/$',
         UpdateProfileFormView.as_view(),
         name='profile_update',
+    ),
+
+    url(
+        r'^ax-deactivate-account/$',
+        DeactivateAccountView.as_view(),
+        name='deactivate_account',
+    ),
+
+    url(
+        r'^ax-activate-account/$',
+        ActivateAccountView.as_view(),
+        name='activate_account',
+    ),
+
+    url(
+        r'^ax-delete-account-message/$',
+        DeleteAccountMessageView.as_view(),
+        name='delete_account_message',
     ),
 
     url(

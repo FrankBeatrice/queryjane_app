@@ -11,9 +11,6 @@ from .models import Venture
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from entrepreneur.models import AdministratorMembership
-from place.models import City
-from place.models import Country
-from place.models import State
 
 
 class CompanyFilter(forms.Form):
@@ -329,3 +326,20 @@ class TransferCompany(forms.ModelForm):
             )
 
         return data
+
+
+class DeleteObjectMessageForm(Form):
+    """
+    Used to let users to send a message to platform
+    administrators when they want to delete a company
+    or an account.
+    """
+    message = forms.CharField(
+        required=False,
+        label=_('message'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': _('How can be Queryjane a better app?'),
+            },
+        ),
+    )

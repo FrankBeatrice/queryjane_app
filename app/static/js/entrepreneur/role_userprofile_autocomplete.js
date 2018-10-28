@@ -41,7 +41,7 @@ $(function () {
       }
     });
 
-    var venture_slug = $('.qjane-venture-settings').data('venture-slug');
+    var venture_slug = $('.roles_section').data('venture-slug');
 
     $('#id_role-userprofile').typeahead({
         hint: true,
@@ -97,7 +97,7 @@ $(function () {
         return false;
     });
 
-    $('.js_qjane_action').on('click', '.js_qjane_resend_admin_invitation', function () {
+    $('.js_membership_action').on('click', '.js_qjane_resend_admin_invitation', function () {
         var resend_link = $(this);
         var resend_admin_invitation = $(this).data('resend-admin-invitation-url');
 
@@ -105,6 +105,33 @@ $(function () {
             resend_link.closest('li').html(response.content);
 
             return false;
+        });
+    });
+
+    $('.roles_section').on('click', '.js_qjane_membership_delete', function () {
+        var delete_membership_url = $(this).data('delete-membership-url');
+        var membership_line = $(this).closest('li');
+
+        $.confirm({
+            title: 'Do you want to delete this company?',
+            content: 'User will lose administrative privileges.',
+            buttons: {
+                delete: {
+                    btnClass: 'btn-warning',
+                    action: function(){
+                        $.post(delete_membership_url, function (response) {
+                            if (response === "success") {
+                                membership_line.remove();
+                                $.alert({
+                                    title: 'Membership deleted!',
+                                    content: 'User has lost his administrator privileges.',
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: function () {}
+            }
         });
     });
 })

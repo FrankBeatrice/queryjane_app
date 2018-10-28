@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import Q
@@ -7,6 +8,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic import TemplateView
@@ -20,8 +22,8 @@ from account.forms import ProfileForm
 from account.models import IndustryCategory
 from account.models import ProfessionalProfile
 from account.models import User
-from place.models import City
-from place.models import Country
+from app.tasks import send_email
+from entrepreneur.forms import DeleteObjectMessageForm
 
 
 def profile_as_JSON(profile):
@@ -53,6 +55,7 @@ class ProfileSearch(LoginRequiredMixin, View):
         if 'q' in request.GET and request.GET.get('q'):
             query = request.GET.get('q')
             query_set = ProfessionalProfile.objects.filter(
+                Q(user__is_active=True) |
                 Q(user__email__icontains=query) |
                 Q(user__first_name__icontains=query) |
                 Q(user__last_name__icontains=query),
@@ -231,6 +234,37 @@ class EmailNotificationsUpdateView(LoginRequiredMixin, View):
         return HttpResponse('success')
 
 
+class DeleteAccountMessageView(LoginRequiredMixin, View):
+    """
+    Send message to platform administrators about
+    why want to delete an account.
+    """
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        user_mesage = request.POST.get('message')
+
+        subject = 'Delete account message.'
+
+        body = render_to_string(
+            'entrepreneur/emails/delete_object_message.html', {
+                'title': subject,
+                'company': None,
+                'user': request.user.get_full_name,
+                'message': user_mesage,
+            },
+        )
+
+        # Send email to the registered email Address
+        # of the platform administrators.
+        send_email(
+            subject=subject,
+            body=body,
+            mail_to=settings.ADMIN_EMAILS,
+        )
+
+        return HttpResponse('success')
+
+
 class DeleteAccountView(LoginRequiredMixin, DeleteView):
     """
     Account delete view. Users are the unique owners of their
@@ -244,7 +278,40 @@ class DeleteAccountView(LoginRequiredMixin, DeleteView):
     def get_object(self):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['delete_object_form'] = DeleteObjectMessageForm()
+
+        return context
+
     def get_success_url(self):
         return reverse(
             'landing_page',
         )
+
+
+class DeactivateAccountView(LoginRequiredMixin, View):
+    """
+    Deactivate user account view. User profile will be
+    disabled from search forms.
+    """
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        user = request.user
+        user.is_active = False
+        user.save()
+
+        return HttpResponse('success')
+
+
+class ActivateAccountView(LoginRequiredMixin, View):
+    """
+    Activate user account view.
+    """
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        user = request.user
+        user.is_active = True
+        user.save()
+
+        return HttpResponse('success')

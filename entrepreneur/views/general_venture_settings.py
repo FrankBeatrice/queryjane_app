@@ -28,6 +28,7 @@ from entrepreneur.data import VENTURE_STATUS_INACTIVE
 from entrepreneur.forms import CompanyLogoForm
 from entrepreneur.forms import TransferCompany
 from entrepreneur.forms import VentureDescriptionForm
+from entrepreneur.forms import DeleteObjectMessageForm
 from entrepreneur.models import AdministratorMembership
 from entrepreneur.models import Venture
 from entrepreneur.permissions import EntrepreneurPermissions
@@ -333,6 +334,50 @@ class ActivateCompanyView(CustomUserMixin, View):
         return HttpResponse('success')
 
 
+class DeleteCompanyMessageView(CustomUserMixin, View):
+    """
+    Send message to platform administrators about
+    why want to delete a company.
+    """
+    def get_object(self):
+        return get_object_or_404(
+            Venture,
+            slug=self.kwargs.get('slug')
+        )
+
+    def test_func(self):
+        return EntrepreneurPermissions.can_delete_company(
+            user=self.request.user,
+            company=self.get_object()
+        )
+
+    @transaction.atomic
+    def post(self, request, **kwargs):
+        company = self.get_object()
+        user_mesage = request.POST.get('message')
+
+        subject = 'Delete company message.'
+
+        body = render_to_string(
+            'entrepreneur/emails/delete_object_message.html', {
+                'title': subject,
+                'company': company,
+                'user': request.user.get_full_name,
+                'message': user_mesage,
+            },
+        )
+
+        # Send email to the registered email Address
+        # of the platform administrators.
+        send_email(
+            subject=subject,
+            body=body,
+            mail_to=settings.ADMIN_EMAILS,
+        )
+
+        return HttpResponse('success')
+
+
 class DeleteCompanyView(CustomUserMixin, DeleteView):
     """
     Company delete view. Only company owner can delete a
@@ -364,6 +409,7 @@ class DeleteCompanyView(CustomUserMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['company'] = self.get_object()
+        context['delete_object_form'] = DeleteObjectMessageForm()
         context['general_active'] = True
 
         return context

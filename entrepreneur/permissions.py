@@ -39,3 +39,28 @@ class EntrepreneurPermissions(object):
             return True
 
         return False
+
+    @classmethod
+    def can_delete_membership(self, user, membership):
+        professional_profile = user.professionalprofile
+
+        if not AdministratorMembership.objects.filter(
+            admin=user.professionalprofile,
+            venture=membership.venture,
+            status=ACTIVE_MEMBERSHIP,
+        ):
+            return False
+
+        # Owner membership can't be deleted.
+        if membership.admin == membership.venture.owner:
+            return False
+
+        # Users can delete their own membership.
+        if professional_profile == membership.admin:
+            return True
+
+        # Company owner can delete all memberships.
+        if professional_profile == membership.venture.owner:
+            return True
+
+        return False

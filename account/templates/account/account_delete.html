@@ -11,19 +11,18 @@
 <div class="container py-4">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <div class="alert alert-warning" role="alert">
-        {% trans "Are you sure that you want to delete your account?" %}
-      </div>
-
       <div class="card mb-4">
         <div class="card-header">
           {% trans "You are your data owner" %}
         </div>
+        <div class="card-body text-center">
+          <div class="alert alert-warning" role="alert">
+            <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
 
-        <div class="card-body">
-          <p>{% trans "you are the sole owner of your data, and you can delete it when you want, we will not keep anything." %} </p>
+            <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page" %}</a> {% trans "if you don't want ro receive emails from the platform." %}</p>
+          </div>
 
-          <p>{% trans "However, we want to make you one last invitation to keep your account. You can configure the mailing from your" %} <a href="{% url 'account:profile_update' %}">{% trans "account settings page." %}</a></p>
+          <a href="{% url 'account:profile_update' %}#id_deactivate_container" class="btn btn-success">{% trans "Deactivate my account" %}</a>
         </div>
       </div>
 
@@ -53,7 +52,7 @@
         </div>
 
         <div class="card-body">
-          <h5 class="card-title text-center">{% trans "Are you sure you want to delete your account definitely?" %}</h5>
+          <h5 class="card-title text-center">{% trans "Are you sure about delete your account definitely?" %}</h5>
 
           <div class="row">
               <div class="col-md-6 col-12">
@@ -61,6 +60,18 @@
               </div>
 
               <div class="col-md-6 col-12">
+                <a href="javascript:void(0)" id="id_delete_object_toggle">{% trans 'Please, let us know why you want to delete your account.' %}</a>
+
+                <form id="id_delete_account_message_form" data-delete-account-message-form-url="{% url 'account:delete_account_message' %}" style="display: none;">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                    {% render_field delete_object_form.message class+="form-control" %}
+                  </div>
+
+                  <button type="submit" class="btn btn-outline-primary">{% trans 'Send' %}</button>
+                </form>
+
                 <form method="post">{% csrf_token %}
                   <input class="btn btn-outline-danger" type="submit" value="{% trans "yes, definitely delete my account" %}" />
                 </form>
@@ -71,4 +82,9 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'dist/js/layout/layout.min.js' %}"></script>
+<script src="{% static 'js/account/account_delete.js' %}"></script>
 {% endblock %}

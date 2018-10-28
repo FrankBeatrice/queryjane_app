@@ -11,6 +11,7 @@ OLD_JOB_OFFER_CLOSED = 80
 DEACTIVATED_COMPANY = 90
 DELETED_COMPANY = 100
 TRANSFERED_COMPANY = 110
+DELETED_MEMBERSHIP = 120
 
 NOTIFICATION_TYPE_CHOICES = (
     (NEW_ENTREPRENEUR_ADMIN, _('Invitation to administer company.')),
@@ -24,4 +25,5 @@ NOTIFICATION_TYPE_CHOICES = (
     (DEACTIVATED_COMPANY, _('Company has been deactivated.')),
     (DELETED_COMPANY, _('Company has been deleted.')),
     (TRANSFERED_COMPANY, _('Company has been transfered.')),
+    (DELETED_MEMBERSHIP, _('Administrator membership has been deleted.')),
 )
