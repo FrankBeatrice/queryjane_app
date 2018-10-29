@@ -80,6 +80,8 @@
     <a href="{% url 'entrepreneur:general_venture_form' notification.venture_from.slug %}" class="btn btn-primary">{% trans 'Go to company settings' %}</a>
 {% elif notification.is_company_elimination %}
     <p>{% trans 'Your administrator membership has been deleted too.' %}</p>
+{% elif notification.is_deleted_membership %}
+    <p>{% trans 'You can not manage this company settings now.' %}</p>
 {% elif notification.is_updated_user_agreement %}
     {% if not user.accepted_terms %}
     <a href="{% url 'corporative:legal_item_agree' 'user-agreement' %}" class="btn btn-primary">{% trans 'I am agree' %}</a>
