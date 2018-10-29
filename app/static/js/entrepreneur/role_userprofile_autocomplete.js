@@ -113,7 +113,7 @@ $(function () {
         var membership_line = $(this).closest('li');
 
         $.confirm({
-            title: 'Do you want to delete this company?',
+            title: 'Do you want to delete this membership?',
             content: 'User will lose administrative privileges.',
             buttons: {
                 delete: {
