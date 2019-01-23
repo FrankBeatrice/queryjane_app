@@ -1,23 +1,13 @@
-# QueryJane
+# (Social Network - Queryjane)
 
-![queryjane.png](https://steemitimages.com/DQmcXpCUp5m2m2VKGXq3quvjMsAyDJVE6CNmFZ4qdB94KH8/queryjane.png)
+*Connect with companies and experts in different sectors of the industry.*
 
-
-### The Cannabis Industry Network.
-
-*Connect with companies and experts in different sectors of the cannabis industry.*
-
-
-This application allows to classify companies and experts of the cannabis industry in different categories in order to establish commercial and professional relationships and boost the economic growth of the industry.
+This application allows to classify companies and experts of different indsutry categories in order to establish commercial and professional relationships and boost the economic growth of the industry.
 
 QueryJane is aimed at specifically boosting the growth of cannabis industry, but this source code can be easily adjusted to almost any industry.
 
-
 ***
 ***
-
-We are using Docker to isolate the development environment to have a single
-and stable operating system and libraries.
 
 ## Installation
 
